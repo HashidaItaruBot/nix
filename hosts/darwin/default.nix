@@ -1,5 +1,9 @@
 { pkgs, ... }: {
   nixpkgs.hostPlatform = "aarch64-darwin";
+
+  system.primaryUser = "zhaochanglong";
+
+  nix.enable = false;
   
   users.users.zhaochanglong = {
     name = "zhaochanglong";
