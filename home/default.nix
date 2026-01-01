@@ -18,7 +18,7 @@
   programs.git = {
     enable = true;
     settings = {
-      user.name = "zhaochanglon";
+      user.name = "zhaochanglong";
       user.email = "changlong.zhao@outlook.com";
     };
   };
