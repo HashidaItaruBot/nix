@@ -1,5 +1,7 @@
 { config, lib, pkgs, ... }: {
   imports = [
+    ../../configuration.nix
+    ../../packages/nixos.nix
     ./hardware-configuration.nix
   ];
 
@@ -29,6 +31,42 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+  };
+
+  # Fonts configuration
+  # fonts.packages are imported from packages/common.nix
+  fonts = {
+    fontconfig = {
+      enable = true;
+      defaultFonts = {
+        emoji = [ "Noto Color Emoji" ];
+        monospace = [ "Sarasa Mono SC" "Noto Sans Mono CJK SC" ];
+        sansSerif = [ "Sarasa Term SC" "Noto Sans CJK SC" ];
+        serif = [ "Noto Serif CJK SC" ];
+      };
+      antialias = true;
+      hinting.enable = true;
+      subpixel.lcdfilter = "default";
+    };
+  };
+
+  # Input Method
+  i18n.inputMethod = {
+    enable = true;
+    type = "fcitx5";
+    fcitx5.addons = with pkgs; [
+      qt6Packages.fcitx5-chinese-addons
+      fcitx5-rime
+      qt6Packages.fcitx5-configtool
+      fcitx5-gtk
+      fcitx5-material-color
+    ];
+  };
+
+  environment.variables = {
+    XMODIFIERS = "@im=fcitx";
+    QT_IM_MODULE = "fcitx";
+    GTK_IM_MODULE = "fcitx";
   };
 
   # Define a user account.

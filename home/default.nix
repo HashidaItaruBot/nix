@@ -13,11 +13,7 @@
   # 必须设置，通常设置为当前 NixOS 或 nix-darwin 的版本
   home.stateVersion = "24.05"; 
 
-  home.packages = with pkgs; [
-    fzf
-    zoxide
-    bat
-  ];
+  # Packages have been moved to ../packages/common.nix
 
   programs.git = {
     enable = true;

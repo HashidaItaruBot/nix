@@ -19,9 +19,7 @@
       system = "aarch64-darwin";
       specialArgs = { inherit inputs; };
       modules = [
-        ./modules/shared/system.nix
-        ./modules/darwin/default.nix
-        ./hosts/darwin/default.nix
+        ./hosts/darwin
         home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
@@ -37,9 +35,7 @@
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
       modules = [
-        ./modules/shared/system.nix
-        ./modules/nixos/default.nix
-        ./hosts/nixos/default.nix
+        ./hosts/nixos
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
@@ -52,4 +48,3 @@
     };
   };
 }
-

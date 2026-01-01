@@ -1,7 +1,4 @@
 { pkgs, ... }: {
-  # Common system configuration
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  
   environment.systemPackages = with pkgs; [
     # Core tools
     vim
@@ -14,6 +11,8 @@
     fzf
     ripgrep
     lazygit
+    zoxide
+    bat
     
     # Development tools
     nodejs_20
@@ -37,8 +36,29 @@
     qemu
     nh
     
-    # TeX Live (Moved from platform specific to shared as it was in both originally or useful for both)
-    # Note: TeX Live is large, consider if you want it on both. Assuming yes for consistency.
+    # TeX Live
     texlive.combined.scheme-full
+
+    # GUI Apps (Cross-platform)
+    vscode
+    alacritty
+    obsidian
+    telegram-desktop
+    vlc
+    qbittorrent
+    code-cursor
+  ];
+
+  fonts.packages = with pkgs; [
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-cjk-serif
+    sarasa-gothic
+    corefonts
+    nerd-fonts.fira-code
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.symbols-only
+    nerd-fonts.hack
+    nerd-fonts.noto
   ];
 }
