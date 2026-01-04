@@ -10,6 +10,7 @@
     telegram-desktop
     vlc
     qbittorrent
+    qq
   ];
 
   programs._1password.enable = true;
@@ -20,7 +21,7 @@
 
   programs.steam = {
     enable = true;
-    remotePlay.openFirewall = true; # 如果需要远程串流
+    remotePlay.openFirewall = true; # 远程串流
   };
 }
 
