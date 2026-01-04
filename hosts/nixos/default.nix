@@ -32,7 +32,6 @@
   };
 
   # Fonts configuration
-  # fonts.packages are imported from packages/common.nix
   fonts = {
     fontconfig = {
       enable = true;
@@ -61,12 +60,6 @@
     ];
   };
 
-  environment.variables = {
-    XMODIFIERS = "@im=fcitx";
-    QT_IM_MODULE = "fcitx";
-    GTK_IM_MODULE = "fcitx";
-  };
-
   # Define a user account.
   users.users.zhaochanglong = {
     isNormalUser = true;
@@ -77,13 +70,5 @@
     home.homeDirectory = "/home/zhaochanglong";
   };
 
-  programs._1password.enable = true;
-  programs._1password-gui = {
-    enable = true;
-    polkitPolicyOwners = [ "zhaochanglong" ];
-  };
-
-  
-  nixpkgs.config.allowUnfree = true;
   system.stateVersion = "25.11";
 }

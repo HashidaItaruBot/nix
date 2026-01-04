@@ -44,7 +44,7 @@
       
       # Utils
       "balenaetcher"
-      # qbittorrent moved to nix
+      "qbittorrent"
       "crossover"
       "mos"
       "itermai"
