@@ -56,9 +56,10 @@
   programs.zsh.enable = true;
 
   users.users.zhaochanglong = {
-    isNormalUser = true;
     shell = pkgs.zsh;
   };
+
+  nixpkgs.config.allowUnfree = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }
