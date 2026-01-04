@@ -75,5 +75,6 @@
     home.homeDirectory = "/home/zhaochanglong";
   };
 
+
   system.stateVersion = "25.11";
 }

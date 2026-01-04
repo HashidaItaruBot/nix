@@ -15,16 +15,19 @@
 
     lanzaboote.url = "github:nix-community/lanzaboote/v1.0.0";
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
+
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nixpkgs, nix-darwin, home-manager, nixvim, lanzaboote, ... }: {
+  outputs = inputs@{ self, nixpkgs, nix-darwin, home-manager, nixvim, lanzaboote, sops-nix, ... }: {
     darwinConfigurations."zhaochanglongdeMacBook-Air" = nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       specialArgs = { inherit inputs; };
       modules = [
         ./hosts/darwin
         ./packages/darwin
-        ./configurations.nix
+        ./configuration.nix
         home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
@@ -42,8 +45,9 @@
       modules = [
         ./hosts/nixos
         ./packages/nixos
-        ./configurations.nix
+        ./configuration.nix
         lanzaboote.nixosModules.lanzaboote
+        sops-nix.nixosModules.sops
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;

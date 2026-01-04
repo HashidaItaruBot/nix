@@ -62,6 +62,8 @@
     shell = pkgs.zsh;
   };
 
+  sops.defaultSopsFile = ./secrets/secureboot.yaml;
+
   nixpkgs.config.allowUnfree = true;
 
   nix.package = pkgs.lixPackageSets.stable.lix;
