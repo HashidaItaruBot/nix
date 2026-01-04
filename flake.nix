@@ -26,7 +26,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.zhaochanglong = import ./home;
+          home-manager.users.zhaochanglong = import ./home/zhaochanglong;
           home-manager.extraSpecialArgs = { inherit inputs; };
           home-manager.backupFileExtension = "bak";
         }
@@ -44,7 +44,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.zhaochanglong = import ./home;
+          home-manager.users.zhaochanglong = import ./home/zhaochanglong;
           home-manager.extraSpecialArgs = { inherit inputs; };
           home-manager.backupFileExtension = "bak";
         }
