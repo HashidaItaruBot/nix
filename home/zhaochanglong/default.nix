@@ -39,7 +39,6 @@
       theme = "robbyrussell";
       plugins = [
         "git"
-        "sudo"
         "docker"
       ];
     };
