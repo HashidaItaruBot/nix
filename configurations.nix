@@ -38,6 +38,9 @@
     
     # TeX Live
     texlive.combined.scheme-full
+
+    ssh-to-age
+    sops
   ];
 
   fonts.packages = with pkgs; [
