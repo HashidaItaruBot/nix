@@ -21,6 +21,9 @@
       user.name = "zhaochanglong";
       user.email = "changlong.zhao@outlook.com";
     };
+    extraConfig = {
+      pull.rebase = true;
+    };
   };
 
   programs.zsh = {

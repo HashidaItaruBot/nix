@@ -61,4 +61,11 @@
     nerd-fonts.hack
     nerd-fonts.noto
   ];
+
+  programs.zsh.enable = true;
+
+  users.users.zhaochanglong = {
+    isNormalUser = true;
+    shell = pkgs.zsh;
+  };
 }

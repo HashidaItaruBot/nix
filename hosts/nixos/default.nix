@@ -71,12 +71,6 @@
   users.users.zhaochanglong = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "video" ];
-    packages = with pkgs; [
-      kdePackages.kate
-      kdePackages.dolphin
-      firefox
-      _1password-cli
-    ];
   };
   
   home-manager.users.zhaochanglong = {
