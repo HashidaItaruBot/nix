@@ -36,9 +36,9 @@
       "zotero"
       
       # Media
-      # vlc moved to nix
+      "vlc"
       "elmedia-player"
-      # telegram moved to nix
+      "telegram-desktop"
       "fluent-reader"
       "moonlight"
       
@@ -51,9 +51,7 @@
       "utm"
     ];
 
-    masApps = {
-      # "Xcode" = 497799835;
-    };
+    
   };
 }
 
