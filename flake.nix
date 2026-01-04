@@ -12,9 +12,12 @@
     
     nixvim.url = "github:nix-community/nixvim";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
+
+    lanzaboote.url = "github:nix-community/lanzaboote/v1.0.0";
+    lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nixpkgs, nix-darwin, home-manager, nixvim, ... }: {
+  outputs = inputs@{ self, nixpkgs, nix-darwin, home-manager, nixvim, lanzaboote, ... }: {
     darwinConfigurations."zhaochanglongdeMacBook-Air" = nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       specialArgs = { inherit inputs; };
@@ -40,6 +43,7 @@
         ./hosts/nixos
         ./packages/nixos
         ./configurations.nix
+        lanzaboote.nixosModules.lanzaboote
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
