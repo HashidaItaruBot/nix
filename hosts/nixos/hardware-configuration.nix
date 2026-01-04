@@ -16,8 +16,10 @@
   boot.loader.systemd-boot.enable = lib.mkForce false;
   boot.lanzaboote.enable = true;
   boot.lanzaboote.pkiBundle = "/etc/secureboot";
+  boot.kernelPackages = pkgs.linuxPackages_xanmod_latest; # 使用 xanmod 内核
 
   # 解密 Secure Boot 密钥
+  sops.defaultSopsFile = ../../secrets/secureboot.yaml;
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
   sops.secrets = {
     sb_pk_key = { owner = "root"; mode = "0400"; };
