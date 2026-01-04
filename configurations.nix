@@ -59,7 +59,8 @@
     shell = pkgs.zsh;
   };
 
-  nix.package = pkgs.lixPackageSets.stable.lix;
   nixpkgs.config.allowUnfree = true;
+
+  nix.package = pkgs.lixPackageSets.stable.lix;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }
