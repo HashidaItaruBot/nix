@@ -22,6 +22,9 @@
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true; # 远程串流
+    extraCompatPackages = with pkgs; [
+      proton-ge-bin
+    ];
   };
 }
 
