@@ -10,6 +10,7 @@
     telegram-desktop
     vlc
     qbittorrent
+    steam
   ];
 
 }
