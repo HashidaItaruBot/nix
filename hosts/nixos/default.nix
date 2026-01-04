@@ -9,6 +9,7 @@
 
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
+  networking.firewall.checkReversePath = "loose"; # 防止 TPROXY 丢包
 
   time.timeZone = "Asia/Shanghai";
   networking.timeServers = [

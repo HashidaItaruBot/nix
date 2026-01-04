@@ -11,6 +11,7 @@
     vlc
     qbittorrent
     qq
+    protonup-qt
   ];
 
   programs._1password.enable = true;
@@ -26,5 +27,7 @@
       proton-ge-bin
     ];
   };
+
+  services.daed-next.enable = true;
 }
 
