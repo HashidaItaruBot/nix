@@ -32,7 +32,7 @@
       "zerotier-one"
       
       # Docs & Notes
-      # obsidian moved to nix
+      "obsidian"
       "zotero"
       
       # Media
