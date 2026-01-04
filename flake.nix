@@ -20,8 +20,8 @@
       specialArgs = { inherit inputs; };
       modules = [
         ./hosts/darwin
-        ./modules/common
-        ./modules/darwin
+        ./packages/darwin
+        ./configurations.nix
         home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
@@ -38,8 +38,8 @@
       specialArgs = { inherit inputs; };
       modules = [
         ./hosts/nixos
-        ./modules/common
-        ./modules/nixos
+        ./packages/nixos
+        ./configurations.nix
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
