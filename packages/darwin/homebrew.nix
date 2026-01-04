@@ -49,6 +49,7 @@
       "mos"
       "itermai"
       "utm"
+      "ghostty"
     ];
   };
 }
