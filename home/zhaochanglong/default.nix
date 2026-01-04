@@ -21,7 +21,7 @@
       user.name = "zhaochanglong";
       user.email = "changlong.zhao@outlook.com";
     };
-    extraConfig = {
+    settings = {
       pull.rebase = true;
     };
   };

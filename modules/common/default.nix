@@ -38,15 +38,6 @@
     
     # TeX Live
     texlive.combined.scheme-full
-
-    # GUI Apps (Cross-platform)
-    vscode
-    alacritty
-    obsidian
-    telegram-desktop
-    vlc
-    qbittorrent
-    code-cursor
   ];
 
   fonts.packages = with pkgs; [
@@ -68,4 +59,6 @@
     isNormalUser = true;
     shell = pkgs.zsh;
   };
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }

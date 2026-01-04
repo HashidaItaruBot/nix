@@ -18,12 +18,12 @@
       "google-chrome"
       
       # Dev Tools
-      # visual-studio-code moved to nix
-      # cursor moved to nix (code-cursor)
-      # alacritty moved to nix
-      
+      "cursor"
+      "visual-studio-code"
+      "alacritty"
+
       # Terminal
-      # iterm2 moved to nix
+      "iterm2"
       "warp"
       
       # System Tools
@@ -48,9 +48,7 @@
       "crossover"
       "mos"
       "itermai"
-      
-      # Fonts
-      # fonts moved to nix
+      "utm"
     ];
 
     masApps = {
