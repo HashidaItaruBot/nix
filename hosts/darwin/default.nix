@@ -1,9 +1,4 @@
 { pkgs, ... }: {
-  imports = [
-    ../../packages/darwin.nix
-    ../../packages/brew.nix
-  ];
-
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   system.primaryUser = "zhaochanglong";

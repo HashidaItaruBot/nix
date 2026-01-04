@@ -1,7 +1,7 @@
 { pkgs, ... }: {
 
   imports = [
-    ./brew.nix
+    ./homebrew.nix
   ];
   environment.systemPackages = with pkgs; [
     # macOS specific packages
