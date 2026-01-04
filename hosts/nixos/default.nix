@@ -60,6 +60,11 @@
     ];
   };
 
+  environment.variables = {
+    GTK_IM_MODULE = lib.mkForce "";
+    QT_IM_MODULE = lib.mkForce "";
+  };
+
   # Define a user account.
   users.users.zhaochanglong = {
     isNormalUser = true;

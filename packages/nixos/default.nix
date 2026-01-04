@@ -10,13 +10,17 @@
     telegram-desktop
     vlc
     qbittorrent
-    steam
   ];
 
   programs._1password.enable = true;
   programs._1password-gui = {
     enable = true;
     polkitPolicyOwners = [ "zhaochanglong" ];
+  };
+
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # 如果需要远程串流
   };
 }
 
