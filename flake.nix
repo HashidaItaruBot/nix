@@ -20,18 +20,19 @@
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nixpkgs, nix-darwin, home-manager, nixvim, lanzaboote, sops-nix, ... }: {
+  outputs = inputs@{ self, nixpkgs, nix-darwin, home-manager, nixvim, lanzaboote, sops-nix, ... }:
+  let 
+    specialArgs = { inherit inputs home-manager self; };
+  in {
     darwinConfigurations."zhaochanglongdeMacBook-Air" = nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";
-      specialArgs = { inherit inputs; };
+      inherit specialArgs;
       modules = [
         ./darwin
-        ./shared
-        home-manager.darwinModules.home-manager
-        {
+        home-manager.darwinModules.home-manager {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.zhaochanglong = import ./home/zhaochanglong;
+          home-manager.users.zhaochanglong = import "${self}/shared/home";
           home-manager.extraSpecialArgs = { inherit inputs; };
           home-manager.backupFileExtension = "bak";
         }
@@ -40,20 +41,11 @@
 
     nixosConfigurations."nixos" = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      specialArgs = { inherit inputs; };
+      inherit specialArgs;
       modules = [
         ./nixos
-        ./shared
         lanzaboote.nixosModules.lanzaboote
         sops-nix.nixosModules.sops
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.zhaochanglong = import ./shared/home;
-          home-manager.extraSpecialArgs = { inherit inputs; };
-          home-manager.backupFileExtension = "bak";
-        }
       ];
     };
   };

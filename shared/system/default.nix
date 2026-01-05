@@ -58,6 +58,10 @@
 
   programs.zsh.enable = true;
 
+  users.users.zhaochanglong = {
+    shell = pkgs.zsh;
+  };
+
   nixpkgs.config.allowUnfree = true;
 
   nix.package = pkgs.lixPackageSets.stable.lix;

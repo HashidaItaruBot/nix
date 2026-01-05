@@ -1,7 +1,9 @@
-{ config, lib, pkgs, ... }: {
+{ self, config, lib, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
     ./packages
+    ./home
+    "${self}/shared/system"
   ];
 
   # Use the systemd-boot EFI boot loader.

@@ -13,7 +13,6 @@
     qbittorrent
     qq
     protonup-qt
-    ghostty
   ];
 
   programs._1password.enable = true;
