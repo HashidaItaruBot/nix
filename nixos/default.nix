@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
+    ./packages
   ];
 
   # Use the systemd-boot EFI boot loader.
@@ -74,7 +75,6 @@
   home-manager.users.zhaochanglong = {
     home.homeDirectory = "/home/zhaochanglong";
   };
-
 
   system.stateVersion = "25.11";
 }

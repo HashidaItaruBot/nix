@@ -25,9 +25,8 @@
       system = "aarch64-darwin";
       specialArgs = { inherit inputs; };
       modules = [
-        ./hosts/darwin
-        ./packages/darwin
-        ./configuration.nix
+        ./darwin
+        ./shared
         home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
@@ -43,16 +42,15 @@
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
       modules = [
-        ./hosts/nixos
-        ./packages/nixos
-        ./configuration.nix
+        ./nixos
+        ./shared
         lanzaboote.nixosModules.lanzaboote
         sops-nix.nixosModules.sops
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.zhaochanglong = import ./home/zhaochanglong;
+          home-manager.users.zhaochanglong = import ./shared/home;
           home-manager.extraSpecialArgs = { inherit inputs; };
           home-manager.backupFileExtension = "bak";
         }

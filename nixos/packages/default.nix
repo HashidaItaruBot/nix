@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   environment.systemPackages = with pkgs; [
     kdePackages.kate
     kdePackages.dolphin
@@ -12,6 +13,7 @@
     qbittorrent
     qq
     protonup-qt
+    ghostty
   ];
 
   programs._1password.enable = true;

@@ -20,8 +20,6 @@
     settings = {
       user.name = "zhaochanglong";
       user.email = "changlong.zhao@outlook.com";
-    };
-    settings = {
       pull.rebase = true;
     };
   };
