@@ -1,14 +1,19 @@
-{ self, config, lib, pkgs, ... }: {
+{ self, config, lib, pkgs, home-manager, inputs, ... }: {
   imports = [
     ./hardware-configuration.nix
     ./packages
-    ./home
     "${self}/shared/system"
+    home-manager.nixosModules.home-manager
+    {
+      home-manager.useGlobalPkgs = true;
+      home-manager.useUserPackages = true;
+      home-manager.users.zhaochanglong = import ./home;
+      home-manager.extraSpecialArgs = { inherit inputs self; };
+      home-manager.backupFileExtension = "bak";
+    }
   ];
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  
 
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;

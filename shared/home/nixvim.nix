@@ -1,4 +1,8 @@
-{ pkgs, ... }: {
+{ pkgs, inputs, ... }: {
+  imports = [
+    inputs.nixvim.homeModules.nixvim # nixvim 模块
+  ];
+
   programs.nixvim = {
     enable = true;
     defaultEditor = true; # 设置 nvim 为系统默认编辑器

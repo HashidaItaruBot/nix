@@ -8,12 +8,14 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
+  
   boot.initrd.systemd.enable = true;
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ "tpm_tis" ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
   boot.loader.systemd-boot.enable = lib.mkForce false;
+  boot.loader.efi.canTouchEfiVariables = true; # Use the systemd-boot EFI boot loader.
   boot.lanzaboote.enable = true;
   boot.lanzaboote.pkiBundle = "/etc/secureboot";
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest; # 使用 xanmod 内核

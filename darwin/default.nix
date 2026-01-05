@@ -1,4 +1,9 @@
-{ pkgs, ... }: {
+{ self, pkgs, ... }: {
+  imports = [
+    "${self}/shared/system"
+    ./home
+  ];
+
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   system.primaryUser = "zhaochanglong";
