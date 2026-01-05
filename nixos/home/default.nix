@@ -7,11 +7,12 @@
   programs.ghostty = {
     enable = true;
     settings = {
-      font-size = 12;
+      font-size = 18;
       font-family = "Hack Nerd Font";
       
       window-decoration = true;
       confirm-close-surface = false;
+      maximize = true;
     };
   };
 }
