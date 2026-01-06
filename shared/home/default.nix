@@ -4,10 +4,8 @@
     ./nixvim.nix
   ];
 
-  # 这里的用户名和目录要对应
   home.username = "zhaochanglong";
 
-  # 必须设置，通常设置为当前 NixOS 或 nix-darwin 的版本
   home.stateVersion = "24.05"; 
 
   programs.git = {
@@ -36,6 +34,4 @@
       ];
     };
   };
-
-  
 }
