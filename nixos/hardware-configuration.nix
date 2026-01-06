@@ -24,7 +24,7 @@
 
   # 解密 Secure Boot 密钥
   sops.defaultSopsFile = "${self}/shared/secrets.yaml";
-  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  sops.age.sshKeyPaths = [ "/root/.ssh/id_ed25519" ];
   sops.secrets = {
     sb_pk_key = { owner = "root"; mode = "0400"; };
     sb_kek_key = { owner = "root"; mode = "0400"; };
