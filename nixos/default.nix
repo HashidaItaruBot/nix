@@ -1,11 +1,11 @@
 { self, config, lib, pkgs, home-manager, inputs, ... }: 
 let 
   homeManagerArgs = {
-      home-manager.useGlobalPkgs = true;
-      home-manager.useUserPackages = true;
-      home-manager.users.zhaochanglong = import ./home;
-      home-manager.extraSpecialArgs = { inherit inputs self; };
-      home-manager.backupFileExtension = "bak";
+    home-manager.useGlobalPkgs = true;
+    home-manager.useUserPackages = true;
+    home-manager.users.zhaochanglong = import ./home;
+    home-manager.extraSpecialArgs = { inherit inputs self; };
+    home-manager.backupFileExtension = "bak";
   };
 in
 {
@@ -80,9 +80,5 @@ in
     extraGroups = [ "wheel" "networkmanager" "video" ];
   };
   
-  home-manager.users.zhaochanglong = {
-    home.homeDirectory = "/home/zhaochanglong";
-  };
-
   system.stateVersion = "25.11";
 }

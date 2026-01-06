@@ -15,28 +15,22 @@ in
   ];
 
   nixpkgs.hostPlatform = "aarch64-darwin";
+  nix.enable = false;
 
   system.primaryUser = "zhaochanglong";
-
-  nix.enable = false;
-  
   users.users.zhaochanglong = {
     name = "zhaochanglong";
     home = "/Users/zhaochanglong";
   };
   
-  home-manager.users.zhaochanglong = {
-    home.homeDirectory = "/Users/zhaochanglong";
-  };
-
-  system.stateVersion = 5;
-
   # macOS System Defaults
   system.defaults = {
     dock.autohide = true;
     finder.AppleShowAllExtensions = true;
     NSGlobalDomain.ApplePressAndHoldEnabled = false; # allow keyboard press continuesly
   };
+
+  system.stateVersion = 5;
 
   # TouchID for sudo
   security.pam.services.sudo_local.touchIdAuth = true;

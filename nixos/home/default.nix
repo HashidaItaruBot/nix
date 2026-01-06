@@ -5,6 +5,7 @@
     inputs.plasma-manager.homeModules.plasma-manager
   ];
 
+  home.homeDirectory = "/home/zhaochanglong";
 
   programs.ghostty = {
     enable = true;
