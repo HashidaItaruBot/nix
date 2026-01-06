@@ -1,17 +1,8 @@
 { self, pkgs, home-manager, ... }:
-let 
-  homeManagerArgs = {
-    home-manager.useGlobalPkgs = true;
-    home-manager.useUserPackages = true;
-    home-manager.users.zhaochanglong = import ./home;
-    home-manager.extraSpecialArgs = { inherit inputs; };
-    home-manager.backupFileExtension = "bak";
-  };
-in
 {
   imports = [
     "${self}/shared/system"
-    home-manager.darwinModules.home-manager homeManagerArgs
+    ./home
   ];
 
   nixpkgs.hostPlatform = "aarch64-darwin";
