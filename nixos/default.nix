@@ -1,16 +1,19 @@
-{ self, config, lib, pkgs, home-manager, inputs, ... }: {
-  imports = [
-    ./hardware-configuration.nix
-    ./packages
-    "${self}/shared/system"
-    home-manager.nixosModules.home-manager
-    {
+{ self, config, lib, pkgs, home-manager, inputs, ... }: 
+let 
+  homeManagerArgs = {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.users.zhaochanglong = import ./home;
       home-manager.extraSpecialArgs = { inherit inputs self; };
       home-manager.backupFileExtension = "bak";
-    }
+  };
+in
+{
+  imports = [
+    ./hardware-configuration.nix
+    ./packages
+    "${self}/shared/system"
+    home-manager.nixosModules.home-manager homeManagerArgs
   ];
 
   networking.hostName = "nixos";
