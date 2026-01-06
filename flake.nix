@@ -26,7 +26,7 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, nix-darwin, home-manager, nixvim, lanzaboote, sops-nix, plasma-manager, ... }:
+  outputs = inputs@{ self, nixpkgs, nix-darwin, home-manager, nixvim, ... }:
   let 
     specialArgs = { inherit inputs self; };
   in {
@@ -50,8 +50,6 @@
       inherit specialArgs;
       modules = [
         ./nixos
-        lanzaboote.nixosModules.lanzaboote
-        sops-nix.nixosModules.sops
       ];
     };
   };

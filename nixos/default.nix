@@ -1,7 +1,4 @@
-{ self, config, lib, pkgs, home-manager, inputs, ... }: 
-let 
-  
-in
+{ self, config, lib, pkgs, ... }: 
 {
   imports = [
     ./hardware-configuration.nix
