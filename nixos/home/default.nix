@@ -1,31 +1,12 @@
-{ self, inputs, ... }:
+{ self, inputs, ... }: 
 {
   imports = [
-    "${self}/shared/home"
-    inputs.plasma-manager.homeModules.plasma-manager
+    inputs.home-manager.nixosModules.home-manager {
+      home-manager.useGlobalPkgs = true;
+      home-manager.useUserPackages = true;
+      home-manager.users.zhaochanglong = import ./zhaochanglong.nix;
+      home-manager.extraSpecialArgs = { inherit inputs self; };
+      home-manager.backupFileExtension = "bak";
+    }
   ];
-
-  home.homeDirectory = "/home/zhaochanglong";
-
-  programs.ghostty = {
-    enable = true;
-    settings = {
-      font-size = 18;
-      font-family = "Hack Nerd Font";
-      window-decoration = true;
-      confirm-close-surface = false;
-      maximize = true;
-    };
-  };
-
-  programs.plasma = {
-    enable = true;
-    hotkeys.commands = {
-      "launch-ghostty" = {
-        name = "Launch Ghostty";
-        key = "Ctrl+Alt+T";
-        command = "ghostty";
-      };
-    };
-  };
 }

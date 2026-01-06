@@ -28,7 +28,7 @@
 
   outputs = inputs@{ self, nixpkgs, nix-darwin, home-manager, nixvim, lanzaboote, sops-nix, plasma-manager, ... }:
   let 
-    specialArgs = { inherit inputs home-manager self plasma-manager; };
+    specialArgs = { inherit inputs self; };
   in {
     darwinConfigurations."zhaochanglongdeMacBook-Air" = nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";
@@ -39,7 +39,7 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.zhaochanglong = import "${self}/shared/home";
-          home-manager.extraSpecialArgs = { inherit inputs; };
+          home-manager.extraSpecialArgs = { inherit inputs self; };
           home-manager.backupFileExtension = "bak";
         }
       ];
