@@ -2,6 +2,7 @@
 {
   imports = [
     ./nixvim.nix
+    ./kitty.nix
   ];
 
   home.username = "zhaochanglong";
