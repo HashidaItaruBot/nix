@@ -5,6 +5,7 @@
     ./packages
     "${self}/shared/system"
     ./home
+    ./sops.nix
   ];
 
   networking.hostName = "nixos";
