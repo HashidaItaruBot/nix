@@ -13,6 +13,7 @@
     qbittorrent
     qq
     protonup-qt
+    pciutils
   ];
 
   programs._1password.enable = true;
