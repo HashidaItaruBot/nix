@@ -38,10 +38,12 @@
     pulse.enable = true;
   };
 
+  # mihomo configuration
   services.mihomo = {
     enable = true;
     configFile = config.sops.secrets.mihomo_config.path;
     tunMode = false;
+    webui = pkgs.metacubexd;
   };
 
   powerManagement.cpuFreqGovernor = "performance"; # 强制 CPU 模式为高性能
