@@ -40,7 +40,7 @@
 
   # mihomo configuration
   services.mihomo = {
-    enable = true;
+    enable = false;
     configFile = config.sops.secrets.mihomo_config.path;
     tunMode = false;
     webui = pkgs.metacubexd;
