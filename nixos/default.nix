@@ -38,6 +38,12 @@
     pulse.enable = true;
   };
 
+  services.mihomo = {
+    enable = true;
+    configFile = config.sops.secrets.mihomo_config.path;
+    tunMode = false;
+  };
+
   powerManagement.cpuFreqGovernor = "performance"; # 强制 CPU 模式为高性能
 
   # Fonts configuration

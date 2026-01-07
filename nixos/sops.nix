@@ -25,8 +25,8 @@
     };
     # 解密 mihomo 配置
     mihomo_config = {
-      sopsFile = "${self}/shared/secrets/mihomo.yaml";
-      key = "config";
+      sopsFile = "${self}/shared/secrets/mihomo_config.yaml";
+      key = "data";
       owner = "root";
       mode = "0400";
     };
@@ -44,8 +44,5 @@
     "secureboot/keys/KEK/KEK.pem".source = ./secureboot/keys/KEK/KEK.pem;
     "secureboot/keys/db/db.pem".source = ./secureboot/keys/db/db.pem;
     "secureboot/GUID".source = ./secureboot/GUID;
-
-    # 映射 mihomo 配置
-    "mihomo/config.yaml".source = config.sops.secrets.mihomo_config.path;
   };
 }
