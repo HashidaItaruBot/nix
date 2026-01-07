@@ -50,6 +50,7 @@
       "itermai"
       "utm"
       "ghostty"
+      "kitty"
     ];
   };
 }
