@@ -13,7 +13,7 @@
     wallpapers = [
       {
         monitor = "DP-3";      # 显示器名称
-        wallpaperId = "848010835";
+        wallpaperId = "823335782";
       }
     ];
   };
