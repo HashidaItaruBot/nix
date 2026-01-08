@@ -5,6 +5,8 @@
     inputs.plasma-manager.homeModules.plasma-manager
   ];
 
+  services.linux-wallpaperengine.enable = true; # install linux wallpaper engine
+
   home.homeDirectory = "/home/zhaochanglong";
 
   programs.ghostty = {
