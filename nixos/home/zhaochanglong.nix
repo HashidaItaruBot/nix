@@ -1,13 +1,22 @@
-{ self, inputs, ... }:
+{ self, inputs, config, ... }:
 {
   imports = [
     "${self}/shared/home"
     inputs.plasma-manager.homeModules.plasma-manager
   ];
 
-  services.linux-wallpaperengine.enable = true; # install linux wallpaper engine
-
   home.homeDirectory = "/home/zhaochanglong";
+
+  services.linux-wallpaperengine = {
+    enable = true;
+    assetsPath = config.home.homeDirectory + "/.local/share/Steam/steamapps/workshop/content/431960";
+    wallpapers = [
+      {
+        monitor = "DP-3";      # 显示器名称
+        wallpaperId = "848010835";
+      }
+    ];
+  };
 
   programs.ghostty = {
     enable = true;
