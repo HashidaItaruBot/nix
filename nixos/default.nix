@@ -46,6 +46,8 @@
     webui = pkgs.metacubexd;
   };
 
+  services.blueman.enable = true;
+
   powerManagement.cpuFreqGovernor = "performance"; # 强制 CPU 模式为高性能
 
   # Fonts configuration
