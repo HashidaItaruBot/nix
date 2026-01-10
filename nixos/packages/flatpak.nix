@@ -13,6 +13,5 @@
   ];
   services.flatpak.packages = [
       "com.usebottles.bottles"
-      "com.tencent.wechat"
   ];
 }
