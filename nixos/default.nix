@@ -46,24 +46,24 @@
     webui = pkgs.metacubexd;
   };
 
+  virtualisation.waydroid.enable = true;
+
   services.blueman.enable = true;
 
   powerManagement.cpuFreqGovernor = "performance"; # 强制 CPU 模式为高性能
 
   # Fonts configuration
-  fonts = {
-    fontconfig = {
-      enable = true;
-      defaultFonts = {
-        emoji = [ "Noto Color Emoji" ];
-        monospace = [ "Sarasa Mono SC" "Noto Sans Mono CJK SC" ];
-        sansSerif = [ "Sarasa Term SC" "Noto Sans CJK SC" ];
-        serif = [ "Noto Serif CJK SC" ];
-      };
-      antialias = true;
-      hinting.enable = true;
-      subpixel.lcdfilter = "default";
+  fonts.fontconfig = {
+    enable = true;
+    defaultFonts = {
+      emoji = [ "Noto Color Emoji" ];
+      monospace = [ "Sarasa Mono SC" "Noto Sans Mono CJK SC" ];
+      sansSerif = [ "Sarasa Term SC" "Noto Sans CJK SC" ];
+      serif = [ "Noto Serif CJK SC" ];
     };
+    antialias = true;
+    hinting.enable = true;
+    subpixel.lcdfilter = "default";
   };
 
   # Input Method
