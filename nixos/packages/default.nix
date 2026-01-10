@@ -20,6 +20,7 @@
     pciutils
     heroic
     mangohud
+    netease-cloud-music-gtk
   ];
 
   programs._1password.enable = true;
