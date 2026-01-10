@@ -3,6 +3,7 @@
   imports = [
     ./flatpak.nix
   ];
+  
   environment.systemPackages = with pkgs; [
     kdePackages.kate
     kdePackages.dolphin

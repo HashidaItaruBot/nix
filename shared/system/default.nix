@@ -44,6 +44,7 @@
   ];
 
   fonts.packages = with pkgs; [
+    wqy_microhei
     noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-cjk-serif
