@@ -1,5 +1,8 @@
 { pkgs, ... }:
 {
+  imports = [
+    ./flatpak.nix
+  ];
   environment.systemPackages = with pkgs; [
     kdePackages.kate
     kdePackages.dolphin
@@ -14,6 +17,8 @@
     qq
     protonup-qt
     pciutils
+    heroic
+    mangohud
   ];
 
   programs._1password.enable = true;
