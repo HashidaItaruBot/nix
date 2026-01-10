@@ -21,6 +21,7 @@
     heroic
     mangohud
     netease-cloud-music-gtk
+    waydroid-helper
   ];
 
   programs._1password.enable = true;

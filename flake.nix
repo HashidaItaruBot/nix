@@ -26,7 +26,7 @@
     plasma-manager.inputs.home-manager.follows = "home-manager";
   };
 
-  outputs = inputs@{ self, nixpkgs, nix-darwin, home-manager, nixvim, ... }:
+  outputs = inputs@{ self, nixpkgs, nix-darwin, home-manager, ... }:
   let 
     specialArgs = { inherit inputs self; };
   in {
