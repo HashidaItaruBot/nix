@@ -22,6 +22,8 @@
     mangohud
     netease-cloud-music-gtk
     waydroid-helper
+    unrar
+    p7zip
   ];
 
   programs._1password.enable = true;
