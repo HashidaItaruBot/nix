@@ -24,6 +24,7 @@
     waydroid-helper
     unrar
     p7zip
+    onscripter
   ];
 
   programs._1password.enable = true;
