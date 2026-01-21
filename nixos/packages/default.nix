@@ -25,6 +25,7 @@
     unrar
     p7zip
     onscripter
+    unar
   ];
 
   programs._1password.enable = true;
