@@ -26,6 +26,7 @@
     p7zip
     onscripter
     unar
+    ppsspp-sdl-wayland
   ];
 
   programs._1password.enable = true;
