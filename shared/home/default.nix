@@ -3,6 +3,7 @@
   imports = [
     ./nixvim.nix
     ./kitty.nix
+    ./ssh.nix
   ];
 
   home.username = "zhaochanglong";
