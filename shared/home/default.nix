@@ -11,11 +11,6 @@
 
   home.stateVersion = "24.05";
 
-  # Git SSH signing allowed signers file
-  home.file.".ssh/allowed_signers" = {
-    source = ./allowed_signers;
-  };
-
   programs.zsh = {
     enable = true;
     enableCompletion = true;
