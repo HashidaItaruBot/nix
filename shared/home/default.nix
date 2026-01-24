@@ -16,7 +16,6 @@
     source = ./allowed_signers;
   };
 
-
   programs.zsh = {
     enable = true;
     enableCompletion = true;
