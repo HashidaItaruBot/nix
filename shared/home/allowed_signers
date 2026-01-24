@@ -1,0 +1,8 @@
+# Git SSH signing allowed signers file
+# Format: email keytype base64-encoded-key
+# Example:
+# changlong.zhao@outlook.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI...
+
+# Add your SSH public key here
+# You can get your public key from: ssh-keygen -y -f ~/.ssh/id_ed25519
+changlong.zhao@outlook.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAI...

@@ -4,20 +4,18 @@
     ./nixvim.nix
     ./kitty.nix
     ./ssh.nix
+    ./git.nix
   ];
 
   home.username = "zhaochanglong";
 
-  home.stateVersion = "24.05"; 
+  home.stateVersion = "24.05";
 
-  programs.git = {
-    enable = true;
-    settings = {
-      user.name = "zhaochanglong";
-      user.email = "changlong.zhao@outlook.com";
-      pull.rebase = true;
-    };
+  # Git SSH signing allowed signers file
+  home.file.".ssh/allowed_signers" = {
+    source = ./allowed_signers;
   };
+
 
   programs.zsh = {
     enable = true;
