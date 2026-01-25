@@ -24,7 +24,6 @@
     waydroid-helper
     unrar
     p7zip
-    onscripter
     unar
     ppsspp-sdl-wayland
     inputs.nixvim.packages.x86_64-linux.default

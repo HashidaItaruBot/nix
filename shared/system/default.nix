@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   environment.systemPackages = with pkgs; [
     # Core tools
     vim
@@ -13,12 +14,12 @@
     lazygit
     zoxide
     bat
-    
+
     # Development tools
     nodejs_20
     python314
     lua
-    
+
     # Compilers & Toolchains
     rustc
     cargo
@@ -28,14 +29,14 @@
     haskell-language-server
     gcc
     gmp
-    
+
     # Utilities
     pnpm
     pipx
     python3Packages.jupyterlab
     qemu
     nh
-    
+
     # TeX Live
     texlive.combined.scheme-full
 
@@ -66,5 +67,8 @@
   nixpkgs.config.allowUnfree = true;
 
   nix.package = pkgs.lixPackageSets.stable.lix;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 }
