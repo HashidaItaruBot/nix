@@ -1,7 +1,7 @@
 { pkgs, inputs, ... }:
 {
   imports = [
-    ./nixvim
+    ./nixvim.nix
     ./kitty.nix
     ./ssh.nix
     ./git.nix
