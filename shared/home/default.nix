@@ -4,7 +4,7 @@
     ./kitty.nix
     ./ssh.nix
     ./git.nix
-    ./tmux
+    ./tmux.nix
   ];
 
   home.username = "zhaochanglong";
