@@ -3,13 +3,13 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    
+
     nix-darwin.url = "github:nix-darwin/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    
+
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    
+
     nixvim.url = "github:dc-tec/nixvim";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -24,33 +24,45 @@
     plasma-manager.url = "github:nix-community/plasma-manager";
     plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
     plasma-manager.inputs.home-manager.follows = "home-manager";
+
+    oh-my-tmux.url = "github:gpakosz/.tmux";
+    oh-my-tmux.flake = false;
   };
 
-  outputs = inputs@{ self, nixpkgs, nix-darwin, home-manager, ... }:
-  let 
-    specialArgs = { inherit inputs self; };
-  in {
-    darwinConfigurations."zhaochanglongdeMacBook-Air" = nix-darwin.lib.darwinSystem {
-      system = "aarch64-darwin";
-      inherit specialArgs;
-      modules = [
-        ./darwin
-        home-manager.darwinModules.home-manager {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.zhaochanglong = import "${self}/shared/home";
-          home-manager.extraSpecialArgs = { inherit inputs self; };
-          home-manager.backupFileExtension = "bak";
-        }
-      ];
-    };
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      nix-darwin,
+      home-manager,
+      ...
+    }:
+    let
+      specialArgs = { inherit inputs self; };
+    in
+    {
+      darwinConfigurations."zhaochanglongdeMacBook-Air" = nix-darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        inherit specialArgs;
+        modules = [
+          ./darwin
+          home-manager.darwinModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.zhaochanglong = import "${self}/shared/home";
+            home-manager.extraSpecialArgs = { inherit inputs self; };
+            home-manager.backupFileExtension = "bak";
+          }
+        ];
+      };
 
-    nixosConfigurations."nixos" = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      inherit specialArgs;
-      modules = [
-        ./nixos
-      ];
+      nixosConfigurations."nixos" = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        inherit specialArgs;
+        modules = [
+          ./nixos
+        ];
+      };
     };
-  };
 }

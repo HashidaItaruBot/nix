@@ -316,6 +316,22 @@
         "type": "github"
       }
     },
+    "oh-my-tmux": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1767648552,
+        "narHash": "sha256-rfJkL4EMMunbC7wGiw7O/1E/0XTzA2N+RR7gXEoalAY=",
+        "owner": "gpakosz",
+        "repo": ".tmux",
+        "rev": "87dcd13a28aeb5f18baee630e24b3f5765ae3a4f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gpakosz",
+        "repo": ".tmux",
+        "type": "github"
+      }
+    },
     "plasma-manager": {
       "inputs": {
         "home-manager": [
@@ -390,6 +406,7 @@
         "nix-flatpak": "nix-flatpak",
         "nixpkgs": "nixpkgs",
         "nixvim": "nixvim",
+        "oh-my-tmux": "oh-my-tmux",
         "plasma-manager": "plasma-manager",
         "sops-nix": "sops-nix"
       }
