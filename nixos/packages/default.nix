@@ -3,7 +3,7 @@
   imports = [
     ./flatpak.nix
   ];
-  
+
   environment.systemPackages = with pkgs; [
     kdePackages.kate
     kdePackages.dolphin
@@ -14,7 +14,7 @@
     obsidian
     telegram-desktop
     vlc
-    qbittorrent
+    qbittorrent-enhanced
     qq
     protonup-qt
     pciutils
@@ -51,4 +51,3 @@
     openFirewall = true; # 自动打开必要的端口 (47984-48010 等)
   };
 }
-
