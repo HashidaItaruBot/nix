@@ -15,25 +15,9 @@
     zoxide
     bat
 
-    # Development tools
-    nodejs_20
-    python314
-    lua
+    # Development
+    opencode
 
-    # Compilers & Toolchains
-    rustc
-    cargo
-    ghc
-    cabal-install
-    stack
-    haskell-language-server
-    gcc
-    gmp
-
-    # Utilities
-    pnpm
-    pipx
-    python3Packages.jupyterlab
     qemu
     nh
 
