@@ -8,7 +8,6 @@
     kdePackages.kate
     kdePackages.dolphin
     firefox
-    _1password-cli
     code-cursor
     alacritty
     obsidian
@@ -28,7 +27,6 @@
     ppsspp-sdl-wayland
   ];
 
-  programs._1password.enable = true;
   programs._1password-gui = {
     enable = true;
     polkitPolicyOwners = [ "zhaochanglong" ];

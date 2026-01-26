@@ -60,6 +60,7 @@
   ];
 
   programs.zsh.enable = true;
+  programs._1password.enable = true;
 
   users.users.zhaochanglong = {
     shell = pkgs.zsh;
