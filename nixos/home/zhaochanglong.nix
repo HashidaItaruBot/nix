@@ -4,6 +4,7 @@
     "${self}/shared/home"
     inputs.plasma-manager.homeModules.plasma-manager
     ./git.nix
+    ./ssh.nix
   ];
 
   home.homeDirectory = "/home/zhaochanglong";
