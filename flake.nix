@@ -10,7 +10,7 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixvim.url = "github:dc-tec/nixvim";
+    nixvim.url = "github:itsmyowninvention/nixvim";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
 
     lanzaboote.url = "github:nix-community/lanzaboote/v1.0.0";
@@ -24,9 +24,6 @@
     plasma-manager.url = "github:nix-community/plasma-manager";
     plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
     plasma-manager.inputs.home-manager.follows = "home-manager";
-
-    oh-my-tmux.url = "github:gpakosz/.tmux";
-    oh-my-tmux.flake = false;
   };
 
   outputs =

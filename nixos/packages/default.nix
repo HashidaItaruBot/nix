@@ -26,7 +26,6 @@
     p7zip
     unar
     ppsspp-sdl-wayland
-    inputs.nixvim.packages.x86_64-linux.default
   ];
 
   programs._1password.enable = true;

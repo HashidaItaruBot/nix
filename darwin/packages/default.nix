@@ -1,4 +1,8 @@
 { ... }: {
+  
+  environment.systemPackages = with pkgs; [
+  ];
+
   homebrew = {
     enable = true;
     onActivation = {

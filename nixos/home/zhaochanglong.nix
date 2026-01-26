@@ -3,6 +3,7 @@
   imports = [
     "${self}/shared/home"
     inputs.plasma-manager.homeModules.plasma-manager
+    ./git.nix
   ];
 
   home.homeDirectory = "/home/zhaochanglong";

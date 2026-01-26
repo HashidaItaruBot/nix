@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   environment.systemPackages = with pkgs; [
     # Core tools
@@ -42,6 +42,7 @@
 
     ssh-to-age
     sops
+    inputs.nixvim
   ];
 
   fonts.packages = with pkgs; [
