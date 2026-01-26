@@ -26,7 +26,7 @@
 
     ssh-to-age
     sops
-    inputs.nixvim
+    neovim
   ];
 
   fonts.packages = with pkgs; [
