@@ -3,7 +3,11 @@
     enable = true;
     defaultEditor = true;
     extraPackages = with pkgs; [
+      # LSP 服务器
       lua-language-server
+      pyright
+      nil
+
       stylua
       ripgrep
       fd
