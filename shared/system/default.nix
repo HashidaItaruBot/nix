@@ -26,7 +26,6 @@
 
     ssh-to-age
     sops
-    neovim
   ];
 
   fonts.packages = with pkgs; [
