@@ -1,4 +1,4 @@
 { pkgs, ... }:
 {
-  programs.git.signing.signer = "${pkgs._1password-gui}/bin/op-ssh-sign";
+  programs.git.signing.signer = "${lib.getExe' pkgs._1password-gui "op-ssh-sign"}";
 }
