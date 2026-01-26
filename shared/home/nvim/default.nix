@@ -12,6 +12,8 @@
       ripgrep
       fd
       git
+      tree-sitter
+      gcc
     ];
   };
 
