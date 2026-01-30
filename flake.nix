@@ -40,14 +40,6 @@
         inherit specialArgs;
         modules = [
           ./darwin
-          home-manager.darwinModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.zhaochanglong = import "${self}/shared/home";
-            home-manager.extraSpecialArgs = { inherit inputs self; };
-            home-manager.backupFileExtension = "bak";
-          }
         ];
       };
 
