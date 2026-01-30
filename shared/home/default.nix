@@ -5,6 +5,7 @@
     ./ssh.nix
     ./git.nix
     ./tmux
+    ./nvim
   ];
 
   home.username = "zhaochanglong";
