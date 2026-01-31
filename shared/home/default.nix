@@ -5,7 +5,7 @@
     ./ssh.nix
     ./git.nix
     ./tmux
-    ./nixvim.nix
+    ./nixvim
     ./zsh.nix
   ];
 
