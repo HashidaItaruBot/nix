@@ -1,9 +1,5 @@
-{ pkgs, inputs, ... }:
+{ pkgs, ... }:
 {
-  imports = [
-    ./ollama.nix
-  ];
-
   environment.systemPackages = with pkgs; [
     # Core tools
     vim

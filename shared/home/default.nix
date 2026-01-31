@@ -7,6 +7,7 @@
     ./tmux
     ./nixvim
     ./zsh.nix
+    ./ollama.nix
   ];
 
   home.username = "zhaochanglong";
