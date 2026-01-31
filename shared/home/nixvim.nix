@@ -96,24 +96,54 @@
           action = "buffers";
           options.desc = "Switch Buffer";
         };
-        "<leader>/" = { action = "live_grep"; options.desc = "Grep (Root Dir)"; };
-        "<leader>:" = { action = "command_history"; options.desc = "Command History"; };
-        "<leader><space>" = { action = "find_files"; options.desc = "Find Files (Root Dir)"; };
+        "<leader>/" = {
+          action = "live_grep";
+          options.desc = "Grep (Root Dir)";
+        };
+        "<leader>:" = {
+          action = "command_history";
+          options.desc = "Command History";
+        };
+        "<leader><space>" = {
+	  action = "find_files";
+	  options.desc = "Find Files (Root Dir)";
+	};
 
         # f - Find 模块
         "<leader>fb" = {
           action = "buffers";
           options.desc = "Buffers";
         };
-        "<leader>fB" = { action = "buffers"; options.desc = "Buffers (all)"; };
-        "<leader>ff" = { action = "find_files"; options.desc = "Find Files (Root Dir)"; };
-        "<leader>fg" = { action = "git_files"; options.desc = "Find Files (git-files)"; };
-        "<leader>fr" = { action = "oldfiles"; options.desc = "Recent"; };
+        "<leader>fB" = {
+	  action = "buffers";
+	  options.desc = "Buffers (all)";
+	};
+        "<leader>ff" = {
+	  action = "find_files";
+	  options.desc = "Find Files (Root Dir)";
+	};
+        "<leader>fg" = {
+	  action = "git_files";
+	  options.desc = "Find Files (git-files)";
+	};
+        "<leader>fr" = {
+	  action = "oldfiles";
+	  options.desc = "Recent";
+	};
 
         # g - Git 模块
-        "<leader>gc" = { action = "git_commits"; options.desc = "Commits"; };
-        "<leader>gs" = { action = "git_status"; options.desc = "Status"; };
-        "<leader>gS" = { action = "git_stash"; options.desc = "Git Stash"; };
+        "<leader>gc" = {
+	  action = "git_commits";
+	  options.desc = "Commits";
+	};
+        "<leader>gs" = {
+	  action = "git_status";
+	  options.desc = "Status";
+	};
+        "<leader>gS" = {
+	  action = "git_stash";
+	  options.desc = "Git Stash";
+	};
 
         # s - Search 模块
         "<leader>s\"" = "registers";
