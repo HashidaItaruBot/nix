@@ -10,36 +10,34 @@
 
     colorschemes.catppuccin = {
       enable = true;
-      settings = {
-	integrations = {
-	  aerial = true;
-	  alpha = true;
-	  cmp = true;
-	  dashboard = true;
-	  flash = true;
-	  fzf = true;
-	  grug_far = true;
-	  gitsigns = true;
-	  headlines = true;
-	  illuminate = true;
-	  indent_blankline.enabled = true;
-	  leap = true;
-	  lsp_trouble = true;
-	  mason = true;
-	  mini = true;
-	  navic = {
-	    enabled = true;
-	    custom_bg = "lualine";
-	  };
-	  neotest = true;
-	  neotree = true;
-	  noice = true;
-	  notify = true;
-	  snacks = true;
-	  telescope = true;
-	  treesitter_context = true;
-	  which_key = true;
-	};
+      settings.integrations = {
+        aerial = true;
+        alpha = true;
+        cmp = true;
+        dashboard = true;
+        flash = true;
+        fzf = true;
+        grug_far = true;
+        gitsigns = true;
+        headlines = true;
+        illuminate = true;
+        indent_blankline.enabled = true;
+        leap = true;
+        lsp_trouble = true;
+        mason = true;
+        mini = true;
+        navic = {
+          enabled = true;
+          custom_bg = "lualine";
+        };
+        neotest = true;
+        neotree = true;
+        noice = true;
+        notify = true;
+        snacks = true;
+        telescope = true;
+        treesitter_context = true;
+        which_key = true;
       };
     };
 
@@ -61,15 +59,12 @@
         };
       };
     };
-
     plugins.lazygit.enable = true;
-
     plugins.treesitter = {
       enable = true;
       highlight.enable = true;
       indent.enable = true;
       folding.enable = false;
-
       grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
         bash
         json
@@ -85,8 +80,80 @@
         yaml
       ];
     };
-
     plugins.gitsigns.enable = true;
+    plugins.neo-tree.enable = true;
+    plugins.neoclip.enable = true;
+    plugins.telescope = {
+      enable = true;
+      extensions = {
+	      file-browser.enable = true;
+	      zoxide.enable = true;
+      };
+
+      keymaps = {
+        # 快捷跳转
+        "<leader>," = {
+          action = "buffers";
+          options.desc = "Switch Buffer";
+        };
+        "<leader>/" = { action = "live_grep"; options.desc = "Grep (Root Dir)"; };
+        "<leader>:" = { action = "command_history"; options.desc = "Command History"; };
+        "<leader><space>" = { action = "find_files"; options.desc = "Find Files (Root Dir)"; };
+
+        # f - Find 模块
+        "<leader>fb" = {
+          action = "buffers";
+          options.desc = "Buffers";
+        };
+        "<leader>fB" = { action = "buffers"; options.desc = "Buffers (all)"; };
+        "<leader>ff" = { action = "find_files"; options.desc = "Find Files (Root Dir)"; };
+        "<leader>fg" = { action = "git_files"; options.desc = "Find Files (git-files)"; };
+        "<leader>fr" = { action = "oldfiles"; options.desc = "Recent"; };
+
+        # g - Git 模块
+        "<leader>gc" = { action = "git_commits"; options.desc = "Commits"; };
+        "<leader>gs" = { action = "git_status"; options.desc = "Status"; };
+        "<leader>gS" = { action = "git_stash"; options.desc = "Git Stash"; };
+
+        # s - Search 模块
+        "<leader>s\"" = "registers";
+        "<leader>s/" = "search_history";
+        "<leader>sa" = "autocommands";
+        "<leader>sb" = "current_buffer_fuzzy_find";
+        "<leader>sc" = "command_history";
+        "<leader>sC" = "commands";
+        "<leader>sd" = "diagnostics";
+        "<leader>sg" = "live_grep";
+        "<leader>sh" = "help_tags";
+        "<leader>sH" = "highlights";
+        "<leader>sj" = "jumplist";
+        "<leader>sk" = "keymaps";
+        "<leader>sl" = "loclist";
+        "<leader>sM" = "man_pages";
+        "<leader>sm" = "marks";
+        "<leader>so" = "vim_options";
+        "<leader>sR" = "resume";
+        "<leader>sq" = "quickfix";
+        "<leader>sw" = {
+          action = "grep_string";
+          options.desc = "Word (Root Dir)";
+        };
+        "<leader>ss" = {
+          action = "lsp_document_symbols";
+          options.desc = "Goto Symbol";
+        };
+        "<leader>sS" = {
+          action = "lsp_dynamic_workspace_symbols";
+          options.desc = "Goto Symbol (Workspace)";
+        };
+
+        # UI 模块
+        "<leader>uC" = {
+          action = "colorscheme";
+          options.desc = "Colorscheme with Preview";
+        };
+      };
+    };
 
     clipboard.providers.wl-copy.enable = true;
 
