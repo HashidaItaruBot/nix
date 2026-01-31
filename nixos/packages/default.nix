@@ -42,7 +42,14 @@
 
   programs.vscode = {
     enable = true;
-    # extensions = with pkgs.vscode-extensions; []
+    extensions = with pkgs.vscode-extensions; [
+      github.copilot
+      github.codespaces
+      github.copilot-chat
+      github.github-vscode-theme
+      github.vscode-github-actions
+      github.vscode-pull-request-github
+    ];
   };
 
   services.sunshine = {
