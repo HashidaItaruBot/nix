@@ -2,7 +2,6 @@
 {
   imports = [
     ./flatpak.nix
-    ./ollama.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -26,13 +25,6 @@
     p7zip
     unar
     ppsspp-sdl-wayland
-
-    # Nix开发工具
-    nixd
-    nixpkgs-fmt
-    nil
-
-    # AI/ML工具
   ];
 
   programs._1password-gui = {

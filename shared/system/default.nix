@@ -1,5 +1,9 @@
 { pkgs, inputs, ... }:
 {
+  imports = [
+    ./ollama.nix
+  ];
+
   environment.systemPackages = with pkgs; [
     # Core tools
     vim
@@ -26,6 +30,11 @@
 
     ssh-to-age
     sops
+
+    # Nix开发工具
+    nixd
+    nixpkgs-fmt
+    nil
   ];
 
   fonts.packages = with pkgs; [
