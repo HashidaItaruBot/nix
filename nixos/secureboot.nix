@@ -1,11 +1,12 @@
 { inputs, self, config, ... }:
 {
   imports = [
-    inputs.sops-nix.nixosModules.sops
+    inputs.lanzaboote.nixosModules.lanzaboote
   ];
-
+  boot.loader.systemd-boot.enable = lib.mkForce false;
+  boot.lanzaboote.enable = true;
+  boot.lanzaboote.pkiBundle = "/etc/secureboot";
   # sops 配置
-  sops.age.sshKeyPaths = [ "/root/.ssh/id_ed25519" ];
   sops.secrets = {
     # 解密 Secure Boot 密钥
     sb_pk_key = {
@@ -20,13 +21,6 @@
     };
     sb_db_key = {
       sopsFile = "${self}/shared/secrets/secureboot.yaml";
-      owner = "root";
-      mode = "0400";
-    };
-    # 解密 mihomo 配置
-    mihomo_config = {
-      sopsFile = "${self}/shared/secrets/mihomo_config.yaml";
-      key = "data";
       owner = "root";
       mode = "0400";
     };
