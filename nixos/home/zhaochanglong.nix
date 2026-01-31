@@ -6,6 +6,7 @@
     ./git.nix
     ./ssh.nix
     ./vscode.nix
+    ./zed.nix
   ];
 
   home.homeDirectory = "/home/zhaochanglong";
