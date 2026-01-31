@@ -6,19 +6,31 @@
 
   programs.nixvim = {
     enable = true;
-    # 开启 LazyVim 预设
-    plugins.lazyvim = {
+
+
+
+    plugins.avante = {
       enable = true;
-      installLazyVim = true; # 这会自动引用 vimPlugins.LazyVim
+      settings = {
+        provider = "deepseek";
+        auto_suggestions_provider = "deepseek";
+        providers = {
+          deepseek = {
+            __inherited_from = "openai";
+            endpoint = "https://api.deepseek.com";
+            api_key_name = "DEEPSEEK_API_KEY";
+            model = "deepseek-coder";
+          };
+        };
+      };
     };
 
-    plugins.avante.enable = true;
+    plugins.lazygit.enable = true;
     
     extraPlugins = with pkgs.vimPlugins; [
       vim-nix
     ];
 
-    # 依然可以自定义配置
     opts = {
       number = true;
       shiftwidth = 2;

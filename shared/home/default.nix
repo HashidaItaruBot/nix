@@ -6,7 +6,6 @@
     ./git.nix
     ./tmux
     ./nixvim.nix
-    ./vscode.nix
     ./zsh.nix
   ];
 

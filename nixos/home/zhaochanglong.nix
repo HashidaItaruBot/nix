@@ -5,6 +5,7 @@
     inputs.plasma-manager.homeModules.plasma-manager
     ./git.nix
     ./ssh.nix
+    ./vscode.nix
   ];
 
   home.homeDirectory = "/home/zhaochanglong";
