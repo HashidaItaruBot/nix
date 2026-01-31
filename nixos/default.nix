@@ -3,8 +3,9 @@
   imports = [
     ./hardware-configuration.nix
     ./packages
-    ./home
     "${self}/shared/system"
+    ./home
+    ./sops.nix
   ];
 
   networking.hostName = "nixos";
