@@ -25,6 +25,11 @@
     p7zip
     unar
     ppsspp-sdl-wayland
+
+    # Nix开发工具
+    nixd
+    nixpkgs-fmt
+    nil
   ];
 
   programs._1password-gui = {
