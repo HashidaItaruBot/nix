@@ -2,6 +2,7 @@
 {
   imports = [
     ./flatpak.nix
+    ./ollama.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -30,6 +31,8 @@
     nixd
     nixpkgs-fmt
     nil
+
+    # AI/ML工具
   ];
 
   programs._1password-gui = {
