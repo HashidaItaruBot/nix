@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 {
   imports = [
     inputs.nixvim.homeModules.nixvim
@@ -11,6 +11,12 @@
       enable = true;
       installLazyVim = true; # 这会自动引用 vimPlugins.LazyVim
     };
+
+    plugins.avante.enable = true;
+    
+    extraPlugins = with pkgs.vimPlugins; [
+      vim-nix
+    ];
 
     # 依然可以自定义配置
     opts = {
