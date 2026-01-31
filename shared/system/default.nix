@@ -17,6 +17,9 @@
 
     # Development
     opencode
+    gcc
+    cmake
+    gnumake
 
     qemu
     nh
