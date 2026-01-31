@@ -93,7 +93,7 @@
       keymaps = {
         # 快捷跳转
         "<leader>," = {
-          action = "buffers";
+          action = "buffers sort_mru=true sort_lastused=true";
           options.desc = "Switch Buffer";
         };
         "<leader>/" = {
@@ -111,7 +111,7 @@
 
         # f - Find 模块
         "<leader>fb" = {
-          action = "buffers";
+          action = "buffers sort_mru=true sort_lastused=true ignore_current_buffer=true";
           options.desc = "Buffers";
         };
         "<leader>fB" = {
@@ -179,7 +179,7 @@
 
         # UI 模块
         "<leader>uC" = {
-          action = "colorscheme";
+          action = "colorscheme enable_preview=true";
           options.desc = "Colorscheme with Preview";
         };
       };
