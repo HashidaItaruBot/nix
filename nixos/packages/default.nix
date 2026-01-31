@@ -40,11 +40,6 @@
     ];
   };
 
-  programs.vscode = {
-    enable = true;
-    # extensions = with pkgs.vscode-extensions; []
-  };
-
   services.sunshine = {
     enable = true;
     autoStart = true;
