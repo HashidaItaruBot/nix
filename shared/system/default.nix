@@ -21,9 +21,6 @@
     qemu
     nh
 
-    # TeX Live
-    texlive.combined.scheme-full
-
     ssh-to-age
     sops
 

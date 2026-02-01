@@ -7,6 +7,8 @@
     ./ssh.nix
     ./vscode.nix
     ./zed.nix
+    ./ollama.nix
+    ./nixvim
   ];
 
   home.homeDirectory = "/home/zhaochanglong";
