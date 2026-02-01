@@ -8,6 +8,7 @@
     ./nixvim
     ./zsh.nix
     ./ollama.nix
+    ./aider.nix
   ];
 
   home.username = "zhaochanglong";
