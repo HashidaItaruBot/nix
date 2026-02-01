@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
 
   homebrew = {
     enable = true;
@@ -52,7 +53,6 @@
       "utm"
       "ghostty"
       "zed"
-      "thunderbird"
     ];
   };
 }
