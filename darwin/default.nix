@@ -1,8 +1,14 @@
-{ self, pkgs, home-manager, ... }:
+{
+  self,
+  pkgs,
+  home-manager,
+  ...
+}:
 {
   imports = [
     "${self}/shared/system"
     ./home
+    ./packages
   ];
 
   nixpkgs.hostPlatform = "aarch64-darwin";
@@ -13,7 +19,7 @@
     name = "zhaochanglong";
     home = "/Users/zhaochanglong";
   };
-  
+
   # macOS System Defaults
   system.defaults = {
     dock.autohide = true;
