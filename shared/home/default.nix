@@ -1,4 +1,5 @@
-_: {
+{ pkgs, inputs, ... }:
+{
   imports = [
     ./kitty.nix
     ./ssh.nix
@@ -6,6 +7,7 @@ _: {
     ./tmux
     ./zsh.nix
     ./direnv.nix
+    ./texlive.nix
   ];
 
   home.username = "zhaochanglong";
