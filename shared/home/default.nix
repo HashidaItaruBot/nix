@@ -1,5 +1,4 @@
-{ pkgs, inputs, ... }:
-{
+_: {
   imports = [
     ./kitty.nix
     ./ssh.nix
