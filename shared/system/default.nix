@@ -47,6 +47,13 @@
   programs.zsh.enable = true;
   programs._1password.enable = true;
 
+  programs.neovim = {
+    enable = true;
+    viAlias = true;
+    vimAlias = true;
+    defaultEditor = true;
+  };
+
   users.users.zhaochanglong = {
     shell = pkgs.zsh;
   };
