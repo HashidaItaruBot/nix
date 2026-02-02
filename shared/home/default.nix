@@ -5,6 +5,7 @@ _: {
     ./git.nix
     ./tmux
     ./zsh.nix
+    ./direnv.nix
   ];
 
   home.username = "zhaochanglong";
