@@ -6,6 +6,7 @@
     ./git.nix
     ./tmux
     ./zsh.nix
+    ./texlive.nix
   ];
 
   home.username = "zhaochanglong";
