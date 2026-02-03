@@ -6,7 +6,6 @@ _: {
     ./tmux
     ./zsh.nix
     ./direnv.nix
-    ./texlive.nix
   ];
 
   home.username = "zhaochanglong";

@@ -17,6 +17,10 @@
 
     # Development
     opencode
+    gnumake
+    gcc
+    clang
+    cmake
 
     qemu
     nh
@@ -28,6 +32,8 @@
     nixd
     nixpkgs-fmt
     nil
+
+    texlive.combined.scheme-full
   ];
 
   fonts.packages = with pkgs; [
