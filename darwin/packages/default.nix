@@ -53,6 +53,7 @@
       "utm"
       "ghostty"
       "zed"
+      "Sikarugir-App/sikarugir/sikarugir"
     ];
   };
 }
