@@ -1,4 +1,5 @@
-_: {
+{ pkgs, ... }:
+{
   imports = [
     ./kitty.nix
     ./ssh.nix
@@ -14,6 +15,10 @@ _: {
     vimAlias = true;
     defaultEditor = true;
   };
+
+  home.packages = with pkgs; [
+    jupyter-all
+  ];
 
   home.username = "zhaochanglong";
 
