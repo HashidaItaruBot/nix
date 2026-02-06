@@ -1,4 +1,10 @@
-{ self, config, lib, pkgs, ... }: 
+{
+  self,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   imports = [
     ./hardware-configuration.nix
@@ -57,8 +63,14 @@
     enable = true;
     defaultFonts = {
       emoji = [ "Noto Color Emoji" ];
-      monospace = [ "Sarasa Mono SC" "Noto Sans Mono CJK SC" ];
-      sansSerif = [ "Sarasa Term SC" "Noto Sans CJK SC" ];
+      monospace = [
+        "Sarasa Mono SC"
+        "Noto Sans Mono CJK SC"
+      ];
+      sansSerif = [
+        "Sarasa Term SC"
+        "Noto Sans CJK SC"
+      ];
       serif = [ "Noto Serif CJK SC" ];
     };
     antialias = true;
@@ -87,8 +99,21 @@
   # Define a user account.
   users.users.zhaochanglong = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "video" ];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "video"
+      "docker"
+    ];
   };
-  
+
+  # Docker configuration
+  virtualisation.docker = {
+    enable = true;
+    enableOnBoot = true;
+    autoPrune.enable = true;
+    daemon.settings = { };
+  };
+
   system.stateVersion = "25.11";
 }

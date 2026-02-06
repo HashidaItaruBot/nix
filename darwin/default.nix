@@ -31,4 +31,9 @@
 
   # TouchID for sudo
   security.pam.services.sudo_local.touchIdAuth = true;
+
+  # Docker configuration for macOS
+  # Docker CLI tools are installed via shared system packages
+  # Docker Desktop is installed via Homebrew (see packages/default.nix)
+  # After installation, Docker Desktop will automatically configure permissions
 }
