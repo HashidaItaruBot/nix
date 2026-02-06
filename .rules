@@ -1,2 +1,202 @@
+# Nix配置项目AI指导规则
+
+## 项目概述
+这是一个统一管理NixOS和Darwin（macOS）系统配置的Nix Flake项目。项目采用模块化设计，支持跨平台配置共享。
+
+## 目录结构说明
+```
+nix/
+├── darwin/              # macOS系统配置
+│   ├── default.nix      # Darwin主配置文件
+│   ├── home/           # macOS用户环境配置
+│   └── packages/       # macOS专用包配置
+├── nixos/              # NixOS系统配置
+│   ├── default.nix     # NixOS主配置文件
+│   ├── home/          # NixOS用户环境配置
+│   ├── packages/      # NixOS专用包配置
+│   ├── secureboot/    # 安全启动配置
+│   ├── hardware-configuration.nix  # 硬件配置
+│   └── sops.nix       # 加密配置
+├── shared/             # 共享配置
+│   ├── home/          # 跨平台用户配置
+│   ├── secrets/       # 加密的敏感数据（使用sops-nix）
+│   └── system/        # 跨平台系统配置
+├── flake.nix          # Flake主配置文件
+├── flake.lock         # Flake锁定文件
+├── .sops.yaml         # sops加密配置文件
+├── .gitignore         # Git忽略文件
+└── .rules             # 本项目指导规则
+```
+
+## 核心原则
+
+### 1. Git追踪要求
 - Nix构建系统只能检测到git追踪的文件
-- 测试完成后需要删除用于测试的文件
+- 所有配置更改必须通过`git add`添加到版本控制
+- 测试文件必须在测试完成后删除，不得提交到仓库
+- 敏感数据必须使用sops-nix加密后存储在`shared/secrets/`目录
+
+### 2. 模块化设计
+- 保持配置模块化，便于维护和重用
+- 跨平台通用配置放在`shared/`目录
+- 平台特定配置放在各自的`darwin/`或`nixos/`目录
+- 用户环境配置使用home-manager，统一管理shell、编辑器等工具
+
+### 3. 安全要求
+- 所有密码、API密钥等敏感信息必须使用sops-nix加密
+- 加密配置文件位于`.sops.yaml`，使用age密钥
+- 硬件特定配置（如分区、网络接口）应在`hardware-configuration.nix`中管理
+- 安全启动配置使用lanzaboote，位于`nixos/secureboot/`
+
+## AI修改指南
+
+### 1. 修改前检查
+- 确认要修改的文件是否在git追踪中
+- 检查相关依赖是否已在flake.nix中声明
+- 验证配置的语法正确性：使用`nix flake check`或`nix eval`
+
+### 2. 修改流程
+1. **分析需求**：明确要添加/修改的功能
+2. **定位文件**：根据功能类型选择正确的目录
+   - 系统级配置：`darwin/`或`nixos/`
+   - 用户级配置：`shared/home/`或平台特定的`home/`
+   - 软件包：`packages/`目录或直接在配置中引用nixpkgs
+3. **编写配置**：遵循Nix语言最佳实践
+4. **测试验证**：
+   - 语法检查：`nix eval`或`nix-instantiate`
+   - 构建测试：`nix build`相关配置
+   - 实际部署前进行dry-run
+5. **清理工作**：删除所有测试生成的文件
+
+### 3. 配置编写规范
+- 使用有意义的变量名和函数名
+- 添加必要的注释说明配置目的
+- 保持配置声明式，避免副作用
+- 优先使用flake输入中的包，避免硬编码版本
+- 跨平台配置使用条件判断：`lib.mkIf`、`lib.mkMerge`
+
+### 4. 包管理
+- 系统级包：在系统配置的`environment.systemPackages`中添加
+- 用户级包：在home-manager配置的`home.packages`中添加
+- 开发环境：使用direnv或nix-shell配置
+- 自定义包：在`packages/`目录中创建独立的Nix表达式
+
+### 5. 敏感数据处理
+- 所有敏感数据必须加密存储
+- 使用sops-nix管理加密文件
+- 加密文件路径：`shared/secrets/*.yaml`
+- 在配置中通过`sops.secrets`引用加密数据
+
+## 测试与验证
+
+### 1. 本地测试
+```bash
+# 检查flake语法
+nix flake check
+
+# 评估NixOS配置（不实际构建）
+nix eval .#nixosConfigurations.nixos.config.system.build.toplevel
+
+# 评估Darwin配置
+nix eval .#darwinConfigurations."zhaochanglongdeMacBook-Air".config.system.build.toplevel
+
+# 构建配置（dry-run）
+nix build .#nixosConfigurations.nixos.config.system.build.toplevel --dry-run
+```
+
+### 2. 构建测试（禁止直接切换）
+- **重要安全约束：AI不得直接执行系统切换命令**
+- 只能进行构建测试，不能实际部署到运行系统
+- NixOS构建测试：`nix build .#nixosConfigurations.nixos.config.system.build.toplevel`
+- Darwin构建测试：`nix build .#darwinConfigurations."zhaochanglongdeMacBook-Air".config.system.build.toplevel`
+- 测试生成物在`result/`目录，测试完成后必须删除
+
+### 3. 实际部署（仅限用户手动执行）
+- 实际系统切换必须由用户手动执行
+- NixOS: `sudo nixos-rebuild switch --flake .#nixos`
+- Darwin: `darwin-rebuild switch --flake .`
+
+### 4. 回滚机制
+- 所有更改通过git版本控制
+- 系统支持通过`nixos-rebuild switch --rollback`回滚
+- 重要更改前建议创建git tag
+
+## 常见任务指南
+
+### 添加新软件包
+1. 确定包类型（系统/用户）
+2. 在相应配置文件的packages列表中添加包名
+3. 测试构建：`nix build nixpkgs#包名`
+4. 验证功能
+
+### 修改用户环境
+1. 编辑`shared/home/`或平台特定`home/`目录中的配置
+2. 使用home-manager模块化配置
+3. 测试：`home-manager build --flake .`
+
+### 添加加密数据
+1. 创建YAML文件在`shared/secrets/`
+2. 使用sops加密：`sops --encrypt --in-place 文件.yaml`
+3. 在配置中通过`sops.secrets`引用
+4. 更新`.sops.yaml`如果需要新的密钥
+
+### 跨平台配置
+1. 在`shared/`目录创建通用配置
+2. 使用条件判断处理平台差异
+3. 在各平台配置中导入共享模块
+
+## 故障排除
+
+### 构建测试失败
+1. 检查flake.lock是否同步：`nix flake update`
+2. 验证Nix表达式语法
+3. 检查依赖包是否在nixpkgs中可用
+4. 查看详细错误：添加`--show-trace`参数
+
+### 配置测试不通过
+1. 确认文件已git add
+2. 检查配置路径是否正确
+3. 验证模块导入顺序
+4. 查看系统日志：`journalctl -u`相关服务
+
+### 加密配置问题
+1. 确认age密钥可用
+2. 检查`.sops.yaml`配置
+3. 验证文件加密状态：`sops 文件.yaml`
+
+## 安全约束
+
+### 1. 禁止直接系统切换
+- AI只能进行构建测试，不能执行`nixos-rebuild switch`或`darwin-rebuild switch`
+- 所有系统切换操作必须由用户手动执行
+- 构建测试生成的文件必须存放在`result/`目录
+- 测试完成后必须清理：`rm -rf result/`
+
+### 2. 测试环境隔离
+- 使用`nix build`进行离线构建测试
+- 使用`nix eval`进行配置语法验证
+- 使用`nix flake check`进行完整性检查
+- 避免影响运行中的系统配置
+
+### 3. 用户确认机制
+- 重要配置更改需要用户明确确认
+- 敏感操作（如内核模块、安全配置）需要额外验证
+- 跨平台配置需要分别测试两个平台的构建
+
+## 最佳实践
+1. **小步提交**：每次更改完成一个明确的功能
+2. **充分测试**：在部署前进行充分验证
+3. **文档更新**：重要更改更新相关文档
+4. **备份重要数据**：系统级更改前备份关键数据
+5. **关注社区**：参考nixpkgs和home-manager的现有配置模式
+
+## 注意事项
+- **安全第一**：AI只能测试构建，不能切换系统配置
+- 所有构建测试必须在隔离环境中进行
+- `result/`目录是临时测试产物，必须及时清理
+- 用户负责最终的系统部署和切换操作
+- 不要硬编码绝对路径，使用Nix提供的路径变量
+- 避免在配置中直接写入密码等敏感信息
+- 保持flake.nix的inputs更新，但注意稳定性
+- 定期运行垃圾回收：`nix-collect-garbage -d`
+- 注意Nix store空间使用，及时清理旧版本
