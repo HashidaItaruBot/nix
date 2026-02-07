@@ -46,4 +46,9 @@
     capSysAdmin = true; # 允许 Sunshine 捕获屏幕和模拟输入
     openFirewall = true; # 自动打开必要的端口 (47984-48010 等)
   };
+
+  services.redshift = {
+    enable = true;
+    provider = "geoclue2";
+  };
 }
