@@ -1,7 +1,6 @@
 { pkgs, ... }:
 {
   imports = [
-    ./kitty.nix
     ./ssh.nix
     ./git.nix
     ./tmux

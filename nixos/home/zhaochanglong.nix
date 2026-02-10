@@ -1,4 +1,9 @@
-{ self, inputs, config, ... }:
+{
+  self,
+  inputs,
+  config,
+  ...
+}:
 {
   imports = [
     "${self}/shared/home"
@@ -8,6 +13,7 @@
     ./vscode.nix
     ./zed.nix
     ./ollama.nix
+    ./kitty.nix
     ./nixvim
   ];
 
@@ -18,7 +24,7 @@
     assetsPath = config.home.homeDirectory + "/.local/share/Steam/steamapps/workshop/content/431960";
     wallpapers = [
       {
-        monitor = "DP-3";      # 显示器名称
+        monitor = "DP-3"; # 显示器名称
         wallpaperId = "823335782";
       }
     ];

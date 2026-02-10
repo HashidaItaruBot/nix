@@ -22,11 +22,13 @@
       # Dev Tools
       "cursor"
       "visual-studio-code"
-      "alacritty"
+      "zed"
 
       # Terminal
       "iterm2"
       "warp"
+      "alacritty"
+      "kitty"
 
       # System Tools
       "1password"
@@ -52,7 +54,6 @@
       "itermai"
       "utm"
       "ghostty"
-      "zed"
     ];
   };
 }
