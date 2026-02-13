@@ -21,6 +21,8 @@
     gcc
     clang
     cmake
+    nodejs
+    pnpm
 
     qemu
     nh
