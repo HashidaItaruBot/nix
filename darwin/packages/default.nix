@@ -54,7 +54,6 @@
       "itermai"
       "utm"
       "ghostty"
-      "openclaw"
     ];
   };
 }
