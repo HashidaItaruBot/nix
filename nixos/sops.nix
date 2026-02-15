@@ -1,4 +1,9 @@
-{ inputs, self, config, ... }:
+{
+  inputs,
+  self,
+  config,
+  ...
+}:
 {
   imports = [
     inputs.sops-nix.nixosModules.sops
@@ -23,19 +28,6 @@
       owner = "root";
       mode = "0400";
     };
-    # 解密 mihomo 配置
-    mihomo_config = {
-      sopsFile = "${self}/shared/secrets/mihomo_config.yaml";
-      key = "data";
-      owner = "root";
-      mode = "0400";
-    };
-    # 解密 deepseek api key
-    deepseek_api_key = {
-      sopsFile = "${self}/shared/secrets/api_keys.yaml";
-      owner = "root";
-      mode = "0444";
-    };
   };
 
   # 组装lanzaboote的pkiBundle
@@ -51,7 +43,4 @@
     "secureboot/keys/db/db.pem".source = ./secureboot/keys/db/db.pem;
     "secureboot/GUID".source = ./secureboot/GUID;
   };
-  environment.extraInit = ''
-    export DEEPSEEK_API_KEY="$(cat ${config.sops.secrets.deepseek_api_key.path})"
-  '';
 }

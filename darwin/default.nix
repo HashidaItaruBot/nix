@@ -1,7 +1,5 @@
 {
   self,
-  pkgs,
-  home-manager,
   ...
 }:
 {
@@ -9,6 +7,7 @@
     "${self}/shared/system"
     ./home
     ./packages
+    ./sops.nix
   ];
 
   nixpkgs.hostPlatform = "aarch64-darwin";
