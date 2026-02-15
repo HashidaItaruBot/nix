@@ -4,7 +4,7 @@
     "${self}/shared/home"
     ./git.nix
     ./ssh.nix
-    ./openclaw
+    ./openclaw.nix
   ];
 
   home.homeDirectory = "/Users/zhaochanglong";
