@@ -13,6 +13,7 @@
     ];
 
     brews = [
+      "openclaw-cli"
     ];
 
     casks = [
@@ -54,6 +55,7 @@
       "itermai"
       "utm"
       "ghostty"
+      "openclaw"
     ];
   };
 }
