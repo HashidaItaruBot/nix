@@ -2,7 +2,6 @@
   self,
   inputs,
   config,
-  pkgs,
   ...
 }:
 
@@ -37,10 +36,10 @@ in
     instances.default = {
       enable = true;
       # Use openclaw-gateway package to avoid Python conflicts
-      package = pkgs.openclaw-gateway;
+      #package = pkgs.openclaw-gateway;
       #stateDir = "~/.openclaw";
       #workspaceDir = "~/.openclaw/workspace";
-      launchd.enable = true;
+      #launchd.enable = true;
 
       # Plugins (optional)
       plugins = [
