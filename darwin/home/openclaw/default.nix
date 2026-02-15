@@ -1,7 +1,7 @@
 {
   self,
   inputs,
-  config,
+  pkgs,
   ...
 }:
 
@@ -15,6 +15,7 @@ in
   ];
 
   programs.openclaw = {
+    # Path to documents directory (contains AGENTS.md, SOUL.md, TOOLS.md, etc.)
     documents = ./documents;
 
     config = {
@@ -24,7 +25,7 @@ in
       };
 
       channels.telegram = {
-        tokenFile = config.sops.secrets.telegram_bot_token;
+        tokenFile = "/run/secrets/telegram_bot_token";
         allowFrom = [ 1622558025 ];
         groups."*" = {
           requireMention = true;
@@ -36,10 +37,10 @@ in
     instances.default = {
       enable = true;
       # Use openclaw-gateway package to avoid Python conflicts
-      #package = pkgs.openclaw-gateway;
-      #stateDir = "~/.openclaw";
-      #workspaceDir = "~/.openclaw/workspace";
-      #launchd.enable = true;
+      package = pkgs.openclaw-gateway;
+      stateDir = "~/.openclaw";
+      workspaceDir = "~/.openclaw/workspace";
+      launchd.enable = true;
 
       # Plugins (optional)
       plugins = [
