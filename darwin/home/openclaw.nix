@@ -29,8 +29,8 @@ in
     # Use instances.default for more control
     instances.default = {
       enable = true;
-      # Use the bundled package from overlay
-      package = pkgs.openclaw;
+      # Use openclaw-gateway package to avoid Python conflicts
+      package = pkgs.openclaw-gateway;
       stateDir = "~/.openclaw";
       workspaceDir = "~/.openclaw/workspace";
       launchd.enable = true;
