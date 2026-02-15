@@ -1,4 +1,9 @@
-{ self, inputs, pkgs, ... }:
+{
+  self,
+  inputs,
+  pkgs,
+  ...
+}:
 
 let
   # Generate a deterministic gateway token based on self path
@@ -11,7 +16,7 @@ in
 
   programs.openclaw = {
     # Path to documents directory (contains AGENTS.md, SOUL.md, TOOLS.md, etc.)
-    documents = self + "/documents";
+    documents = ./documents;
 
     config = {
       gateway = {
@@ -22,7 +27,9 @@ in
       channels.telegram = {
         tokenFile = "/run/secrets/telegram_bot_token";
         allowFrom = [ 1622558025 ];
-        groups."*" = { requireMention = true; };
+        groups."*" = {
+          requireMention = true;
+        };
       };
     };
 

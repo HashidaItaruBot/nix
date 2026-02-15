@@ -54,6 +54,7 @@
       "itermai"
       "utm"
       "ghostty"
+      "sourcegit"
     ];
   };
 }
