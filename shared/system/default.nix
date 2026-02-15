@@ -1,5 +1,8 @@
 { pkgs, ... }:
 {
+  imports = [
+    ./sops.nix
+  ];
   environment.systemPackages = with pkgs; [
     # Core tools
     vim
