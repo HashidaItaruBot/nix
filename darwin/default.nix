@@ -1,5 +1,6 @@
 {
   self,
+  inputs,
   ...
 }:
 {
@@ -11,6 +12,7 @@
   ];
 
   nixpkgs.hostPlatform = "aarch64-darwin";
+  #nixpkgs.overlays = [ inputs.nix-openclaw.overlays.default ];
   nix.enable = false;
 
   system.primaryUser = "zhaochanglong";

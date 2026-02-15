@@ -14,6 +14,13 @@
       owner = "root";
       mode = "0444";
     };
+    # telegram bot token
+    telegram_bot_token = {
+      sopsFile = "${self}/shared/secrets/telegram_bot_token.yaml";
+      owner = "root";
+      mode = "0440";
+      group = "wheel";
+    };
   };
 
   environment.extraInit = ''
