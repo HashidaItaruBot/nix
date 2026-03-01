@@ -11,8 +11,6 @@
 
   # Docker无根模式配置
   virtualisation.docker = {
-    enable = false; # 禁用系统级Docker守护进程
-
     rootless = {
       enable = true;
       setSocketVariable = true; # 自动设置DOCKER_HOST环境变量

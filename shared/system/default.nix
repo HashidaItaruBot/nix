@@ -38,10 +38,6 @@
     nixpkgs-fmt
     nil
 
-    # Container tools
-    docker
-    docker-compose
-
     texlive.combined.scheme-full
   ];
 
