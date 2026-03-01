@@ -14,9 +14,16 @@
       owner = "root";
       mode = "0444";
     };
+    # alibaba api key (用于opencode)
+    alibaba_api_key = {
+      sopsFile = "${self}/shared/secrets/api_keys.yaml";
+      owner = "root";
+      mode = "0444";
+    };
   };
 
   environment.extraInit = ''
     export DEEPSEEK_API_KEY="$(cat ${config.sops.secrets.deepseek_api_key.path})"
+    export ALIBABA_API_KEY="$(cat ${config.sops.secrets.alibaba_api_key.path})"
   '';
 }

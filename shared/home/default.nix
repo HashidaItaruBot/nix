@@ -6,6 +6,7 @@
     ./tmux
     ./zsh.nix
     ./direnv.nix
+    ./opencode.nix  # 添加opencode配置
   ];
 
   programs.neovim = {
