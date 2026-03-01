@@ -15,6 +15,7 @@
     ./ollama.nix
     ./kitty.nix
     ./nixvim
+    ./1password.nix
   ];
 
   home.homeDirectory = "/home/zhaochanglong";
