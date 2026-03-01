@@ -12,6 +12,7 @@
     "${self}/shared/system"
     ./home
     ./sops.nix
+    ./docker.nix
   ];
 
   networking.hostName = "nixos";
@@ -104,14 +105,19 @@
       "networkmanager"
       "video"
     ];
-  };
-
-  # Docker configuration
-  virtualisation.docker = {
-    enable = true;
-    enableOnBoot = true;
-    autoPrune.enable = true;
-    daemon.settings = { };
+    # 无根Docker需要subuid/subgid映射
+    subGidRanges = [
+      {
+        startGid = 100000;
+        count = 65536;
+      }
+    ];
+    subUidRanges = [
+      {
+        startUid = 100000;
+        count = 65536;
+      }
+    ];
   };
 
   system.stateVersion = "25.11";
