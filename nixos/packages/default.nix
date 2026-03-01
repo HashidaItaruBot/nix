@@ -25,6 +25,7 @@
     p7zip
     unar
     ppsspp-sdl-wayland
+    appimage-run
   ];
 
   programs._1password-gui = {
