@@ -12,7 +12,7 @@
     "${self}/shared/system"
     ./home
     ./sops.nix
-    ./podman.nix
+    ./docker.nix
   ];
 
   networking.hostName = "nixos";

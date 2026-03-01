@@ -13,7 +13,7 @@
       theme = "robbyrussell";
       plugins = [
         "git"
-        "podman"
+        "docker"
       ];
     };
   };
