@@ -26,6 +26,7 @@
     cmake
     nodejs
     pnpm
+    aider-chat-full
 
     qemu
     nh
