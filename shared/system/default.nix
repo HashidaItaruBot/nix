@@ -26,7 +26,6 @@
     cmake
     nodejs
     pnpm
-    aider-chat-full
 
     qemu
     nh
@@ -38,8 +37,6 @@
     nixd
     nixpkgs-fmt
     nil
-
-    texlive.combined.scheme-full
   ];
 
   fonts.packages = with pkgs; [
