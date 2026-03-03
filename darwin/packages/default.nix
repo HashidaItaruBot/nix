@@ -1,5 +1,8 @@
-{ ... }:
+{ pkgs, ... }:
 {
+  environment.systemPackages = with pkgs; [
+    mas
+  ];
 
   homebrew = {
     enable = true;
@@ -10,10 +13,6 @@
     };
 
     taps = [
-    ];
-
-    brews = [
-      "openclaw-cli"
     ];
 
     casks = [
@@ -55,7 +54,6 @@
       "itermai"
       "utm"
       "ghostty"
-      "openclaw"
     ];
   };
 }
