@@ -19,7 +19,6 @@
     bat
 
     # Development
-    opencode
     gnumake
     gcc
     clang
