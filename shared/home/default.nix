@@ -7,6 +7,7 @@
     ./zsh.nix
     ./direnv.nix
     ./opencode.nix
+    ./claude-code.nix
   ];
 
   programs.neovim = {
