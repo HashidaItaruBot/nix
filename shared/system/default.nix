@@ -26,6 +26,7 @@
     cmake
     nodejs
     pnpm
+    claude-code
 
     qemu
     nh
