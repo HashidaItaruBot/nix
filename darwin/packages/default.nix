@@ -55,6 +55,7 @@
       "utm"
       "ghostty"
       "clash-verge-rev"
+      "zerotier-one"
     ];
   };
 }
