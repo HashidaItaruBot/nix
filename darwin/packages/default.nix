@@ -56,6 +56,7 @@
       "ghostty"
       "clash-verge-rev"
       "zerotier-one"
+      "moonlight"
     ];
   };
 }
