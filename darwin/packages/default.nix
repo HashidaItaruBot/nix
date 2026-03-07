@@ -57,6 +57,7 @@
       "clash-verge-rev"
       "zerotier-one"
       "moonlight"
+      "steam"
     ];
   };
 }
