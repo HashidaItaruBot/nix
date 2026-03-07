@@ -13,6 +13,8 @@
     ./home
     ./sops.nix
     ./podman.nix
+    ./zerotier.nix
+    ./sshd.nix
   ];
 
   networking.hostName = "nixos";
@@ -105,18 +107,8 @@
       "networkmanager"
       "video"
     ];
-    # 无根Docker需要subuid/subgid映射
-    subGidRanges = [
-      {
-        startGid = 100000;
-        count = 65536;
-      }
-    ];
-    subUidRanges = [
-      {
-        startUid = 100000;
-        count = 65536;
-      }
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP5M2RGhIG1CslAdzx+1xcOFiAgJhw0FKFqhe/Wkm1qZ"
     ];
   };
 
