@@ -10,13 +10,6 @@
     ./claude-code.nix
   ];
 
-  programs.neovim = {
-    enable = true;
-    viAlias = true;
-    vimAlias = true;
-    defaultEditor = true;
-  };
-
   home.packages = with pkgs; [
     jupyter-all
   ];

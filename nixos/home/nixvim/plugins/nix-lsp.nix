@@ -5,42 +5,7 @@
     plugins.lsp = {
       enable = true;
 
-      # 预定义的服务器配置
-      servers = {
-        # Nix语言服务器 - 使用nil (推荐)
-        nil = {
-          enable = true;
-          # nil配置
-          settings = {
-            formatting = {
-              command = [ "nixpkgs-fmt" ];
-            };
-            nix = {
-              # 启用flake支持
-              flake = {
-                autoEvalInputs = true;
-                autoArchive = true;
-              };
-              # 格式化器设置
-              formatter = {
-                command = "nixpkgs-fmt";
-              };
-            };
-          };
-        };
-
-        # 也可以使用nixd作为替代
-        # nixd = {
-        #   enable = true;
-        #   settings = {
-        #     formatting = {
-        #       command = [ "nixpkgs-fmt" ];
-        #     };
-        #   };
-        # };
-      };
-
-      # 启用LSP功能
+      # LSP Keymaps
       keymaps = {
         lspBuf = {
           # 跳转到定义
@@ -58,38 +23,180 @@
           # 代码操作
           "<leader>ca" = "code_action";
           # 格式化
-          "<leader>f" = "format";
+          "<leader>cf" = "format";
+        };
+        diagnostic = {
+          "<leader>d" = "open_float";
+          "[d" = "goto_prev";
+          "]d" = "goto_next";
+          "<leader>q" = "setloclist";
+        };
+      };
+
+      # 预定义的服务器配置
+      servers = {
+        # Nix语言服务器 - 使用nil (推荐)
+        nil = {
+          enable = true;
+          settings = {
+            formatting = {
+              command = [ "nixpkgs-fmt" ];
+            };
+            nix = {
+              flake = {
+                autoEvalInputs = true;
+                autoArchive = true;
+              };
+              formatter = {
+                command = "nixpkgs-fmt";
+              };
+            };
+          };
+        };
+
+        # Lua
+        lua_ls = {
+          enable = true;
+          settings = {
+            Lua = {
+              runtime.version = "LuaJIT";
+              diagnostics.globals = [ "vim" ];
+              workspace = {
+                checkThirdParty = false;
+                library = [
+                  "\${3rd}/luv/library"
+                  "\${3rd}/busted/library"
+                ];
+              };
+              telemetry.enabled = false;
+            };
+          };
+        };
+
+        # Python
+        pyright.enable = true;
+
+        # TypeScript/JavaScript
+        ts_ls.enable = true;
+
+        # JSON
+        jsonls.enable = true;
+
+        # YAML
+        yamlls.enable = true;
+
+        # HTML
+        html.enable = true;
+
+        # CSS
+        cssls.enable = true;
+
+        # Rust
+        rust_analyzer = {
+          enable = true;
+          installCargo = true;
+          installRustc = true;
+        };
+
+        # Go
+        gopls.enable = true;
+
+        # Bash
+        bash-ls.enable = true;
+
+        # Docker
+        dockerls.enable = true;
+
+        # Markdown
+        marksman.enable = true;
+      };
+    };
+
+    # LSP 格式化
+    plugins.lsp-format.enable = true;
+
+    # LSP Lines (显示诊断行)
+    plugins.lsp-lines.enable = true;
+
+    # nvim-navic (面包屑导航)
+    plugins.navic = {
+      enable = true;
+      settings = {
+        lsp = {
+          auto_attach = true;
         };
       };
     };
 
-    # 启用LSP相关的插件
-    plugins.lsp-format.enable = true;
-    plugins.lsp-lines.enable = true;
+    # SchemaStore (JSON Schema)
+    plugins.schemastore.enable = true;
 
-    # 启用none-ls用于格式化（备用）
+    # none-ls (格式化和诊断)
     plugins.none-ls = {
       enable = true;
-      sources.formatting.nixpkgs-fmt.enable = true;
+      sources = {
+        formatting = {
+          nixpkgs-fmt.enable = true;
+          stylua.enable = true;
+          prettier = {
+            enable = true;
+            disableTsServerFormatter = true;
+          };
+          shfmt.enable = true;
+        };
+        diagnostics = {
+          shellcheck.enable = true;
+        };
+      };
     };
 
-    # 启用cmp-nvim-lsp用于自动补全
+    # 补全
     plugins.cmp-nvim-lsp.enable = true;
 
-    # 启用自动补全
+    # 自动补全
     plugins.cmp = {
       enable = true;
-      settings.mapping = {
-        "<C-Space>" = "cmp.mapping.complete()";
-        "<CR>" = "cmp.mapping.confirm({ select = true })";
-        "<Tab>" = "cmp.mapping.select_next_item()";
-        "<S-Tab>" = "cmp.mapping.select_prev_item()";
+      settings = {
+        snippet.expand = ''
+          function(args)
+            require('luasnip').lsp_expand(args.body)
+          end
+        '';
+        mapping = {
+          "<C-Space>" = "cmp.mapping.complete()";
+          "<CR>" = "cmp.mapping.confirm({ select = true })";
+          "<Tab>" = "cmp.mapping.select_next_item()";
+          "<S-Tab>" = "cmp.mapping.select_prev_item()";
+          "<C-n>" = "cmp.mapping.select_next_item()";
+          "<C-p>" = "cmp.mapping.select_prev_item()";
+          "<C-d>" = "cmp.mapping.scroll_docs(-4)";
+          "<C-f>" = "cmp.mapping.scroll_docs(4)";
+          "<C-e>" = "cmp.mapping.abort()";
+        };
+        sources = [
+          { name = "nvim_lsp"; }
+          { name = "luasnip"; }
+          { name = "path"; }
+          { name = "buffer"; }
+        ];
       };
-      settings.sources = [
-        { name = "nvim_lsp"; }
-        { name = "path"; }
-        { name = "buffer"; }
-      ];
+    };
+
+    # LuaSnip
+    plugins.luasnip = {
+      enable = true;
+      settings = {
+        enable_autosnippets = true;
+      };
+    };
+
+    # Friendly snippets
+    plugins.friendly-snippets.enable = true;
+
+    # LSP Kind icons
+    plugins.lspkind = {
+      enable = true;
+      settings.mode = "symbol";
     };
   };
 }
