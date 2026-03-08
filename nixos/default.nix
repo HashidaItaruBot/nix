@@ -13,6 +13,7 @@
     ./home
     ./sops.nix
     ./podman.nix
+    ./openclaw.nix
     ./zerotier.nix
     ./sshd.nix
     ./microvm
