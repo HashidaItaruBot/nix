@@ -20,6 +20,12 @@
       owner = "root";
       mode = "0444";
     };
+
+    telegram_bot_token = {
+      sopsFile = "${self}/shared/secrets/telegram_bot_token.yaml";
+      owner = "root";
+      mode = "0444";
+    };
   };
 
   environment.extraInit = ''
@@ -28,5 +34,6 @@
     export ANTHROPIC_AUTH_TOKEN=$ALIBABA_API_KEY
     export ANTHROPIC_BASE_URL="https://coding.dashscope.aliyuncs.com/apps/anthropic"
     export ANTHROPIC_MODEL="glm-5"
+    export TELEGRAM_BOT_TOKEN=$(cat ${config.sops.secrets.telegram_bot_token.path})
   '';
 }
