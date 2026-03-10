@@ -1,9 +1,8 @@
-{
-  self,
-  config,
-  lib,
-  pkgs,
-  ...
+{ self
+, config
+, lib
+, pkgs
+, ...
 }:
 {
   imports = [
@@ -13,7 +12,6 @@
     ./home
     ./sops.nix
     ./podman.nix
-    ./openclaw.nix
     ./zerotier.nix
     ./sshd.nix
     ./microvm
