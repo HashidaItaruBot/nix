@@ -15,6 +15,7 @@
     ./podman.nix
     ./zerotier.nix
     ./sshd.nix
+    ./microvm
   ];
 
   networking.hostName = "nixos";
