@@ -1,8 +1,7 @@
-{
-  inputs,
-  pkgs,
-  lib,
-  ...
+{ inputs
+, pkgs
+, lib
+, ...
 }:
 
 {
@@ -10,8 +9,8 @@
   microvm = {
     hypervisor = "qemu";
 
-    # 启用图形支持 - 为Playwright等应用提供虚拟显示
-    graphics.enable = true;
+    # 禁用QEMU图形窗口 - VM内部使用Xvfb虚拟显示即可
+    # graphics.enable = true;
 
     # 可写Nix Store影子层 - 允许安装新nix程序
     # 主机/nix/store(只读) + 影子层(可写) → overlayfs合并
@@ -32,6 +31,15 @@
         type = "user";
         id = "openclaw-net";
         mac = "02:00:00:00:00:01";
+      }
+    ];
+
+    # 端口转发 - 让主机可以访问VM内的服务
+    forwardPorts = [
+      {
+        host.port = 18789;
+        guest.port = 18789;
+        proto = "tcp";
       }
     ];
   };
@@ -83,3 +91,4 @@
 
   system.stateVersion = "25.11";
 }
+
