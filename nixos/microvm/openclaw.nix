@@ -41,8 +41,29 @@
         guest.port = 18789;
         proto = "tcp";
       }
+      # SSH 端口转发 - 用于进入VM
+      {
+        host.port = 2222;
+        guest.port = 22;
+        proto = "tcp";
+      }
     ];
   };
+
+  # 启用 SSH 服务
+  services.openssh = {
+    enable = true;
+    settings = {
+      PermitRootLogin = "yes";
+      PasswordAuthentication = true;
+    };
+  };
+
+  # 开放 SSH 端口和openclaw的web管理界面
+  networking.firewall.allowedTCPPorts = [ 18789 22 ];
+
+  # 创建 root 用户密码（用于 SSH 登录）
+  users.users.root.password = "openclaw";
 
   # 启用Nix守护进程 - 允许在VM内安装软件
   nix = {
@@ -61,6 +82,9 @@
 
   # 安装虚拟显示和浏览器相关依赖
   environment.systemPackages = with pkgs; [
+    # OpenClaw CLI
+    openclaw
+    # 虚拟显示和浏览器
     xvfb
     chromium
     firefox
@@ -85,9 +109,6 @@
     enable = true;
     port = 18789;
   };
-
-  # 开放防火墙端口
-  networking.firewall.allowedTCPPorts = [ 18789 ];
 
   system.stateVersion = "25.11";
 }
