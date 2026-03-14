@@ -142,22 +142,22 @@ Which phases cover which requirements. Updated during roadmap creation.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | FOUND-01 - FOUND-05 | Phase 1 | Validated |
+| USER-01 - USER-06 | Phase 1 | Validated |
+| PKG-01 - PKG-04 | Phase 1 | Validated |
 | SECRE-01 - SECRE-04 | Phase 2 | Validated |
 | NIXOS-01 - NIXOS-06 | Phase 3 | Validated |
-| DARWN-01 - DARWN-03 | Phase 4 | Validated |
-| USER-01 - USER-06 | Phase 1 | Validated |
-| DEVEL-01 - DEVEL-07 | Phase 3 | Validated |
-| PKG-01 - PKG-04 | Phase 1 | Validated |
-| VAL-01 - VAL-04 | Phase 1 | Pending |
-| TOOL-01 - TOOL-04 | Phase 1 | Pending |
-| QUAL-01 - QUAL-03 | Phase 1 | Pending |
+| DARWN-01 - DARWN-03 | Phase 3 | Validated |
+| DEVEL-01 - DEVEL-07 | Phase 4 | Validated |
+| VAL-01 - VAL-04 | Phase 5 | Pending |
+| TOOL-01 - TOOL-04 | Phase 5 | Pending |
+| QUAL-01 - QUAL-03 | Phase 5 | Pending |
 
 **Coverage:**
-- Validated requirements: 32 total
-- Active requirements: 11 total
+- Validated requirements: 32 total (Phases 1-4)
+- Active requirements: 11 total (Phase 5)
 - Mapped to phases: 43
-- Unmapped: 0 ✓
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-14*
-*Last updated: 2026-03-14 after research synthesis*
+*Last updated: 2026-03-14 after roadmap creation*
