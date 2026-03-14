@@ -46,6 +46,10 @@
       specialArgs = { inherit inputs self; };
     in
     {
+      # Formatter outputs for `nix fmt`
+      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
+      formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.alejandra;
+
       darwinConfigurations."zhaochanglongdeMacBook-Air" = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         inherit specialArgs;
