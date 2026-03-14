@@ -11,5 +11,27 @@
     "nyquist_validation": true,
     "auto_advance": true,
     "_auto_chain_active": true
+  },
+  "verification": {
+    "commands": [
+      {
+        "name": "nix-format",
+        "command": "nix fmt -- --check .",
+        "description": "Check Nix formatting with nix fmt",
+        "on_failure": "warning"
+      },
+      {
+        "name": "statix-lint",
+        "command": "statix check .",
+        "description": "Run statix linter for Nix code",
+        "on_failure": "warning"
+      },
+      {
+        "name": "nix-build",
+        "command": "nix flake check --no-build",
+        "description": "Verify Nix flake checks",
+        "on_failure": "blocker"
+      }
+    ]
   }
 }

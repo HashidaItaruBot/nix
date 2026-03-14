@@ -179,6 +179,61 @@ Extract files modified in this phase from SUMMARY.md, scan each:
 Categorize: 🛑 Blocker (prevents goal) | ⚠️ Warning (incomplete) | ℹ️ Info (notable).
 </step>
 
+<step name="run_project_verification">
+Run project-specific verification commands defined in `.planning/config.json`.
+
+**Check for project verification config:**
+```bash
+cat .planning/config.json 2>/dev/null | grep -q '"verification"' && echo "has_verification" || echo "no_verification"
+```
+
+**If `has_verification`:** Parse the `verification.commands` array from config.json:
+
+```json
+{
+  "verification": {
+    "commands": [
+      {
+        "name": "command-name",
+        "command": "shell command to run",
+        "description": "What this checks",
+        "on_failure": "warning" | "blocker"
+      }
+    ]
+  }
+}
+```
+
+**For each command:**
+
+1. Execute the command and capture exit code
+2. Record result:
+   - Exit code 0 → ✓ PASSED
+   - Exit code non-zero → ✗ FAILED with output
+
+**Results table format:**
+
+| Command | Description | Status | Output |
+|---------|-------------|--------|--------|
+| nix-format | Check Nix formatting | ✓ PASSED | - |
+| statix-lint | Run statix linter | ✗ FAILED | W10: Empty pattern... |
+
+**Categorize failures:**
+- `on_failure: "blocker"` → 🛑 Blocker (must fix before phase complete)
+- `on_failure: "warning"` → ⚠️ Warning (notable but not blocking)
+
+**Add to VERIFICATION.md:**
+```markdown
+## Project Verification
+
+| Command | Description | Status |
+|---------|-------------|--------|
+| ... | ... | ... |
+```
+
+**If no project verification config:** Skip this step silently.
+</step>
+
 <step name="identify_human_verification">
 **Always needs human:** Visual appearance, user flow completion, real-time behavior (WebSocket/SSE), external service integration, performance feel, error message clarity.
 
@@ -188,9 +243,9 @@ Format each as: Test Name → What to do → Expected result → Why can't verif
 </step>
 
 <step name="determine_status">
-**passed:** All truths VERIFIED, all artifacts pass levels 1-3, all key links WIRED, no blocker anti-patterns.
+**passed:** All truths VERIFIED, all artifacts pass levels 1-3, all key links WIRED, no blocker anti-patterns, no project verification blockers.
 
-**gaps_found:** Any truth FAILED, artifact MISSING/STUB, key link NOT_WIRED, or blocker found.
+**gaps_found:** Any truth FAILED, artifact MISSING/STUB, key link NOT_WIRED, blocker anti-pattern found, or project verification blocker.
 
 **human_needed:** All automated checks pass but human verification items remain.
 
@@ -212,7 +267,7 @@ If gaps_found:
 REPORT_PATH="$PHASE_DIR/${PHASE_NUM}-VERIFICATION.md"
 ```
 
-Fill template sections: frontmatter (phase/timestamp/status/score), goal achievement, artifact table, wiring table, requirements coverage, anti-patterns, human verification, gaps summary, fix plans (if gaps_found), metadata.
+Fill template sections: frontmatter (phase/timestamp/status/score), goal achievement, artifact table, wiring table, requirements coverage, anti-patterns, project verification (if configured), human verification, gaps summary, fix plans (if gaps_found), metadata.
 
 See ./.claude/get-shit-done/templates/verification-report.md for complete template.
 </step>
@@ -235,6 +290,7 @@ Orchestrator routes: `passed` → update_roadmap | `gaps_found` → create/execu
 - [ ] All key links verified
 - [ ] Requirements coverage assessed (if applicable)
 - [ ] Anti-patterns scanned and categorized
+- [ ] Project verification commands executed (if configured)
 - [ ] Human verification items identified
 - [ ] Overall status determined
 - [ ] Fix plans generated (if gaps_found)
