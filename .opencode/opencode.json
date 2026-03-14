@@ -1,0 +1,10 @@
+{
+  "permission": {
+    "read": {
+      "/Users/zhaochanglong/Documents/nix/.opencode/get-shit-done/*": "allow"
+    },
+    "external_directory": {
+      "/Users/zhaochanglong/Documents/nix/.opencode/get-shit-done/*": "allow"
+    }
+  }
+}
