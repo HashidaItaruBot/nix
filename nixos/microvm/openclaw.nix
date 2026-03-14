@@ -1,10 +1,9 @@
-{ inputs
-, pkgs
-, lib
-, ...
-}:
-
 {
+  inputs,
+  pkgs,
+  lib,
+  ...
+}: {
   # MicroVM配置
   microvm = {
     hypervisor = "qemu";
@@ -60,7 +59,7 @@
   };
 
   # 开放 SSH 端口和openclaw的web管理界面
-  networking.firewall.allowedTCPPorts = [ 18789 22 ];
+  networking.firewall.allowedTCPPorts = [18789 22];
 
   # 创建 root 用户密码（用于 SSH 登录）
   users.users.root.password = "openclaw";
@@ -69,7 +68,7 @@
   nix = {
     enable = true;
     settings = {
-      trusted-users = [ "root" ];
+      trusted-users = ["root"];
       sandbox = false; # overlayfs环境下需要禁用sandbox
       # 启用实验性功能
       experimental-features = [
@@ -112,4 +111,3 @@
 
   system.stateVersion = "25.11";
 }
-

@@ -1,5 +1,4 @@
-{pkgs, ...}:
-{
+{pkgs, ...}: {
   programs.nixvim = {
     keymaps = [
       # 快捷跳转

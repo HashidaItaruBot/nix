@@ -1,8 +1,4 @@
-{
-  self,
-  ...
-}:
-{
+{self, ...}: {
   imports = [
     "${self}/shared/system"
     ./home

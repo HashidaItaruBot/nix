@@ -1,9 +1,4 @@
-{
-  pkgs,
-  ...
-}:
-
-{
+{pkgs, ...}: {
   # Enable Ollama service with ROCm support for AMD GPU acceleration
   services.ollama = {
     enable = true;

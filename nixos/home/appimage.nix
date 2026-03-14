@@ -3,8 +3,7 @@
   lib,
   pkgs,
   ...
-}:
-{
+}: {
   # Create desktop entry for appimage-run
   xdg.desktopEntries.appimage-run = {
     name = "AppImage Runner";
@@ -15,7 +14,7 @@
       "application/x-executable"
     ];
     terminal = false;
-    categories = [ "Utility" ];
+    categories = ["Utility"];
   };
 
   # Set default application for AppImage files

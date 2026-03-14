@@ -1,6 +1,4 @@
-{ ... }:
-
-{
+{...}: {
   programs.opencode = {
     enable = true;
     settings = {
@@ -16,8 +14,8 @@
             "qwen3.5-plus" = {
               name = "Qwen3.5 Plus";
               modalities = {
-                input = [ "text" "image" ];
-                output = [ "text" ];
+                input = ["text" "image"];
+                output = ["text"];
               };
               options = {
                 thinking = {
@@ -65,8 +63,8 @@
             "kimi-k2.5" = {
               name = "Kimi K2.5";
               modalities = {
-                input = [ "text" "image" ];
-                output = [ "text" ];
+                input = ["text" "image"];
+                output = ["text"];
               };
               options = {
                 thinking = {

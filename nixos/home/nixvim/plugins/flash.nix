@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   programs.nixvim = {
     plugins.flash = {
       enable = true;
@@ -16,13 +15,13 @@
     # Flash keymaps
     keymaps = [
       {
-        mode = [ "n" "x" "o" ];
+        mode = ["n" "x" "o"];
         key = "s";
         action.__raw = "function() require('flash').jump() end";
         options.desc = "Flash";
       }
       {
-        mode = [ "n" "x" "o" ];
+        mode = ["n" "x" "o"];
         key = "S";
         action.__raw = "function() require('flash').treesitter() end";
         options.desc = "Flash Treesitter";
@@ -34,7 +33,7 @@
         options.desc = "Remote Flash";
       }
       {
-        mode = [ "x" "o" ];
+        mode = ["x" "o"];
         key = "R";
         action.__raw = "function() require('flash').treesitter_search() end";
         options.desc = "Treesitter Search";

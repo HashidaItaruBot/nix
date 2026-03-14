@@ -1,5 +1,4 @@
-{pkgs, ...}:
-{
+{pkgs, ...}: {
   imports = [
     # UI
     ./lualine.nix

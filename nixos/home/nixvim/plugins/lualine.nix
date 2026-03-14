@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   programs.nixvim = {
     plugins.lualine = {
       enable = true;
@@ -18,8 +17,8 @@
           };
         };
         sections = {
-          lualine_a = [ "mode" ];
-          lualine_b = [ "branch" ];
+          lualine_a = ["mode"];
+          lualine_b = ["branch"];
           lualine_c = [
             {
               __unkeyed-1 = "filename";
@@ -30,8 +29,8 @@
             "diagnostics"
             "filetype"
           ];
-          lualine_y = [ "progress" ];
-          lualine_z = [ "location" ];
+          lualine_y = ["progress"];
+          lualine_z = ["location"];
         };
       };
     };

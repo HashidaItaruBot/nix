@@ -1,5 +1,8 @@
-{ self, config, ... }:
 {
+  self,
+  config,
+  ...
+}: {
   sops.secrets = {
     # mihomo 配置
     mihomo_config = {

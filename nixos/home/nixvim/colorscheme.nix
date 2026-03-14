@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   programs.nixvim = {
     colorschemes.catppuccin = {
       enable = true;
@@ -40,10 +39,10 @@
           native_lsp = {
             enabled = true;
             underlines = {
-              errors = [ "underline" ];
-              hints = [ "underline" ];
-              warnings = [ "underline" ];
-              information = [ "underline" ];
+              errors = ["underline"];
+              hints = ["underline"];
+              warnings = ["underline"];
+              information = ["underline"];
             };
           };
           navic = {

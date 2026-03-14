@@ -3,14 +3,13 @@
   self,
   config,
   ...
-}:
-{
+}: {
   imports = [
     inputs.sops-nix.nixosModules.sops
   ];
 
   # sops 配置
-  sops.age.sshKeyPaths = [ "/root/.ssh/id_ed25519" ];
+  sops.age.sshKeyPaths = ["/root/.ssh/id_ed25519"];
   sops.secrets = {
     # 解密 Secure Boot 密钥
     sb_pk_key = {

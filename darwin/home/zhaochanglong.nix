@@ -1,5 +1,4 @@
-{ self, ... }:
-{
+{self, ...}: {
   imports = [
     "${self}/shared/home"
     ./git.nix

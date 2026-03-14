@@ -34,36 +34,33 @@
     nix-openclaw.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs =
-    inputs@{
-      self,
-      nixpkgs,
-      nix-darwin,
-      home-manager,
-      ...
-    }:
-    let
-      specialArgs = { inherit inputs self; };
-    in
-    {
-      # Formatter outputs for `nix fmt`
-      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
-      formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.alejandra;
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    nix-darwin,
+    home-manager,
+    ...
+  }: let
+    specialArgs = {inherit inputs self;};
+  in {
+    # Formatter outputs for `nix fmt`
+    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
+    formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.alejandra;
 
-      darwinConfigurations."zhaochanglongdeMacBook-Air" = nix-darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        inherit specialArgs;
-        modules = [
-          ./darwin
-        ];
-      };
-
-      nixosConfigurations."nixos" = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        inherit specialArgs;
-        modules = [
-          ./nixos
-        ];
-      };
+    darwinConfigurations."zhaochanglongdeMacBook-Air" = nix-darwin.lib.darwinSystem {
+      system = "aarch64-darwin";
+      inherit specialArgs;
+      modules = [
+        ./darwin
+      ];
     };
+
+    nixosConfigurations."nixos" = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      inherit specialArgs;
+      modules = [
+        ./nixos
+      ];
+    };
+  };
 }

@@ -1,5 +1,4 @@
-{pkgs, ...}:
-{
+{pkgs, ...}: {
   programs.nixvim = {
     keymaps = [
       # NeoTree Root Dir

@@ -1,5 +1,4 @@
-{pkgs, ...}:
-{
+{pkgs, ...}: {
   programs.nixvim = {
     keymaps = [
       # LSP相关键盘映射

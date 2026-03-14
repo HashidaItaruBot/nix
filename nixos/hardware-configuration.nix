@@ -9,9 +9,7 @@
   modulesPath,
   inputs,
   ...
-}:
-
-{
+}: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     inputs.lanzaboote.nixosModules.lanzaboote
@@ -25,12 +23,12 @@
     "usb_storage"
     "sd_mod"
   ];
-  boot.initrd.kernelModules = [ "tpm_tis" ];
+  boot.initrd.kernelModules = ["tpm_tis"];
   boot.kernelModules = [
     "kvm-amd"
     "amdgpu"
   ];
-  boot.extraModulePackages = [ ];
+  boot.extraModulePackages = [];
   boot.loader.systemd-boot.enable = lib.mkForce false;
   boot.loader.efi.canTouchEfiVariables = true; # Use the systemd-boot EFI boot loader.
   boot.lanzaboote.enable = true;
@@ -49,12 +47,12 @@
   boot.initrd.luks.devices = {
     "crypt1" = {
       device = "/dev/disk/by-uuid/075c53b2-44d1-4fab-b6f2-f2af285e8111";
-      crypttabExtraOpts = [ "tpm2-device=auto" ];
+      crypttabExtraOpts = ["tpm2-device=auto"];
       preLVM = true;
     };
     "crypt2" = {
       device = "/dev/disk/by-uuid/36410584-09b5-444d-8731-e66a77b7a94a";
-      crypttabExtraOpts = [ "tpm2-device=auto" ];
+      crypttabExtraOpts = ["tpm2-device=auto"];
       preLVM = true;
     };
   };
@@ -95,7 +93,7 @@
     ];
   };
 
-  swapDevices = [ ];
+  swapDevices = [];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

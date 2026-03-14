@@ -1,5 +1,4 @@
-{pkgs, ...}:
-{
+{pkgs, ...}: {
   imports = [
     ./neo-tree.nix
     ./telescope.nix

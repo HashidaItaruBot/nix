@@ -1,10 +1,10 @@
-{ self
-, config
-, lib
-, pkgs
-, ...
-}:
 {
+  self,
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
     ./packages
@@ -65,7 +65,7 @@
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {
-      emoji = [ "Noto Color Emoji" ];
+      emoji = ["Noto Color Emoji"];
       monospace = [
         "Sarasa Mono SC"
         "Noto Sans Mono CJK SC"
@@ -74,7 +74,7 @@
         "Sarasa Term SC"
         "Noto Sans CJK SC"
       ];
-      serif = [ "Noto Serif CJK SC" ];
+      serif = ["Noto Serif CJK SC"];
     };
     antialias = true;
     hinting.enable = true;

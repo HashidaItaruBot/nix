@@ -1,5 +1,8 @@
-{ pkgs, inputs, ... }:
 {
+  pkgs,
+  inputs,
+  ...
+}: {
   imports = [
     ./flatpak.nix
   ];
@@ -30,7 +33,7 @@
 
   programs._1password-gui = {
     enable = true;
-    polkitPolicyOwners = [ "zhaochanglong" ];
+    polkitPolicyOwners = ["zhaochanglong"];
   };
 
   programs.steam = {

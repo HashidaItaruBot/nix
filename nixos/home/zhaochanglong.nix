@@ -3,8 +3,7 @@
   inputs,
   config,
   ...
-}:
-{
+}: {
   imports = [
     "${self}/shared/home"
     inputs.plasma-manager.homeModules.plasma-manager

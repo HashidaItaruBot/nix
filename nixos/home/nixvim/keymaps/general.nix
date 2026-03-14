@@ -1,5 +1,4 @@
-{pkgs, ...}:
-{
+{pkgs, ...}: {
   programs.nixvim = {
     keymaps = [
       # Better window navigation
@@ -98,7 +97,7 @@
 
       # Save file
       {
-        mode = [ "i" "n" "v" ];
+        mode = ["i" "n" "v"];
         key = "<C-s>";
         action = "<cmd>w<cr>";
         options.desc = "Save file";

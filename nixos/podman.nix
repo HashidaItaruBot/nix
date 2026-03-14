@@ -3,9 +3,7 @@
   lib,
   pkgs,
   ...
-}:
-
-{
+}: {
   security.unprivilegedUsernsClone = true;
 
   virtualisation.containers.enable = true;

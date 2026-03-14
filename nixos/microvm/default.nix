@@ -1,11 +1,10 @@
-{ inputs
-, config
-, lib
-, pkgs
-, ...
-}:
-
 {
+  inputs,
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   imports = [
     inputs.microvm.nixosModules.host
   ];
@@ -30,4 +29,3 @@
     };
   };
 }
-

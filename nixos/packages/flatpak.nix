@@ -1,5 +1,4 @@
-{ inputs, ... }:
-{
+{inputs, ...}: {
   imports = [
     inputs.nix-flatpak.nixosModules.nix-flatpak
   ];
@@ -12,7 +11,7 @@
     }
   ];
   services.flatpak.packages = [
-      "com.usebottles.bottles"
-      "com.tencent.WeChat"
+    "com.usebottles.bottles"
+    "com.tencent.WeChat"
   ];
 }
