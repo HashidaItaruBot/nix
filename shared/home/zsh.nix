@@ -7,6 +7,10 @@
     syntaxHighlighting.enable = true;
     shellAliases = {
       ll = "ls -l";
+      # nom aliases for better build output
+      nb = "nom build";
+      ns = "nom build . && sudo nixos-rebuild switch --flake .";
+      nd = "nom build . && darwin-rebuild switch --flake .";
     };
     oh-my-zsh = {
       enable = true;
