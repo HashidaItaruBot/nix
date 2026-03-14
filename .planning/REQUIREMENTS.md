@@ -76,10 +76,10 @@ Requirements for validation and enhancement.
 
 ### Tooling Enhancement
 
-- [ ] **TOOL-01**: Consider alejandra formatter (stricter than nixpkgs-fmt)
-- [ ] **TOOL-02**: Add statix linter for Nix code quality
-- [ ] **TOOL-03**: Add nom for build visualization
-- [ ] **TOOL-04**: Consider nixd LSP (better flake support than nil)
+- [x] **TOOL-01**: alejandra formatter configured in flake.nix
+- [x] **TOOL-02**: statix linter added to system packages
+- [x] **TOOL-03**: nom build visualizer with shell aliases
+- [x] **TOOL-04**: nixd LSP configured with alejandra formatting
 
 ### Quality Improvements
 
@@ -149,7 +149,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DARWN-01 - DARWN-03 | Phase 3 | Validated |
 | DEVEL-01 - DEVEL-07 | Phase 4 | Validated |
 | VAL-01 - VAL-04 | Phase 5 | Pending |
-| TOOL-01 - TOOL-04 | Phase 5 | Pending |
+| TOOL-01 - TOOL-04 | Phase 5 | Complete |
 | QUAL-01 - QUAL-03 | Phase 5 | Pending |
 
 **Coverage:**

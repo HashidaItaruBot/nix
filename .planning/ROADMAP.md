@@ -105,7 +105,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 Plans:
 - [ ] 05-01-PLAN.md - Validation infrastructure (scripts, README)
-- [ ] 05-02-PLAN.md - Tooling enhancement (alejandra, statix, nom, nixd)
+- [x] 05-02-PLAN.md - Tooling enhancement (alejandra, statix, nom, nixd)
 - [ ] 05-03-PLAN.md - CI/CD pipeline (GitHub Actions)
 - [ ] 05-04-PLAN.md - Quality improvements (update schedule, config consolidation)
 
@@ -120,7 +120,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 2. Secrets Management | 2/2 | Complete | Validated |
 | 3. Platform-Specific Configuration | 2/2 | Complete | Validated |
 | 4. Development Tools | 2/2 | Complete | Validated |
-| 5. Validation & Enhancement | 0/4 | Planned | - |
+| 5. Validation & Enhancement | 1/4 | In Progress | 2026-03-14 |
 
 ---
 *Roadmap created: 2026-03-14*
