@@ -5,7 +5,7 @@ milestone_name: MVP
 status: completed
 stopped_at: "Milestone v1.0 complete - archived"
 last_updated: "2026-03-14T14:32:00Z"
-last_activity: "2026-03-14 — Quick task: Fixed Nix formatting (71 files)"
+last_activity: "2026-03-14 — Completed quick task 1: 修复 Nix 格式化问题"
 progress:
   total_phases: 5
   completed_phases: 5
@@ -67,6 +67,12 @@ None — milestone complete.
 ### Blockers/Concerns
 
 None — milestone complete.
+
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 1 | 修复 Nix 格式化问题 (71 文件) | 2026-03-14 | 548a0d8 | [1-fix-nix-formatting](./quick/1-fix-nix-formatting/) |
 
 ## Session Continuity
 
