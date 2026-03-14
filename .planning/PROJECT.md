@@ -12,32 +12,41 @@ Single source of truth for all system configurations across platforms — reprod
 
 ### Validated
 
-(None yet — ship to validate)
+- ✓ Modular flake structure (darwin/nixos/shared) — v1.0
+- ✓ NixOS system configuration with secure boot (lanzaboote) — v1.0
+- ✓ Darwin/macOS system configuration — v1.0
+- ✓ User environment management via home-manager — v1.0
+- ✓ Secrets management via sops-nix — v1.0
+- ✓ Modular package organization per platform — v1.0
+- ✓ Development tooling (nixvim, editors, AI tools) — v1.0
+- ✓ Validation infrastructure (scripts, documentation) — v1.0
+- ✓ Nix tooling (alejandra, statix, nom, nixd) — v1.0
+- ✓ CI/CD pipeline (GitHub Actions) — v1.0
+- ✓ Quality processes (update schedule, consolidation) — v1.0
 
 ### Active
 
-- [ ] Cross-platform configuration sharing (shared/ directory)
-- [ ] NixOS system configuration with secure boot (lanzaboote)
-- [ ] Darwin/macOS system configuration
-- [ ] User environment management via home-manager
-- [ ] Secrets management via sops-nix
-- [ ] Modular package organization per platform
+(None — awaiting next milestone)
 
 ### Out of Scope
 
 - Non-Nix systems (Windows, traditional Linux distros) — project is Nix-focused
 - Real-time configuration sync — configurations are version-controlled and deployed manually
+- Imperative package installation — breaks reproducibility
+- Multiple Nix implementations — Lix is standardized
 
 ## Context
 
-This is a brownfield project with established structure:
-- **darwin/**: macOS-specific configurations (home, packages)
-- **nixos/**: NixOS-specific configurations (home, packages, secureboot, hardware)
-- **shared/**: Cross-platform configurations (home, secrets, system)
-- **flake.nix**: Main flake configuration with inputs/outputs
-- **.sops.yaml**: Sops encryption configuration for secrets
+**Shipped v1.0 MVP** with:
+- **3,166 LOC** Nix code
+- **Tech stack:** Nix Flakes, home-manager, sops-nix, lanzaboote, nix-darwin, nixvim
+- **Platforms:** NixOS (x86_64-linux) and Darwin (aarch64-darwin)
+- **CI:** Multi-platform GitHub Actions with alejandra and statix checks
 
-Key technologies: Nix Flakes, home-manager, sops-nix, lanzaboote (secure boot)
+Key decisions validated during development:
+- Modular structure enables clean platform-specific overrides
+- Git signing with 1Password SSH agent works well
+- MicroVM provides declarative VM management
 
 ## Constraints
 
@@ -53,7 +62,11 @@ Key technologies: Nix Flakes, home-manager, sops-nix, lanzaboote (secure boot)
 | Modular structure (darwin/nixos/shared) | Enables code reuse across platforms | ✓ Good |
 | home-manager for user environments | Declarative user-space configuration | ✓ Good |
 | sops-nix for secrets | Secure, encrypted secrets in git | ✓ Good |
-| lanzaboote for secure boot | Modern UEFI secure boot on NixOS | — Pending |
+| lanzaboote for secure boot | Modern UEFI secure boot on NixOS | ✓ Good |
+| alejandra over nixpkgs-fmt | More opinionated, faster formatting | ✓ Good |
+| nixd over nil | Better flake support, actively maintained | ✓ Good |
+| install-nix-action@master | Fixes macOS CI runner issues | ✓ Good |
+| Shared config pattern | Common settings in shared/, platform overrides separate | ✓ Good |
 
 ---
-*Last updated: 2026-03-14 after initialization*
+*Last updated: 2026-03-14 after v1.0 milestone*
