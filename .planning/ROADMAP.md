@@ -92,7 +92,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Goal**: Verify the implementation is correct, improve tooling, and establish quality processes
 **Depends on**: Phase 4
 **Requirements**: VAL-01, VAL-02, VAL-03, VAL-04, TOOL-01, TOOL-02, TOOL-03, TOOL-04, QUAL-01, QUAL-02, QUAL-03
-**Status**: Ready to execute
+**Status**: Gaps found - gap closure plan created
 
 **Success Criteria** (what must be TRUE):
   1. All secrets verified as properly encrypted (no secrets in nix store)
@@ -101,13 +101,14 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. CI/CD pipeline runs flake checks automatically
   5. Regular input update schedule is established
 
-**Plans**: 4 plans in 2 waves
+**Plans**: 5 plans (4 original + 1 gap closure)
 
 Plans:
 - [x] 05-01-PLAN.md - Validation infrastructure (scripts, README)
 - [x] 05-02-PLAN.md - Tooling enhancement (alejandra, statix, nom, nixd)
 - [x] 05-03-PLAN.md - CI/CD pipeline (GitHub Actions)
-- [ ] 05-04-PLAN.md - Quality improvements (update schedule, config consolidation)
+- [x] 05-04-PLAN.md - Quality improvements (update schedule, config consolidation)
+- [ ] 05-05-PLAN.md - Gap closure: fix git config consolidation and CI macOS runner failure
 
 ## Progress
 
@@ -120,7 +121,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 2. Secrets Management | 2/2 | Complete | Validated |
 | 3. Platform-Specific Configuration | 2/2 | Complete | Validated |
 | 4. Development Tools | 2/2 | Complete | Validated |
-| 5. Validation & Enhancement | 3/4 | In Progress | 2026-03-14 |
+| 5. Validation & Enhancement | 4/5 | Gap Closure | 2026-03-14 |
 
 ---
 *Roadmap created: 2026-03-14*
