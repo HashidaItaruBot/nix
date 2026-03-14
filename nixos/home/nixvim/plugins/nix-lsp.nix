@@ -35,20 +35,21 @@
 
       # 预定义的服务器配置
       servers = {
-        # Nix语言服务器 - 使用nil (推荐)
-        nil = {
+        # Nix语言服务器 - 使用nixd (better flake support)
+        nixd = {
           enable = true;
           settings = {
             formatting = {
-              command = [ "nixpkgs-fmt" ];
+              command = [ "alejandra" ];
             };
-            nix = {
-              flake = {
-                autoEvalInputs = true;
-                autoArchive = true;
-              };
-              formatter = {
-                command = "nixpkgs-fmt";
+            nixd = {
+              options = {
+                nixos = {
+                  expr = "(builtins.getFlake \"/path/to/flake\").nixosConfigurations.nixos.options";
+                };
+                home_manager = {
+                  expr = "(builtins.getFlake \"/path/to/flake\").homeConfigurations.zhaochanglong.options";
+                };
               };
             };
           };
@@ -136,7 +137,7 @@
       enable = true;
       sources = {
         formatting = {
-          nixpkgs-fmt.enable = true;
+          alejandra.enable = true;
           stylua.enable = true;
           prettier = {
             enable = true;
