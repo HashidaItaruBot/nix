@@ -144,6 +144,40 @@ nix flake update nixpkgs
     └── system.nix      # Shared system config
 ```
 
+## Updating Inputs
+
+Run `nix flake update` periodically to update all flake inputs to their latest versions.
+
+For individual input updates:
+
+```bash
+nix flake lock --update-input nixpkgs
+```
+
+Recommended: Update inputs weekly or before major changes.
+
+## Validation
+
+### Secrets Verification
+
+Run `./scripts/verify-secrets.sh` after rebuild to verify no secrets leaked to nix store.
+
+### Cross-Platform Secret Sharing
+
+After rebuilding on both platforms, verify secrets are accessible:
+
+- **NixOS**: Check `ls /run/secrets/` contains expected secrets
+- **Darwin**: Check `ls /run/user/$(id -u)/secrets/` contains expected secrets
+
+### MicroVM Networking (NixOS only)
+
+Test MicroVM networking:
+
+```bash
+sudo microvm -m openclaw run
+curl http://localhost:18789  # Should return OpenClaw UI
+```
+
 ## Inputs
 
 Key flake inputs:
