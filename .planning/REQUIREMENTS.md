@@ -71,8 +71,8 @@ Requirements for validation and enhancement.
 
 - [ ] **VAL-01**: Verify all secrets are properly encrypted (no secrets in nix store)
 - [ ] **VAL-02**: Document rebuild procedures for both platforms
-- [ ] **VAL-03**: Verify cross-platform secret sharing works correctly
-- [ ] **VAL-04**: Validate MicroVM networking configuration
+- [x] **VAL-03**: Verify cross-platform secret sharing works correctly
+- [x] **VAL-04**: Validate MicroVM networking configuration
 
 ### Tooling Enhancement
 
@@ -84,8 +84,8 @@ Requirements for validation and enhancement.
 ### Quality Improvements
 
 - [x] **QUAL-01**: Add CI/CD for flake checks
-- [ ] **QUAL-02**: Regular input update schedule
-- [ ] **QUAL-03**: Consolidate duplicate git/ssh configs across platforms
+- [x] **QUAL-02**: Regular input update schedule
+- [x] **QUAL-03**: Consolidate duplicate git/ssh configs across platforms
 
 ## v2 Requirements
 
