@@ -21,9 +21,13 @@
 
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
-    plasma-manager.url = "github:nix-community/plasma-manager";
-    plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
-    plasma-manager.inputs.home-manager.follows = "home-manager";
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+      };
+    };
 
     # MicroVM for virtualization
     microvm.url = "github:microvm-nix/microvm.nix";

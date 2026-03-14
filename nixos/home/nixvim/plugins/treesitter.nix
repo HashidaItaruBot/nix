@@ -1,6 +1,6 @@
 {pkgs, ...}: {
-  programs.nixvim = {
-    plugins.treesitter = {
+  programs.nixvim.plugins = {
+    treesitter = {
       enable = true;
       highlight.enable = true;
       indent.enable = true;
@@ -63,7 +63,7 @@
     };
 
     # Treesitter context (sticky header)
-    plugins.treesitter-context = {
+    treesitter-context = {
       enable = true;
       settings = {
         enable = true;
@@ -73,7 +73,7 @@
     };
 
     # Treesitter textobjects
-    plugins.nvim-treesitter-textobjects = {
+    nvim-treesitter-textobjects = {
       enable = true;
       select = {
         enable = true;

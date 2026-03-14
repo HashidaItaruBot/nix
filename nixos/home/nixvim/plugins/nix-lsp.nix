@@ -1,7 +1,7 @@
 {pkgs, ...}: {
-  programs.nixvim = {
+  programs.nixvim.plugins = {
     # 启用LSP支持
-    plugins.lsp = {
+    lsp = {
       enable = true;
 
       # LSP Keymaps
@@ -113,13 +113,13 @@
     };
 
     # LSP 格式化
-    plugins.lsp-format.enable = true;
+    lsp-format.enable = true;
 
     # LSP Lines (显示诊断行)
-    plugins.lsp-lines.enable = true;
+    lsp-lines.enable = true;
 
     # nvim-navic (面包屑导航)
-    plugins.navic = {
+    navic = {
       enable = true;
       settings = {
         lsp = {
@@ -129,10 +129,10 @@
     };
 
     # SchemaStore (JSON Schema)
-    plugins.schemastore.enable = true;
+    schemastore.enable = true;
 
     # none-ls (格式化和诊断)
-    plugins.none-ls = {
+    none-ls = {
       enable = true;
       sources = {
         formatting = {
@@ -151,10 +151,10 @@
     };
 
     # 补全
-    plugins.cmp-nvim-lsp.enable = true;
+    cmp-nvim-lsp.enable = true;
 
     # 自动补全
-    plugins.cmp = {
+    cmp = {
       enable = true;
       settings = {
         snippet.expand = ''
@@ -183,7 +183,7 @@
     };
 
     # LuaSnip
-    plugins.luasnip = {
+    luasnip = {
       enable = true;
       settings = {
         enable_autosnippets = true;
@@ -191,10 +191,10 @@
     };
 
     # Friendly snippets
-    plugins.friendly-snippets.enable = true;
+    friendly-snippets.enable = true;
 
     # LSP Kind icons
-    plugins.lspkind = {
+    lspkind = {
       enable = true;
       settings.mode = "symbol";
     };

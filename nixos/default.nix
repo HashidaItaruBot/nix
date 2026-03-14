@@ -17,47 +17,48 @@
     ./microvm
   ];
 
-  networking.hostName = "nixos";
-  networking.networkmanager.enable = true;
+  networking = {
+    hostName = "nixos";
+    networkmanager.enable = true;
+    timeServers = [
+      "ntp.aliyun.com"
+      "ntp.tuna.tsinghua.edu.cn"
+      "0.nixos.pool.ntp.org"
+    ];
+  };
 
   time.timeZone = "Asia/Shanghai";
-  networking.timeServers = [
-    "ntp.aliyun.com"
-    "ntp.tuna.tsinghua.edu.cn"
-    "0.nixos.pool.ntp.org"
-  ];
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
-  services.thermald.enable = true; # 启用温度管理
-  services.power-profiles-daemon.enable = true; # 启用电源模式切换
-  services.logind.settings.Login = {
-    IdleAction = "ignore"; # 禁用空闲时的操作（不关机、不休眠、不挂起）
-    HandlePowerKey = "suspend"; # 按下电源按钮后挂起
+  services = {
+    xserver.enable = true;
+    displayManager.sddm.enable = true;
+    desktopManager.plasma6.enable = true;
+    thermald.enable = true; # 启用温度管理
+    power-profiles-daemon.enable = true; # 启用电源模式切换
+    logind.settings.Login = {
+      IdleAction = "ignore"; # 禁用空闲时的操作（不关机、不休眠、不挂起）
+      HandlePowerKey = "suspend"; # 按下电源按钮后挂起
+    };
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+    };
+    mihomo = {
+      enable = false;
+      configFile = config.sops.secrets.mihomo_config.path;
+      tunMode = true;
+      webui = pkgs.metacubexd;
+    };
+    blueman.enable = true;
   };
 
   # Enable PipeWire
   security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
-
-  # mihomo configuration
-  services.mihomo = {
-    enable = false;
-    configFile = config.sops.secrets.mihomo_config.path;
-    tunMode = true;
-    webui = pkgs.metacubexd;
-  };
 
   virtualisation.waydroid.enable = true;
-
-  services.blueman.enable = true;
 
   powerManagement.cpuFreqGovernor = "performance"; # 强制 CPU 模式为高性能
 

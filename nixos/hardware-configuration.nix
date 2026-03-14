@@ -15,99 +15,107 @@
     inputs.lanzaboote.nixosModules.lanzaboote
   ];
 
-  boot.initrd.systemd.enable = true;
-  boot.initrd.availableKernelModules = [
-    "nvme"
-    "xhci_pci"
-    "usbhid"
-    "usb_storage"
-    "sd_mod"
-  ];
-  boot.initrd.kernelModules = ["tpm_tis"];
-  boot.kernelModules = [
-    "kvm-amd"
-    "amdgpu"
-  ];
-  boot.extraModulePackages = [];
-  boot.loader.systemd-boot.enable = lib.mkForce false;
-  boot.loader.efi.canTouchEfiVariables = true; # Use the systemd-boot EFI boot loader.
-  boot.lanzaboote.enable = true;
-  boot.lanzaboote.pkiBundle = "/etc/secureboot";
-  boot.kernelPackages = pkgs.linuxPackages_xanmod_latest; # 使用 xanmod 内核
-
-  fileSystems."/" = {
-    device = "/dev/disk/by-label/NIXOS";
-    fsType = "btrfs";
-    options = [
-      "subvol=@"
-      "compress=zstd"
-    ];
-  };
-
-  boot.initrd.luks.devices = {
-    "crypt1" = {
-      device = "/dev/disk/by-uuid/075c53b2-44d1-4fab-b6f2-f2af285e8111";
-      crypttabExtraOpts = ["tpm2-device=auto"];
-      preLVM = true;
+  boot = {
+    initrd = {
+      systemd.enable = true;
+      availableKernelModules = [
+        "nvme"
+        "xhci_pci"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
+      ];
+      kernelModules = ["tpm_tis"];
+      luks.devices = {
+        "crypt1" = {
+          device = "/dev/disk/by-uuid/075c53b2-44d1-4fab-b6f2-f2af285e8111";
+          crypttabExtraOpts = ["tpm2-device=auto"];
+          preLVM = true;
+        };
+        "crypt2" = {
+          device = "/dev/disk/by-uuid/36410584-09b5-444d-8731-e66a77b7a94a";
+          crypttabExtraOpts = ["tpm2-device=auto"];
+          preLVM = true;
+        };
+      };
     };
-    "crypt2" = {
-      device = "/dev/disk/by-uuid/36410584-09b5-444d-8731-e66a77b7a94a";
-      crypttabExtraOpts = ["tpm2-device=auto"];
-      preLVM = true;
+    kernelModules = [
+      "kvm-amd"
+      "amdgpu"
+    ];
+    extraModulePackages = [];
+    loader = {
+      systemd-boot.enable = lib.mkForce false;
+      efi.canTouchEfiVariables = true; # Use the systemd-boot EFI boot loader.
     };
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/etc/secureboot";
+    };
+    kernelPackages = pkgs.linuxPackages_xanmod_latest; # 使用 xanmod 内核
   };
 
-  fileSystems."/home" = {
-    device = "/dev/disk/by-label/NIXOS";
-    fsType = "btrfs";
-    options = [
-      "subvol=@home"
-      "compress=zstd"
-    ];
-  };
-
-  fileSystems."/nix" = {
-    device = "/dev/disk/by-label/NIXOS";
-    fsType = "btrfs";
-    options = [
-      "subvol=@nix"
-      "compress=zstd"
-    ];
-  };
-
-  fileSystems."/var/log" = {
-    device = "/dev/disk/by-label/NIXOS";
-    fsType = "btrfs";
-    options = [
-      "subvol=@log"
-      "compress=zstd"
-    ];
-  };
-
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/E9CD-7770";
-    fsType = "vfat";
-    options = [
-      "fmask=0022"
-      "dmask=0022"
-    ];
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-label/NIXOS";
+      fsType = "btrfs";
+      options = [
+        "subvol=@"
+        "compress=zstd"
+      ];
+    };
+    "/home" = {
+      device = "/dev/disk/by-label/NIXOS";
+      fsType = "btrfs";
+      options = [
+        "subvol=@home"
+        "compress=zstd"
+      ];
+    };
+    "/nix" = {
+      device = "/dev/disk/by-label/NIXOS";
+      fsType = "btrfs";
+      options = [
+        "subvol=@nix"
+        "compress=zstd"
+      ];
+    };
+    "/var/log" = {
+      device = "/dev/disk/by-label/NIXOS";
+      fsType = "btrfs";
+      options = [
+        "subvol=@log"
+        "compress=zstd"
+      ];
+    };
+    "/boot" = {
+      device = "/dev/disk/by-uuid/E9CD-7770";
+      fsType = "vfat";
+      options = [
+        "fmask=0022"
+        "dmask=0022"
+      ];
+    };
   };
 
   swapDevices = [];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = true;
 
-  # Enable ROCm for AMD GPU acceleration (required for ollama-rocm)
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-    extraPackages = with pkgs; [
-      rocmPackages.clr.icd
-      rocmPackages.rocm-runtime
-    ];
+  hardware = {
+    cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+    };
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+      extraPackages = with pkgs; [
+        rocmPackages.clr.icd
+        rocmPackages.rocm-runtime
+      ];
+    };
   };
 
   # Set environment variables for ROCm

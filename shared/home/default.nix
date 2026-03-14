@@ -9,11 +9,11 @@
     ./claude-code.nix
   ];
 
-  home.packages = with pkgs; [
-    jupyter-all
-  ];
-
-  home.username = "zhaochanglong";
-
-  home.stateVersion = "24.05";
+  home = {
+    packages = with pkgs; [
+      jupyter-all
+    ];
+    username = "zhaochanglong";
+    stateVersion = "24.05";
+  };
 }
