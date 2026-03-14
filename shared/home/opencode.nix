@@ -10,7 +10,7 @@
           name = "Model Studio Coding Plan";
           options = {
             baseURL = "https://coding.dashscope.aliyuncs.com/apps/anthropic/v1";
-            apiKey = "\${ALIBABA_API_KEY}";
+            apiKey = "$ALIBABA_API_KEY";
           };
           models = {
             "qwen3.5-plus" = {
