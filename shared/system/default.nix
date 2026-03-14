@@ -34,8 +34,10 @@
 
     # Nix开发工具
     nixd
-    nixpkgs-fmt
     nil
+    alejandra
+    statix
+    nom
   ];
 
   fonts.packages = with pkgs; [
