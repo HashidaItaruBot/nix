@@ -83,7 +83,7 @@ Requirements for validation and enhancement.
 
 ### Quality Improvements
 
-- [ ] **QUAL-01**: Add CI/CD for flake checks
+- [x] **QUAL-01**: Add CI/CD for flake checks
 - [ ] **QUAL-02**: Regular input update schedule
 - [ ] **QUAL-03**: Consolidate duplicate git/ssh configs across platforms
 
@@ -150,7 +150,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DEVEL-01 - DEVEL-07 | Phase 4 | Validated |
 | VAL-01 - VAL-04 | Phase 5 | Pending |
 | TOOL-01 - TOOL-04 | Phase 5 | Complete |
-| QUAL-01 - QUAL-03 | Phase 5 | Pending |
+| QUAL-01 | Phase 5 | Complete |
+| QUAL-02 - QUAL-03 | Phase 5 | Pending |
 
 **Coverage:**
 - Validated requirements: 32 total (Phases 1-4)
