@@ -6,6 +6,7 @@
     # Core tools
     vim
     git
+    gh # GitHub CLI
     tree
     wget
     htop

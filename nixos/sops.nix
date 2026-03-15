@@ -4,13 +4,14 @@
   config,
   lib,
   ...
-}: {
+}:
+{
   imports = [
     inputs.sops-nix.nixosModules.sops
   ];
 
   # Only configure SSH key paths if the key exists (not in CI)
-  sops.age.sshKeyPaths = lib.mkIf (lib.pathExists "/root/.ssh/id_ed25519") ["/root/.ssh/id_ed25519"];
+  sops.age.sshKeyPaths = [ "/root/.ssh/id_ed25519" ];
   sops.secrets = {
     # 解密 Secure Boot 密钥
     sb_pk_key = {
