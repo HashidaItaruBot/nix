@@ -507,8 +507,28 @@ async function main() {
         branch.cmdEnsureFeatureBranch(cwd, branchName, strategyIdx !== -1 ? args[strategyIdx + 1] : 'phase', raw);
       } else if (subcommand === 'status') {
         branch.cmdBranchStatus(cwd, raw);
+      } else if (subcommand === 'create-pr') {
+        const phaseNumberIdx = args.indexOf('--phase-number');
+        const phaseNameIdx = args.indexOf('--phase-name');
+        const branchNameIdx = args.indexOf('--branch-name');
+        const summaryPathIdx = args.indexOf('--summary-path');
+        const baseBranchIdx = args.indexOf('--base-branch');
+        branch.cmdCreatePR(cwd, {
+          phase_number: phaseNumberIdx !== -1 ? args[phaseNumberIdx + 1] : null,
+          phase_name: phaseNameIdx !== -1 ? args[phaseNameIdx + 1] : null,
+          branch_name: branchNameIdx !== -1 ? args[branchNameIdx + 1] : null,
+          summary_path: summaryPathIdx !== -1 ? args[summaryPathIdx + 1] : null,
+          base_branch: baseBranchIdx !== -1 ? args[baseBranchIdx + 1] : 'main',
+        }, raw);
+      } else if (subcommand === 'cleanup-merged') {
+        const prefixIdx = args.indexOf('--prefix');
+        const dryRunIdx = args.indexOf('--dry-run');
+        branch.cmdCleanupMergedBranches(cwd, {
+          prefix: prefixIdx !== -1 ? args[prefixIdx + 1] : 'gsd/phase-',
+          dry_run: dryRunIdx !== -1,
+        }, raw);
       } else {
-        error('Unknown branch subcommand. Available: ensure, status');
+        error('Unknown branch subcommand. Available: ensure, status, create-pr, cleanup-merged');
       }
       break;
     }
