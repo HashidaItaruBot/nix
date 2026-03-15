@@ -93,6 +93,16 @@ Requirements for validation and enhancement.
 - [x] **BUILD-02**: Darwin configuration builds successfully in CI
 - [x] **BUILD-03**: GitHub Actions caching works (magic-nix-cache)
 
+### Workflow Enhancement (Phase 7)
+
+- [x] **BRANCH-01**: pr strategy option accepted in config
+- [x] **BRANCH-02**: Branch created at discuss-phase start
+- [x] **BRANCH-03**: Branch naming format gsd/phase-{phase}-{slug}
+- [x] **BRANCH-04**: PR created after phase completion
+- [x] **BRANCH-05**: Main branch protection enforced
+- [x] **BRANCH-06**: Auto-create branch when on main
+- [x] **BRANCH-07**: Merged branch cleanup at next phase start
+
 ## v2 Requirements
 
 Deferred to future release. Tracked but not in current roadmap.
@@ -159,13 +169,14 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TOOL-01 - TOOL-04 | Phase 5 | Complete |
 | QUAL-01 - QUAL-03 | Phase 5 | Complete |
 | BUILD-01 - BUILD-03 | Phase 6 | Complete |
+| BRANCH-01 - BRANCH-07 | Phase 7 | Complete |
 
 **Coverage:**
 - Validated requirements: 32 total (Phases 1-4)
-- Active requirements: 14 total (Phases 5-6)
-- Mapped to phases: 46
+- Active requirements: 21 total (Phases 5-7)
+- Mapped to phases: 53
 - Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-14*
-*Last updated: 2026-03-15 after Phase 6 completion*
+*Last updated: 2026-03-15 after Phase 7 completion*
