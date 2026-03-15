@@ -52,7 +52,7 @@ function cmdInitExecutePhase(cwd, phase, raw) {
     incomplete_count: phaseInfo?.incomplete_plans?.length || 0,
 
     // Branch name (pre-computed)
-    branch_name: config.branching_strategy === 'phase' && phaseInfo
+    branch_name: (config.branching_strategy === 'phase' || config.branching_strategy === 'pr') && phaseInfo
       ? config.phase_branch_template
           .replace('{phase}', phaseInfo.phase_number)
           .replace('{slug}', phaseInfo.phase_slug || 'phase')
@@ -61,6 +61,9 @@ function cmdInitExecutePhase(cwd, phase, raw) {
             .replace('{milestone}', milestone.version)
             .replace('{slug}', generateSlugInternal(milestone.name) || 'milestone')
         : null,
+
+    // PR workflow flag
+    requires_pr: config.branching_strategy === 'pr',
 
     // Milestone info
     milestone_version: milestone.version,
@@ -390,6 +393,8 @@ function cmdInitPhaseOp(cwd, phase, raw) {
     // Config
     commit_docs: config.commit_docs,
     brave_search: config.brave_search,
+    branching_strategy: config.branching_strategy,
+    requires_pr: config.branching_strategy === 'pr',
 
     // Phase info
     phase_found: !!phaseInfo,
