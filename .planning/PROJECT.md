@@ -23,6 +23,10 @@ Single source of truth for all system configurations across platforms — reprod
 - ✓ Nix tooling (alejandra, statix, nom, nixd) — v1.0
 - ✓ CI/CD pipeline (GitHub Actions) — v1.0
 - ✓ Quality processes (update schedule, consolidation) — v1.0
+- ✓ Conditional sops configuration for CI — v1.1
+- ✓ Fast CI verification with nix eval — v1.1
+- ✓ GSD 'pr' branching strategy — v1.2
+- ✓ Automatic branch creation and PR workflow — v1.2
 
 ### Active
 
@@ -37,16 +41,19 @@ Single source of truth for all system configurations across platforms — reprod
 
 ## Context
 
-**Shipped v1.0 MVP** with:
+**Shipped v1.0-v1.2** with:
 - **3,166 LOC** Nix code
 - **Tech stack:** Nix Flakes, home-manager, sops-nix, lanzaboote, nix-darwin, nixvim
 - **Platforms:** NixOS (x86_64-linux) and Darwin (aarch64-darwin)
-- **CI:** Multi-platform GitHub Actions with alejandra and statix checks
+- **CI:** Multi-platform GitHub Actions with nix eval verification (minutes vs 60+ min)
+- **Workflow:** GSD 'pr' branching strategy with automatic PR creation
 
 Key decisions validated during development:
 - Modular structure enables clean platform-specific overrides
 - Git signing with 1Password SSH agent works well
 - MicroVM provides declarative VM management
+- nix eval catches most config errors without full builds
+- Branch protection via auto-creation improves workflow discipline
 
 ## Constraints
 
@@ -68,6 +75,9 @@ Key decisions validated during development:
 | nixd over nil | Better flake support, actively maintained | ✓ Good |
 | install-nix-action@master | Fixes macOS CI runner issues | ✓ Good |
 | Shared config pattern | Common settings in shared/, platform overrides separate | ✓ Good |
+| nix eval over nix build for CI | Faster verification (minutes vs 60+ min) | ✓ Good |
+| Conditional sops with lib.mkIf | CI builds without SSH keys | ✓ Good |
+| GSD 'pr' branching strategy | Enforces feature branches, auto PR creation | ✓ Good |
 
 ---
-*Last updated: 2026-03-14 after v1.0 milestone*
+*Last updated: 2026-03-15 after v1.2 milestone*
