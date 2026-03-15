@@ -4,7 +4,7 @@
 
 - **v1.0 MVP** - Phases 1-5 (shipped 2026-03-14)
 - **v1.1 CI Enhancements** - Phase 6 (shipped 2026-03-15)
-- **v1.2 Workflow Enhancement** - Phase 7 (planned)
+- **v1.2 Workflow Enhancement** - Phase 7 (shipped 2026-03-15)
 
 ## Phases
 
@@ -40,24 +40,18 @@
 
 </details>
 
-### v1.2 Workflow Enhancement — READY TO EXECUTE
+<details>
+<summary>v1.2 Workflow Enhancement (Phase 7) - SHIPPED 2026-03-15</summary>
 
-| Phase | Name | Goal | Status |
-|-------|------|------|--------|
-| 7 | GSD Workflow Branch Mode | Enforce branch-based development: create dev branch from main, implement, create PR, user reviews, manual merge | Ready to Execute |
+- [x] Phase 7: GSD Workflow Branch Mode (3 plans) - verified
 
-**Phase 7: GSD Workflow Branch Mode**
+**Key accomplishments:**
+- Added 'pr' branching strategy option to GSD config
+- Branch protection enforces feature branches for 'pr' and 'phase' strategies
+- PR creation after phase completion with SUMMARY.md content
+- Branch cleanup before new phase start
 
-**Goal:** 修改 GSD 工作流，强制实现分支开发模式：基于 main 创建开发分支、在开发分支实现需求、创建 PR、用户在 GitHub 审查、手动合并到 main，禁止直接在 main 分支修改
-
-**Requirements:** BRANCH-01, BRANCH-02, BRANCH-03, BRANCH-04, BRANCH-05, BRANCH-06, BRANCH-07
-
-**Plans:** 3 plans
-
-Plans:
-- [ ] 07-01-PLAN.md — Config Extension: Add `pr` branching strategy support
-- [ ] 07-02-PLAN.md — Branch Protection & Creation: Implement branch protection utilities
-- [ ] 07-03-PLAN.md — PR Creation & Cleanup: Complete the PR-based workflow
+</details>
 
 ## Progress
 
@@ -69,8 +63,8 @@ Plans:
 | 4. Development Tools | v1.0 | 2/2 | Complete | Validated |
 | 5. Validation & Enhancement | v1.0 | 5/5 | Complete | 2026-03-14 |
 | 6. GitHub PR Build Pipeline | v1.1 | 2/2 | Complete | 2026-03-15 |
-| 7. GSD Workflow Branch Mode | v1.2 | 0/3 | Ready to Execute | - |
+| 7. GSD Workflow Branch Mode | v1.2 | 3/3 | Complete | 2026-03-15 |
 
 ---
 *Roadmap created: 2026-03-14*
-*Last updated: 2026-03-15 - Phase 7 planning complete*
+*Last updated: 2026-03-15 - Phase 7 complete*
