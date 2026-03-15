@@ -117,7 +117,28 @@ INIT=$(node "./.claude/get-shit-done/bin/gsd-tools.cjs" init phase-op "${PHASE}"
 if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
 ```
 
-Parse JSON for: `commit_docs`, `phase_found`, `phase_dir`, `phase_number`, `phase_name`, `phase_slug`, `padded_phase`, `has_research`, `has_context`, `has_plans`, `has_verification`, `plan_count`, `roadmap_exists`, `planning_exists`.
+Parse JSON for: `commit_docs`, `phase_found`, `phase_dir`, `phase_number`, `phase_name`, `phase_slug`, `padded_phase`, `has_research`, `has_context`, `has_plans`, `has_verification`, `plan_count`, `roadmap_exists`, `planning_exists`, `branching_strategy`, `branch_name`.
+
+**Branch protection check (for 'pr' strategy):**
+
+If `branching_strategy` from config is 'pr':
+```bash
+# Get branch info from init
+BRANCH_NAME=$(printf '%s\n' "$INIT" | jq -r '.branch_name // empty')
+BRANCHING_STRATEGY=$(printf '%s\n' "$INIT" | jq -r '.branching_strategy // "none"')
+
+if [[ -n "$BRANCH_NAME" && "$BRANCHING_STRATEGY" == "pr" ]]; then
+  # Ensure we're on a feature branch
+  BRANCH_RESULT=$(node "./.claude/get-shit-done/bin/gsd-tools.cjs" branch ensure "$BRANCH_NAME" --strategy pr 2>/dev/null)
+  if [[ "$BRANCH_RESULT" == @file:* ]]; then BRANCH_RESULT=$(cat "${BRANCH_RESULT#@file:}"); fi
+
+  # Log the branch switch
+  SWITCHED=$(printf '%s\n' "$BRANCH_RESULT" | jq -r '.switched // false')
+  if [[ "$SWITCHED" == "true" ]]; then
+    echo "Branch created: $BRANCH_NAME"
+  fi
+fi
+```
 
 **If `phase_found` is false:**
 ```
