@@ -54,6 +54,7 @@ Key decisions validated during development:
 - **Security**: All secrets must use sops-nix encryption
 - **Declarative**: All configuration must be declarative, no imperative state
 - **Git-tracked**: Nix only sees git-tracked files; all changes must be staged
+- **No imperative installation**: 禁止使用 `nix profile`、`nix-env` 等命令直接安装软件。所有软件和系统配置必须通过修改 Nix 配置文件完成。
 
 ## Key Decisions
 
