@@ -50,12 +50,14 @@
 
 **Goal:** 修改 GSD 工作流，强制实现分支开发模式：基于 main 创建开发分支、在开发分支实现需求、创建 PR、用户在 GitHub 审查、手动合并到 main，禁止直接在 main 分支修改
 
-**Requirements:** TBD
+**Requirements:** BRANCH-01, BRANCH-02, BRANCH-03, BRANCH-04, BRANCH-05, BRANCH-06, BRANCH-07
 
-**Plans:** 0 plans
+**Plans:** 3 plans
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 7 to break down)
+- [ ] 07-01-PLAN.md — Config Extension: Add `pr` branching strategy support
+- [ ] 07-02-PLAN.md — Branch Protection & Creation: Implement branch protection utilities
+- [ ] 07-03-PLAN.md — PR Creation & Cleanup: Complete the PR-based workflow
 
 ## Progress
 
@@ -67,8 +69,8 @@ Plans:
 | 4. Development Tools | v1.0 | 2/2 | Complete | Validated |
 | 5. Validation & Enhancement | v1.0 | 5/5 | Complete | 2026-03-14 |
 | 6. GitHub PR Build Pipeline | v1.1 | 2/2 | Complete | 2026-03-15 |
-| 7. GSD Workflow Branch Mode | v1.2 | 0/0 | Planning | - |
+| 7. GSD Workflow Branch Mode | v1.2 | 0/3 | Planning | - |
 
 ---
 *Roadmap created: 2026-03-14*
-*Last updated: 2026-03-15 - Added Phase 7 for workflow enhancement*
+*Last updated: 2026-03-15 - Phase 7 planning complete*
