@@ -384,6 +384,51 @@ node "./.claude/get-shit-done/bin/gsd-tools.cjs" commit "docs(phase-{X}): comple
 ```
 </step>
 
+<step name="create_pr">
+**For 'pr' branching strategy only:** Create a pull request after phase completion.
+
+Check if `requires_pr` is true from init context:
+
+```bash
+REQUIRES_PR=$(printf '%s\n' "$INIT" | jq -r '.requires_pr // false')
+BRANCH_NAME=$(printf '%s\n' "$INIT" | jq -r '.branch_name // empty')
+```
+
+**If `REQUIRES_PR` is true and `BRANCH_NAME` exists:**
+
+1. Find the SUMMARY.md file:
+```bash
+SUMMARY_FILE=$(ls "${PHASE_DIR}"/*-SUMMARY.md 2>/dev/null | head -1)
+```
+
+2. Create the PR:
+```bash
+if [[ -n "$SUMMARY_FILE" && -n "$BRANCH_NAME" ]]; then
+  echo "Creating PR for ${BRANCH_NAME}..."
+
+  PR_RESULT=$(node "./.claude/get-shit-done/bin/gsd-tools.cjs" branch create-pr \
+    --phase-number "${PHASE_NUMBER}" \
+    --phase-name "${PHASE_NAME}" \
+    --branch-name "${BRANCH_NAME}" \
+    --summary-path "${SUMMARY_FILE}" \
+    2>/dev/null)
+
+  if [[ "$PR_RESULT" == @file:* ]]; then PR_RESULT=$(cat "${PR_RESULT#@file:}"); fi
+
+  PR_CREATED=$(printf '%s\n' "$PR_RESULT" | jq -r '.created // false')
+  if [[ "$PR_CREATED" == "true" ]]; then
+    PR_URL=$(printf '%s\n' "$PR_RESULT" | jq -r '.url // ""')
+    echo "PR created: ${PR_URL}"
+  else
+    echo "Note: PR creation skipped or failed. Create manually on GitHub."
+  fi
+fi
+```
+
+**If `REQUIRES_PR` is false:** Skip this step.
+
+</step>
+
 <step name="offer_next">
 
 **Exception:** If `gaps_found`, the `verify_phase_goal` step already presents the gap-closure path (`/gsd:plan-phase {X} --gaps`). No additional routing needed — skip auto-advance.
