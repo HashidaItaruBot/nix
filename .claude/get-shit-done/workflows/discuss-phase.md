@@ -119,6 +119,21 @@ if [[ "$INIT" == @file:* ]]; then INIT=$(cat "${INIT#@file:}"); fi
 
 Parse JSON for: `commit_docs`, `phase_found`, `phase_dir`, `phase_number`, `phase_name`, `phase_slug`, `padded_phase`, `has_research`, `has_context`, `has_plans`, `has_verification`, `plan_count`, `roadmap_exists`, `planning_exists`, `branching_strategy`, `branch_name`.
 
+**Branch cleanup (before starting new phase):**
+
+For 'pr' strategy, clean up any previously merged branches:
+
+```bash
+BRANCHING_STRATEGY=$(printf '%s\n' "$INIT" | jq -r '.branching_strategy // "none"')
+
+if [[ "$BRANCHING_STRATEGY" == "pr" ]]; then
+  echo "Checking for merged branches to clean up..."
+  node "./.claude/get-shit-done/bin/gsd-tools.cjs" branch cleanup-merged --prefix "gsd/phase-" 2>/dev/null || true
+fi
+```
+
+This ensures that before starting a new phase, any branches from completed phases that have been merged are cleaned up from the local repository.
+
 **Branch protection check (for 'pr' strategy):**
 
 If `branching_strategy` from config is 'pr':
