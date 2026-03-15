@@ -3,7 +3,8 @@
 ## Milestones
 
 - **v1.0 MVP** - Phases 1-5 (shipped 2026-03-14)
-- **v1.1 CI Enhancements** - Phase 6 (in progress)
+- **v1.1 CI Enhancements** - Phase 6 (shipped 2026-03-15)
+- **v1.2 Workflow Enhancement** - Phase 7 (planned)
 
 ## Phases
 
@@ -19,7 +20,7 @@
 **Key accomplishments:**
 - Modular Nix Flake structure for NixOS + Darwin
 - sops-nix with age encryption for secrets
-- NixOS secure boot, MicroVM, platform features
+- lanzaboote for secure boot, microvm for virtualization
 - Development tools: nixvim, editors, AI tooling
 - Validation: scripts, alejandra, statix, nom, nixd
 - Multi-platform GitHub Actions CI
@@ -27,23 +28,34 @@
 
 </details>
 
-### v1.1 CI Enhancements — IN PROGRESS
+<details>
+<summary>v1.1 CI Enhancements (Phase 6) - SHIPPED 2026-03-15</summary>
+
+- [x] Phase 6: GitHub PR Build Pipeline (2 plans) - verified
+
+**Key accomplishments:**
+- Replaced nix build with nix eval for faster CI verification
+- CI time reduced from 60+ minutes to minutes
+- Eval verifies config correctness without building
+
+</details>
+
+### v1.2 Workflow Enhancement — PLANNING
 
 | Phase | Name | Goal | Status |
 |-------|------|------|--------|
-| 6 | GitHub PR Build Pipeline | Replace `nix build` with `nix eval` for faster CI verification | In Progress |
+| 7 | GSD Workflow Branch Mode | Enforce branch-based development: create dev branch from main, implement, create PR, user reviews, manual merge | Planning |
 
-**Phase 6: GitHub PR Build Pipeline**
+**Phase 7: GSD Workflow Branch Mode**
 
-**Goal:** Replace `nix build` with `nix eval` for faster CI verification. Use `nix eval` to verify all configuration derivations evaluate correctly without the time-consuming actual build.
+**Goal:** 修改 GSD 工作流，强制实现分支开发模式：基于 main 创建开发分支、在开发分支实现需求、创建 PR、用户在 GitHub 审查、手动合并到 main，禁止直接在 main 分支修改
 
-**Requirements:** BUILD-01 (NixOS verification), BUILD-02 (Darwin verification), BUILD-03 (Fast CI)
+**Requirements:** TBD
 
-**Plans:** 2 plans
+**Plans:** 0 plans
 
 Plans:
-- [x] 06-01-PLAN.md - Add build job to CI with conditional sops and caching (reference - used nix build)
-- [x] 06-02-PLAN.md - Replace nix build with nix eval, remove build job
+- [ ] TBD (run /gsd:plan-phase 7 to break down)
 
 ## Progress
 
@@ -55,7 +67,8 @@ Plans:
 | 4. Development Tools | v1.0 | 2/2 | Complete | Validated |
 | 5. Validation & Enhancement | v1.0 | 5/5 | Complete | 2026-03-14 |
 | 6. GitHub PR Build Pipeline | v1.1 | 2/2 | Complete | 2026-03-15 |
+| 7. GSD Workflow Branch Mode | v1.2 | 0/0 | Planning | - |
 
 ---
 *Roadmap created: 2026-03-14*
-*Last updated: 2026-03-15 - v1.1 CI Enhancements COMPLETE*
+*Last updated: 2026-03-15 - Added Phase 7 for workflow enhancement*

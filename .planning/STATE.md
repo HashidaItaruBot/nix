@@ -1,17 +1,17 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.1
-milestone_name: CI Enhancements
-status: complete
-stopped_at: "Completed 06-02-SUMMARY.md"
-last_updated: "2026-03-15T04:30:00Z"
-last_activity: "2026-03-15 — Plan 06-02: Replaced nix build with nix eval for CI verification"
+milestone: v1.2
+milestone_name: Workflow Enhancement
+status: planning
+stopped_at: "Phase 7 added"
+last_updated: "2026-03-15T05:35:00Z"
+last_activity: "2026-03-15 — Added Phase 7: GSD Workflow Branch Mode"
 progress:
-  total_phases: 6
+  total_phases: 7
   completed_phases: 6
   total_plans: 17
   completed_plans: 17
-  percent: 100
+  percent: 86
 ---
 
 # Project State
@@ -21,21 +21,21 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-14 after v1.0)
 
 **Core value:** Single source of truth for all system configurations across platforms — reproducible, version-controlled, and secure.
-**Current focus:** Milestone v1.1 Complete — Ready for next milestone planning
+**Current focus:** Milestone v1.2 — Workflow Enhancement
 
 ## Current Position
 
-Phase: 6 - GitHub PR Build Pipeline
-Milestone: v1.1 CI Enhancements — COMPLETE ✅
-Status: Complete
-Last activity: 2026-03-15 — Verified Phase 6 GitHub PR Build Pipeline
+Phase: 7 - GSD Workflow Branch Mode
+Milestone: v1.2 Workflow Enhancement — PLANNING
+Status: Planning
+Last activity: 2026-03-15 — Added Phase 7 for branch-based development workflow
 
-Progress: [██████████] 100%
+Progress: [████████░░] 86%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 16 (Phases 1-6)
+- Total plans completed: 17 (Phases 1-6)
 - Phase 6 execution time: ~10 min
 
 **By Phase:**
@@ -48,6 +48,7 @@ Progress: [██████████] 100%
 | 4. Development Tools | 2 | Validated |
 | 5. Validation & Enhancement | 5 | Complete |
 | 6. GitHub PR Build Pipeline | 2 | Verified ✅ 2026-03-15 |
+| 7. GSD Workflow Branch Mode | 0 | Planning |
 
 ## Accumulated Context
 
@@ -68,9 +69,13 @@ Key decisions from milestone:
 - CI time reduced from 60+ minutes to minutes
 - Accept tradeoff: eval verifies config correctness, not build success
 
+### Roadmap Evolution
+
+- Phase 7 added: GSD Workflow Branch Mode - 强制分支开发模式
+
 ### Pending Todos
 
-None — milestone complete.
+None.
 
 ### Blockers/Concerns
 
@@ -86,6 +91,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-15T03:47:11Z
-Stopped at: Completed quick task 3 - Nix formatting fix
-Resume file: .planning/phases/06-github-pr-build-pipeline/06-VERIFICATION.md
+Last session: 2026-03-15T05:35:00Z
+Stopped at: Phase 7 added - ready for discussion
+Resume file: .planning/phases/07-gsd-workflow-branch-mode/
