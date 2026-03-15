@@ -139,6 +139,7 @@ const milestone = require('./lib/milestone.cjs');
 const commands = require('./lib/commands.cjs');
 const init = require('./lib/init.cjs');
 const frontmatter = require('./lib/frontmatter.cjs');
+const branch = require('./lib/branch.cjs');
 
 // ─── CLI Router ───────────────────────────────────────────────────────────────
 
@@ -172,7 +173,7 @@ async function main() {
   const command = args[0];
 
   if (!command) {
-    error('Usage: gsd-tools <command> [args] [--raw] [--cwd <path>]\nCommands: state, resolve-model, find-phase, commit, verify-summary, verify, frontmatter, template, generate-slug, current-timestamp, list-todos, verify-path-exists, config-ensure-section, init');
+    error('Usage: gsd-tools <command> [args] [--raw] [--cwd <path>]\nCommands: state, resolve-model, find-phase, commit, verify-summary, verify, frontmatter, template, generate-slug, current-timestamp, list-todos, verify-path-exists, config-ensure-section, init, branch');
   }
 
   switch (command) {
@@ -494,6 +495,20 @@ async function main() {
         commands.cmdTodoComplete(cwd, args[2], raw);
       } else {
         error('Unknown todo subcommand. Available: complete');
+      }
+      break;
+    }
+
+    case 'branch': {
+      const subcommand = args[1];
+      if (subcommand === 'ensure') {
+        const branchName = args[2];
+        const strategyIdx = args.indexOf('--strategy');
+        branch.cmdEnsureFeatureBranch(cwd, branchName, strategyIdx !== -1 ? args[strategyIdx + 1] : 'phase', raw);
+      } else if (subcommand === 'status') {
+        branch.cmdBranchStatus(cwd, raw);
+      } else {
+        error('Unknown branch subcommand. Available: ensure, status');
       }
       break;
     }
