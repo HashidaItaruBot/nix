@@ -366,6 +366,7 @@ function cmdInitVerifyWork(cwd, phase, raw) {
 
 function cmdInitPhaseOp(cwd, phase, raw) {
   const config = loadConfig(cwd);
+  const milestone = getMilestoneInfo(cwd);
   let phaseInfo = findPhaseInternal(cwd, phase);
 
   // Fallback to ROADMAP.md if no directory exists (e.g., Plans: TBD)
@@ -395,6 +396,19 @@ function cmdInitPhaseOp(cwd, phase, raw) {
     brave_search: config.brave_search,
     branching_strategy: config.branching_strategy,
     requires_pr: config.branching_strategy === 'pr',
+    phase_branch_template: config.phase_branch_template,
+    milestone_branch_template: config.milestone_branch_template,
+
+    // Branch name (pre-computed) - same logic as cmdInitExecutePhase
+    branch_name: (config.branching_strategy === 'phase' || config.branching_strategy === 'pr') && phaseInfo
+      ? config.phase_branch_template
+          .replace('{phase}', phaseInfo.phase_number)
+          .replace('{slug}', phaseInfo.phase_slug || 'phase')
+      : config.branching_strategy === 'milestone'
+        ? config.milestone_branch_template
+            .replace('{milestone}', milestone.version)
+            .replace('{slug}', generateSlugInternal(milestone.name) || 'milestone')
+        : null,
 
     // Phase info
     phase_found: !!phaseInfo,
