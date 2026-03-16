@@ -139,7 +139,6 @@ const milestone = require('./lib/milestone.cjs');
 const commands = require('./lib/commands.cjs');
 const init = require('./lib/init.cjs');
 const frontmatter = require('./lib/frontmatter.cjs');
-const branch = require('./lib/branch.cjs');
 
 // ─── CLI Router ───────────────────────────────────────────────────────────────
 
@@ -173,7 +172,7 @@ async function main() {
   const command = args[0];
 
   if (!command) {
-    error('Usage: gsd-tools <command> [args] [--raw] [--cwd <path>]\nCommands: state, resolve-model, find-phase, commit, verify-summary, verify, frontmatter, template, generate-slug, current-timestamp, list-todos, verify-path-exists, config-ensure-section, init, branch');
+    error('Usage: gsd-tools <command> [args] [--raw] [--cwd <path>]\nCommands: state, resolve-model, find-phase, commit, verify-summary, verify, frontmatter, template, generate-slug, current-timestamp, list-todos, verify-path-exists, config-ensure-section, init');
   }
 
   switch (command) {
@@ -378,6 +377,11 @@ async function main() {
       break;
     }
 
+    case "config-set-model-profile": {
+      config.cmdConfigSetModelProfile(cwd, args[1], raw);
+      break;
+    }
+
     case 'config-get': {
       config.cmdConfigGet(cwd, args[1], raw);
       break;
@@ -489,46 +493,18 @@ async function main() {
       break;
     }
 
+    case 'stats': {
+      const subcommand = args[1] || 'json';
+      commands.cmdStats(cwd, subcommand, raw);
+      break;
+    }
+
     case 'todo': {
       const subcommand = args[1];
       if (subcommand === 'complete') {
         commands.cmdTodoComplete(cwd, args[2], raw);
       } else {
         error('Unknown todo subcommand. Available: complete');
-      }
-      break;
-    }
-
-    case 'branch': {
-      const subcommand = args[1];
-      if (subcommand === 'ensure') {
-        const branchName = args[2];
-        const strategyIdx = args.indexOf('--strategy');
-        branch.cmdEnsureFeatureBranch(cwd, branchName, strategyIdx !== -1 ? args[strategyIdx + 1] : 'phase', raw);
-      } else if (subcommand === 'status') {
-        branch.cmdBranchStatus(cwd, raw);
-      } else if (subcommand === 'create-pr') {
-        const phaseNumberIdx = args.indexOf('--phase-number');
-        const phaseNameIdx = args.indexOf('--phase-name');
-        const branchNameIdx = args.indexOf('--branch-name');
-        const summaryPathIdx = args.indexOf('--summary-path');
-        const baseBranchIdx = args.indexOf('--base-branch');
-        branch.cmdCreatePR(cwd, {
-          phase_number: phaseNumberIdx !== -1 ? args[phaseNumberIdx + 1] : null,
-          phase_name: phaseNameIdx !== -1 ? args[phaseNameIdx + 1] : null,
-          branch_name: branchNameIdx !== -1 ? args[branchNameIdx + 1] : null,
-          summary_path: summaryPathIdx !== -1 ? args[summaryPathIdx + 1] : null,
-          base_branch: baseBranchIdx !== -1 ? args[baseBranchIdx + 1] : 'main',
-        }, raw);
-      } else if (subcommand === 'cleanup-merged') {
-        const prefixIdx = args.indexOf('--prefix');
-        const dryRunIdx = args.indexOf('--dry-run');
-        branch.cmdCleanupMergedBranches(cwd, {
-          prefix: prefixIdx !== -1 ? args[prefixIdx + 1] : 'gsd/phase-',
-          dry_run: dryRunIdx !== -1,
-        }, raw);
-      } else {
-        error('Unknown branch subcommand. Available: ensure, status, create-pr, cleanup-merged');
       }
       break;
     }
