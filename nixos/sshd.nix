@@ -8,8 +8,10 @@ _: {
       PermitRootLogin = "no";
       PubkeyAuthentication = true;
       AuthorizedKeysFile = "%h/.ssh/authorized_keys";
+      AllowAgentForwarding = true;
     };
   };
 
-  networking.firewall.allowedTCPPorts = [22];
+  networking.firewall.allowedTCPPorts = [ 22 ];
 }
+
