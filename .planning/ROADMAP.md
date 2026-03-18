@@ -35,7 +35,10 @@ Plans:
 1. `git commit` 成功创建带签名的提交
 2. 签名验证通过 `git verify-commit`
 
-**Plans:** 2 plans
+**Plans:** 1 plan
+
+Plans:
+- [ ] 02-01-PLAN.md — 配置 git signer 使用 ssh-keygen
 
 ---
 
@@ -70,7 +73,7 @@ Phase 3 验证整个流程。
 | Phase | Status | Plans | Progress |
 |-------|--------|-------|----------|
 | 1 | ● | 2/2 | 100% |
-| 2 | ○ | 0/2 | 0% |
+| 2 | ○ | 0/1 | 0% |
 | 3 | ○ | 0/3 | 0% |
 
 **Overall:** 4/8 requirements complete
