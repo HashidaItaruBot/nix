@@ -38,7 +38,7 @@ Plans:
 **Plans:** 1 plan
 
 Plans:
-- [ ] 02-01-PLAN.md — 配置 git signer 使用 ssh-keygen
+- [x] 02-01-PLAN.md — 配置 git signer 使用 ssh-keygen (736c979)
 
 ---
 
@@ -73,13 +73,14 @@ Phase 3 验证整个流程。
 | Phase | Status | Plans | Progress |
 |-------|--------|-------|----------|
 | 1 | ● | 2/2 | 100% |
-| 2 | ○ | 0/1 | 0% |
+| 2 | ◐ | 1/1 | 100% |
 | 3 | ○ | 0/3 | 0% |
 
-**Overall:** 4/8 requirements complete
+**Overall:** 6/8 requirements complete
 
 ---
 *Roadmap created: 2026-03-18*
 *Plans created: 2026-03-18*
 *Plan 01-01 completed: 2026-03-18*
 *Plan 01-02 completed: 2026-03-18*
+*Plan 02-01 completed: 2026-03-18*
