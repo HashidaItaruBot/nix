@@ -8,6 +8,7 @@ _: {
       PermitRootLogin = "no";
       PubkeyAuthentication = true;
       AuthorizedKeysFile = "%h/.ssh/authorized_keys";
+      AllowAgentForwarding = true;
     };
   };
 
