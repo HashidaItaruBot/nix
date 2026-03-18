@@ -26,6 +26,7 @@ key-files:
 key-decisions:
   - "Use ssh-keygen instead of op-ssh-sign for NixOS git signing (ssh-keygen works with SSH agent forwarding)"
   - "Override signer in nixos/home/git.nix to use openssh package"
+  - "Configure gpg.ssh.allowedSignersFile via git.settings for signature verification"
 
 patterns-established:
   - "Platform-specific git signer configuration in nixos/home/git.nix"
@@ -59,6 +60,7 @@ completed: "2026-03-18"
 Each task was committed atomically:
 
 1. **Task 1: Add ssh-keygen signer to NixOS git configuration** - `736c979` (feat)
+2. **Gap fix: Add gpg.ssh.allowedSignersFile** - `fefb905` (fix) - Required for `git verify-commit` to work
 
 **Plan metadata:** `4c5e94e` (docs: create phase plan)
 
@@ -89,6 +91,8 @@ Each task was committed atomically:
 ## Issues Encountered
 
 **Plan context mismatch:** The plan's context section showed an outdated file structure for nixos/home/git.nix. The actual file only contained the signer override, not the full git configuration. This was a documentation issue in the plan, not a code issue. Proceeded with the correct minimal change.
+
+**Missing allowedSignersFile:** During human verification, `git verify-commit HEAD` failed with "gpg.ssh.allowedSignersFile needs to be configured". Fixed by adding the signing key to an allowed_signers file and configuring `git.settings.gpg.ssh.allowedSignersFile` (commit `fefb905`).
 
 ## User Setup Required
 
