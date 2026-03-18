@@ -20,8 +20,8 @@
 **Plans:** 2 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — NixOS sshd 启用 AllowAgentForwarding
-- [ ] 01-02-PLAN.md — macOS SSH 配置 ForwardAgent for nixos
+- [x] 01-01-PLAN.md — NixOS sshd 启用 AllowAgentForwarding (b70f8e5)
+- [x] 01-02-PLAN.md — macOS SSH 配置 ForwardAgent for nixos (dfa77df)
 
 ---
 
@@ -69,12 +69,14 @@ Phase 3 验证整个流程。
 
 | Phase | Status | Plans | Progress |
 |-------|--------|-------|----------|
-| 1 | ● | 2/2 | 0% |
+| 1 | ● | 2/2 | 100% |
 | 2 | ○ | 0/2 | 0% |
 | 3 | ○ | 0/3 | 0% |
 
-**Overall:** 0/8 requirements complete
+**Overall:** 4/8 requirements complete
 
 ---
 *Roadmap created: 2026-03-18*
 *Plans created: 2026-03-18*
+*Plan 01-01 completed: 2026-03-18*
+*Plan 01-02 completed: 2026-03-18*
