@@ -1,3 +1,16 @@
+---
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+status: planning
+last_updated: "2026-03-18T15:33:54.695Z"
+progress:
+  total_phases: 3
+  completed_phases: 1
+  total_plans: 2
+  completed_plans: 2
+---
+
 # STATE.md
 
 **Project:** SSH Agent Forwarding 配置
@@ -16,7 +29,7 @@ See: .planning/PROJECT.md (updated 2026-03-18)
 
 ## Milestone: v1.0
 
-**Status:** In Progress
+**Status:** Ready to plan
 **Started:** 2026-03-18
 
 ### Phase Progress
