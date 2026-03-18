@@ -17,8 +17,8 @@
 
 ### Git 签名
 
-- [ ] **GIT-01**: NixOS git signer 改用 ssh-keygen -Y sign
-- [ ] **GIT-02**: 创建签名脚本，使用 SSH agent 中的密钥
+- [x] **GIT-01**: NixOS git signer 改用 ssh-keygen -Y sign
+- [x] **GIT-02**: 创建签名脚本，使用 SSH agent 中的密钥
 
 ### 验证
 
@@ -47,8 +47,8 @@
 | SSHD-02 | Phase 1 | Complete |
 | MAC-01 | Phase 1 | Complete |
 | MAC-02 | Phase 1 | Complete |
-| GIT-01 | Phase 2 | Pending |
-| GIT-02 | Phase 2 | Pending |
+| GIT-01 | Phase 2 | Complete |
+| GIT-02 | Phase 2 | Complete |
 | VER-01 | Phase 3 | Pending |
 | VER-02 | Phase 3 | Pending |
 | VER-03 | Phase 3 | Pending |
@@ -57,7 +57,7 @@
 - v1 requirements: 8 total
 - Mapped to phases: 8
 - Unmapped: 0 ✓
-- Complete: 4/8
+- Complete: 6/8
 
 ---
 *Requirements defined: 2026-03-18*
