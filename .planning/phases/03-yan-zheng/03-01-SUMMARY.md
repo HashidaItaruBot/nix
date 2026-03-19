@@ -42,38 +42,49 @@ completed: "2026-03-19"
 
 # Phase 03 Plan 01: SSH Agent Forwarding Verification Summary
 
-**VER-01 passed; VER-02/VER-03 blocked by NixOS SSH config pointing to non-existent 1Password agent socket - fixed in commit 0c96c31, requires user to run nixos-rebuild**
+**All 3 verifications passed - SSH Agent Forwarding and Git signing fully operational**
 
 ## Performance
 
-- **Duration:** 5 min
+- **Duration:** 20 min (includes user action for config apply)
 - **Started:** 2026-03-19T14:06:16Z
-- **Completed:** 2026-03-19T14:15:00Z
+- **Completed:** 2026-03-19T14:25:00Z
 - **Tasks:** 3 (all checkpoint:human-verify)
-- **Files modified:** 1
+- **Files modified:** 2
 
 ## Accomplishments
 
 - VER-01: SSH agent forwarding verified - SSH_AUTH_SOCK set and ssh-add -L shows key
-- Discovered and fixed blocking SSH config issue on NixOS
-- Fix committed, awaiting user to apply via nixos-rebuild
+- VER-02: Git fetch/push successful via forwarded agent
+- VER-03: Git commit signed and verified with "Good signature"
+- Discovered and fixed SSH config issue on NixOS (user ~/.ssh/config had wrong IdentityAgent)
 
 ## Verification Results
 
 | Requirement | Status | Details |
 |-------------|--------|---------|
-| VER-01 | **PASSED** | SSH_AUTH_SOCK=/home/zhaochanglong/.ssh/agent/s.Pv4fiUmGtK.sshd.K3e8tnecKk, ssh-add -L outputs key |
-| VER-02 | **BLOCKED** | Git SSH fails: "communication with agent failed" - NixOS SSH config had wrong IdentityAgent |
-| VER-03 | **BLOCKED** | Cannot test git commit signing until VER-02 is resolved |
+| VER-01 | **PASSED** | SSH_AUTH_SOCK=/home/zhaochanglong/.ssh/agent/s.Pv4fiUmGtK.sshd.kehRsDwdtr, ssh-add -L outputs ED25519 key |
+| VER-02 | **PASSED** | git fetch origin && git push successful |
+| VER-03 | **PASSED** | git log --show-signature shows: Good "git" signature for changlong.zhao@outlook.com |
 
 ## Root Cause Analysis
 
-The NixOS SSH config (`nixos/home/ssh.nix`) had:
+Two issues were found:
+
+**1. Home-manager config (`nixos/home/ssh.nix`):**
 ```nix
 programs.ssh.matchBlocks."*".identityAgent = "~/.1password/agent.sock";
 ```
+This path doesn't exist on NixOS (1Password only runs on macOS). Fixed in commit `0c96c31`.
 
-This path doesn't exist on NixOS (1Password only runs on macOS). When git tried to SSH to GitHub, it used this non-existent socket instead of the forwarded agent via `$SSH_AUTH_SOCK`.
+**2. User-level `~/.ssh/config` on NixOS:**
+```
+Host *
+  IdentityAgent ~/.1password/agent.sock
+```
+This file was created outside of home-manager and was overriding the fixed config. User removed it manually.
+
+When git tried to SSH to GitHub, it used the non-existent 1Password socket instead of the forwarded agent via `$SSH_AUTH_SOCK`.
 
 ## Fix Applied
 
@@ -141,13 +152,15 @@ git log --show-signature -1
 ## Issues Encountered
 
 - **SSH config inheritance:** The NixOS SSH config appears to have been copied from or configured similarly to macOS, but macOS-specific paths (1Password agent socket) don't exist on NixOS
+- **User-level SSH config override:** `~/.ssh/config` on NixOS had `IdentityAgent ~/.1password/agent.sock` which overrode the home-manager config
 - **Home-manager not standalone:** Cannot run `home-manager switch` on NixOS - requires full `nixos-rebuild`
 
 ## Next Phase Readiness
 
-- VER-01 confirmed: SSH agent forwarding infrastructure works
-- Fix committed: NixOS SSH config corrected
-- Awaiting user action: Apply config via nixos-rebuild to complete VER-02 and VER-03
+- ✓ VER-01 confirmed: SSH agent forwarding infrastructure works
+- ✓ VER-02 confirmed: Git fetch/push works via forwarded agent
+- ✓ VER-03 confirmed: Git commit signing works with ssh-keygen
+- Phase 3 COMPLETE - all requirements verified
 
 ---
 
