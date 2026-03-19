@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   environment.systemPackages = with pkgs; [
     mas
   ];
@@ -53,7 +54,6 @@
       "utm"
       "ghostty"
       "clash-verge-rev"
-      "zerotier-one"
       "moonlight"
       "steam"
     ];
