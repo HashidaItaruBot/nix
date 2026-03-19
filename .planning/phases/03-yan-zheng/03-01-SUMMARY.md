@@ -153,3 +153,9 @@ git log --show-signature -1
 
 *Phase: 03-yan-zheng*
 *Completed: 2026-03-19*
+
+## Self-Check: PASSED
+
+- [x] SUMMARY.md exists: .planning/phases/03-yan-zheng/03-01-SUMMARY.md
+- [x] Fix commit exists: 0c96c31
+- [x] Docs commit exists: 29f1296
