@@ -2,7 +2,7 @@
 
 ## What This Is
 
-为 macOS 配置 SSH agent forwarding，使其通过 SSH 连接到 NixOS 时能够使用本地 1Password 的 SSH 密钥。用于解决 macOS 远程连接 NixOS 后无法使用 NixOS 上的 1Password 的问题。
+为 macOS 配置 SSH agent forwarding，使其通过 SSH 连接到 NixOS 时能够使用本地 1Password 的 SSH 密钥。
 
 ## Core Value
 
@@ -10,30 +10,41 @@
 
 ## Requirements
 
-### Validated
+### Validated (v1.0 — 2026-03-19)
 
-(N/A — 新功能配置)
+- ✓ macOS SSH 配置启用 ForwardAgent — v1.0
+- ✓ NixOS SSH 配置允许 agent forwarding — v1.0
+- ✓ 验证 git push/pull 能正常使用转发密钥 — v1.0
+- ✓ 验证 git commit SSH 签名能正常工作 — v1.0
 
 ### Active
 
-- [ ] macOS SSH 配置启用 ForwardAgent
-- [ ] NixOS SSH 配置允许 agent forwarding
-- [ ] 验证 git push/pull 能正常使用转发密钥
-- [ ] 验证 git commit SSH 签名能正常工作
+- [ ] Phase 4: 修复 git SSH 认证问题导致无法拉取远端分支 (TBD)
 
 ### Out of Scope
 
 - 配置新的 SSH 密钥 — 使用现有 1Password 中的密钥
 - 配置 1Password SSH agent — 已配置完成
-- 配置 NixOS git 签名 — 已配置完成
+- 在 NixOS 上安装 1Password — 非 SSH Agent Forwarding 方案
+
+## Current State (after v1.0)
+
+**Shipped:** 2026-03-19
+
+**Delivered:**
+- NixOS sshd 启用 AllowAgentForwarding
+- macOS SSH 客户端为 nixos 主机配置 ForwardAgent=true
+- NixOS git 配置使用 ssh-keygen 进行 SSH 签名
+- 所有 9 个 v1 requirements 验证通过
+
+**Codebase:**
+- 3,162 LOC Nix
+- Key files: `nixos/sshd.nix`, `darwin/home/ssh.nix`, `nixos/home/git.nix`, `nixos/home/ssh.nix`
+
+**Known Issues:**
+- Phase 01 缺少完整的 Nyquist VALIDATION.md (可在 v1.1 补充)
 
 ## Context
-
-### 已有状态
-
-- macOS 上 1Password SSH agent 已配置，本地可用
-- NixOS 上 git commit SSH 签名已配置
-- 使用 `ssh user@host` 方式连接
 
 ### 使用场景
 
@@ -52,7 +63,11 @@
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| 使用 SSH Agent Forwarding | 1Password 无法在远程 NixOS 上运行，必须转发本地 agent | — Pending |
+| 使用 SSH Agent Forwarding | 1Password 无法在远程 NixOS 上运行，必须转发本地 agent | ✓ Good |
+| 使用 ssh-keygen 代替 op-ssh-sign | ssh-keygen 支持 SSH agent forwarding，op-ssh-sign 不支持 | ✓ Good |
+| NixOS SSH 不设置 IdentityAgent | 让 SSH 使用默认的 $SSH_AUTH_SOCK (从 macOS 转发) | ✓ Good |
+| 平台特定的 git signer 配置 | nixos/home/git.nix 覆盖 signer，shared/home/git.nix 保留基础配置 | ✓ Good |
 
 ---
-*Last updated: 2026-03-18 after initialization*
+
+*Last updated: 2026-03-19 after v1.0 milestone*
