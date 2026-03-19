@@ -1,14 +1,14 @@
-# SSH Agent Forwarding 配置
+# Nix 配置项目
 
 ## What This Is
 
-为 macOS 配置 SSH agent forwarding，使其通过 SSH 连接到 NixOS 时能够使用本地 1Password 的 SSH 密钥。
+使用 Nix 声明式管理系统配置的 Flake 项目。支持 NixOS 和 macOS Darwin 双平台，通过 home-manager 管理用户环境。
 
 **v1.3 新增：** 在 macOS 上使用 Colima 运行 OpenHands（AI 编程助手），通过 Web UI 访问，配置阿里百炼 LLM 后端。
 
 ## Core Value
 
-让 NixOS 上的 git 操作（push/pull/commit 签名）能够无缝使用 macOS 上的 1Password SSH 密钥。
+所有系统配置和软件包管理必须通过修改 Nix 配置文件完成，完全声明式，可复现。
 
 ## Requirements
 
@@ -19,66 +19,33 @@
 - ✓ 验证 git push/pull 能正常使用转发密钥 — v1.0
 - ✓ 验证 git commit SSH 签名能正常工作 — v1.0
 
-### Active (v1.3)
+### Active (v1.1)
 
-- [ ] 在 macOS 上使用 Podman 运行 OpenHands
-- [ ] 配置阿里百炼 LLM 后端（qwen3.5-plus、kimi-k2.5 等）
-- [ ] Web UI 访问
-- [ ] 工作区挂载 + git 集成
-- [ ] 持久化存储配置
-
-### Deferred (from v1.0)
-
-- [ ] Phase 4: 修复 git SSH 认证问题导致无法拉取远端分支 (TBD)
+- [ ] 在 NixOS 上创建 MicroVM 运行 openclaw
+- [ ] MicroVM 权限隔离（沙盒化）
+- [ ] MicroVM 持久化存储
+- [ ] MicroVM 网络访问（对外提供服务）
+- [ ] MicroVM 开机自动启动
 
 ### Out of Scope
 
-- 配置新的 SSH 密钥 — 使用现有 1Password 中的密钥
-- 配置 1Password SSH agent — 已配置完成
-- 在 NixOS 上安装 1Password — 非 SSH Agent Forwarding 方案
-
-## Current State (after v1.0)
-
-**Shipped:** 2026-03-19
-
-**Delivered:**
-- NixOS sshd 启用 AllowAgentForwarding
-- macOS SSH 客户端为 nixos 主机配置 ForwardAgent=true
-- NixOS git 配置使用 ssh-keygen 进行 SSH 签名
-- 所有 9 个 v1 requirements 验证通过
-
-**Current Milestone: v1.3 — Colima + OpenHands on macOS**
-
-**Goal:** 在 macOS 上使用 Colima 运行 OpenHands AI 编程助手，通过 Web UI 访问，配置阿里百炼 LLM 后端
-
-**Target features:**
-- Colima 安装与配置
-- OpenHands 容器定义与运行
-- 阿里百炼 LLM 后端配置（qwen3.5-plus、kimi-k2.5 等）
-- Web UI 访问（端口 3000/3001）
-- 工作区挂载与持久化存储
-
-**Codebase:**
-- 3,162 LOC Nix
-- Key files: `nixos/sshd.nix`, `darwin/home/ssh.nix`, `nixos/home/git.nix`, `nixos/home/ssh.nix`
-
-**Known Issues:**
-- Phase 01 缺少完整的 Nyquist VALIDATION.md (可在 v1.1 补充)
+- MicroVM 与宿主机共享 SSH 密钥 — 不需要，MicroVM 独立运行
+- macOS 平台 — 仅针对 NixOS
 
 ## Context
 
 ### 使用场景
 
-1. macOS 用户通过 SSH 连接到 NixOS 系统
-2. 在 NixOS 上执行 `git push`/`git pull` 时需要 SSH 认证
-3. 在 NixOS 上执行 `git commit` 时需要 SSH 签名
-4. 所有密钥操作通过 macOS 的 1Password 完成
+1. openclaw 服务在隔离的 MicroVM 中运行
+2. MicroVM 具有持久化存储，数据不会丢失
+3. MicroVM 可以对外提供网络服务
+4. 系统启动时 MicroVM 自动运行
 
 ## Constraints
 
-- **兼容性**: 必须兼容现有 Nix 配置结构（darwin/nixos 分离）
-- **安全**: 只转发到指定的 NixOS 主机，不全局开启
+- **平台**: 仅针对 NixOS
 - **声明式**: 所有配置通过 Nix 配置文件管理
+- **隔离性**: MicroVM 必须与宿主机隔离（不共享 SSH 密钥）
 
 ## Key Decisions
 
@@ -91,4 +58,4 @@
 
 ---
 
-*Last updated: 2026-03-19 after v1.0 milestone*
+*Last updated: 2026-03-19 after v1.0, starting v1.1 MicroVM*

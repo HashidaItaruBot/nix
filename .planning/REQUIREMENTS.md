@@ -1,104 +1,85 @@
-# Requirements: v1.3 Colima + OpenHands on macOS
+# v1.1 Requirements
 
-**Defined:** 2026-03-20
-**Core Value:** 在 macOS 上使用 Colima 运行 OpenHands AI 编程助手，通过 Web UI 访问，配置阿里百炼 LLM 后端
+**Milestone:** v1.1 — MicroVM 运行 OpenClaw
+**Created:** 2026-03-19
+**Status:** Defining requirements
 
-## v1.3 Requirements
+---
 
-### Colima 安装与配置
+## v1 Requirements
 
-- [x] **COLIMA-01**: 通过 Homebrew 安装 Colima
-- [x] **COLIMA-02**: 初始化 Colima VM (`colima start`)
-- [x] **COLIMA-03**: 配置 Colima VM 资源（8GB+ RAM, 4+ CPUs）
-- [x] **COLIMA-04**: 配置 launchd 自动启动
-- [ ] **COLIMA-05**: 验证 Colima 容器运行能力
+### MIC (MicroVM 基础设施)
 
-### OpenHands 容器
+- [ ] **MIC-01**: microvm.nix 集成到 NixOS 配置
+- [ ] **MIC-02**: MicroVM 可启动并运行 NixOS guest
+- [ ] **MIC-03**: 配置 cloud-hypervisor 作为 hypervisor
+- [ ] **MIC-04**: 配置 2GB 内存分配
 
-- [ ] **OH-01**: 使用官方镜像 (`ghcr.io/openhands/openhands:latest`)
-- [ ] **OH-02**: Web UI 端口映射 (3000:3000)
-- [ ] **OH-03**: 容器绑定到 0.0.0.0（非 127.0.0.1）
-- [ ] **OH-04**: LLM 环境变量传递（LLM_API_KEY, LLM_MODEL, LLM_BASE_URL）
-- [ ] **OH-05**: 容器可正常启动并无错误退出
+### STO (存储和持久化)
 
-### LLM 后端配置（阿里百炼）
+- [ ] **STO-01**: virtiofs 只读共享 host 的 `/nix/store`
+- [ ] **STO-02**: ext4 块设备卷用于持久化存储
+- [ ] **STO-03**: 持久化目录挂载到 MicroVM 内正确位置
+- [ ] **STO-04**: Nix 包在 host 上构建（避免 Nix DB 遗忘问题）
 
-- [ ] **LLM-01**: 配置阿里百炼 provider (`alibaba/qwen-plus`)
-- [ ] **LLM-02**: 配置正确的 API Base URL
-- [ ] **LLM-03**: API Key 正确传递到容器
-- [ ] **LLM-04**: 支持 qwen3.5-plus 模型
-- [ ] **LLM-05**: 支持 kimi-k2.5 模型（可选）
+### NET (网络配置)
 
-### 持久化与工作区
+- [ ] **NET-01**: TAP 桥接接口配置
+- [ ] **NET-02**: MicroVM 获得独立 LAN IP 地址
+- [ ] **NET-03**: openclaw 端口 18789 可访问
+- [ ] **NET-04**: systemd-networkd 桥接服务配置
 
-- [ ] **PERS-01**: `~/.openhands` 配置目录持久化
-- [ ] **PERS-02**: 工作区目录挂载到容器
-- [ ] **PERS-03**: Volume 挂载使用 SELinux 标签 (`:z` 或 `:Z`)
-- [ ] **PERS-04**: 工作区路径为绝对路径且在 `/Users` 下
-- [ ] **PERS-05**: 对话历史在容器重启后保留
+### OCL (openclaw 集成)
 
-## v2 Requirements
+- [ ] **OCL-01**: Node.js 22+ 运行时配置
+- [ ] **OCL-02**: openclaw Gateway 服务运行
+- [ ] **OCL-03**: nix-openclaw home-manager 模块集成
+- [ ] **OCL-04**: secrets 文件放置在持久化卷中
 
-Deferred to future release.
+### OPS (运维加固)
 
-### 高级功能
+- [ ] **OPS-01**: MicroVM 开机自动启动
+- [ ] **OPS-02**: systemd 服务依赖正确配置
+- [ ] **OPS-03**: 资源限制配置（CPU/内存）
+- [ ] **OPS-04**: 验证重启后 MicroVM 自动恢复
 
-- **ADV-01**: 使用 Colima/ Docker 原生 API 管理容器
-- **ADV-02**: litellm proxy 集成（多 LLM 路由、fallback）
-- **ADV-03**: Git 仓库深度集成（自动 clone/push）
-- **ADV-04**: 自定义 OpenHands 配置模板
+---
 
-### 优化与调优
+## Future Requirements (Deferred)
 
-- **OPT-01**: Colima VM 资源动态调整
-- **OPT-02**: 容器启动脚本/服务定义
-- **OPT-03**: 监控与日志收集
+### 监控和可观测性
+
+- [ ] MicroVM 日志聚合到 host journal
+- [ ] openclaw 健康检查端点监控
+- [ ] 资源使用率监控（CPU/内存/磁盘）
+
+### 高级隔离
+
+- [ ] 配置 seccomp 系统调用过滤
+- [ ] 配置 cgroups v2 资源控制
+- [ ] 网络流量限制和 QoS
+
+---
 
 ## Out of Scope
 
-Explicitly excluded. Documented to prevent scope creep.
+**明确排除的功能：**
 
-| Feature | Reason |
-|---------|--------|
-| 在 NixOS 上运行 OpenHands | v1.3 仅限 macOS 本地 |
-| 企业版 OpenHands | 需要购买 license，社区版足够 |
-| 本地 LLM 模型（Ollama 等）| 阿里百炼已满足需求，defer 到未来 |
-| 多用户支持 | 单用户场景足够 |
-| OpenHands 源码修改 | 使用官方镜像，不定制 |
-| Podman 兼容性 | 专注 Colima，Docker API 兼容性好 |
+- SSH Agent Forwarding 到 MicroVM — 需求明确不需要与宿主机共享 SSH 密钥
+- macOS 平台支持 — microvm.nix 仅支持 NixOS
+- Docker-in-MicroVM — 不必要的复杂性
+- 动态资源调整 — v1.1 使用静态配置
+
+---
 
 ## Traceability
 
-Which phases cover which requirements. Updated during roadmap creation.
+*Requirements will be mapped to phases in ROADMAP.md after roadmap creation.*
 
-| Requirement | Phase | Status |
-|-------------|-------|--------|
-| COLIMA-01 | Phase 4 | Complete |
-| COLIMA-02 | Phase 4 | Complete |
-| COLIMA-03 | Phase 4 | Complete |
-| COLIMA-04 | Phase 4 | Complete |
-| COLIMA-05 | Phase 4 | Pending |
-| OH-01 | Phase 5 | Pending |
-| OH-02 | Phase 5 | Pending |
-| OH-03 | Phase 5 | Pending |
-| OH-04 | Phase 5 | Pending |
-| OH-05 | Phase 5 | Pending |
-| LLM-01 | Phase 6 | Pending |
-| LLM-02 | Phase 6 | Pending |
-| LLM-03 | Phase 6 | Pending |
-| LLM-04 | Phase 6 | Pending |
-| LLM-05 | Phase 6 | Pending |
-| PERS-01 | Phase 7 | Pending |
-| PERS-02 | Phase 7 | Pending |
-| PERS-03 | Phase 7 | Pending |
-| PERS-04 | Phase 7 | Pending |
-| PERS-05 | Phase 7 | Pending |
-
-**Coverage:**
-- v1.3 requirements: 20 total
-- Mapped to phases: 20
-- Unmapped: 0 ✓
+| Requirement | Phase | Plan | Status |
+|-------------|-------|------|--------|
+| — | — | — | — |
 
 ---
-*Requirements defined: 2026-03-20*
-*Last updated: 2026-03-20 after roadmap creation*
+
+*Created: 2026-03-19*
