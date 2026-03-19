@@ -63,7 +63,10 @@ Plans:
 2. git pull 成功拉取远程更改
 3. git commit 创建的提交签名有效
 
-**Plans:** 3 plans
+**Plans:** 1 plan
+
+Plans:
+- [ ] 03-01-PLAN.md — 验证 SSH Agent Forwarding 和 Git 签名 (VER-01, VER-02, VER-03)
 
 ---
 
@@ -84,7 +87,7 @@ Phase 3 验证整个流程。
 |-------|--------|-------|----------|
 | 1 | ● | 2/2 | 100% |
 | 2 | ◐ | 1/1 | 100% |
-| 3 | ○ | 0/3 | 0% |
+| 3 | ◐ | 0/1 | 0% |
 
 **Overall:** 6/8 requirements complete
 
