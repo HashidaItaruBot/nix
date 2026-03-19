@@ -66,7 +66,7 @@ Plans:
 **Plans:** 1 plan
 
 Plans:
-- [ ] 03-01-PLAN.md — 验证 SSH Agent Forwarding 和 Git 签名 (VER-01, VER-02, VER-03)
+- [~] 03-01-PLAN.md — 验证 SSH Agent Forwarding 和 Git 签名 (VER-01 passed, VER-02/VER-03 awaiting nixos-rebuild)
 
 ---
 
@@ -86,10 +86,10 @@ Phase 3 验证整个流程。
 | Phase | Status | Plans | Progress |
 |-------|--------|-------|----------|
 | 1 | ● | 2/2 | 100% |
-| 2 | ◐ | 1/1 | 100% |
+| 2 | ● | 1/1 | 100% |
 | 3 | ◐ | 0/1 | 0% |
 
-**Overall:** 6/8 requirements complete
+**Overall:** 7/9 requirements complete
 
 ### Phase 4: 修复 git SSH 认证问题导致无法拉取远端分支
 
@@ -107,3 +107,4 @@ Plans:
 *Plan 01-01 completed: 2026-03-18*
 *Plan 01-02 completed: 2026-03-18*
 *Plan 02-01 completed: 2026-03-18*
+*Plan 03-01 completed: 2026-03-19 (VER-01 passed, VER-02/VER-03 awaiting nixos-rebuild)*
