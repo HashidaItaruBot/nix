@@ -1,234 +1,321 @@
-# Architecture Patterns: OpenHands on macOS with Podman
+# Architecture Patterns
 
-**Domain:** Container-based AI development environment
-**Researched:** 2026-03-20
+**Domain:** NixOS MicroVM for openclaw service isolation
+**Researched:** 2026-03-19
 
 ## Recommended Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                      macOS Host                             │
-│  ┌─────────────────────────────────────────────────────┐   │
-│  │              Podman Machine VM (Linux)              │   │
-│  │  ┌──────────────────┐  ┌─────────────────────────┐  │   │
-│  │  │  OpenHands       │  │  Sandbox Runtime        │  │   │
-│  │  │  Container       │  │  Container              │  │   │
-│  │  │  - Port 3000    │  │  - User code execution  │  │   │
-│  │  │  - WebSocket    │  │  - File operations      │  │   │
-│  │  │  - REST API     │  │  - Shell commands       │  │   │
-│  │  └────────┬─────────┘  └───────────┬─────────────┘  │   │
-│  │           │                        │                 │   │
-│  │           └──────────┬─────────────┘                 │   │
-│  │                      │                               │   │
-│  │           ┌──────────▼───────────┐                   │   │
-│  │           │  Podman Network      │                   │   │
-│  │           │  (NAT to host)       │                   │   │
-│  │           └──────────┬───────────┘                   │   │
-│  └──────────────────────┼───────────────────────────────┘   │
-│                          │                                   │
-│  ┌───────────────────────▼──────────────────────────────┐   │
-│  │  Volume Mounts                                       │   │
-│  │  - ~/.openhands → /:openhands (persistence)         │   │
-│  │  - ./workspace → /opt/workspace_base (work files)   │   │
-│  └──────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────┘
-                            │
-                            ▼
-              ┌─────────────────────────┐
-              │  External LLM APIs      │
-              │  - Aliyun DashScope     │
-              │  - Anthropic            │
-              │  - OpenAI               │
-              └─────────────────────────┘
+┌─────────────────────────────────────────────────────────────────┐
+│                        NixOS Host                               │
+│  ┌─────────────────────────────────────────────────────────┐    │
+│  │              microvm.nixosModules.host                   │    │
+│  │  ┌─────────────────┐  ┌─────────────────────────────┐   │    │
+│  │  │ /var/lib/microvms│  │ systemd services:          │   │    │
+│  │  │ ┌─────────────┐ │  │ - microvm-tap-interfaces@   │   │    │
+│  │  │ │ openclaw/   │ │  │ - microvm-virtiofsd@        │   │    │
+│  │  │ │  - config   │ │  │ - microvm@                  │   │    │
+│  │  │ │  - volumes  │ │  │ - install-microvm-*         │   │    │
+│  │  │ └─────────────┘ │  │ - microvms.target           │   │    │
+│  │  └─────────────────┘  └─────────────────────────────┘   │    │
+│  │                              │                            │    │
+│  │         ┌────────────────────┼────────────────────┐      │    │
+│  │         │                    │                    │      │    │
+│  │    ┌────▼────┐         ┌─────▼─────┐     ┌───────▼────┐ │    │
+│  │    │  TAP    │         │ virtiofsd │     │  MicroVM   │ │    │
+│  │    │  iface  │         │  shares   │     │  @openclaw │ │    │
+│  │    └─────────┘         └───────────┘     └────────────┘ │    │
+│  └─────────────────────────────────────────────────────────┘    │
+│                                                                  │
+│  ┌──────────────────────────────────────────────────────────┐   │
+│  │              MicroVM: openclaw (isolated)                │   │
+│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────┐  │   │
+│  │  │ /nix/.ro-   │  │  persistent │  │   openclaw      │  │   │
+│  │  │ store (9p/  │  │  volume     │  │   service       │  │   │
+│  │  │ virtiofs)   │  │  (ext4)     │  │   (systemd)     │  │   │
+│  │  └─────────────┘  └─────────────┘  └─────────────────┘  │   │
+│  │  ┌─────────────┐  ┌─────────────┐                       │   │
+│  │  │ TAP network │  │  read-only  │                       │   │
+│  │  │ interface   │  │  rootfs     │                       │   │
+│  │  └─────────────┘  └─────────────┘                       │   │
+│  └──────────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 ## Component Boundaries
 
 | Component | Responsibility | Communicates With |
 |-----------|---------------|-------------------|
-| **Podman Machine VM** | Linux environment for containers | macOS host (via virtualization) |
-| **OpenHands Container** | Main application server, agent logic, WebSocket handler | Sandbox Runtime, LLM APIs, Host volumes |
-| **Sandbox Runtime Container** | Isolated code execution, file operations | OpenHands Container (internal network) |
-| **Host macOS** | User interface (browser), file storage, API keys | Browser → OpenHands UI, Volume mounts |
-| **External LLM APIs** | Language model inference | OpenHands Container (outbound HTTPS) |
+| **Host: microvm host module** | Provides systemd infrastructure, TAP setup, virtiofsd | systemd, kernel (TUN/TAP), MicroVM |
+| **Host: flake.nix** | Declares MicroVM in `microvm.vms`, autostart configuration | microvm.nixosModules.host |
+| **MicroVM: nixosConfigurations** | Full NixOS config for openclaw VM | microvm.nixosModules.microvm |
+| **MicroVM: virtiofs/9p share** | Read-only `/nix/.ro-store` from host | Host `/nix/store` |
+| **MicroVM: volume** | Persistent writable storage (ext4 block device) | MicroVM filesystem |
+| **MicroVM: TAP interface** | Network connectivity (bridged to host) | Host network, external clients |
+| **MicroVM: openclaw service** | The actual application service | Network clients, persistent volume |
 
 ## Data Flow
 
-1. **User Input:** User types instruction in browser → WebSocket → OpenHands Container
-2. **Agent Processing:** OpenHands agent processes instruction → generates action plan
-3. **LLM Call:** OpenHands → HTTPS → External LLM API → returns completion
-4. **Code Execution:** Agent sends code → Sandbox Runtime → executes → returns output
-5. **File Operations:** Agent reads/writes → Host volume mount → files persist on macOS
-6. **Response:** Agent output → WebSocket → Browser UI
+### Boot Sequence (Auto-start)
+
+```
+1. NixOS host boots
+2. systemd starts microvms.target
+3. microvm-tap-interfaces@openclaw.service creates TAP device
+4. microvm-virtiofsd@openclaw.service starts virtiofsd for /nix/store share
+5. install-microvm-openclaw.service prepares /var/lib/microvms/openclaw/
+6. microvm@openclaw.service launches the VM
+7. MicroVM boots, mounts /nix/.ro-store (virtiofs) + persistent volume
+8. openclaw systemd service starts inside MicroVM
+9. openclaw binds to network port via TAP interface
+```
+
+### Runtime Data Flow
+
+```
+External Client
+      │
+      ▼
+Host Network (bridge/TAP)
+      │
+      ▼
+MicroVM TAP Interface (virtio-net)
+      │
+      ▼
+openclaw service (inside MicroVM)
+      │
+      ├──▶ Read: /nix/.ro-store (virtiofs → host /nix/store)
+      │
+      └──▶ Read/Write: persistent volume (ext4 block device)
+```
+
+### Build/Deploy Flow
+
+```
+nixos-rebuild switch
+      │
+      ├──▶ Rebuild host configuration
+      │      │
+      │      └──▶ microvm.vms.openclaw evaluated
+      │
+      └──▶ Build MicroVM closure
+             │
+             ├──▶ Read-only rootfs (squashfs/erofs)
+             │
+             └──▶ /nix/.ro-store share configured
+```
 
 ## Patterns to Follow
 
-### Pattern 1: Single Container for Simple Setup
+### Pattern 1: Declarative MicroVM with Host
 
-**What:** Run OpenHands as a single container with built-in sandbox.
+**What:** Define MicroVMs directly in host configuration using `microvm.vms`
 
-**When:** Development, personal use, single-user scenarios.
-
-**Example:**
-```bash
-podman run -it --rm \
-  -p 3000:3000 \
-  -v ~/.openhands:/.openhands \
-  -v ./workspace:/opt/workspace_base:Z \
-  -e LLM_MODEL="alibaba/qwen-plus" \
-  -e LLM_API_KEY="${DASHSCOPE_API_KEY}" \
-  ghcr.io/openhands/openhands:latest
-```
-
-### Pattern 2: Pod for Multi-Container Architecture
-
-**What:** Use Podman pod to group OpenHands + Sandbox Runtime containers.
-
-**When:** Production-like setups, isolation requirements, multi-agent scenarios.
+**When:** You want MicroVMs to be managed declaratively alongside host
 
 **Example:**
-```bash
-# Create pod with shared network
-podman pod create -p 3000:3000 openhands-pod
+```nix
+# In nixos/default.nix or a dedicated microvm.nix
+{
+  microvm.vms.openclaw = {
+    config = {
+      microvm.shares = [{
+        source = "/nix/store";
+        mountPoint = "/nix/.ro-store";
+        tag = "ro-store";
+        proto = "virtiofs";
+      }];
 
-# Run main OpenHands container
-podman run --pod openhands-pod \
-  -e SANDBOX_REMOTE_RUNTIME_API_URL="http://localhost:8000" \
-  ... openhands:latest
+      microvm.volumes = [{
+        image = "openclaw-data.img";
+        mountPoint = "/var/lib/openclaw";
+        size = 4096;  # MB
+      }];
 
-# Run sandbox runtime separately
-podman run --pod openhands-pod \
-  -e WORKSPACE_BASE=/opt/workspace_base \
-  ... sandbox-runtime:latest
+      microvm.interfaces = [{
+        type = "tap";
+        id = "openclaw-tap";
+        mac = "02:00:00:00:00:01";
+      }];
+
+      # openclaw service configuration
+      systemd.services.openclaw = {
+        enable = true;
+        wantedBy = [ "multi-user.target" ];
+        # ...
+      };
+    };
+  };
+}
 ```
 
-### Pattern 3: litellm Proxy for Multi-LLM Routing
+### Pattern 2: TAP Networking with vhost Acceleration
 
-**What:** Run litellm as sidecar proxy for unified LLM interface.
+**What:** Use TAP interfaces with kernel vhost-net acceleration
 
-**When:** Multiple LLM providers, fallback strategies, cost optimization.
+**When:** High-throughput network workloads (many connections or high bandwidth)
 
 **Example:**
-```bash
-# Run litellm proxy
-podman run -p 4000:4000 \
-  -v ./litellm_config.yaml:/app/config.yaml \
-  ghcr.io/berriai/litellm:main-latest \
-  --config /app/config.yaml
-
-# Configure OpenHands to use litellm
--e LLM_MODEL="litellm_proxy/qwen-max"
--e LLM_BASE_URL="http://host.docker.internal:4000"
+```nix
+microvm.interfaces = [{
+  type = "tap";
+  id = "openclaw-tap";
+  mac = "02:00:00:00:00:01";
+  tap.vhost = true;  # ~10 Gbps vs ~1.5 Gbps without
+}];
 ```
+
+### Pattern 3: Writable Overlay for /nix/store
+
+**What:** Add writable layer on top of read-only /nix/store
+
+**When:** MicroVM needs to install packages at runtime (not recommended for isolation)
+
+**Example:**
+```nix
+{
+  microvm.writableStoreOverlay = "/nix/.rw-store";
+
+  microvm.volumes = [{
+    image = "nix-overlay.img";
+    mountPoint = config.microvm.writableStoreOverlay;
+    size = 2048;
+  }];
+}
+```
+
+### Pattern 4: Isolated MicroVM (No SSH Key Sharing)
+
+**What:** MicroVM runs without access to host SSH agent or keys
+
+**When:** Security isolation is required (this project's requirement)
+
+**Implementation:**
+- Do NOT configure `IdentityAgent` in MicroVM SSH config
+- Do NOT forward SSH agent to MicroVM
+- MicroVM has its own (or no) SSH configuration
+- Network isolation via TAP (not user networking which has less control)
 
 ## Anti-Patterns to Avoid
 
-### Anti-Pattern 1: Running Podman Without Machine VM
+### Anti-Pattern 1: Running MicroVM as Root
 
-**What:** Attempting to run `podman run` without `podman machine start`.
+**What:** Starting MicroVM processes as root user
 
-**Why bad:** All operations fail with connection errors.
+**Why bad:** Defeats isolation purpose, security risk if VM escapes
 
-**Instead:**
-```bash
-# Always initialize and start machine first
-podman machine init
-podman machine start
-podman machine ls  # Verify "Running" status
-```
+**Instead:** Use microvm.nix host module which runs MicroVMs as unprivileged user
 
-### Anti-Pattern 2: Hardcoding API Keys in Config Files
+### Anti-Pattern 2: Using User Networking for Services
 
-**What:** Storing `LLM_API_KEY` directly in compose files or config.
+**What:** Relying on QEMU user-mode networking (`type = "user"`)
 
-**Why bad:** Credentials in version control, no rotation mechanism.
+**Why bad:** No control over which ports are exposed, NAT complications
 
-**Instead:**
-```bash
-# Use environment variable substitution
--e LLM_API_KEY="${LLM_API_KEY}"
+**Instead:** Use TAP networking with explicit port exposure via firewall rules
 
-# Or use .env file (gitignored)
---env-file .env.local
-```
+### Anti-Pattern 3: Sharing Host SSH Keys with MicroVM
 
-### Anti-Pattern 3: Mounting Non-Shared Directories
+**What:** Mounting host ~/.ssh or forwarding SSH agent to MicroVM
 
-**What:** Mounting paths outside `/Users` or `/home` on macOS.
+**Why bad:** Breaks isolation goal, MicroVM compromise = host keys compromised
 
-**Why bad:** Podman VM cannot access these paths; mount fails.
+**Instead:** MicroVM should have no SSH keys, or generate its own independent keys
 
-**Instead:**
-```bash
-# Good - inside shared zone
--v /Users/username/project:/workspace:Z
+### Anti-Pattern 4: Storing State in Rootfs
 
-# Bad - outside shared zone
--v /opt/project:/workspace:Z  # Will fail
-```
+**What:** Writing persistent data to the MicroVM root filesystem
 
-### Anti-Pattern 4: Binding to localhost Instead of 0.0.0.0
+**Why bad:** Rootfs is read-only squashfs/erofs; data lost on rebuild
 
-**What:** Container binds to 127.0.0.1 instead of 0.0.0.0.
+**Instead:** Use `microvm.volumes` for persistent block device storage
 
-**Why bad:** Not accessible from macOS host due to NAT.
+### Anti-Pattern 5: ZFS Shares Without Proper Options
 
-**Instead:**
-- OpenHands defaults to `0.0.0.0` (correct)
-- If customizing, ensure `HOST=0.0.0.0`
+**What:** Sharing ZFS datasets via virtiofs without xattr/acl configuration
+
+**Why bad:** virtiofs requires extended attributes and POSIX ACLs
+
+**Instead:** Set ZFS dataset options: `zfs set xattr=sa,acltype=posixacl <dataset>`
 
 ## Scalability Considerations
 
-| Concern | At 1 user (default) | At 10 users (multi-agent) | At 100+ users (enterprise) |
-|---------|---------------------|---------------------------|----------------------------|
-| **Container** | Single OpenHands container | Multiple agent containers | Kubernetes cluster |
-| **Memory** | 8GB Podman VM | 16-32GB Podman VM | Dedicated VM per agent |
-| **Storage** | Local ~/.openhands | Shared NFS volume | Object storage (S3) |
-| **LLM Access** | Direct API calls | litellm proxy with rate limiting | Enterprise LLM gateway |
-| **Network** | NAT via podman machine | Bridge network | Service mesh |
-| **Persistence** | Local file store | Database (PostgreSQL) | Distributed database |
+| Concern | At 1 MicroVM | At 5 MicroVMs | At 20+ MicroVMs |
+|---------|--------------|---------------|-----------------|
+| **Memory** | 512MB-2GB per VM | Plan host RAM carefully | Consider memory overcommit with ballooning |
+| **Storage** | Single volume file | Organize under /var/lib/microvms/<name>/ | Consider LVM/ZFS for volume management |
+| **Network** | Single TAP interface | Multiple TAPs, consider bridge | VLAN segmentation, dedicated NIC |
+| **CPU** | 1-2 vCPUs | Pin vCPUs to physical cores | NUMA awareness, CPU isolation |
+| **Management** | Manual config | Use `microvm` CLI tool | Consider orchestration layer |
 
-## macOS-Specific Considerations
+## Integration with Existing Project Structure
 
-### Virtualization Layer
+### Current Architecture (Pre-MicroVM)
 
 ```
-macOS (Darwin kernel)
-    │
-    ▼
-Apple Hypervisor / Virtualization Framework
-    │
-    ▼
-Podman Machine VM (Linux + systemd)
-    │
-    ▼
-Podman Engine (rootless by default)
-    │
-    ▼
-OpenHands Container
+flake.nix
+├── nixosConfigurations.nixos
+│   └── modules = [
+│       ./nixos                    # NixOS system config
+│       ./shared/system            # Shared system config
+│       ./nixos/home               # home-manager for user
+│       ./nixos/sshd.nix           # SSH server (agent forwarding)
+│       └── ...
+│   ]
 ```
 
-### Network Translation
+### New Architecture (With MicroVM)
 
-| Layer | Network | Accessible From |
-|-------|---------|-----------------|
-| Container | 10.x.x.x/16 | Podman VM, sibling containers |
-| Podman VM | 192.168.x.x | macOS host (NAT) |
-| macOS Host | LAN IP | Local network |
-
-### Volume Mount Path Requirements
-
-```bash
-# Must be under /Users or /home for automatic sharing
-/Users/username/workspace  # ✓ Works
-/Users/shared/project     # ✓ Works
-/opt/workspace            # ✗ Requires manual sharing
-/private/var/data         # ✗ Requires manual sharing
 ```
+flake.nix
+├── inputs
+│   └── microvm.url = "github:microvm-nix/microvm.nix"
+│
+├── nixosConfigurations.nixos (HOST)
+│   └── modules = [
+│       inputs.microvm.nixosModules.host    # NEW: host module
+│       ./nixos
+│       ./shared/system
+│       ...
+│       # NEW: MicroVM declaration
+│       {
+│         microvm.autostart = [ "openclaw" ];
+│         microvm.vms.openclaw = { ... };
+│       }
+│   ]
+│
+└── nixosConfigurations.openclaw (MICROVM - NEW)
+    └── modules = [
+        inputs.microvm.nixosModules.microvm  # NEW: microvm module
+        {
+          networking.hostName = "openclaw";
+          microvm.hypervisor = "qemu";
+          # ... openclaw service config
+        }
+    ]
+```
+
+### Files to Create
+
+| File | Purpose |
+|------|---------|
+| `nixos/microvm.nix` | Host-side MicroVM configuration (autostart, vms declaration) |
+| `nixos/microvms/openclaw.nix` | openclaw MicroVM NixOS configuration |
+| `nixos/microvms/default.nix` | Re-export for microvms directory |
+
+### Files to Modify
+
+| File | Change |
+|------|--------|
+| `flake.nix` | Add microvm input, add openclaw nixosConfiguration |
+| `nixos/default.nix` | Import microvm.nix module |
 
 ## Sources
 
-- [Podman Architecture on macOS](https://podman.io/docs/overview)
-- [OpenHands Container Structure](https://github.com/All-Hands-AI/OpenHands/blob/main/docker-compose.yml)
-- [Podman Machine Documentation](https://podman.io/docs/podman-machine)
-- [OpenHands Sandbox Architecture](https://github.com/All-Hands-AI/OpenHands/blob/main/openhands/core/config/sandbox_config.py)
+- [microvm.nix Handbook - Preparing Host](https://github.com/microvm-nix/microvm.nix/blob/master/doc/src/host.md)
+- [microvm.nix Handbook - Declaring MicroVMs](https://github.com/microvm-nix/microvm.nix/blob/master/doc/src/declaring.md)
+- [microvm.nix Handbook - Shares](https://github.com/microvm-nix/microvm.nix/blob/master/doc/src/shares.md)
+- [microvm.nix Handbook - Network Interfaces](https://github.com/microvm-nix/microvm.nix/blob/master/doc/src/interfaces.md)
+- [microvm.nix Handbook - systemd Services](https://github.com/microvm-nix/microvm.nix/blob/master/doc/src/host-systemd.md)
+- [microvm.nix Handbook - Declarative MicroVMs](https://github.com/microvm-nix/microvm.nix/blob/master/doc/src/declarative.md)
+- [microvm.nix README](https://github.com/microvm-nix/microvm.nix/blob/master/README.md)

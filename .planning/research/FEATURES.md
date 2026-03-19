@@ -1,7 +1,7 @@
-# Feature Landscape: OpenHands on macOS
+# Feature Landscape
 
-**Domain:** AI-driven development environment
-**Researched:** 2026-03-20
+**Domain:** NixOS MicroVM running openclaw
+**Researched:** 2026-03-19
 
 ## Table Stakes
 
@@ -9,27 +9,23 @@ Features users expect. Missing = product feels incomplete.
 
 | Feature | Why Expected | Complexity | Notes |
 |---------|--------------|------------|-------|
-| **Web UI Access** | Primary interaction mode | Low | Port 3000, React SPA |
-| **Workspace Persistence** | Work must survive container restarts | Low | Volume mount `~/.openhands` |
-| **LLM Integration** | Core functionality | Low | Environment variable config |
-| **Code Execution Sandbox** | Safe code execution | Medium | Built-in to OpenHands image |
-| **File Read/Write** | Agent must modify files | Low | Volume mount to workspace |
-| **Git Integration** | Commit/push changes | Medium | Requires SSH key or token |
-| **Conversation History** | Continue previous sessions | Low | Auto-saved to `~/.openhands` |
-| **WebSocket Real-time Updates** | Live agent progress | Low | Built-in, port 3001 |
+| **MicroVM isolation via microvm.nix** | Core requirement for sandboxing openclaw from host | Medium | microvm.nix provides KVM-based virtualization with configurable isolation levels |
+| **Network access (bridge/tap)** | openclaw must expose service on port 18789 (Gateway) and connect to external messaging APIs | Medium | Requires host networking setup (bridge/tap/macvtap); MicroVM needs static IP or DHCP |
+| **Persistent storage** | openclaw stores sessions, channels config, user data that must survive reboots | Medium | Options: virtiofs (9P), host-mounted directories, or block devices |
+| **Systemd auto-start** | MicroVM should start automatically on host boot | Low | microvm.nix integrates with systemd; just enable `microvm.vms.<name>.autoStart` |
+| **Node.js 22+ runtime** | openclaw requires Node.js >= 22 | Low | Must be available inside MicroVM image |
+| **Dependency isolation from host** | SSH keys and sensitive data must NOT be shared with host | Low | Explicit volume mounts only; no IdentityAgent forwarding |
 
 ## Differentiators
 
-Features that set this setup apart. Not expected, but valued.
+Features that set product apart. Not expected, but valued.
 
 | Feature | Value Proposition | Complexity | Notes |
 |---------|-------------------|------------|-------|
-| **Multi-LLM Routing via litellm** | Fallback providers, cost optimization | Medium | litellm proxy sidecar |
-| **Aliyun Bailian Native Support** | China-region LLM access, lower latency | Low | Qwen, Kimi models |
-| **Podman (vs Docker)** | No daemon, lighter, open source | Low | Drop-in replacement |
-| **Nix-Managed Stack** | Reproducible, declarative | Medium | Integrated with existing Darwin config |
-| **Container-to-Host Git SSH Forwarding** | Use macOS SSH keys from container | Medium | SSH agent socket mount |
-| **Custom Sandbox Resource Limits** | Prevent runaway containers | Low | Podman `--memory`, `--cpus` flags |
+| **Declarative MicroVM definition** | Entire MicroVM config in Nix flake; reproducible, version-controlled | Medium | Use microvm.nix flake to define VM image and host configuration together |
+| **Resource limits (CPU/RAM)** | Prevent openclaw from consuming all host resources | Low | microvm.nix supports `microvm.vms.<name>.memory` and CPU pinning |
+| **Separate network namespace** | Clean network isolation; MicroVM has its own IP | Medium | Bridge networking gives VM independent network presence |
+| **NixOS guest image** | Running NixOS inside MicroVM for declarative guest config too | High | Heavier than Alpine/scratch but matches project philosophy |
 
 ## Anti-Features
 
@@ -37,68 +33,62 @@ Features to explicitly NOT build.
 
 | Anti-Feature | Why Avoid | What to Do Instead |
 |--------------|-----------|-------------------|
-| Docker Desktop dependency | Subscription requirements, daemon overhead | Use Podman (daemonless) |
-| Hardcoded API keys | Security risk, no rotation | Environment variables or `.env` files |
-| Complex orchestration (Kubernetes) | Overkill for single-user macOS | Single container or Podman pod |
-| Custom LLM proxy (if litellm works) | Reinventing the wheel | Use litellm's existing provider support |
-| GUI application for management | Extra installation, platform-specific | Web UI + CLI commands |
-| Local LLM inference (Ollama, etc.) | Resource intensive, setup complexity | Cloud LLM APIs only for v1.3 |
+| **SSH Agent Forwarding to MicroVM** | Violates isolation principle; host keys would be accessible | MicroVM has its own identity; no SSH key sharing |
+| **Host root filesystem mount** | Breaks isolation; MicroVM could access host secrets | Use explicit virtiofs mounts for only needed directories |
+| **macOS support** | Project scope is NixOS-only; microvm.nix is NixOS-specific | Keep Darwin configuration separate (already done in project) |
+| **Docker-in-MicroVM** | Unnecessary complexity; openclaw can run directly in NixOS guest | Use Nix packages directly in MicroVM image |
 
 ## Feature Dependencies
 
 ```
-Web UI Access ← LLM Integration ← Conversation History
-     ↓
-Workspace Persistence ← File Read/Write
-     ↓
-Git Integration ← SSH Key Forwarding (optional)
-
-litellm Proxy ← Multi-LLM Routing
+MicroVM isolation → Network access (VM needs network to serve)
+MicroVM isolation → Persistent storage (VM needs storage location)
+Network access → openclaw Gateway (port 18789 must be reachable)
+Persistent storage → openclaw sessions/data (data must survive reboot)
+Systemd auto-start → MicroVM definition (must exist before auto-starting)
+Node.js runtime → openclaw application (runtime dependency)
 ```
 
 ## MVP Recommendation
 
 Prioritize:
-1. **Podman Installation + Machine VM** - Foundation for everything
-2. **OpenHands Container Run** - Basic agent functionality
-3. **LLM Configuration (Aliyun Bailian)** - Primary model access
-4. **Workspace + Persistence Volumes** - Work must persist
+1. **MicroVM isolation via microvm.nix** - Foundation for everything else
+2. **Systemd auto-start** - Basic operational requirement
+3. **Network access (bridge)** - openclaw must be reachable
 
-Defer:
-- **litellm Proxy** - Add after direct LLM integration works
-- **Git SSH Forwarding** - Nice-to-have, not core to agent functionality
-- **Multi-container Pod setups** - Single container sufficient for v1.3
+Defer: **Resource limits** - Can be added after basic functionality works
 
-## Phase Feature Mapping
+## Complexity Notes by Category
 
-### Phase 1: Podman Installation
-- [ ] Homebrew install of Podman
-- [ ] `podman machine init`
-- [ ] `podman machine start`
-- [ ] Verification: `podman info`
+### Infrastructure (Medium Complexity)
+- microvm.nix setup requires understanding of NixOS modules and flake integration
+- Network bridge configuration on host needs careful planning
+- virtiofs/9P storage setup has subtle configuration options
 
-### Phase 2: OpenHands Container Definition
-- [ ] Basic `podman run` command
-- [ ] Port mapping (3000:3000)
-- [ ] Volume mount: `~/.openhands`
-- [ ] Volume mount: `./workspace`
-- [ ] Environment variables: `LLM_MODEL`, `LLM_API_KEY`
+### openclaw Application (Low-Medium Complexity)
+- Standard Node.js application with well-documented requirements
+- Gateway port (18789) is the main network requirement
+- Configuration stored in `~/.config/openclaw/` or XDG equivalent
 
-### Phase 3: LLM Backend Configuration
-- [ ] Aliyun DashScope API key setup
-- [ ] Correct provider identifier (`alibaba/qwen-plus`)
-- [ ] Base URL configuration
-- [ ] Test LLM connectivity
+### Security/Isolation (Low Complexity)
+- microvm.nix provides good defaults for isolation
+- Main risk is over-mounting host filesystems
+- SSH key isolation is explicit (don't mount, don't forward)
 
-### Phase 4: Workspace + Persistence
-- [ ] Verify conversation history saves
-- [ ] Test file read/write in workspace
-- [ ] Container restart preserves state
-- [ ] Optional: Git SSH key forwarding
+## openclaw Specific Requirements
+
+| Requirement | Details |
+|-------------|---------|
+| **Runtime** | Node.js >= 22 |
+| **Gateway Port** | TCP 18789 (WebSocket control plane) |
+| **Storage** | ~100MB-1GB depending on session history |
+| **Config Location** | `~/.config/openclaw/` (XDG compliant) |
+| **External Connections** | Messaging APIs (WhatsApp, Telegram, Slack, etc.) - outbound HTTPS |
+| **Optional** | Tailscale, SSH tunnels for remote access |
 
 ## Sources
 
-- [OpenHands Documentation](https://docs.openhands.dev/)
-- [OpenHands GitHub Repository](https://github.com/All-Hands-AI/OpenHands)
-- [Podman Documentation](https://podman.io/docs)
-- [litellm Documentation](https://docs.litellm.ai/)
+- [openclaw documentation](https://docs.openclaw.ai/)
+- [openclaw GitHub](https://github.com/openclaw/openclaw)
+- [microvm.nix search results](https://github.com/stikonas/microvm.nix)
+- [NixOS Wiki - Virtualization](https://nixos.wiki/wiki/Virtualization)

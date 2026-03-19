@@ -1,414 +1,319 @@
-# Domain Pitfalls: OpenHands with Podman on macOS
+# Domain Pitfalls
 
-**Domain:** Container Development Environment on macOS
-**Researched:** 2026-03-20
-**Confidence:** MEDIUM (based on WebSearch patterns, official documentation gaps)
-
----
+**Domain:** MicroVM on NixOS
+**Researched:** 2026-03-19
+**Confidence:** MEDIUM (based on microvm.nix official documentation and handbook)
 
 ## Critical Pitfalls
 
-These mistakes cause complete failures or require full reconfiguration.
+Mistakes that cause rewrites or major issues.
 
-### Pitfall 1: Using `podman run` Without Podman Machine
+### Pitfall 1: Writable Nix Store Overlay on Incompatible Filesystems
 
-**What goes wrong:**
-Podman on macOS requires a Linux VM (podman machine) to run containers. Users attempt to run containers directly without initializing and starting the VM first.
+**What goes wrong:** Users attempt to use a 9p or virtiofs share as the writable overlay for `/nix/store`, but the Linux overlay filesystem rejects these filesystem types. The VM builds successfully but after reboot, all installed packages disappear because the overlay fails to mount.
 
-**Why it happens:**
-- Docker Desktop auto-starts its backend; Podman does not
-- `podman machine init` must be run manually after installation
-- `podman machine start` must be running before any container operation
+**Why it happens:** The Linux overlayfs driver is extremely picky about underlying filesystems. According to microvm.nix documentation: "The Linux overlay filesystem is very picky about the filesystems that can be the upper (writable) layer. 9p/virtiofs shares don't work currently."
 
 **Consequences:**
-```bash
-Error: cannot connect to Podman. Is podman machine running?
-```
-All container operations fail.
+- All packages built inside the VM are lost after reboot
+- `/nix/store` becomes read-only with no fallback
+- Users may accidentally fill up root filesystem if overlay mounts to wrong location
 
 **Prevention:**
-```bash
-# Required setup sequence (one-time)
-podman machine init
-podman machine start
+```nix
+{ config, ... }:
+{
+  microvm.writableStoreOverlay = "/nix/.rw-store";
 
-# Verify before running containers
-podman machine ls  # Should show "Running"
-
-# Before any container work, ensure machine is started
-podman machine start
+  microvm.volumes = [ {
+    image = "nix-store-overlay.img";
+    mountPoint = config.microvm.writableStoreOverlay;
+    size = 2048;  # MB
+  } ];
+}
 ```
 
 **Detection:**
-Run `podman machine ls` — if not "Running", no container operations will work.
+- Run `mount | grep overlay` inside VM to verify overlay is active
+- Check `dmesg | grep overlay` for mount errors
+- After reboot, run `nix-store --verify` to detect missing store paths
 
-**Phase to address:** Phase 0 (Podman Installation & Setup)
+**Phase to address:** Phase 2 (Storage & Persistence)
 
 ---
 
-### Pitfall 2: Volume Mount Path Mismatch on macOS
+### Pitfall 2: Nix Database Forgetting Packages After Reboot
 
-**What goes wrong:**
-Podman on macOS runs containers inside a VM. When mounting host directories, the path must be accessible from the VM, not just from macOS.
+**What goes wrong:** Even with a writable overlay configured, the Nix database inside the VM forgets all packages built or installed after the VM was created. After reboot, `nix-env -q` shows only the original packages.
 
-**Why it happens:**
-- Podman VM has limited shared directories (typically `/Users` or `/home`)
-- Users mount paths outside shared zones (e.g., `/private/var`, `/opt`)
-- OpenHands requires `WORKSPACE_BASE` to be accessible inside the container
+**Why it happens:** The Nix database (`/nix/var/nix/db`) state is not properly persisted across the overlay. The microvm.nix documentation explicitly states: "The Nix database will forget all built packages after a reboot, containing only what is needed for the VM's NixOS system."
 
 **Consequences:**
-```bash
-Error: failed to mount volume: access denied
-Container starts but cannot read workspace files
-OpenHands agent reports "workspace not accessible"
-```
+- Garbage collection may delete "unregistered" packages even though files exist
+- `nix-env` operations fail with "not found" errors for existing packages
+- Confusion about where packages are installed
 
 **Prevention:**
-```bash
-# Good - inside shared zone
-podman run -v /Users/username/projects/myapp:/workspace:z ...
-
-# Bad - outside shared zone
-podman run -v /opt/myapp:/workspace:z ...  # Will fail
-
-# For OpenHands specifically
-export WORKSPACE_BASE=/Users/username/my-project
-podman run \
-  -v "$WORKSPACE_BASE:/workspace:z" \
-  -e WORKSPACE_BASE=/workspace \
-  ghcr.io/all-hands-ai/openhands:latest
+- Delete and recreate the overlay after each MicroVM shutdown or before startup
+- Use the host's `/nix/store` share to avoid building inside the VM:
+```nix
+microvm.shares = [ {
+  tag = "ro-store";
+  source = "/nix/store";
+  mountPoint = "/nix/.ro-store";
+  proto = "virtiofs";
+} ];
 ```
-
-**Key requirements for OpenHands:**
-- `WORKSPACE_BASE` must be absolute path
-- Path must exist on host before mounting
-- Use `:z` or `:Z` SELinux label for Podman (see Pitfall 4)
+- Build packages on the host and deploy to VM instead of building inside VM
 
 **Detection:**
-```bash
-# Test mount accessibility
-podman run --rm -v /your/path:/test alpine ls -la /test
-```
+- Compare `nix-store -q --references /run/current-system` before and after reboot
+- Check if `nix-env -q` output changes after reboot
 
-**Phase to address:** Phase 1 (OpenHands Container Definition)
+**Phase to address:** Phase 2 (Storage & Persistence)
 
 ---
 
-### Pitfall 3: Port Binding — `localhost` vs `0.0.0.0` on macOS
+### Pitfall 3: TAP Interface Permission Denied at Boot
 
-**What goes wrong:**
-Podman on macOS uses a VM with NAT. Containers binding to `localhost` (127.0.0.1) inside the VM are NOT accessible from macOS `localhost`.
+**What goes wrong:** MicroVM fails to start during boot with "permission denied" errors on TAP network interfaces, even though the same configuration works when started manually.
 
-**Why it happens:**
-- OpenHands server binds to `0.0.0.0` by default (correct)
-- Custom configurations may bind to `127.0.0.1`
-- Podman machine uses NAT, not direct loopback
+**Why it happens:** TAP interfaces must be created before the MicroVM starts, and the systemd service order matters. The `microvm-tap-interfaces@.service` must complete before `microvm@.service` starts. Additionally, TAP interfaces need the `multi_queue` flag if the VM has multiple CPU cores.
 
 **Consequences:**
-```bash
-# Container is running
-podman ps  # Shows container
-
-# But cannot access from macOS browser
-# http://localhost:3000 — Connection refused
-```
+- MicroVM fails to start on boot
+- Network connectivity missing even if VM starts
+- Silent fallback to user-mode networking (if available)
 
 **Prevention:**
-Ensure OpenHands binds to `0.0.0.0`:
+- Use the `microvm.nixosModules.host` module which handles systemd dependencies
+- Create TAP interfaces with proper flags:
 ```bash
-# Correct port mapping syntax
-podman run -p 3000:3000 ...  # Maps all interfaces
-
-# If using podman pod
-podman pod create -p 3000:3000 openhands-pod
-podman run --pod openhands-pod ...
-
-# Verify binding inside container
-podman exec -it <container> netstat -tlnp
-# Should show 0.0.0.0:3000, NOT 127.0.0.1:3000
+# For multi-core VMs (vcpu > 1)
+sudo ip tuntap add vm-a1 mode tap multi_queue user $(whoami)
 ```
-
-**OpenHands specific:**
-- Default port: 3000 (web UI)
-- Default bind: `0.0.0.0` (correct)
-- If using custom config, ensure HOST=0.0.0.0
+- Ensure `microvm.autostart` is configured on host:
+```nix
+microvm.autostart = [ "my-microvm" ];
+```
 
 **Detection:**
-```bash
-# From macOS, test connectivity
-curl -v http://localhost:3000
+- Check `systemctl status microvm@my-microvm` for dependency failures
+- Run `ip tuntap show` to verify TAP interfaces exist
+- Check `journalctl -u microvm-tap-interfaces@my-microvm`
 
-# Check podman machine network config
-podman machine inspect | jq '.[0].HostUser.NetworkMode'
-```
-
-**Phase to address:** Phase 1 (OpenHands Container Definition)
+**Phase to address:** Phase 3 (Networking)
 
 ---
 
-### Pitfall 4: SELinux Label Omission on Volume Mounts
+### Pitfall 4: virtiofs on ZFS Without Required Options
 
-**What goes wrong:**
-Podman enforces SELinux labeling on volume mounts. Without the `:z` or `:Z` suffix, containers cannot access mounted files.
+**What goes wrong:** virtiofs shares fail to mount or behave erratically when the underlying host directory is on a ZFS dataset without extended attribute and ACL configuration.
 
-**Why it happens:**
-- Docker silently handles this; Podman requires explicit labels
-- Documentation often omits SELinux labels in examples
-- Error messages are cryptic ("permission denied" without context)
+**Why it happens:** virtiofs requires POSIX ACLs and extended attributes. ZFS defaults to `xattr=off` and `acltype=off` on many distributions.
 
 **Consequences:**
-```bash
-Error: OCI permission denied
-Error: open /workspace/file.txt: permission denied
-OpenHands agent cannot read or write workspace files
-```
+- virtiofs shares fail to mount
+- Permission errors on shared directories
+- Silent data corruption if partial mounts succeed
 
 **Prevention:**
+Configure ZFS dataset with required options:
 ```bash
-# Always use SELinux label for shared volumes
-podman run -v /host/path:/container/path:z ...
+zfs set xattr=sa pool/dataset
+zfs set acltype=posixacl pool/dataset
+```
 
-# :z = shared content (multiple containers can access)
-# :Z = private content (only this container can access)
-
-# For OpenHands workspace (private to container)
-podman run -v "$WORKSPACE_BASE:/workspace:Z" ...
-
-# For shared configs (multiple containers)
-podman run -v "$CONFIG_DIR:/config:z" ...
+Or in NixOS:
+```nix
+boot.zfs.devNodes = "/dev/disk/by-uuid";  # Ensure proper device paths
 ```
 
 **Detection:**
-```bash
-# Check SELinux context on host directory
-ls -Z /your/path
+- Check ZFS properties: `zfs get xattr,acltype pool/dataset`
+- Test virtiofs mount manually before VM startup
+- Monitor `journalctl -u microvm-virtiofsd@my-microvm`
 
-# If container logs show "permission denied" on mounted files
-# SELinux label is likely missing
-```
-
-**Phase to address:** Phase 1 (OpenHands Container Definition)
-
----
-
-### Pitfall 5: LLM API Configuration — Wrong Provider Name or Base URL
-
-**What goes wrong:**
-OpenHands requires specific provider identifiers. Aliyun DashScope (阿里百炼) must be configured with correct provider name, API key format, and base URL.
-
-**Why it happens:**
-- Provider names are case-sensitive (`alibaba`, `Alibaba`, `ALIYUN`?)
-- Base URL format varies (`https://dashscope.aliyuncs.com` vs `https://dashscope.aliyun.com`)
-- API key format confusion (DashScope uses `sk-` prefix keys)
-
-**Consequences:**
-```bash
-LLM initialization failed
-Error: Invalid provider: aliyun
-Error: API authentication failed
-OpenHands starts but cannot complete any tasks
-```
-
-**Prevention:**
-```bash
-# Correct OpenHands LLM configuration for Aliyun DashScope
-export LLM_MODEL="alibaba/qwen-plus"  # or alibaba/qwen-turbo
-export LLM_API_KEY="sk-xxxxxxxxxxxxx"  # DashScope API key
-export LLM_BASE_URL="https://dashscope.aliyuncs.com/compatible-mode/v1"
-
-# Alternative: config.toml format
-cat > ~/.openhands/config.toml << EOF
-[core]
-llm_model = "alibaba/qwen-plus"
-llm_api_key = "sk-xxxxxxxxxxxxx"
-llm_base_url = "https://dashscope.aliyuncs.com/compatible-mode/v1"
-EOF
-```
-
-**Valid Aliyun models in OpenHands:**
-- `alibaba/qwen-plus` — General purpose
-- `alibaba/qwen-turbo` — Faster, cheaper
-- `alibaba/qwen-max` — Most capable
-
-**Detection:**
-```bash
-# Test API key validity
-curl -X POST https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions \
-  -H "Authorization: Bearer sk-xxxxx" \
-  -H "Content-Type: application/json" \
-  -d '{"model":"qwen-plus","messages":[{"role":"user","content":"test"}]}'
-```
-
-**Phase to address:** Phase 2 (LLM Backend Configuration)
-
----
-
-### Pitfall 6: Insufficient Podman Machine Resources
-
-**What goes wrong:**
-Default Podman machine settings (2GB RAM, 2 CPUs) are insufficient for OpenHands, which runs:
-- Main OpenHands server
-- Sandbox runtime container
-- LLM API calls (memory for context)
-
-**Why it happens:**
-- `podman machine init` creates VM with minimal defaults
-- OpenHands has no explicit resource requirements documented
-- Container OOM (Out of Memory) kills the process silently
-
-**Consequences:**
-```bash
-Container starts then immediately exits
-podman ps shows container repeatedly restarting
-Container logs show "OOMKilled" or memory errors
-OpenHands agent times out during task execution
-```
-
-**Prevention:**
-```bash
-# Stop existing machine
-podman machine stop
-
-# Reinitialize with adequate resources
-podman machine init --memory 8192 --cpus 4 --disk-size 100
-
-# Or modify existing machine (Podman 4+)
-podman machine set --memory 8192 --cpus 4
-
-# Start with new settings
-podman machine start
-
-# Verify
-podman machine inspect | jq '.[0].VMType, .[0].Memory, .[0].CPUs'
-```
-
-**Recommended minimum for OpenHands:**
-- Memory: 8GB (4GB absolute minimum)
-- CPUs: 4 (2 absolute minimum)
-- Disk: 50GB+
-
-**Detection:**
-```bash
-# Check if container was OOM killed
-podman inspect <container> | jq '.[0].State.OOMKilled'
-
-# Monitor machine resources
-podman machine ssh top
-```
-
-**Phase to address:** Phase 0 (Podman Installation & Setup)
+**Phase to address:** Phase 2 (Storage & Persistence)
 
 ---
 
 ## Moderate Pitfalls
 
-These cause partial failures or degraded functionality.
+### Pitfall 5: Insufficient Memory Allocation
 
-### Pitfall 7: Workspace Directory Does Not Exist Before Mount
+**What goes wrong:** MicroVM is configured with default 512MB RAM which is insufficient for running services with Nix store access, causing OOM kills during package operations or service startup.
 
-**What goes wrong:**
-Podman does not auto-create host directories for volume mounts. If `WORKSPACE_BASE` path doesn't exist, mount fails silently or creates empty directory.
+**Why it happens:** The default `microvm.mem = 512` is appropriate for minimal appliances but not for services that need to run Nix operations or maintain multiple processes.
+
+**Consequences:**
+- Services crash with OOM errors
+- Nix operations fail mid-build
+- VM becomes unresponsive under load
 
 **Prevention:**
-```bash
-# Always create workspace directory first
-mkdir -p /Users/username/my-project
-export WORKSPACE_BASE=/Users/username/my-project
-
-# Verify before running container
-ls -la "$WORKSPACE_BASE"
-
-# Then run container
-podman run -v "$WORKSPACE_BASE:/workspace:Z" ...
+```nix
+microvm.mem = 2048;  # For services with Nix operations
+microvm.vcpu = 2;    # Match TAP interface multi_queue if needed
 ```
 
-**Phase to address:** Phase 1
-
----
-
-### Pitfall 8: Not Using Podman Pod for Multi-Container Setup
-
-**What goes wrong:**
-OpenHands architecture may require multiple containers (main app + sandbox runtime). Running them separately without pod networking causes inter-container communication failures.
-
-**Prevention:**
-```bash
-# Create pod with shared network namespace
-podman pod create -p 3000:3000 openhands-pod
-
-# Run main container in pod
-podman run --pod openhands-pod -e ... openhands:latest
-
-# Sandbox container shares pod network automatically
-podman run --pod openhands-pod ... sandbox-runtime
-```
-
-**Phase to address:** Phase 1
-
----
-
-### Pitfall 9: API Key Not Exported to Container Environment
-
-**What goes wrong:**
-LLM API keys set on host shell are not automatically available inside containers. Must explicitly pass via `-e`.
-
-**Prevention:**
-```bash
-# Host shell
-export LLM_API_KEY="sk-xxxxx"
-
-# Pass to container
-podman run \
-  -e LLM_API_KEY="$LLM_API_KEY" \
-  -e LLM_MODEL="alibaba/qwen-plus" \
-  ...
+Enable memory ballooning for dynamic adjustment:
+```nix
+microvm.balloon = true;
 ```
 
 **Detection:**
-OpenHands starts but all LLM calls fail with authentication errors.
+- Monitor `dmesg | grep -i oom` inside VM
+- Use `microvm-balloon` tool to check memory pressure
+- Check systemd service restart counts
 
-**Phase to address:** Phase 2
+**Phase to address:** Phase 1 (Basic Setup)
+
+---
+
+### Pitfall 6: NAT Port Forwarding Not Configured for Public Services
+
+**What goes wrong:** MicroVM service is running and listening on ports internally, but external traffic cannot reach it because NAT forwarding was not configured on the host.
+
+**Why it happens:** When using bridge networking with NAT (the recommended isolated setup), the host must explicitly forward ports to MicroVM internal IPs.
+
+**Consequences:**
+- Services accessible internally but not externally
+- Confusion about firewall vs NAT issues
+- Debugging time wasted on wrong layer
+
+**Prevention:**
+Configure host NAT forwarding:
+```nix
+networking.nat = {
+  enable = true;
+  externalInterface = "eth0";
+  internalInterfaces = [ "microvm" ];
+  forwardPorts = [ {
+    proto = "tcp";
+    sourcePort = 8080;
+    destination = "10.0.0.2";  # MicroVM IP
+  } ];
+};
+```
+
+**Detection:**
+- Test connectivity from host: `curl http://10.0.0.2:8080`
+- Test from external: `curl http://host-ip:8080`
+- Check `iptables -t nat -L` for forwarding rules
+
+**Phase to address:** Phase 3 (Networking)
+
+---
+
+### Pitfall 7: Hypervisor Selection Mismatch with Feature Requirements
+
+**What goes wrong:** User selects a hypervisor (e.g., firecracker) that doesn't support required features like 9p/virtiofs shares, then wonders why share configuration is ignored.
+
+**Why it happens:** Different hypervisors have different capability restrictions:
+
+| Hypervisor | 9p Shares | virtiofs Shares | Control Socket |
+|------------|-----------|-----------------|----------------|
+| qemu       | Yes       | Yes             | Yes            |
+| firecracker| No        | No              | Yes            |
+| cloud-hypervisor | No  | Yes             | Yes            |
+| kvmtool    | No        | No              | No             |
+| vfkit (macOS) | No     | Built-in        | Limited        |
+
+**Consequences:**
+- Share mounts silently fail
+- No control socket for clean shutdown
+- Configuration ignored without error
+
+**Prevention:**
+- Use `qemu` for maximum compatibility during development
+- Match hypervisor to requirements:
+  - Need 9p shares: qemu, kvmtool
+  - Need virtiofs: qemu, cloud-hypervisor, alioth
+  - Need control socket: avoid kvmtool, stratovirt, alioth
+
+**Detection:**
+- Check hypervisor restrictions in microvm.nix documentation
+- Verify shares mount: `mount | grep 9p` or `mount | grep virtiofs`
+- Test shutdown via control socket
+
+**Phase to address:** Phase 1 (Basic Setup)
 
 ---
 
 ## Minor Pitfalls
 
-### Pitfall 10: Not Cleaning Up Stopped Machines
+### Pitfall 8: machineId Not Set for Centralized Logging
 
-**What goes wrong:**
-Old Podman machines accumulate, consuming disk space and causing confusion about which machine is active.
+**What goes wrong:** When sharing journal logs with the host, all MicroVM logs appear under the same machine ID, making it impossible to distinguish which VM generated which log entries.
+
+**Why it happens:** systemd identifies hosts by `/etc/machine-id`. Without setting `microvm.machineId`, all VMs may share the same or randomly generated ID.
+
+**Consequences:**
+- Journal entries from multiple VMs interleave
+- Cannot filter logs by VM
+- Log analysis tools show incorrect hostnames
 
 **Prevention:**
-```bash
-# List all machines
-podman machine ls
-
-# Remove unused
-podman machine rm old-machine-name
+```nix
+microvm.machineId = "unique-hex-id-for-this-vm";
 ```
 
-**Phase to address:** Any phase (maintenance)
+Or derive from hostname:
+```nix
+networking.hostName = "openclaw-vm";
+microvm.machineId = lib.fixedWidthString 32 "0" (builtins.hashString "md5" config.networking.hostName);
+```
+
+**Phase to address:** Phase 4 (Observability) - optional
 
 ---
 
-### Pitfall 11: Using Relative Paths for WORKSPACE_BASE
+### Pitfall 9: sops-nix Secrets Disappear on Host Update
 
-**What goes wrong:**
-`WORKSPACE_BASE` with relative path resolves differently inside container vs host.
+**What goes wrong:** When using sops-nix with virtiofs-shared secrets, the `/run/secrets` directory disappears or becomes stale after host system updates.
+
+**Why it happens:** sops-nix cleans up old generations in `/run/secrets.d/`, but virtiofs shares may not update atomically. The FAQ notes this is a known issue.
+
+**Consequences:**
+- Services lose access to secrets after host rebuild
+- Manual VM reboot required to refresh secrets
+- Potential secret exposure if old generations not cleaned
 
 **Prevention:**
-Always use absolute paths:
-```bash
-# Bad
-export WORKSPACE_BASE="./my-project"
-
-# Good
-export WORKSPACE_BASE="$(pwd)/my-project"
-# or
-export WORKSPACE_BASE="/Users/username/my-project"
+```nix
+sops.keepGenerations = 0;  # Stop sops-nix from removing old generations
 ```
 
-**Phase to address:** Phase 1
+Note: This means VMs must be rebooted to adapt updated secrets.
+
+**Phase to address:** Phase 4 (Security & Secrets) - if using sops-nix
+
+---
+
+### Pitfall 10: Declarative VM Definition Increases Host Build Time
+
+**What goes wrong:** Adding `microvm.vms` with inline `config` causes host system rebuilds to take 2-5x longer and closure size to balloon.
+
+**Why it happens:** Building MicroVMs together with the host means every host rebuild also rebuilds all MicroVM configurations.
+
+**Consequences:**
+- `nixos-rebuild switch` takes much longer
+- Larger system closure
+- Hydra/CI build times increase
+
+**Prevention:**
+Use declarative deployment mode instead of fully declarative:
+```nix
+microvm.vms.my-microvm = {
+  flake = self;
+  updateFlake = "git+file:///etc/nixos";
+};
+```
+
+Then update with `microvm -u my-microvm` instead of full rebuild.
+
+**Phase to address:** Phase 1 (Basic Setup)
 
 ---
 
@@ -416,37 +321,26 @@ export WORKSPACE_BASE="/Users/username/my-project"
 
 | Phase Topic | Likely Pitfall | Mitigation |
 |-------------|---------------|------------|
-| Podman Installation | Machine not initialized | Run `podman machine init && start` before any container work |
-| Resource Allocation | Insufficient RAM/CPU | Set 8GB+ RAM, 4+ CPUs during `machine init` |
-| Container Setup | Volume mount failures | Use absolute paths, `:z`/`:Z` labels, pre-create directories |
-| Network Configuration | Port not accessible | Bind to `0.0.0.0`, use `-p` flags correctly |
-| LLM Configuration | Wrong provider name/URL | Use `alibaba/*` prefix, correct DashScope base URL |
-| Environment Variables | API keys not passed | Explicitly `-e LLM_API_KEY="$LLM_API_KEY"` |
+| Basic MicroVM Setup | Hypervisor mismatch with requirements | Choose qemu for development, verify feature support |
+| Basic MicroVM Setup | Insufficient memory for services | Set `microvm.mem >= 1024` for any service workload |
+| Storage & Persistence | Writable overlay on 9p/virtiofs | Use volume (block device) for writableStoreOverlay |
+| Storage & Persistence | Nix DB forgets packages | Plan for host-based builds or accept rebuilds |
+| Storage & Persistence | ZFS + virtiofs incompatibility | Set `xattr=sa acltype=posixacl` on ZFS dataset |
+| Networking | TAP interface permission denied | Use host module, ensure systemd ordering |
+| Networking | NAT port forwarding missing | Explicitly configure `networking.nat.forwardPorts` |
+| Networking | multi_queue flag missing for multi-core | Add `multi_queue` to TAP creation if vcpu > 1 |
+| Autostart | VM doesn't start on boot | Configure `microvm.autostart` on host |
+| Security | Over-permissive device access | Use custom udev rules, not `users.users.microvm.extraGroups = ["disk"]` |
 
 ---
 
 ## Sources
 
-- Podman machine initialization patterns: WebSearch results on `podman machine init setup macOS`
-- Volume mount permission issues: WebSearch on `podman volume mount permissions macOS`, SELinux labeling requirements
-- Network binding on macOS: WebSearch on `podman mac network port binding localhost`
-- OpenHands container requirements: WebSearch on `OpenHands docker run command environment variables`
-- Aliyun DashScope configuration: WebSearch on `阿里百炼 dashscope API base URL`, `OpenHands LLM configuration`
-- Resource allocation patterns: WebSearch on `podman machine set memory CPU disk`
-
----
-
-## Research Confidence Assessment
-
-| Pitfall Category | Confidence | Notes |
-|-----------------|------------|-------|
-| Podman machine setup | HIGH | Well-documented in Podman docs |
-| Volume mounts & SELinux | HIGH | Consistent across sources |
-| Network/port binding | MEDIUM | Inferred from Podman architecture |
-| OpenHands LLM config | MEDIUM | Based on general OpenHands patterns, specific Aliyun integration unverified |
-| Resource requirements | LOW | OpenHands resource requirements not explicitly documented |
-
-**Validation needed in Phase 0/1:**
-- Confirm exact OpenHands Docker image name and tag
-- Verify Aliyun DashScope provider identifier in OpenHands (`alibaba/*` vs `dashscope/*`)
-- Test actual resource consumption with typical workloads
+- [microvm.nix Handbook - Shares](https://github.com/microvm-nix/microvm.nix/blob/main/doc/src/shares.md)
+- [microvm.nix Handbook - Network interfaces](https://github.com/microvm-nix/microvm.nix/blob/main/doc/src/interfaces.md)
+- [microvm.nix Handbook - Preparing a host](https://github.com/microvm-nix/microvm.nix/blob/main/doc/src/host.md)
+- [microvm.nix Handbook - Declarative MicroVMs](https://github.com/microvm-nix/microvm.nix/blob/main/doc/src/declarative.md)
+- [microvm.nix Handbook - Advanced network setup](https://github.com/microvm-nix/microvm.nix/blob/main/doc/src/advanced-network.md)
+- [microvm.nix Handbook - FAQ](https://github.com/microvm-nix/microvm.nix/blob/main/doc/src/faq.md)
+- [microvm.nix Handbook - systemd services](https://github.com/microvm-nix/microvm.nix/blob/main/doc/src/host-systemd.md)
+- [microvm.nix Options reference](https://github.com/microvm-nix/microvm.nix/blob/main/nixos-modules/microvm/options.nix)
