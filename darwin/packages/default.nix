@@ -31,7 +31,6 @@
 
       # System Tools
       "1password"
-      "docker-desktop"
       "zerotier-one"
 
       # Docs & Notes
