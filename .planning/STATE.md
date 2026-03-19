@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: MicroVM 运行 OpenClaw
-status: defining_requirements
+status: roadmap_created
 last_updated: "2026-03-19"
 progress:
-  total_phases: 0
+  total_phases: 4
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -23,27 +23,35 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-19 after v1.0, starting v1.1)
 
 **Core value:** 所有系统配置和软件包管理必须通过修改 Nix 配置文件完成，完全声明式，可复现
-**Current focus:** Defining requirements for v1.1
+**Current focus:** v1.1 — MicroVM 运行 OpenClaw (Roadmap created, awaiting phase planning)
 
 ---
 
 ## Milestone: v1.1 — MicroVM 运行 OpenClaw
 
-**Status:** Defining requirements
+**Status:** Roadmap created
 **Started:** 2026-03-19
 **Completed:** —
 
 **Phase Progress:**
 
-| Phase | Name | Status | Plans Complete |
-|-------|------|--------|----------------|
-| — | — | — | — |
+| Phase | Name | Status | Plans |
+|-------|------|--------|-------|
+| 4 | MicroVM 基础设施 | Not started | 0/5 |
+| 5 | 存储与持久化 | Not started | 0/4 |
+| 6 | 网络配置 | Not started | 0/4 |
+| 7 | openclaw 集成与运维 | Not started | 0/6 |
 
 ### Requirements Status
 
 | Category | Total | Complete | Pending |
 |----------|-------|----------|---------|
-| — | 0 | 0 | 0 |
+| MIC (MicroVM 基础设施) | 4 | 0 | 4 |
+| STO (存储和持久化) | 4 | 0 | 4 |
+| NET (网络配置) | 4 | 0 | 4 |
+| OCL (openclaw 集成) | 4 | 0 | 4 |
+| OPS (运维加固) | 4 | 0 | 4 |
+| **Total** | **20** | **0** | **20** |
 
 ---
 
@@ -64,14 +72,12 @@ See: .planning/PROJECT.md (updated 2026-03-19 after v1.0, starting v1.1)
 
 ### Decisions
 
-| Decision | Rationale | Phase |
-|----------|-----------|-------|
-| Phase numbering starts at 4 | v1.0 ended at phase 3, continuing sequence | Roadmap |
-| Coarse granularity | From config.json, combine related requirements | Roadmap |
-| 4 phases derived from requirement categories | COLIMA, OH, LLM, PERS natural groupings | Roadmap |
-| Colima via Homebrew | Project already uses Homebrew for macOS apps, follows existing pattern | 04-01 |
-| Init script for idempotent VM setup | Handles both first-run initialization and subsequent boots | 04-02 |
-| launchd agent with KeepAlive=false | Start once at login, don't restart supervisor | 04-02 |
+- 使用 SSH Agent Forwarding 而非在 NixOS 上运行 1Password
+- 使用 ssh-keygen -Y sign 代替 op-ssh-sign
+- NixOS SSH 配置不设置 IdentityAgent，使用默认的 $SSH_AUTH_SOCK
+- 平台特定的 git signer 配置放在 nixos/home/git.nix 中
+- Phase 7 合并 OCL + OPS 以满足粗粒度配置（粗粒度 3-5 阶段）
+- 阶段号从 4 开始（v1.0 结束于阶段 3）
 
 ### Todos
 
@@ -81,25 +87,45 @@ See: .planning/PROJECT.md (updated 2026-03-19 after v1.0, starting v1.1)
 
 ### Blockers
 
-- v1.1: MicroVM 方案待研究
-- v1.1: openclaw 运行需求待研究
+- v1.1: 路线图已创建，等待阶段 4 规划
+- v1.1: nix-openclaw home-manager 模块集成细节需要在阶段 7 规划时研究
 
 ---
 
 ## Session Continuity
 
-| Session | Date | Focus |
-|---------|------|-------|
-| 1 | 2026-03-20 | Roadmap creation |
+| File | Purpose |
+|------|---------|
+| `.planning/ROADMAP.md` | v1.1 阶段结构和成功标准 |
+| `.planning/STATE.md` | 本项目记忆文件 |
+| `.planning/REQUIREMENTS.md` | 需求与可追溯性 |
+| `.planning/PROJECT.md` | 核心价值和约束 |
+| `.planning/config.json` | 工作流配置 |
+| `.planning/research/SUMMARY.md` | 阶段识别研究背景 |
+| `nixos/sshd.nix` | NixOS SSH 服务器配置 (AllowAgentForwarding) |
+| `darwin/home/ssh.nix` | macOS SSH 客户端配置 (ForwardAgent for nixos) |
+| `nixos/home/git.nix` | NixOS git 签名配置 (ssh-keygen) |
+| `nixos/home/ssh.nix` | NixOS SSH 客户端配置 (empty matchBlocks) |
 
 ---
 
 ## Archive
 
-- `.planning/ROADMAP.md` — Phase structure and success criteria
-- `.planning/REQUIREMENTS.md` — v1.3 requirements with traceability
-- `.planning/research/SUMMARY.md` — Research findings
-- `.planning/research/PITFALLS.md` — Domain pitfalls
+| Date | Change | Reason |
+|------|--------|--------|
+| 2026-03-19 | v1.0 shipped | All 9 requirements complete |
+| 2026-03-19 | Phase 02.1 inserted | Emergency bug-fix for SSH agent signing failure |
+| 2026-03-19 | v1.1 roadmap created | 4 phases, 20 requirements mapped |
+
+## Decisions Log
+
+| Date | Decision | Rationale |
+|------|----------|-----------|
+| 2026-03-18 | 使用 ssh-keygen -Y sign 代替 op-ssh-sign | SSH agent forwarding 支持 ssh-keygen 但不支持 op-ssh-sign |
+| 2026-03-18 | AllowAgentForwarding 放在 AuthorizedKeysFile 之后 | 保持设置的逻辑分组 |
+| 2026-03-18 | macOS SSH config uses matchBlocks with forwardAgent=true for nixos host | Enables agent forwarding while preserving 1Password agent socket |
+| 2026-03-19 | Remove IdentityAgent from NixOS SSH config | NixOS doesn't run 1Password - SSH should use forwarded $SSH_AUTH_SOCK from macOS |
+| 2026-03-19 | Phase 7 combines OCL + OPS | Coarse granularity compression; app integration and ops hardening are sequential within phase |
 
 ---
 
@@ -114,9 +140,10 @@ See: .planning/PROJECT.md (updated 2026-03-19 after v1.0, starting v1.1)
 | 2026-03-19 | Phase 3 complete (1/1 plan) |
 | 2026-03-19 | v1.0 milestone shipped |
 | 2026-03-19 | v1.1 milestone started |
+| 2026-03-19 | v1.1 roadmap created (4 phases, 20 requirements) |
 
 ---
 
 *State initialized: 2026-03-18*
 *v1.0 shipped: 2026-03-19*
-*v1.1 started: 2026-03-19*
+*v1.1 roadmap created: 2026-03-19*

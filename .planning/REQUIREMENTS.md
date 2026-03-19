@@ -2,7 +2,7 @@
 
 **Milestone:** v1.1 — MicroVM 运行 OpenClaw
 **Created:** 2026-03-19
-**Status:** Defining requirements
+**Status:** Roadmap created
 
 ---
 
@@ -74,12 +74,34 @@
 
 ## Traceability
 
-*Requirements will be mapped to phases in ROADMAP.md after roadmap creation.*
+*Updated: 2026-03-19 after roadmap creation*
 
-| Requirement | Phase | Plan | Status |
-|-------------|-------|------|--------|
-| — | — | — | — |
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| MIC-01 | Phase 4 | Pending |
+| MIC-02 | Phase 4 | Pending |
+| MIC-03 | Phase 4 | Pending |
+| MIC-04 | Phase 4 | Pending |
+| STO-01 | Phase 5 | Pending |
+| STO-02 | Phase 5 | Pending |
+| STO-03 | Phase 5 | Pending |
+| STO-04 | Phase 5 | Pending |
+| NET-01 | Phase 6 | Pending |
+| NET-02 | Phase 6 | Pending |
+| NET-03 | Phase 6 | Pending |
+| NET-04 | Phase 6 | Pending |
+| OCL-01 | Phase 7 | Pending |
+| OCL-02 | Phase 7 | Pending |
+| OCL-03 | Phase 7 | Pending |
+| OCL-04 | Phase 7 | Pending |
+| OPS-01 | Phase 7 | Pending |
+| OPS-02 | Phase 7 | Pending |
+| OPS-03 | Phase 7 | Pending |
+| OPS-04 | Phase 7 | Pending |
+
+**Coverage:** 20/20 v1 requirements mapped ✓
 
 ---
 
 *Created: 2026-03-19*
+*Roadmap created: 2026-03-19*
