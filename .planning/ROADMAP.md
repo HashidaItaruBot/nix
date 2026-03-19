@@ -42,6 +42,16 @@ Plans:
 
 ---
 
+### Phase 02.1: Fix SSH agent signing failure for git operations (INSERTED)
+
+**Goal:** 验证和修复 SSH agent 基础的 git 签名配置
+**Requirements**: GIT-01, GIT-02
+**Depends on:** Phase 2
+**Plans:** 1 plan
+
+Plans:
+- [x] 02.1-01-PLAN.md — 配置 ssh-keygen 使用 ~/.ssh/id_ed25519.pub 进行 SSH agent 签名
+
 ## Phase 3: 验证
 
 **Goal:** 确保所有功能正常工作
@@ -77,6 +87,16 @@ Phase 3 验证整个流程。
 | 3 | ○ | 0/3 | 0% |
 
 **Overall:** 6/8 requirements complete
+
+### Phase 4: 修复 git SSH 认证问题导致无法拉取远端分支
+
+**Goal:** [To be planned]
+**Requirements**: TBD
+**Depends on:** Phase 3
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 4 to break down)
 
 ---
 *Roadmap created: 2026-03-18*
