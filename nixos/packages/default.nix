@@ -20,7 +20,6 @@
     qq
     protonup-qt
     pciutils
-    heroic
     mangohud
     netease-cloud-music-gtk
     waydroid-helper

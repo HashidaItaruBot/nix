@@ -18,6 +18,5 @@
     dive
     podman-tui
     podman-compose
-    podman-desktop
   ];
 }
