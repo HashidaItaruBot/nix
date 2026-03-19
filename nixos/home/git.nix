@@ -4,6 +4,8 @@
     changlong.zhao@outlook.com ${signingKey}
   '';
 in {
+  home.file.".ssh/id_ed25519.pub".text = signingKey;
+
   programs.git = {
     signing = {
       signer = "${pkgs.openssh}/bin/ssh-keygen";
