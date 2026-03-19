@@ -23,8 +23,8 @@
 ### 验证
 
 - [x] **VER-01**: SSH 连接后验证 SSH_AUTH_SOCK 可用
-- [ ] **VER-02**: git push/pull 认证正常工作
-- [ ] **VER-03**: git commit 签名正常工作
+- [x] **VER-02**: git push/pull 认证正常工作
+- [x] **VER-03**: git commit 签名正常工作
 
 ## v2 Requirements
 
@@ -50,14 +50,14 @@
 | GIT-01 | Phase 2 | Complete |
 | GIT-02 | Phase 2 | Complete |
 | VER-01 | Phase 3 | Complete |
-| VER-02 | Phase 3 | Pending |
-| VER-03 | Phase 3 | Pending |
+| VER-02 | Phase 3 | Complete |
+| VER-03 | Phase 3 | Complete |
 
 **Coverage:**
 - v1 requirements: 9 total (added VER-01, VER-02, VER-03)
 - Mapped to phases: 9
 - Unmapped: 0 ✓
-- Complete: 7/9
+- Complete: 9/9 ✓
 
 ---
 *Requirements defined: 2026-03-18*
