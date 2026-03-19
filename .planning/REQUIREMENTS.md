@@ -22,7 +22,7 @@
 
 ### 验证
 
-- [ ] **VER-01**: SSH 连接后验证 SSH_AUTH_SOCK 可用
+- [x] **VER-01**: SSH 连接后验证 SSH_AUTH_SOCK 可用
 - [ ] **VER-02**: git push/pull 认证正常工作
 - [ ] **VER-03**: git commit 签名正常工作
 
@@ -49,15 +49,15 @@
 | MAC-02 | Phase 1 | Complete |
 | GIT-01 | Phase 2 | Complete |
 | GIT-02 | Phase 2 | Complete |
-| VER-01 | Phase 3 | Pending |
+| VER-01 | Phase 3 | Complete |
 | VER-02 | Phase 3 | Pending |
 | VER-03 | Phase 3 | Pending |
 
 **Coverage:**
-- v1 requirements: 8 total
-- Mapped to phases: 8
+- v1 requirements: 9 total (added VER-01, VER-02, VER-03)
+- Mapped to phases: 9
 - Unmapped: 0 ✓
-- Complete: 6/8
+- Complete: 7/9
 
 ---
 *Requirements defined: 2026-03-18*
