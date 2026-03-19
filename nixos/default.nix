@@ -4,7 +4,8 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   imports = [
     ./hardware-configuration.nix
     ./packages
@@ -14,7 +15,6 @@
     ./podman.nix
     ./zerotier.nix
     ./sshd.nix
-    ./microvm
   ];
 
   networking = {
@@ -66,7 +66,7 @@
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {
-      emoji = ["Noto Color Emoji"];
+      emoji = [ "Noto Color Emoji" ];
       monospace = [
         "Sarasa Mono SC"
         "Noto Sans Mono CJK SC"
@@ -75,7 +75,7 @@
         "Sarasa Term SC"
         "Noto Sans CJK SC"
       ];
-      serif = ["Noto Serif CJK SC"];
+      serif = [ "Noto Serif CJK SC" ];
     };
     antialias = true;
     hinting.enable = true;
