@@ -76,6 +76,12 @@ Phase 2 Plan 01 complete. Continue with Phase 2 Plan 02 or verify end-to-end on 
 
 ---
 
+## Roadmap Evolution
+
+| Date | Change | Reason |
+|------|--------|--------|
+| 2026-03-19 | Phase 02.1 inserted after Phase 2: Fix SSH agent signing failure for git operations | URGENT - git pull failing with SSH signing error |
+
 ## Decisions Log
 
 | Date | Decision | Rationale |
