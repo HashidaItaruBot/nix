@@ -34,7 +34,7 @@
 
   # Podman machine auto-start via launchd agent
   launchd.user.agents.podman-start = {
-    command = "${./scripts/init-podman-machine.sh}";
+    command = "${self}/scripts/init-podman-machine.sh";
     serviceConfig = {
       KeepAlive = false;  # 只启动一次，不持续重启
       RunAtLoad = true;   # 登录时运行

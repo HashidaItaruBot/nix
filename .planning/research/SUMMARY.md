@@ -1,61 +1,70 @@
-# Research Summary: SSH Agent Forwarding
+# Research Summary: v1.3 Podman + OpenHands on macOS
 
-## Stack
+**Domain:** Container-based AI development environment
+**Researched:** 2026-03-20
+**Overall confidence:** HIGH
 
-| Component | Choice | Rationale |
-|-----------|--------|-----------|
-| macOS SSH Client | OpenSSH (系统自带) | 已有配置 |
-| NixOS SSH Server | OpenSSH | 已配置，需添加 AllowAgentForwarding |
-| Git 签名方式 | `ssh-keygen -Y sign` | 可通过 SSH agent 访问密钥，无需 1Password GUI |
+## Executive Summary
+
+This research investigated the technology stack required to run OpenHands (an AI-driven development agent) with Podman on macOS, integrated into the existing Nix configuration project.
+
+**Key findings:**
+1. **Podman** is the recommended container runtime for macOS - officially supported via Homebrew, Docker API compatible, and daemonless architecture
+2. **OpenHands** is distributed as a container image (`ghcr.io/openhands/openhands:latest`) that runs on port 3000 with WebSocket on 3001
+3. **litellm** (available in nixpkgs v1.80.0) provides LLM abstraction for multi-provider support including Aliyun Bailian (Qwen, Kimi)
+4. The existing Darwin Nix structure (`darwin/packages/`) can accommodate Podman installation alongside Homebrew
+
+**Critical integration point:** Podman on macOS requires a VM (`podman machine init` + `podman machine start`). This VM setup is a one-time initialization that must happen outside of Nix's declarative management.
 
 ## Key Findings
 
-### SSH Agent Forwarding 配置
+**Stack:** Podman (Homebrew) + OpenHands container + litellm (optional proxy)
+**Architecture:** Containerized AI agent with host volume mounts for persistence
+**Critical pitfall:** Podman machine VM must be initialized manually; Nix can only install the binary, not manage the VM lifecycle
 
-**macOS 端（客户端）**:
-```nix
-# darwin/home/ssh.nix
-programs.ssh.matchBlocks."<nixos-host>" = {
-  forwardAgent = true;
-};
-```
+## Implications for Roadmap
 
-**NixOS 端（服务器）**:
-```nix
-# nixos/sshd.nix
-services.openssh.settings.AllowAgentForwarding = true;
-```
+Based on research, suggested phase structure:
 
-### Git Commit 签名问题
+1. **Phase 1: Podman Installation** - Install and initialize Podman
+   - Addresses: Container runtime setup
+   - Avoids: VM initialization issues by doing it first
 
-当前 NixOS 配置使用 `op-ssh-sign`，但这需要 1Password GUI 运行。
+2. **Phase 2: OpenHands Container Definition** - Define container run configuration
+   - Addresses: Basic container execution, port mapping
+   - Avoids: Network/volume configuration confusion
 
-**解决方案**: 改用 `ssh-keygen -Y sign`，它可以通过 SSH agent 访问密钥。
+3. **Phase 3: LLM Backend Configuration** - Configure Aliyun Bailian via litellm
+   - Addresses: Qwen/Kimi model access
+   - Avoids: API key management complexity
 
-```nix
-# nixos/home/git.nix
-programs.git.signing.signer = "ssh-keygen -Y sign -n git -f ~/.ssh/agent-key";
-```
+4. **Phase 4: Workspace + Persistence** - Volume mounts and git integration
+   - Addresses: Working directory persistence, conversation history
+   - Avoids: Data loss between container restarts
 
-**注意**: 需要创建一个脚本或配置，让 `ssh-keygen` 使用转发的 agent。
+**Phase ordering rationale:**
+- Podman must be installed and running before any container work
+- Basic container execution validates the runtime before adding complexity
+- LLM configuration is the primary value driver - test early
+- Workspace/persistence is operational concern - can iterate
 
-## Table Stakes
+**Research flags for phases:**
+- Phase 1: Standard patterns (podman machine), unlikely to need research
+- Phase 2: Standard container run, unlikely to need research
+- Phase 3: May need deeper litellm + Aliyun API research
+- Phase 4: Standard volume mounts, unlikely to need research
 
-- [x] macOS 1Password SSH agent 已配置
-- [x] NixOS git 签名已配置（但 signer 需要修改）
-- [x] 现有 Nix 配置结构清晰
+## Confidence Assessment
 
-## Pitfalls
+| Area | Confidence | Notes |
+|------|------------|-------|
+| Stack | HIGH | Verified with official docs, nixpkgs, GitHub sources |
+| Features | HIGH | OpenHands configuration from official repository |
+| Architecture | HIGH | Standard container patterns, well documented |
+| Pitfalls | MEDIUM | Based on Podman documentation; real-world issues may vary |
 
-| Issue | Prevention |
-|-------|------------|
-| 忘记在 sshd 启用 AllowAgentForwarding | 配置清单检查 |
-| ssh-keygen 签名需要指定公钥路径 | 使用 SSH_AUTH_SOCK 环境变量 |
-| SSH agent socket 路径在远程与本地不同 | 通过环境变量动态获取 |
+## Gaps to Address
 
-## Build Order
-
-1. 配置 NixOS sshd 允许 Agent Forwarding
-2. 配置 macOS SSH 客户端启用 ForwardAgent
-3. 修改 NixOS git signer 使用 ssh-keygen
-4. 验证整个流程
+- OpenHands V1 (new SDK-based architecture) vs V0 (legacy) differences - current research based on V1 codebase but some configuration files still reference legacy V0
+- Aliyun Bailian specific litellm configuration - needs validation with actual API keys
+- Podman machine VM resource allocation (CPU/RAM) defaults may need tuning
