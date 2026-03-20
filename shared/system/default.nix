@@ -2,7 +2,6 @@
 {
   imports = [
     ./sops.nix
-    ./podman.nix
   ];
 
   environment.systemPackages = with pkgs; [
