@@ -1,114 +1,89 @@
----
-gsd_state_version: 1.0
-milestone: v1.3
-milestone_name: Podman + OpenHands on macOS
-status: defining_requirements
-last_updated: "2026-03-20T00:00:00.000Z"
-progress:
-  total_phases: 0
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
----
+# STATE: v1.3 Podman + OpenHands on macOS
 
-# STATE.md
-
-**Project:** SSH Agent Forwarding 配置
-**Updated:** 2026-03-20
+**Project:** Nix Configuration Project
+**Milestone:** v1.3 — Podman + OpenHands on macOS
 
 ---
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-03-20 after v1.3 started)
-
-**Core value:** 让 NixOS 上的 git 操作能够无缝使用 macOS 上的 1Password SSH 密钥
-**Current focus:** Defining v1.3 requirements (Podman + OpenHands)
+| Field | Value |
+|-------|-------|
+| Core Value | 在 macOS 上使用 Podman 运行 OpenHands AI 编程助手，通过 Web UI 访问，配置阿里百炼 LLM 后端 |
+| Current Focus | Phase 4: Podman 安装与初始化 |
+| Granularity | Coarse |
+| Started | 2026-03-20 |
 
 ---
 
-## Milestone: v1.3 — Podman + OpenHands on macOS
+## Current Position
 
-**Status:** DEFINING REQUIREMENTS
-**Started:** 2026-03-20
-**Completed:** TBD
+| Field | Value |
+|-------|-------|
+| Current Phase | Phase 4 (not started) |
+| Current Plan | TBD |
+| Status | Not started |
+| Progress | 0/4 phases complete |
 
-### Phase Progress
+**Phase Progress:**
 
-| Phase | Name | Status | Plans Complete |
-|-------|------|--------|----------------|
-| TBD | — | ○ Pending | 0/0 |
+```
+[----|----|----|----]
+ 4    5    6    7
+ ^
+ Current
+```
 
-### Requirements Status
+---
 
-| Category | Total | Complete | Pending |
-|----------|-------|----------|---------|
-| **Total** | 0 | 0 | 0 |
+## Performance Metrics
+
+| Metric | Value |
+|--------|-------|
+| Phases Complete | 0/4 |
+| Plans Complete | 0/20 |
+| Tasks Complete | 0/X |
+| Requirements Complete | 0/20 |
 
 ---
 
 ## Accumulated Context
 
-### Key Decisions
+### Decisions
 
-- 使用 SSH Agent Forwarding 而非在 NixOS 上运行 1Password
-- 使用 ssh-keygen -Y sign 代替 op-ssh-sign
-- NixOS SSH 配置不设置 IdentityAgent，使用默认的 $SSH_AUTH_SOCK
-- 平台特定的 git signer 配置放在 nixos/home/git.nix 中
+| Decision | Rationale | Phase |
+|----------|-----------|-------|
+| Phase numbering starts at 4 | v1.0 ended at phase 3, continuing sequence | Roadmap |
+| Coarse granularity | From config.json, combine related requirements | Roadmap |
+| 4 phases derived from requirement categories | PODMAN, OH, LLM, PERS natural groupings | Roadmap |
 
-### Resolved Blockers
+### Todos
 
-- ✓ NixOS SSH 配置中硬编码的 1Password IdentityAgent 路径已移除
-- ✓ 用户 ~/.ssh/config 中的错误 IdentityAgent 配置已清理
-- ✓ gpg.ssh.allowedSignersFile 配置已添加
+- [ ] Begin Phase 4 planning
+- [ ] Validate Podman installation method (Homebrew vs Nix)
+- [ ] Confirm Podman machine resource requirements
 
-### Open Items
+### Blockers
 
-- Phase 4 (修复 git SSH 认证问题) — 需要规划和执行
-
----
-
-## Key Files
-
-| File | Purpose |
-|------|---------|
-| `nixos/sshd.nix` | NixOS SSH 服务器配置 (AllowAgentForwarding) |
-| `darwin/home/ssh.nix` | macOS SSH 客户端配置 (ForwardAgent for nixos) |
-| `nixos/home/git.nix` | NixOS git 签名配置 (ssh-keygen) |
-| `nixos/home/ssh.nix` | NixOS SSH 客户端配置 (empty matchBlocks) |
+None currently.
 
 ---
 
-## Roadmap Evolution
+## Session Continuity
 
-| Date | Change | Reason |
-|------|--------|--------|
-| 2026-03-19 | v1.0 shipped | All 9 requirements complete |
-| 2026-03-19 | Phase 02.1 inserted | Emergency bug-fix for SSH agent signing failure |
-
-## Decisions Log
-
-| Date | Decision | Rationale |
-|------|----------|-----------|
-| 2026-03-18 | 使用 ssh-keygen -Y sign 代替 op-ssh-sign | SSH agent forwarding 支持 ssh-keygen 但不支持 op-ssh-sign |
-| 2026-03-18 | AllowAgentForwarding 放在 AuthorizedKeysFile 之后 | 保持设置的逻辑分组 |
-| 2026-03-18 | macOS SSH config uses matchBlocks with forwardAgent=true for nixos host | Enables agent forwarding while preserving 1Password agent socket |
-| 2026-03-19 | Remove IdentityAgent from NixOS SSH config | NixOS doesn't run 1Password - SSH should use forwarded $SSH_AUTH_SOCK from macOS |
+| Session | Date | Focus |
+|---------|------|-------|
+| 1 | 2026-03-20 | Roadmap creation |
 
 ---
 
-## Session Log
+## Archive
 
-| Timestamp | Action |
-|-----------|--------|
-| 2026-03-18 | Phase 1 started |
-| 2026-03-18 | Phase 1 complete (2/2 plans) |
-| 2026-03-18 | Phase 2 complete (1/1 plan) |
-| 2026-03-19 | Phase 02.1 inserted and complete |
-| 2026-03-19 | Phase 3 complete (1/1 plan) |
-| 2026-03-19 | v1.0 milestone shipped |
+- `.planning/ROADMAP.md` — Phase structure and success criteria
+- `.planning/REQUIREMENTS.md` — v1.3 requirements with traceability
+- `.planning/research/SUMMARY.md` — Research findings
+- `.planning/research/PITFALLS.md` — Domain pitfalls
 
 ---
 
-*State initialized: 2026-03-18*
-*v1.0 shipped: 2026-03-19*
+*Last updated: 2026-03-20*

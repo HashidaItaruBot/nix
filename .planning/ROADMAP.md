@@ -1,111 +1,135 @@
-# Roadmap: SSH Agent Forwarding 配置
+# Roadmap: v1.3 Podman + OpenHands on macOS
 
-**Created:** 2026-03-18
-**Current Milestone:** v1.0 ✅ SHIPPED
-
----
-
-## Milestones
-
-- ✅ **v1.0 SSH Agent Forwarding** — Phases 1-3 (shipped 2026-03-19)
-- 📋 **v1.1 Enhancements** — Phase 4+ (planned)
+**Created:** 2026-03-20
+**Core Value:** 在 macOS 上使用 Podman 运行 OpenHands AI 编程助手，通过 Web UI 访问，配置阿里百炼 LLM 后端
 
 ---
 
 ## Phases
 
-<details>
-<summary>✅ v1.0 SSH Agent Forwarding (Phases 1-3) — SHIPPED 2026-03-19</summary>
-
-### Phase 1: SSH 配置
-
-**Goal:** 配置 SSH 服务端和客户端支持 Agent Forwarding
-
-**Requirements:** SSHD-01, SSHD-02, MAC-01, MAC-02
-
-**Plans:** 2 plans
-
-Plans:
-- [x] 01-01-PLAN.md — NixOS sshd 启用 AllowAgentForwarding (b70f8e5)
-- [x] 01-02-PLAN.md — macOS SSH 配置 ForwardAgent for nixos (dfa77df)
+- [ ] **Phase 4: Podman 安装与初始化** - 安装 Podman 并配置可运行容器的虚拟机环境
+- [ ] **Phase 5: OpenHands 容器运行** - 使用官方镜像启动 OpenHands 容器，Web UI 可访问
+- [ ] **Phase 6: 阿里百炼 LLM 后端配置** - 配置 Qwen/Kimi 模型，API 认证通过
+- [ ] **Phase 7: 持久化与工作区集成** - 配置卷挂载，对话历史和工作区文件持久化
 
 ---
 
-### Phase 2: Git 签名配置
+## Phase Details
 
-**Goal:** 配置 NixOS git 使用转发的 SSH agent 进行签名
+### Phase 4: Podman 安装与初始化
 
-**Requirements:** GIT-01, GIT-02
+**Goal:** Podman 在 macOS 上可运行容器
 
-**Plans:** 1 plan
+**Depends on:** Nothing (first phase of v1.3)
 
-Plans:
-- [x] 02-01-PLAN.md — 配置 git signer 使用 ssh-keygen (736c979)
+**Requirements:** PODMAN-01, PODMAN-02, PODMAN-03, PODMAN-04, PODMAN-05
 
----
+**Success Criteria** (what must be TRUE):
+  1. `podman --version` 返回已安装版本号
+  2. `podman machine ls` 显示至少一个 machine 状态为 "Running"
+  3. Machine 资源配置为 8GB+ RAM, 4+ CPUs
+  4. `podman run --rm hello-world` 成功执行并无错误退出
+  5. `podman ps` 可正常列出容器
 
-### Phase 02.1: Fix SSH agent signing failure for git operations (INSERTED)
-
-**Goal:** 验证和修复 SSH agent 基础的 git 签名配置
-**Requirements:** GIT-01, GIT-02
-**Depends on:** Phase 2
-**Plans:** 1 plan
-
-Plans:
-- [x] 02.1-01-PLAN.md — 配置 ssh-keygen 使用 ~/.ssh/id_ed25519.pub 进行 SSH agent 签名
+**Plans:** TBD
 
 ---
 
-### Phase 3: 验证
+### Phase 5: OpenHands 容器运行
 
-**Goal:** 确保所有功能正常工作
+**Goal:** OpenHands 容器正常运行，Web UI 可通过浏览器访问
 
-**Requirements:** VER-01, VER-02, VER-03
+**Depends on:** Phase 4 (Podman 运行环境)
 
-**Plans:** 1 plan
+**Requirements:** OH-01, OH-02, OH-03, OH-04, OH-05
 
-Plans:
-- [x] 03-01-PLAN.md — 验证 SSH Agent Forwarding 和 Git 签名 (VER-01/VER-02/VER-03 passed)
+**Success Criteria** (what must be TRUE):
+  1. 使用 `ghcr.io/openhands/openhands:latest` 镜像启动容器
+  2. 浏览器访问 `http://localhost:3000` 显示 OpenHands Web UI
+  3. 容器绑定到 `0.0.0.0:3000` (非 `127.0.0.1`)
+  4. 容器传递 LLM_API_KEY, LLM_MODEL, LLM_BASE_URL 环境变量
+  5. 容器启动后无错误退出，日志正常
 
----
-
-**Phase Dependency:**
-```
-Phase 1 ──► Phase 2 ──► Phase 3
-```
-
-</details>
+**Plans:** TBD
 
 ---
 
-### v1.1 Enhancements (Planned)
+### Phase 6: 阿里百炼 LLM 后端配置
 
-#### Phase 4: 修复 git SSH 认证问题导致无法拉取远端分支
+**Goal:** OpenHands 使用阿里百炼 LLM (qwen3.5-plus, kimi-k2.5) 完成 AI 任务
 
-**Goal:** [To be planned]
-**Requirements:** TBD
-**Depends on:** Phase 3
-**Plans:** 0 plans
+**Depends on:** Phase 5 (OpenHands 容器运行)
 
-Plans:
-- [ ] TBD (run /gsd:plan-phase 4 to break down)
+**Requirements:** LLM-01, LLM-02, LLM-03, LLM-04, LLM-05
 
----
+**Success Criteria** (what must be TRUE):
+  1. LLM_MODEL 配置为 `alibaba/qwen-plus` 或等效标识
+  2. LLM_BASE_URL 配置为 `https://dashscope.aliyuncs.com/compatible-mode/v1`
+  3. API Key 通过环境变量正确传递到容器
+  4. OpenHands 可调用 qwen3.5-plus 模型完成任务
+  5. OpenHands 可调用 kimi-k2.5 模型完成任务 (可选)
 
-## Progress Tracking
-
-| Phase | Milestone | Status | Plans | Progress |
-|-------|-----------|--------|-------|----------|
-| 1 | v1.0 | ✅ Complete | 2/2 | 100% |
-| 2 | v1.0 | ✅ Complete | 1/1 | 100% |
-| 02.1 | v1.0 | ✅ Complete | 1/1 | 100% |
-| 3 | v1.0 | ✅ Complete | 1/1 | 100% |
-| 4 | v1.1 | 📋 Planned | 0/0 | 0% |
-
-**Overall:** v1.0 shipped — 9/9 requirements complete
+**Plans:** TBD
 
 ---
 
-*Roadmap created: 2026-03-18*
-*v1.0 shipped: 2026-03-19*
-*See .planning/milestones/v1.0-ROADMAP.md for full v1.0 details*
+### Phase 7: 持久化与工作区集成
+
+**Goal:** 工作区目录和对话历史在容器重启后保留
+
+**Depends on:** Phase 5 (OpenHands 容器运行)
+
+**Requirements:** PERS-01, PERS-02, PERS-03, PERS-04, PERS-05
+
+**Success Criteria** (what must be TRUE):
+  1. `~/.openhands` 目录挂载到容器，配置文件持久化
+  2. 工作区目录 (如 `~/projects/myapp`) 挂载到容器 `/workspace`
+  3. 卷挂载使用 SELinux 标签 (`:z` 或 `:Z`)
+  4. 工作区路径为 `/Users` 下的绝对路径
+  5. 容器重启后，之前的对话历史仍然可用
+
+**Plans:** TBD
+
+---
+
+## Progress Table
+
+| Phase | Plans Complete | Status | Completed |
+|-------|----------------|--------|-----------|
+| 4. Podman 安装与初始化 | 0/5 | Not started | - |
+| 5. OpenHands 容器运行 | 0/5 | Not started | - |
+| 6. 阿里百炼 LLM 后端配置 | 0/5 | Not started | - |
+| 7. 持久化与工作区集成 | 0/5 | Not started | - |
+
+---
+
+## Requirement Coverage
+
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| PODMAN-01 | Phase 4 | Pending |
+| PODMAN-02 | Phase 4 | Pending |
+| PODMAN-03 | Phase 4 | Pending |
+| PODMAN-04 | Phase 4 | Pending |
+| PODMAN-05 | Phase 4 | Pending |
+| OH-01 | Phase 5 | Pending |
+| OH-02 | Phase 5 | Pending |
+| OH-03 | Phase 5 | Pending |
+| OH-04 | Phase 5 | Pending |
+| OH-05 | Phase 5 | Pending |
+| LLM-01 | Phase 6 | Pending |
+| LLM-02 | Phase 6 | Pending |
+| LLM-03 | Phase 6 | Pending |
+| LLM-04 | Phase 6 | Pending |
+| LLM-05 | Phase 6 | Pending |
+| PERS-01 | Phase 7 | Pending |
+| PERS-02 | Phase 7 | Pending |
+| PERS-03 | Phase 7 | Pending |
+| PERS-04 | Phase 7 | Pending |
+| PERS-05 | Phase 7 | Pending |
+
+**Coverage:** 20/20 v1.3 requirements mapped ✓
+
+---
+
+*Last updated: 2026-03-20*

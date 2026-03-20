@@ -73,26 +73,26 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PODMAN-01 | Phase 1 | Pending |
-| PODMAN-02 | Phase 1 | Pending |
-| PODMAN-03 | Phase 1 | Pending |
-| PODMAN-04 | Phase 1 | Pending |
-| PODMAN-05 | Phase 1 | Pending |
-| OH-01 | Phase 2 | Pending |
-| OH-02 | Phase 2 | Pending |
-| OH-03 | Phase 2 | Pending |
-| OH-04 | Phase 2 | Pending |
-| OH-05 | Phase 2 | Pending |
-| LLM-01 | Phase 3 | Pending |
-| LLM-02 | Phase 3 | Pending |
-| LLM-03 | Phase 3 | Pending |
-| LLM-04 | Phase 3 | Pending |
-| LLM-05 | Phase 3 | Pending |
-| PERS-01 | Phase 4 | Pending |
-| PERS-02 | Phase 4 | Pending |
-| PERS-03 | Phase 4 | Pending |
-| PERS-04 | Phase 4 | Pending |
-| PERS-05 | Phase 4 | Pending |
+| PODMAN-01 | Phase 4 | Pending |
+| PODMAN-02 | Phase 4 | Pending |
+| PODMAN-03 | Phase 4 | Pending |
+| PODMAN-04 | Phase 4 | Pending |
+| PODMAN-05 | Phase 4 | Pending |
+| OH-01 | Phase 5 | Pending |
+| OH-02 | Phase 5 | Pending |
+| OH-03 | Phase 5 | Pending |
+| OH-04 | Phase 5 | Pending |
+| OH-05 | Phase 5 | Pending |
+| LLM-01 | Phase 6 | Pending |
+| LLM-02 | Phase 6 | Pending |
+| LLM-03 | Phase 6 | Pending |
+| LLM-04 | Phase 6 | Pending |
+| LLM-05 | Phase 6 | Pending |
+| PERS-01 | Phase 7 | Pending |
+| PERS-02 | Phase 7 | Pending |
+| PERS-03 | Phase 7 | Pending |
+| PERS-04 | Phase 7 | Pending |
+| PERS-05 | Phase 7 | Pending |
 
 **Coverage:**
 - v1.3 requirements: 20 total
@@ -101,4 +101,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-03-20*
-*Last updated: 2026-03-20 after initial definition*
+*Last updated: 2026-03-20 after roadmap creation*
