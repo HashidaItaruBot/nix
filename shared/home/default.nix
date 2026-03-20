@@ -10,7 +10,6 @@
     ./claude-code.nix
     ./codex.nix
     ./podman.nix
-    ./openhands.nix
   ];
 
   home = {
