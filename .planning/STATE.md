@@ -1,56 +1,49 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: SSH Agent Forwarding 配置
-status: complete
-last_updated: "2026-03-19T00:00:00.000Z"
+milestone: v1.3
+milestone_name: Podman + OpenHands on macOS
+status: defining_requirements
+last_updated: "2026-03-20T00:00:00.000Z"
 progress:
-  total_phases: 3
-  completed_phases: 3
-  total_plans: 4
-  completed_plans: 4
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
 ---
 
 # STATE.md
 
 **Project:** SSH Agent Forwarding 配置
-**Updated:** 2026-03-19
+**Updated:** 2026-03-20
 
 ---
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-03-19 after v1.0)
+See: .planning/PROJECT.md (updated 2026-03-20 after v1.3 started)
 
 **Core value:** 让 NixOS 上的 git 操作能够无缝使用 macOS 上的 1Password SSH 密钥
-**Current focus:** Planning v1.1 Enhancements
+**Current focus:** Defining v1.3 requirements (Podman + OpenHands)
 
 ---
 
-## Milestone: v1.0 — Complete ✅
+## Milestone: v1.3 — Podman + OpenHands on macOS
 
-**Status:** SHIPPED 2026-03-19
-**Started:** 2026-03-18
-**Completed:** 2026-03-19
+**Status:** DEFINING REQUIREMENTS
+**Started:** 2026-03-20
+**Completed:** TBD
 
 ### Phase Progress
 
 | Phase | Name | Status | Plans Complete |
 |-------|------|--------|----------------|
-| 1 | SSH 配置 | ✅ Complete | 2/2 |
-| 2 | Git 签名配置 | ✅ Complete | 1/1 |
-| 02.1 | Fix SSH agent signing (inserted) | ✅ Complete | 1/1 |
-| 3 | 验证 | ✅ Complete | 1/1 |
+| TBD | — | ○ Pending | 0/0 |
 
 ### Requirements Status
 
 | Category | Total | Complete | Pending |
 |----------|-------|----------|---------|
-| SSHD | 2 | 2 | 0 |
-| MAC | 2 | 2 | 0 |
-| GIT | 2 | 2 | 0 |
-| VER | 3 | 3 | 0 |
-| **Total** | 9 | 9 | 0 |
+| **Total** | 0 | 0 | 0 |
 
 ---
 

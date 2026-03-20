@@ -4,6 +4,8 @@
 
 为 macOS 配置 SSH agent forwarding，使其通过 SSH 连接到 NixOS 时能够使用本地 1Password 的 SSH 密钥。
 
+**v1.3 新增：** 在 macOS 上使用 Podman 运行 OpenHands（AI 编程助手），通过 Web UI 访问，配置阿里百炼 LLM 后端。
+
 ## Core Value
 
 让 NixOS 上的 git 操作（push/pull/commit 签名）能够无缝使用 macOS 上的 1Password SSH 密钥。
@@ -17,7 +19,15 @@
 - ✓ 验证 git push/pull 能正常使用转发密钥 — v1.0
 - ✓ 验证 git commit SSH 签名能正常工作 — v1.0
 
-### Active
+### Active (v1.3)
+
+- [ ] 在 macOS 上使用 Podman 运行 OpenHands
+- [ ] 配置阿里百炼 LLM 后端（qwen3.5-plus、kimi-k2.5 等）
+- [ ] Web UI 访问
+- [ ] 工作区挂载 + git 集成
+- [ ] 持久化存储配置
+
+### Deferred (from v1.0)
 
 - [ ] Phase 4: 修复 git SSH 认证问题导致无法拉取远端分支 (TBD)
 
@@ -36,6 +46,17 @@
 - macOS SSH 客户端为 nixos 主机配置 ForwardAgent=true
 - NixOS git 配置使用 ssh-keygen 进行 SSH 签名
 - 所有 9 个 v1 requirements 验证通过
+
+**Current Milestone: v1.3 — Podman + OpenHands on macOS**
+
+**Goal:** 在 macOS 上使用 Podman 运行 OpenHands AI 编程助手，通过 Web UI 访问，配置阿里百炼 LLM 后端
+
+**Target features:**
+- Podman 安装与配置
+- OpenHands 容器定义与运行
+- 阿里百炼 LLM 后端配置（qwen3.5-plus、kimi-k2.5 等）
+- Web UI 访问（端口 3000/3001）
+- 工作区挂载与持久化存储
 
 **Codebase:**
 - 3,162 LOC Nix
