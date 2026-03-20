@@ -32,7 +32,11 @@
 4. MicroVM 配置使用 cloud-hypervisor 作为 hypervisor
 5. MicroVM 分配 2GB 内存并稳定运行
 
-**Plans**: TBD
+**Plans**: 2 plans
+
+**Plans:**
+- [ ] 04-01-PLAN.md — 创建 MicroVM 基础设施配置文件 (Wave 1, MIC-01/03/04)
+- [ ] 04-02-PLAN.md — 验证 MicroVM 可启动和 console 访问 (Wave 2, MIC-02)
 
 ---
 
@@ -93,7 +97,7 @@
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 4. MicroVM 基础设施 | 0/5 | Not started | - |
+| 4. MicroVM 基础设施 | 0/2 | Planned | - |
 | 5. 存储与持久化 | 0/4 | Not started | - |
 | 6. 网络配置 | 0/4 | Not started | - |
 | 7. openclaw 集成与运维 | 0/6 | Not started | - |
