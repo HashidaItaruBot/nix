@@ -31,11 +31,11 @@
   4. `docker run --rm hello-world` 成功执行并无错误退出 (Colima 提供 Docker 兼容 API)
   5. `docker ps` 可正常列出容器
 
-**Plans:** 2/3 plans executed
+**Plans:** 3 plans
 
 Plans:
 - [ ] 04-01-PLAN.md — 安装 Colima，创建验证脚本
-- [ ] 04-02-PLAN.md — 配置 Colima VM 初始化和 launchd 自动启动
+- [ ] 04-02-PLAN.md — 配置 Colima VM 初始化和自动启动
 - [ ] 04-03-PLAN.md — 验证 Colima 完整功能（checkpoint）
 
 ---
@@ -101,7 +101,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 4. Colima 安装与初始化 | 2/3 | In Progress|  |
+| 4. Colima 安装与初始化 | 0/3 | In Progress|  |
 | 5. OpenHands 容器运行 | 0/5 | Not started | - |
 | 6. 阿里百炼 LLM 后端配置 | 0/5 | Not started | - |
 | 7. 持久化与工作区集成 | 0/5 | Not started | - |
