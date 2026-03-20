@@ -57,6 +57,7 @@
       "moonlight"
       "steam"
       "codex-app"
+      "docker-desktop"
     ];
   };
 }
