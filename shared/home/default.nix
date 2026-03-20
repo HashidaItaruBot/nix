@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   imports = [
     ./ssh.nix
     ./git.nix
@@ -7,6 +8,7 @@
     ./direnv.nix
     ./opencode.nix
     ./claude-code.nix
+    ./codex.nix
   ];
 
   home = {

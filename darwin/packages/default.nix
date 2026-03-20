@@ -56,6 +56,7 @@
       "clash-verge-rev"
       "moonlight"
       "steam"
+      "codex-app"
     ];
   };
 }
