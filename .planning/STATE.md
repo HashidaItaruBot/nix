@@ -85,6 +85,12 @@ progress:
 
 None currently.
 
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 260320-ohh | 在 macOS 上面使用容器运行 OpenHands (Colima) | 2026-03-20 | da8ab16 | [260320-ohh-macos-openhands](./quick/260320-ohh-macos-openhands-https-github-com-openhan/) |
+
 ---
 
 ## Session Continuity
