@@ -2,10 +2,12 @@
   pkgs,
   inputs,
   ...
-}: {
+}:
+{
   imports = [
     ./flatpak.nix
     ./podman.nix
+    ./openhands.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -33,7 +35,7 @@
 
   programs._1password-gui = {
     enable = true;
-    polkitPolicyOwners = ["zhaochanglong"];
+    polkitPolicyOwners = [ "zhaochanglong" ];
   };
 
   programs.steam = {
