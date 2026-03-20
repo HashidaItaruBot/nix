@@ -1,4 +1,4 @@
-# Phase 4: Podman 安装与初始化 - 上下文
+# Phase 4: Colima 安装与初始化 - 上下文
 
 **Gathered:** 2026-03-20
 **Status:** Ready for planning
@@ -6,14 +6,14 @@
 <domain>
 ## Phase Boundary
 
-在 macOS 上使用 Nix 声明式配置安装 Podman，初始化并启动 Podman machine，使其能够运行容器。这是 v1.3 的第一个 phase。
+在 macOS 上使用 Nix 声明式配置安装 Colima，初始化并启动 Colima machine，使其能够运行 Docker 容器。这是 v1.3 的第一个 phase。
 
 **Success Criteria:**
-1. `podman --version` 返回已安装版本号
-2. `podman machine ls` 显示至少一个 machine 状态为 "Running"
-3. Machine 资源配置为 8GB+ RAM, 4+ CPUs
-4. `podman run --rm hello-world` 成功执行并无错误退出
-5. `podman ps` 可正常列出容器
+1. `colima --version` 返回已安装版本号
+2. `colima status` 显示 VM 状态为 "Running"
+3. VM 资源配置为 8GB+ RAM, 4+ CPUs
+4. `docker run --rm hello-world` 成功执行并无错误退出 (Colima 提供 Docker 兼容 API)
+5. `docker ps` 可正常列出容器
 
 </domain>
 
@@ -21,49 +21,48 @@
 ## Implementation Decisions
 
 ### 安装方式
-- 通过 Nix 配置声明式安装 Podman
-- 在 darwin/packages 或 homebrew 配置中添加 podman
-- 符合项目的声明式原则，不手动执行 `brew install`
+- 通过 Homebrew cask 在 darwin/packages/default.nix 中添加 Colima
+- 系统级安装，符合项目现有的 Homebrew 模式
+- 不单独创建 colima.nix 模块，直接在 packages 中配置
 
-### Machine 资源配置
-- 声明式固定配置：8GB RAM, 4 CPUs
-- 配置在 Nix 表达式中定义，每次 rebuild 时自动应用
-- 修改资源配置需要 rebuild 配置
+### VM 初始化方式
+- 通过 home-manager 模块管理 Colima 配置
+- 创建 darwin/home/colima.nix 模块
+- 在 zhaochanglong.nix 中导入 colima 模块
+- 配置自动处理 VM 初始化和启动
 
-### Machine 启动方式
-- 配置 launchd agent 实现自动启动
-- 系统启动后 Podman machine 自动运行
-- 无需手动执行 `podman machine start`
+### VM 资源配置
+- 8GB RAM, 4 CPUs, 100GB disk（OpenHands 推荐最低配置）
+- 配置在 home-manager 模块中声明式定义
 
-### 网络配置
-- 使用 macOS Podman 默认 NAT + gvproxy
-- 端口映射通过 gvproxy 配置实现
-- 不配置桥接模式
+### 自动启动
+- 使用 home-manager 的 autoStart 选项（如有）
+- 或配置 launchd agent 作为备选方案
+- 用户登录时自动启动 Colima machine
 
 ### 验证方式
-- 创建验证脚本依次检查：
-  - `podman --version`
-  - `podman machine ls`
-  - `podman run --rm hello-world`
-  - `podman ps`
+- 手动执行验证命令
+- 不创建专门的验证脚本
+- 用户按 checklist 逐项验证
 
 ### Claude's Discretion
-- 验证脚本的具体实现细节
-- launchd plist 文件的具体配置参数
-- gvproxy 的高级配置选项（如有需要）
+- home-manager colima 模块的具体实现细节
+- 配置参数的具体命名和结构
+- 错误处理和日志配置
 
 </decisions>
 
 <canonical_refs>
 ## Canonical References
 
-### Podman 配置
-- `nixos/podman.nix` — NixOS Podman 配置参考（已有）
-- `darwin/packages/default.nix` — macOS packages 配置入口
-- `darwin/default.nix` — Darwin 系统配置入口
+### Colima 配置
+- `docs/openhands-run.md` — Colima 安装和初始化详细步骤
+- `darwin/packages/default.nix` — Homebrew packages 配置入口
+- `darwin/home/zhaochanglong.nix` — home-manager 用户配置入口
 
 ### 外部参考
-- 无外部 spec/ADR — 需求已在 REQUIREMENTS.md 中完整捕获
+- [Colima GitHub](https://github.com/abiosoft/colima) — 官方文档和配置选项
+- 无其他外部 spec/ADR — 需求已在 REQUIREMENTS.md 中完整捕获
 
 </canonical_refs>
 
@@ -71,17 +70,18 @@
 ## Existing Code Insights
 
 ### 现有配置模式
-- darwin/ 目录存放 macOS 配置
-- darwin/packages/default.nix 使用 Homebrew cask
-- darwin/default.nix 是主配置入口
+- darwin/packages/default.nix 使用 Homebrew casks 安装应用
+- darwin/home/zhaochanglong.nix 导入 git.nix, ssh.nix 等模块
+- shared/home/openhands.nix 已引用 colima 包（作为依赖）
 
 ### 可复用模式
-- Homebrew cask 配置已在 darwin/packages/default.nix 中建立
-- launchd 服务配置可参考现有 agent 模式（如有）
+- Homebrew cask 配置已在 packages/default.nix 中建立
+- home-manager 模块模式（git.nix, ssh.nix）可参考
 
 ### 集成点
-- Podman package 需要添加到 darwin/packages 或 homebrew 配置
-- launchd agent 需要集成到 darwin/default.nix 或独立模块
+- Colima package 需要添加到 darwin/packages/default.nix 或 home-manager 配置
+- home-manager colima 模块需要创建并导入到 zhaochanglong.nix
+- 可能需要配置 Docker socket 权限
 
 </code_context>
 
@@ -90,18 +90,20 @@
 
 - "符合项目的声明式原则" — 所有配置通过 Nix 管理
 - 配置应可重复验证
+- 参考 docs/openhands-run.md 中的详细步骤
 
 </specifics>
 
 <deferred>
 ## Deferred Ideas
 
-- Podman machine 资源配置的手动调整方案 — 当前选择声明式，defer 手动方案
-- 桥接网络模式 — 当前选择默认 NAT，defer 桥接模式
+- 手动初始化脚本方案 — 当前选择 home-manager 模块，defer 脚本方案
+- 高配 VM 资源（16GB/8CPU）— 当前选择默认配置，可后续调整
+- Colima 高级配置（网络、镜像存储位置）— 当前选择默认值
 
 </deferred>
 
 ---
 
-*Phase: 04-podman-install*
+*Phase: 04-colima-install*
 *Context gathered: 2026-03-20*
