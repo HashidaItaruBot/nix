@@ -57,7 +57,12 @@
   # Enable PipeWire
   security.rtkit.enable = true;
 
-  virtualisation.waydroid.enable = true;
+  virtualisation = {
+    waydroid.enable = true;
+
+    # NixOS 原生容器支持（声明式轻量容器）
+    containers.enable = true;
+  };
 
   powerManagement.cpuFreqGovernor = "performance"; # 强制 CPU 模式为高性能
 
@@ -106,6 +111,7 @@
       "wheel"
       "networkmanager"
       "video"
+      "containers"  # 允许管理 NixOS 容器
     ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP5M2RGhIG1CslAdzx+1xcOFiAgJhw0FKFqhe/Wkm1qZ"
