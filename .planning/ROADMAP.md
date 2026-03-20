@@ -13,6 +13,7 @@
 - [ ] **Phase 5: 存储与持久化** - 配置只读 Nix store 共享和持久化数据卷
 - [ ] **Phase 6: 网络配置** - 配置 TAP 桥接接口使 MicroVM 获得独立 LAN IP
 - [ ] **Phase 7: openclaw 集成与运维** - 运行 openclaw Gateway 服务并配置开机自启
+- [ ] **Phase 8: OpenHands AI 助手** - 在 NixOS 容器内部署 OpenHands 编程助手
 
 ---
 
@@ -93,6 +94,29 @@
 
 ---
 
+### Phase 8: 在 NixOS 容器内部署 OpenHands AI 编程助手
+**Goal**: OpenHands AI 编程助手在 NixOS 上运行并可通过 Web UI 访问
+
+**Requirements**: OH-01, OH-02, OH-03, OH-04, OH-05
+
+**Depends on:** Phase 7 (OpenHands 需要 Docker，与 MicroVM 独立)
+
+**Success Criteria** (what must be TRUE):
+1. OpenHands 服务可通过 `systemctl start openhands` 启动
+2. Web UI 在端口 3000 可访问
+3. LLM API 密钥通过 sops 加密存储
+4. 数据持久化配置正确，重启后数据不丢失
+5. 服务配置开机自启
+
+**Plans:** 3 plans
+
+Plans:
+- [ ] 08-01-PLAN.md — 配置 Docker 环境和 docker-compose (Wave 1, OH-01)
+- [ ] 08-02-PLAN.md — 创建 OpenHands 容器编排和 systemd 服务 (Wave 2, OH-01/02/04)
+- [ ] 08-03-PLAN.md — 配置 SOPS 密钥管理和验证服务 (Wave 3, OH-03/05)
+
+---
+
 ## Progress Table
 
 | Phase | Plans Complete | Status | Completed |
@@ -101,6 +125,7 @@
 | 5. 存储与持久化 | 0/4 | Not started | - |
 | 6. 网络配置 | 0/4 | Not started | - |
 | 7. openclaw 集成与运维 | 0/6 | Not started | - |
+| 8. OpenHands AI 助手 | 0/3 | Planned | - |
 
 ---
 
@@ -128,9 +153,15 @@
 | OPS-02 | Phase 7 | OPS |
 | OPS-03 | Phase 7 | OPS |
 | OPS-04 | Phase 7 | OPS |
+| OH-01 | Phase 8 | OH |
+| OH-02 | Phase 8 | OH |
+| OH-03 | Phase 8 | OH |
+| OH-04 | Phase 8 | OH |
+| OH-05 | Phase 8 | OH |
 
-**Coverage:** 20/20 v1 requirements mapped ✓
+**Coverage:** 25/25 v1.1 requirements mapped ✓
 
 ---
 
 *Created: 2026-03-19*
+*Phase 8 planned: 2026-03-20*
