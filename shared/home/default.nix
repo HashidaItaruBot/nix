@@ -9,7 +9,6 @@
     ./opencode.nix
     ./claude-code.nix
     ./codex.nix
-    ./podman.nix
   ];
 
   home = {
