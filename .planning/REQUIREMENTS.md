@@ -7,10 +7,10 @@
 
 ### Podman 安装与配置
 
-- [ ] **PODMAN-01**: 通过 Homebrew 或 Nix 安装 Podman
-- [ ] **PODMAN-02**: 初始化 Podman machine (`podman machine init`)
-- [ ] **PODMAN-03**: 启动 Podman machine (`podman machine start`)
-- [ ] **PODMAN-04**: 配置 Podman machine 资源（8GB+ RAM, 4+ CPUs）
+- [x] **PODMAN-01**: 通过 Homebrew 或 Nix 安装 Podman
+- [x] **PODMAN-02**: 初始化 Podman machine (`podman machine init`)
+- [x] **PODMAN-03**: 启动 Podman machine (`podman machine start`)
+- [x] **PODMAN-04**: 配置 Podman machine 资源（8GB+ RAM, 4+ CPUs）
 - [ ] **PODMAN-05**: 验证 Podman 容器运行能力
 
 ### OpenHands 容器
@@ -73,10 +73,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PODMAN-01 | Phase 4 | Pending |
-| PODMAN-02 | Phase 4 | Pending |
-| PODMAN-03 | Phase 4 | Pending |
-| PODMAN-04 | Phase 4 | Pending |
+| PODMAN-01 | Phase 4 | Complete |
+| PODMAN-02 | Phase 4 | Complete |
+| PODMAN-03 | Phase 4 | Complete |
+| PODMAN-04 | Phase 4 | Complete |
 | PODMAN-05 | Phase 4 | Pending |
 | OH-01 | Phase 5 | Pending |
 | OH-02 | Phase 5 | Pending |

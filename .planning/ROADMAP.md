@@ -31,7 +31,7 @@
   4. `podman run --rm hello-world` 成功执行并无错误退出
   5. `podman ps` 可正常列出容器
 
-**Plans:** 3 plans
+**Plans:** 2/3 plans executed
 
 Plans:
 - [ ] 04-01-PLAN.md — 安装 Podman，创建验证脚本
@@ -101,7 +101,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 4. Podman 安装与初始化 | 0/3 | Planned | - |
+| 4. Podman 安装与初始化 | 2/3 | In Progress|  |
 | 5. OpenHands 容器运行 | 0/5 | Not started | - |
 | 6. 阿里百炼 LLM 后端配置 | 0/5 | Not started | - |
 | 7. 持久化与工作区集成 | 0/5 | Not started | - |
