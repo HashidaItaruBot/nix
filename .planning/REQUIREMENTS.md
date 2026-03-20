@@ -1,17 +1,17 @@
-# Requirements: v1.3 Podman + OpenHands on macOS
+# Requirements: v1.3 Colima + OpenHands on macOS
 
 **Defined:** 2026-03-20
-**Core Value:** 在 macOS 上使用 Podman 运行 OpenHands AI 编程助手，通过 Web UI 访问，配置阿里百炼 LLM 后端
+**Core Value:** 在 macOS 上使用 Colima 运行 OpenHands AI 编程助手，通过 Web UI 访问，配置阿里百炼 LLM 后端
 
 ## v1.3 Requirements
 
-### Podman 安装与配置
+### Colima 安装与配置
 
-- [x] **PODMAN-01**: 通过 Homebrew 或 Nix 安装 Podman
-- [x] **PODMAN-02**: 初始化 Podman machine (`podman machine init`)
-- [x] **PODMAN-03**: 启动 Podman machine (`podman machine start`)
-- [x] **PODMAN-04**: 配置 Podman machine 资源（8GB+ RAM, 4+ CPUs）
-- [ ] **PODMAN-05**: 验证 Podman 容器运行能力
+- [x] **COLIMA-01**: 通过 Homebrew 安装 Colima
+- [x] **COLIMA-02**: 初始化 Colima VM (`colima start`)
+- [x] **COLIMA-03**: 配置 Colima VM 资源（8GB+ RAM, 4+ CPUs）
+- [x] **COLIMA-04**: 配置 launchd 自动启动
+- [ ] **COLIMA-05**: 验证 Colima 容器运行能力
 
 ### OpenHands 容器
 
@@ -43,14 +43,14 @@ Deferred to future release.
 
 ### 高级功能
 
-- **ADV-01**: 使用 Podman Pod 管理多容器（OpenHands + Sandbox）
+- **ADV-01**: 使用 Colima/ Docker 原生 API 管理容器
 - **ADV-02**: litellm proxy 集成（多 LLM 路由、fallback）
 - **ADV-03**: Git 仓库深度集成（自动 clone/push）
 - **ADV-04**: 自定义 OpenHands 配置模板
 
 ### 优化与调优
 
-- **OPT-01**: Podman machine 资源动态调整
+- **OPT-01**: Colima VM 资源动态调整
 - **OPT-02**: 容器启动脚本/服务定义
 - **OPT-03**: 监控与日志收集
 
@@ -65,7 +65,7 @@ Explicitly excluded. Documented to prevent scope creep.
 | 本地 LLM 模型（Ollama 等）| 阿里百炼已满足需求，defer 到未来 |
 | 多用户支持 | 单用户场景足够 |
 | OpenHands 源码修改 | 使用官方镜像，不定制 |
-| Docker 兼容性 | 专注 Podman，利用其与 Nix 更好集成 |
+| Podman 兼容性 | 专注 Colima，Docker API 兼容性好 |
 
 ## Traceability
 
@@ -73,11 +73,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PODMAN-01 | Phase 4 | Complete |
-| PODMAN-02 | Phase 4 | Complete |
-| PODMAN-03 | Phase 4 | Complete |
-| PODMAN-04 | Phase 4 | Complete |
-| PODMAN-05 | Phase 4 | Pending |
+| COLIMA-01 | Phase 4 | Complete |
+| COLIMA-02 | Phase 4 | Complete |
+| COLIMA-03 | Phase 4 | Complete |
+| COLIMA-04 | Phase 4 | Complete |
+| COLIMA-05 | Phase 4 | Pending |
 | OH-01 | Phase 5 | Pending |
 | OH-02 | Phase 5 | Pending |
 | OH-03 | Phase 5 | Pending |

@@ -11,10 +11,10 @@ progress:
   completed_plans: 3
 ---
 
-# STATE: v1.3 Podman + OpenHands on macOS
+# STATE: v1.3 Colima + OpenHands on macOS
 
 **Project:** Nix Configuration Project
-**Milestone:** v1.3 — Podman + OpenHands on macOS
+**Milestone:** v1.3 — Colima + OpenHands on macOS
 
 ---
 
@@ -22,8 +22,8 @@ progress:
 
 | Field | Value |
 |-------|-------|
-| Core Value | 在 macOS 上使用 Podman 运行 OpenHands AI 编程助手，通过 Web UI 访问，配置阿里百炼 LLM 后端 |
-| Current Focus | Phase 4: Podman 安装与初始化 |
+| Core Value | 在 macOS 上使用 Colima 运行 OpenHands AI 编程助手，通过 Web UI 访问，配置阿里百炼 LLM 后端 |
+| Current Focus | Phase 4: Colima 安装与初始化 |
 | Granularity | Coarse |
 | Started | 2026-03-20 |
 
@@ -70,16 +70,16 @@ progress:
 |----------|-----------|-------|
 | Phase numbering starts at 4 | v1.0 ended at phase 3, continuing sequence | Roadmap |
 | Coarse granularity | From config.json, combine related requirements | Roadmap |
-| 4 phases derived from requirement categories | PODMAN, OH, LLM, PERS natural groupings | Roadmap |
-| Podman via Homebrew cask | Project already uses Homebrew for macOS apps, follows existing pattern | 04-01 |
-| Init script for idempotent machine setup | Handles both first-run initialization and subsequent boots | 04-02 |
+| 4 phases derived from requirement categories | COLIMA, OH, LLM, PERS natural groupings | Roadmap |
+| Colima via Homebrew | Project already uses Homebrew for macOS apps, follows existing pattern | 04-01 |
+| Init script for idempotent VM setup | Handles both first-run initialization and subsequent boots | 04-02 |
 | launchd agent with KeepAlive=false | Start once at login, don't restart supervisor | 04-02 |
 
 ### Todos
 
-- [ ] Run darwin-rebuild switch to apply Podman installation
-- [ ] Initialize and start Podman machine
-- [ ] Continue Phase 4 Plan 03: Podman verification and testing
+- [ ] Run darwin-rebuild switch to apply Colima installation
+- [ ] Initialize and start Colima VM
+- [ ] Continue Phase 4 Plan 03: Colima verification and testing
 
 ### Blockers
 

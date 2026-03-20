@@ -4,7 +4,7 @@
 
 为 macOS 配置 SSH agent forwarding，使其通过 SSH 连接到 NixOS 时能够使用本地 1Password 的 SSH 密钥。
 
-**v1.3 新增：** 在 macOS 上使用 Podman 运行 OpenHands（AI 编程助手），通过 Web UI 访问，配置阿里百炼 LLM 后端。
+**v1.3 新增：** 在 macOS 上使用 Colima 运行 OpenHands（AI 编程助手），通过 Web UI 访问，配置阿里百炼 LLM 后端。
 
 ## Core Value
 
@@ -47,12 +47,12 @@
 - NixOS git 配置使用 ssh-keygen 进行 SSH 签名
 - 所有 9 个 v1 requirements 验证通过
 
-**Current Milestone: v1.3 — Podman + OpenHands on macOS**
+**Current Milestone: v1.3 — Colima + OpenHands on macOS**
 
-**Goal:** 在 macOS 上使用 Podman 运行 OpenHands AI 编程助手，通过 Web UI 访问，配置阿里百炼 LLM 后端
+**Goal:** 在 macOS 上使用 Colima 运行 OpenHands AI 编程助手，通过 Web UI 访问，配置阿里百炼 LLM 后端
 
 **Target features:**
-- Podman 安装与配置
+- Colima 安装与配置
 - OpenHands 容器定义与运行
 - 阿里百炼 LLM 后端配置（qwen3.5-plus、kimi-k2.5 等）
 - Web UI 访问（端口 3000/3001）

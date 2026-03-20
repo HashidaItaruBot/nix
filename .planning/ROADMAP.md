@@ -1,13 +1,13 @@
-# Roadmap: v1.3 Podman + OpenHands on macOS
+# Roadmap: v1.3 Colima + OpenHands on macOS
 
 **Created:** 2026-03-20
-**Core Value:** 在 macOS 上使用 Podman 运行 OpenHands AI 编程助手，通过 Web UI 访问，配置阿里百炼 LLM 后端
+**Core Value:** 在 macOS 上使用 Colima 运行 OpenHands AI 编程助手，通过 Web UI 访问，配置阿里百炼 LLM 后端
 
 ---
 
 ## Phases
 
-- [ ] **Phase 4: Podman 安装与初始化** - 安装 Podman 并配置可运行容器的虚拟机环境
+- [ ] **Phase 4: Colima 安装与初始化** - 安装 Colima 并配置可运行容器的虚拟机环境
 - [ ] **Phase 5: OpenHands 容器运行** - 使用官方镜像启动 OpenHands 容器，Web UI 可访问
 - [ ] **Phase 6: 阿里百炼 LLM 后端配置** - 配置 Qwen/Kimi 模型，API 认证通过
 - [ ] **Phase 7: 持久化与工作区集成** - 配置卷挂载，对话历史和工作区文件持久化
@@ -16,27 +16,27 @@
 
 ## Phase Details
 
-### Phase 4: Podman 安装与初始化
+### Phase 4: Colima 安装与初始化
 
-**Goal:** Podman 在 macOS 上可运行容器
+**Goal:** Colima 在 macOS 上可运行容器
 
 **Depends on:** Nothing (first phase of v1.3)
 
-**Requirements:** PODMAN-01, PODMAN-02, PODMAN-03, PODMAN-04, PODMAN-05
+**Requirements:** COLIMA-01, COLIMA-02, COLIMA-03, COLIMA-04, COLIMA-05
 
 **Success Criteria** (what must be TRUE):
-  1. `podman --version` 返回已安装版本号
-  2. `podman machine ls` 显示至少一个 machine 状态为 "Running"
-  3. Machine 资源配置为 8GB+ RAM, 4+ CPUs
-  4. `podman run --rm hello-world` 成功执行并无错误退出
-  5. `podman ps` 可正常列出容器
+  1. `colima --version` 返回已安装版本号
+  2. `colima status` 显示 VM 状态为 "Running"
+  3. VM 资源配置为 8GB+ RAM, 4+ CPUs
+  4. `docker run --rm hello-world` 成功执行并无错误退出 (Colima 提供 Docker 兼容 API)
+  5. `docker ps` 可正常列出容器
 
 **Plans:** 2/3 plans executed
 
 Plans:
-- [ ] 04-01-PLAN.md — 安装 Podman，创建验证脚本
-- [ ] 04-02-PLAN.md — 配置 machine 初始化和 launchd 自动启动
-- [ ] 04-03-PLAN.md — 验证 Podman 完整功能（checkpoint）
+- [ ] 04-01-PLAN.md — 安装 Colima，创建验证脚本
+- [ ] 04-02-PLAN.md — 配置 Colima VM 初始化和 launchd 自动启动
+- [ ] 04-03-PLAN.md — 验证 Colima 完整功能（checkpoint）
 
 ---
 
@@ -44,7 +44,7 @@ Plans:
 
 **Goal:** OpenHands 容器正常运行，Web UI 可通过浏览器访问
 
-**Depends on:** Phase 4 (Podman 运行环境)
+**Depends on:** Phase 4 (Colima 运行环境)
 
 **Requirements:** OH-01, OH-02, OH-03, OH-04, OH-05
 
@@ -101,7 +101,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 4. Podman 安装与初始化 | 2/3 | In Progress|  |
+| 4. Colima 安装与初始化 | 2/3 | In Progress|  |
 | 5. OpenHands 容器运行 | 0/5 | Not started | - |
 | 6. 阿里百炼 LLM 后端配置 | 0/5 | Not started | - |
 | 7. 持久化与工作区集成 | 0/5 | Not started | - |
@@ -112,11 +112,11 @@ Plans:
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PODMAN-01 | Phase 4 | Pending |
-| PODMAN-02 | Phase 4 | Pending |
-| PODMAN-03 | Phase 4 | Pending |
-| PODMAN-04 | Phase 4 | Pending |
-| PODMAN-05 | Phase 4 | Pending |
+| COLIMA-01 | Phase 4 | Pending |
+| COLIMA-02 | Phase 4 | Pending |
+| COLIMA-03 | Phase 4 | Pending |
+| COLIMA-04 | Phase 4 | Pending |
+| COLIMA-05 | Phase 4 | Pending |
 | OH-01 | Phase 5 | Pending |
 | OH-02 | Phase 5 | Pending |
 | OH-03 | Phase 5 | Pending |
