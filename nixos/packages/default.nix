@@ -8,6 +8,7 @@
     ./flatpak.nix
     ./podman.nix
     ./openhands.nix
+    ./docker.nix
   ];
 
   environment.systemPackages = with pkgs; [
