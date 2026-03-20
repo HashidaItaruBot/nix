@@ -31,4 +31,15 @@
   # Docker CLI tools are installed via shared system packages
   # Docker Desktop is installed via Homebrew (see packages/default.nix)
   # After installation, Docker Desktop will automatically configure permissions
+
+  # Podman machine auto-start via launchd agent
+  launchd.user.agents.podman-start = {
+    command = "${./scripts/init-podman-machine.sh}";
+    serviceConfig = {
+      KeepAlive = false;  # 只启动一次，不持续重启
+      RunAtLoad = true;   # 登录时运行
+      StandardOutPath = "/tmp/podman-start.log";
+      StandardErrorPath = "/tmp/podman-start.err";
+    };
+  };
 }
