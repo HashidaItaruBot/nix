@@ -1,6 +1,8 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   imports = [
     ./sops.nix
+    ./podman.nix
   ];
   environment.systemPackages = with pkgs; [
     # Core tools
@@ -31,6 +33,7 @@
 
     ssh-to-age
     sops
+    openssh
 
     # Nix开发工具
     nixd

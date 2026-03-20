@@ -12,7 +12,6 @@
     "${self}/shared/system"
     ./home
     ./sops.nix
-    ./podman.nix
     ./zerotier.nix
     ./sshd.nix
   ];
