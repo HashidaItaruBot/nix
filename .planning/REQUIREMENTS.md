@@ -43,6 +43,14 @@
 - [ ] **OPS-03**: 资源限制配置（CPU/内存）
 - [ ] **OPS-04**: 验证重启后 MicroVM 自动恢复
 
+### OH (OpenHands AI 助手)
+
+- [ ] **OH-01**: OpenHands 服务在 nixos-container 内运行
+- [ ] **OH-02**: Web UI 在端口 3000 可访问
+- [ ] **OH-03**: LLM API 密钥通过 sops 加密存储
+- [ ] **OH-04**: 数据持久化配置正确
+- [ ] **OH-05**: 容器开机自启
+
 ---
 
 ## Future Requirements (Deferred)
@@ -98,8 +106,13 @@
 | OPS-02 | Phase 7 | Pending |
 | OPS-03 | Phase 7 | Pending |
 | OPS-04 | Phase 7 | Pending |
+| OH-01 | Phase 8 | Pending |
+| OH-02 | Phase 8 | Pending |
+| OH-03 | Phase 8 | Pending |
+| OH-04 | Phase 8 | Pending |
+| OH-05 | Phase 8 | Pending |
 
-**Coverage:** 20/20 v1 requirements mapped ✓
+**Coverage:** 25/25 v1 requirements mapped ✓
 
 ---
 

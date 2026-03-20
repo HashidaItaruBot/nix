@@ -95,25 +95,26 @@
 ---
 
 ### Phase 8: 在 NixOS 容器内部署 OpenHands AI 编程助手
-**Goal**: OpenHands AI 编程助手在 NixOS 上运行并可通过 Web UI 访问
+**Goal**: OpenHands AI 编程助手在 nixos-container 内运行并可通过 Web UI 访问
 
 **Requirements**: OH-01, OH-02, OH-03, OH-04, OH-05
 
-**Depends on:** Phase 7 (OpenHands 需要 Docker，与 MicroVM 独立)
+**Depends on:** Phase 7 (OpenHands 与 MicroVM 独立部署)
 
 **Success Criteria** (what must be TRUE):
-1. OpenHands 服务可通过 `systemctl start openhands` 启动
-2. Web UI 在端口 3000 可访问
+1. OpenHands 服务可通过 `systemctl start container@openhands` 启动
+2. Web UI 在端口 3000 可访问（通过宿主机转发）
 3. LLM API 密钥通过 sops 加密存储
 4. 数据持久化配置正确，重启后数据不丢失
-5. 服务配置开机自启
+5. nixos-container 配置开机自启
+6. 使用 Podman 代替 Docker，通过 podman-docker 提供兼容层
 
-**Plans:** 3 plans
+**Plans:** 3 plans (用户手动执行)
 
 Plans:
-- [ ] 08-01-PLAN.md — 配置 Docker 环境和 docker-compose (Wave 1, OH-01)
-- [ ] 08-02-PLAN.md — 创建 OpenHands 容器编排和 systemd 服务 (Wave 2, OH-01/02/04)
-- [ ] 08-03-PLAN.md — 配置 SOPS 密钥管理和验证服务 (Wave 3, OH-03/05)
+- [~] 08-01-PLAN.md — 配置 Podman 和 nixos-container 基础设施 (Wave 1, OH-01) - **用户手动**
+- [~] 08-02-PLAN.md — 创建 OpenHands 容器编排和网络配置 (Wave 2, OH-02/04) - **用户手动**
+- [~] 08-03-PLAN.md — 配置 SOPS 密钥管理和服务自启 (Wave 3, OH-03/05) - **用户手动**
 
 ---
 
@@ -125,7 +126,7 @@ Plans:
 | 5. 存储与持久化 | 0/4 | Not started | - |
 | 6. 网络配置 | 0/4 | Not started | - |
 | 7. openclaw 集成与运维 | 0/6 | Not started | - |
-| 8. OpenHands AI 助手 | 0/3 | Planned | - |
+| 8. OpenHands AI 助手 | 3/3 | **用户手动执行** | - |
 
 ---
 
