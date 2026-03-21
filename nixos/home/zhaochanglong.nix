@@ -3,7 +3,8 @@
   inputs,
   config,
   ...
-}: {
+}:
+{
   imports = [
     "${self}/shared/home"
     inputs.plasma-manager.homeModules.plasma-manager
@@ -16,6 +17,7 @@
     ./nixvim
     ./1password.nix
     ./appimage.nix
+    ./podman
   ];
 
   home.homeDirectory = "/home/zhaochanglong";
