@@ -8,7 +8,7 @@
       LOG_ALL_EVENTS = true;
     };
     volumes = [
-      "${config.xdg.runtimeDir}/podman.sock:/var/run/docker.sock"
+      "${config}/podman.sock:/var/run/docker.sock"
       "${config.home.homeDirectory}/.openhands:/.openhands"
     ];
     ports = [
