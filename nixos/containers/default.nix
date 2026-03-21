@@ -3,6 +3,8 @@
 
 { ... }:
 {
+  virtualisation.containers.enable = true;
+
   imports = [
     ./openhands.nix
   ];
