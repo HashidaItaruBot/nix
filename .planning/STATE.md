@@ -1,14 +1,14 @@
 ---
 gsd_state_version: 1.0
 milestone: v1.1
-milestone_name: MicroVM 运行 OpenClaw
-status: roadmap_created
-last_updated: "2026-03-20"
+milestone_name: milestone
+status: executing
+last_updated: "2026-03-21T12:54:04.502Z"
 progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 8
-  completed_plans: 0
+  completed_plans: 3
 ---
 
 # STATE: v1.3 Colima + OpenHands on macOS
@@ -23,13 +23,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-19 after v1.0, starting v1.1)
 
 **Core value:** 所有系统配置和软件包管理必须通过修改 Nix 配置文件完成，完全声明式，可复现
-**Current focus:** v1.1 — MicroVM 运行 OpenClaw (Roadmap created, awaiting phase planning)
+**Current focus:** Phase 08 — nixos-openhands-ai
 
 ---
 
 ## Milestone: v1.1 — MicroVM 运行 OpenClaw
 
-**Status:** Roadmap created
+**Status:** Executing Phase 08
 **Started:** 2026-03-19
 **Completed:** —
 
@@ -52,8 +52,8 @@ See: .planning/PROJECT.md (updated 2026-03-19 after v1.0, starting v1.1)
 | NET (网络配置) | 4 | 0 | 4 |
 | OCL (openclaw 集成) | 4 | 0 | 4 |
 | OPS (运维加固) | 4 | 0 | 4 |
-| OH (OpenHands AI 助手) | 5 | 0 | 5 |
-| **Total** | **25** | **0** | **25** |
+| OH (OpenHands AI 助手) | 5 | 4 | 1 |
+| **Total** | **25** | **4** | **21** |
 
 ---
 
@@ -62,13 +62,14 @@ See: .planning/PROJECT.md (updated 2026-03-19 after v1.0, starting v1.1)
 | Metric | Value |
 |--------|-------|
 | Phases Complete | 0/5 |
-| Plans Complete | 5/25 |
+| Plans Complete | 3/8 |
 | Tasks Complete | 4/4 |
-| Requirements Complete | 3/25 |
+| Requirements Complete | 7/25 |
 
 ---
 | Phase 04-git-ssh P01 | 5m | 2 tasks | 2 files |
 | Phase 04-git-ssh P02 | 5m | 2 tasks | 2 files |
+| Phase 08 P01 | 3min | 4 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -80,7 +81,8 @@ See: .planning/PROJECT.md (updated 2026-03-19 after v1.0, starting v1.1)
 - 平台特定的 git signer 配置放在 nixos/home/git.nix 中
 - Phase 7 合并 OCL + OPS 以满足粗粒度配置（粗粒度 3-5 阶段）
 - 阶段号从 4 开始（v1.0 结束于阶段 3）
-- **Phase 8 使用宿主机 Podman 直接运行容器** - 简化架构，无需 nixos-container 嵌套
+- **Phase 8 使用 nixos-container + Docker** - 容器内运行 Docker 确保 OpenHands 兼容性
+- [Phase 08]: Use EnvironmentFile for LLM_API_KEY injection from SOPS secrets
 
 ### Todos
 
@@ -133,6 +135,7 @@ See: .planning/PROJECT.md (updated 2026-03-19 after v1.0, starting v1.1)
 | 2026-03-19 | Remove IdentityAgent from NixOS SSH config | NixOS doesn't run 1Password - SSH should use forwarded $SSH_AUTH_SOCK from macOS |
 | 2026-03-19 | Phase 7 combines OCL + OPS | Coarse granularity compression; app integration and ops hardening are sequential within phase |
 | 2026-03-20 | Phase 8 架构最终确定 | 宿主机直接运行 Podman 容器 - 最简单实用 |
+| 2026-03-21 | Phase 8 架构变更 | nixos-container + Docker 架构，增强隔离性 |
 
 ---
 
@@ -150,6 +153,7 @@ See: .planning/PROJECT.md (updated 2026-03-19 after v1.0, starting v1.1)
 | 2026-03-19 | v1.1 roadmap created (4 phases, 20 requirements) |
 | 2026-03-20 | Phase 8 added (OpenHands AI 助手) |
 | 2026-03-20 | Phase 8 planned (3 plans in 3 waves) |
+| 2026-03-21 | Phase 8 Plan 01 complete (container configuration) |
 
 ---
 

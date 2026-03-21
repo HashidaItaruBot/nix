@@ -124,7 +124,7 @@
 **Plans:** 3 plans
 
 Plans:
-- [ ] 08-01-PLAN.md — 创建 nixos-container 配置和 Docker Compose 编排 (Wave 1, OH-01/02/04/05)
+- [x] 08-01-PLAN.md — 创建 nixos-container 配置和 Docker Compose 编排 (Wave 1, OH-01/02/04/05)
 - [ ] 08-02-PLAN.md — 配置 SOPS 密钥管理 (Wave 2, OH-03)
 - [ ] 08-03-PLAN.md — 应用配置并验证服务运行 (Wave 3, 所有 OH 需求验证)
 
@@ -138,7 +138,7 @@ Plans:
 | 5. 存储与持久化 | 0/4 | Not started | - |
 | 6. 网络配置 | 0/4 | Not started | - |
 | 7. openclaw 集成与运维 | 0/6 | Not started | - |
-| 8. OpenHands AI 助手 | 0/3 | Planned | - |
+| 8. OpenHands AI 助手 | 1/3 | In Progress | 2026-03-21 |
 
 ---
 
