@@ -1,9 +1,7 @@
 {
-  config,
-  lib,
-  pkgs,
   ...
-}: {
+}:
+{
   # Create autostart desktop entry for 1Password
   xdg.configFile."autostart/1password.desktop".text = ''
     [Desktop Entry]
