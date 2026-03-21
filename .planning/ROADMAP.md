@@ -2,8 +2,9 @@
 
 **Milestone:** v1.1
 **Created:** 2026-03-19
-**Granularity:** Coarse (4 phases)
-**Coverage:** 20/20 requirements mapped
+**Updated:** 2026-03-21
+**Granularity:** Coarse (5 phases)
+**Coverage:** 25/25 requirements mapped
 
 ---
 
@@ -101,20 +102,31 @@
 
 **Depends on:** Phase 7 (OpenHands 与 MicroVM 独立部署)
 
+**Architecture:** NixOS 声明式容器 + Docker (容器内运行 Docker)
+
+| Component | Decision |
+|-----------|----------|
+| 外层隔离 | nixos-container (系统级容器) |
+| 容器运行时 | Docker (容器内运行) |
+| 部署方式 | Docker Compose |
+| 网络 | NAT 端口转发 (宿主机 3000 → 容器 3000) |
+| 数据路径 | /var/lib/openhands (宿主机 bind mount) |
+| 密钥管理 | sops-nix 加密 |
+| LLM 后端 | 阿里百炼 (OpenAI 兼容 API) |
+
 **Success Criteria** (what must be TRUE):
 1. OpenHands 服务可通过 `systemctl start container@openhands` 启动
 2. Web UI 在端口 3000 可访问（通过宿主机转发）
 3. LLM API 密钥通过 sops 加密存储
 4. 数据持久化配置正确，重启后数据不丢失
 5. nixos-container 配置开机自启
-6. 使用 Podman 代替 Docker，通过 podman-docker 提供兼容层
 
-**Plans:** 3 plans (用户手动执行)
+**Plans:** 3 plans
 
 Plans:
-- [~] 08-01-PLAN.md — 配置 Podman 和 nixos-container 基础设施 (Wave 1, OH-01) - **用户手动**
-- [~] 08-02-PLAN.md — 创建 OpenHands 容器编排和网络配置 (Wave 2, OH-02/04) - **用户手动**
-- [~] 08-03-PLAN.md — 配置 SOPS 密钥管理和服务自启 (Wave 3, OH-03/05) - **用户手动**
+- [ ] 08-01-PLAN.md — 创建 nixos-container 配置和 Docker Compose 编排 (Wave 1, OH-01/02/04/05)
+- [ ] 08-02-PLAN.md — 配置 SOPS 密钥管理 (Wave 2, OH-03)
+- [ ] 08-03-PLAN.md — 应用配置并验证服务运行 (Wave 3, 所有 OH 需求验证)
 
 ---
 
@@ -126,7 +138,7 @@ Plans:
 | 5. 存储与持久化 | 0/4 | Not started | - |
 | 6. 网络配置 | 0/4 | Not started | - |
 | 7. openclaw 集成与运维 | 0/6 | Not started | - |
-| 8. OpenHands AI 助手 | 3/3 | **用户手动执行** | - |
+| 8. OpenHands AI 助手 | 0/3 | Planned | - |
 
 ---
 
@@ -166,3 +178,4 @@ Plans:
 
 *Created: 2026-03-19*
 *Phase 8 planned: 2026-03-20*
+*Phase 8 revised: 2026-03-21 (架构: nixos-container + Docker)*
