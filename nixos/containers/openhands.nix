@@ -6,10 +6,8 @@
 }:
 {
   containers.openhands = {
-    # OH-05: 开机自启
     autoStart = true;
 
-    # 容器内配置
     config =
       {
         config,
@@ -36,16 +34,10 @@
           }
         ];
 
-        # 网络配置
         networking.firewall.allowedTCPPorts = [ 3000 ];
 
-        # 系统包
         environment.systemPackages = with pkgs; [
-          uv
-          docker
-          docker-compose
           podman
-          podman-compose
           git
           bash
           coreutils
@@ -57,10 +49,11 @@
           description = "OpenHands Initialization Task";
           wantedBy = [ "multi-user.target" ];
           after = [ "network.target" ];
+          path = with pkgs; [ podman ];
           serviceConfig = {
             Type = "oneshot";
             ExecStart = "${pkgs.writeShellScript "container-init" ''
-              ${pkgs.uv}/bin/uv tool run openhands serve
+              podman run -d --rm --pull=always -e AGENT_SERVER_IMAGE_REPOSITORY=ghcr.io/openhands/agent-server -e AGENT_SERVER_IMAGE_TAG=1.12.0-python -e LOG_ALL_EVENTS=true -v /var/run/docker.sock:/var/run/docker.sock -v ~/.openhands:/.openhands -p 3000:3000 --add-host host.docker.internal:host-gateway --name openhands-app docker.openhands.dev/openhands/openhands:1.5
             ''}";
           };
         };
