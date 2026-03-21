@@ -29,6 +29,18 @@
       owner = "root";
       mode = "0400";
     };
+
+    # OH-03: OpenHands LLM API 密钥
+    openhands_llm_api_key = {
+      sopsFile = ./secrets/openhands.yaml;
+      key = "LLM_API_KEY";
+      # 关键：显式指定路径以匹配容器 bindMount 和 systemd EnvironmentFile
+      # 容器 bindMount: /run/secrets/openhands (目录)
+      # systemd EnvironmentFile: /run/secrets/openhands/LLM_API_KEY (文件)
+      path = "/run/secrets/openhands/LLM_API_KEY";
+      owner = "root";
+      mode = "0400";
+    };
   };
 
   # 组装lanzaboote的pkiBundle
