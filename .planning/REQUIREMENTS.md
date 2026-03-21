@@ -47,7 +47,7 @@
 
 - [x] **OH-01**: OpenHands 服务在 nixos-container 内运行
 - [x] **OH-02**: Web UI 在端口 3000 可访问
-- [ ] **OH-03**: LLM API 密钥通过 sops 加密存储
+- [x] **OH-03**: LLM API 密钥通过 sops 加密存储
 - [x] **OH-04**: 数据持久化配置正确
 - [x] **OH-05**: 容器开机自启
 
@@ -108,7 +108,7 @@
 | OPS-04 | Phase 7 | Pending |
 | OH-01 | Phase 8 | Complete |
 | OH-02 | Phase 8 | Complete |
-| OH-03 | Phase 8 | Pending |
+| OH-03 | Phase 8 | Complete |
 | OH-04 | Phase 8 | Complete |
 | OH-05 | Phase 8 | Complete |
 
