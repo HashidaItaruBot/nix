@@ -7,7 +7,7 @@
   imports = [
     ./flatpak.nix
     ./openhands.nix
-    ./docker.nix
+    ./podman.nix
   ];
 
   environment.systemPackages = with pkgs; [
