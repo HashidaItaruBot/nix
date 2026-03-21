@@ -20,8 +20,8 @@ Runs inline — no Task, no AskUserQuestion, no Bash.
 </objective>
 
 <execution_context>
-@/Users/zhaochanglong/Documents/nix/.claude/get-shit-done/workflows/note.md
-@/Users/zhaochanglong/Documents/nix/.claude/get-shit-done/references/ui-brand.md
+@/home/zhaochanglong/Documents/nix/.claude/get-shit-done/workflows/note.md
+@/home/zhaochanglong/Documents/nix/.claude/get-shit-done/references/ui-brand.md
 </execution_context>
 
 <context>
@@ -29,6 +29,6 @@ $ARGUMENTS
 </context>
 
 <process>
-Execute the note workflow from @/Users/zhaochanglong/Documents/nix/.claude/get-shit-done/workflows/note.md end-to-end.
+Execute the note workflow from @/home/zhaochanglong/Documents/nix/.claude/get-shit-done/workflows/note.md end-to-end.
 Capture the note, list notes, or promote to todo — depending on arguments.
 </process>

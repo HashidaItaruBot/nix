@@ -6,7 +6,6 @@
 {
   imports = [
     ./flatpak.nix
-    ./openhands.nix
     ./podman.nix
   ];
 

@@ -16,9 +16,9 @@ Designed for rapid multi-project workflows where remembering which phase/step yo
 </objective>
 
 <execution_context>
-@/Users/zhaochanglong/Documents/nix/.claude/get-shit-done/workflows/next.md
+@/home/zhaochanglong/Documents/nix/.claude/get-shit-done/workflows/next.md
 </execution_context>
 
 <process>
-Execute the next workflow from @/Users/zhaochanglong/Documents/nix/.claude/get-shit-done/workflows/next.md end-to-end.
+Execute the next workflow from @/home/zhaochanglong/Documents/nix/.claude/get-shit-done/workflows/next.md end-to-end.
 </process>
