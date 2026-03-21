@@ -30,10 +30,10 @@
       mode = "0400";
     };
 
-    # OH-03: OpenHands LLM API 密钥
+    # OH-03: OpenHands LLM API 密钥 (复用现有 alibaba_api_key)
     openhands_llm_api_key = {
-      sopsFile = ./secrets/openhands.yaml;
-      key = "LLM_API_KEY";
+      sopsFile = "${self}/shared/secrets/api_keys.yaml";
+      key = "alibaba_api_key";
       # 关键：显式指定路径以匹配容器 bindMount 和 systemd EnvironmentFile
       # 容器 bindMount: /run/secrets/openhands (目录)
       # systemd EnvironmentFile: /run/secrets/openhands/LLM_API_KEY (文件)
