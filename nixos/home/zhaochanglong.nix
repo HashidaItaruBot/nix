@@ -1,12 +1,10 @@
-{
-  self,
-  inputs,
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-{
+{ self
+, inputs
+, config
+, lib
+, pkgs
+, ...
+}: {
   imports = [
     "${self}/shared/home"
     inputs.plasma-manager.homeModules.plasma-manager

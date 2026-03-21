@@ -1,6 +1,6 @@
-{ config, ... }:
-{
+{ config, ... }: {
   services.podman.containers.openhands = {
+    autoStart = true;
     image = "docker.openhands.dev/openhands/openhands:1.5";
     environment = {
       AGENT_SERVER_IMAGE_REPOSITORY = "ghcr.io/openhands/agent-server";
@@ -8,12 +8,11 @@
       LOG_ALL_EVENTS = true;
     };
     volumes = [
-      "${config}/podman.sock:/var/run/docker.sock"
+      "/run/user/1000/podman/podman.sock:/var/run/docker.sock"
       "${config.home.homeDirectory}/.openhands:/.openhands"
     ];
     ports = [
       "3000:3000"
     ];
   };
-  networking.firewall.allowedTCPPorts = [ 3000 ];
 }
