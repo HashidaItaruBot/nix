@@ -15,4 +15,5 @@
       "3000:3000"
     ];
   };
+  networking.firewall.allowedTCPPorts = [ 3000 ];
 }
