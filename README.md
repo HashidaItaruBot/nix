@@ -23,7 +23,7 @@ Key features:
 
 Enable flakes if not already:
 
-```bash
+```nix
 # Add to ~/.config/nix/nix.conf or /etc/nix/nix.conf
 experimental-features = nix-command flakes
 ```
@@ -62,27 +62,19 @@ sops shared/secrets/<secret-name>.yaml
 
 ### How It Works
 
-1. Secrets are stored encrypted in `shared/secrets/`
-2. The `.sops.yaml` config specifies which age key can decrypt
+1. Secrets are stored encrypted in [`shared/secrets/`](shared/secrets/)
+2. The [`.sops.yaml`](.sops.yaml) config specifies which age key can decrypt
 3. On system activation, sops-nix decrypts secrets to `/run/secrets/`
 4. Services read secrets from the ephemeral `/run/secrets/` path
-
-### Verifying No Secrets in Nix Store
-
-Run the verification script to ensure no plaintext secrets are in the nix store:
-
-```bash
-./scripts/verify-secrets.sh
-```
 
 ## Development
 
 ### Making Changes
 
 1. Edit configuration files in the appropriate directory:
-   - `nixos/` for NixOS-specific config
-   - `darwin/` for Darwin-specific config
-   - `shared/` for cross-platform config
+   - [`nixos/`](nixos/) for NixOS-specific config
+   - [`darwin/`](darwin/) for Darwin-specific config
+   - [`shared/`](shared/) for cross-platform config
 
 2. Stage changes (nix only sees git-tracked files):
 
@@ -120,47 +112,39 @@ nix flake update
 
 # Update specific input
 nix flake update nixpkgs
+
+# Or lock a specific input to latest
+nix flake lock --update-input nixpkgs
 ```
+
+**Recommended:** Update inputs weekly or before major changes.
 
 ## Structure
 
-```
+```text
 .
 ├── flake.nix           # Main flake configuration
 ├── flake.lock          # Pinned input versions
 ├── .sops.yaml          # SOPS encryption configuration
 ├── darwin/             # macOS-specific configuration
 │   ├── default.nix     # Darwin system config
-│   ├── home.nix        # Darwin home-manager config
-│   └── packages.nix    # Darwin-specific packages
+│   ├── home/           # Darwin home-manager config
+│   ├── packages/       # Darwin-specific packages
+│   └── sops.nix        # Darwin sops configuration
 ├── nixos/              # NixOS-specific configuration
 │   ├── default.nix     # NixOS system config
-│   ├── home.nix        # NixOS home-manager config
-│   ├── packages.nix    # NixOS-specific packages
-│   └── hardware/       # Hardware-specific configs
+│   ├── home/           # NixOS home-manager config
+│   ├── packages/       # NixOS-specific packages
+│   ├── hardware-configuration.nix
+│   ├── secureboot/     # Secure boot keys
+│   └── sops.nix        # NixOS sops configuration
 └── shared/             # Cross-platform configuration
-    ├── home.nix        # Shared home-manager config
+    ├── home/           # Shared home-manager config
     ├── secrets/        # Encrypted secrets
-    └── system.nix      # Shared system config
+    └── system/         # Shared system config
 ```
-
-## Updating Inputs
-
-Run `nix flake update` periodically to update all flake inputs to their latest versions.
-
-For individual input updates:
-
-```bash
-nix flake lock --update-input nixpkgs
-```
-
-Recommended: Update inputs weekly or before major changes.
 
 ## Validation
-
-### Secrets Verification
-
-Run `./scripts/verify-secrets.sh` after rebuild to verify no secrets leaked to nix store.
 
 ### Cross-Platform Secret Sharing
 
