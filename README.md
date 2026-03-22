@@ -6,7 +6,7 @@ A unified Nix Flake configuration for managing NixOS and Darwin (macOS) systems 
 
 This repository provides declarative system configuration for:
 
-- **NixOS**: Desktop/server configuration with secure boot (lanzaboote), virtualization (MicroVM), and container support (Podman)
+- **NixOS**: Desktop/server configuration with secure boot (lanzaboote), and container support (Podman)
 - **Darwin/macOS**: System configuration via nix-darwin with home-manager integration
 
 Key features:
@@ -153,15 +153,6 @@ After rebuilding on both platforms, verify secrets are accessible:
 - **NixOS**: Check `ls /run/secrets/` contains expected secrets
 - **Darwin**: Check `ls /run/user/$(id -u)/secrets/` contains expected secrets
 
-### MicroVM Networking (NixOS only)
-
-Test MicroVM networking:
-
-```bash
-sudo microvm -m openclaw run
-curl http://localhost:18789  # Should return OpenClaw UI
-```
-
 ## Inputs
 
 Key flake inputs:
@@ -172,4 +163,3 @@ Key flake inputs:
 - **sops-nix**: Secrets management
 - **lanzaboote**: Secure boot for NixOS
 - **nixvim**: Neovim configuration
-- **microvm**: Virtualization support
