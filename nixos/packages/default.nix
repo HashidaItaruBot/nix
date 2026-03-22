@@ -31,6 +31,7 @@
     unar
     ppsspp-sdl-wayland
     appimage-run
+    podman-desktop
   ];
 
   programs._1password-gui = {
