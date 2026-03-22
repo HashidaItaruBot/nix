@@ -14,7 +14,6 @@
     ./sops.nix
     ./zerotier.nix
     ./sshd.nix
-    ./containers # OpenHands NixOS 容器配置
   ];
 
   networking = {
