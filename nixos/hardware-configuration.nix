@@ -88,6 +88,15 @@
         "compress=zstd"
       ];
     };
+    "/swap" = {
+      device = "/dev/disk/by-label/NIXOS";
+      fsType = "btrfs";
+      options = [
+        "subvol=@swap"
+        "noatime"
+        "nodatacow" # 禁用 CoW，交换文件必需
+      ];
+    };
     "/boot" = {
       device = "/dev/disk/by-uuid/E9CD-7770";
       fsType = "vfat";
@@ -98,7 +107,12 @@
     };
   };
 
-  swapDevices = [];
+  swapDevices = [
+    {
+      device = "/swap/swapfile";
+      priority = 50; # 低优先级，作为后备
+    }
+  ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
