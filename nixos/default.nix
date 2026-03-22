@@ -66,36 +66,6 @@
 
   powerManagement.cpuFreqGovernor = "performance"; # 强制 CPU 模式为高性能
 
-  # zram 内存压缩交换
-  zramSwap = {
-    enable = true;
-    algorithm = "zstd";
-    memoryPercent = 50;
-    priority = 100; # 高优先级，优先使用 zram
-  };
-
-  # 交换文件创建服务（btrfs 需要特殊处理）
-  systemd.services.create-swapfile = {
-    description = "Create swap file with correct attributes for btrfs";
-    wantedBy = [ "multi-user.target" ];
-    before = [ "swap.target" ];
-    requires = [ "swap.mount" ];
-    after = [ "swap.mount" ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStart = [
-        "${pkgs.coreutils}/bin/touch /swap/swapfile"
-        "${pkgs.e2fsprogs}/bin/chattr +C /swap/swapfile" # 禁用 CoW
-        "${pkgs.coreutils}/bin/chmod 600 /swap/swapfile"
-        "${pkgs.coreutils}/bin/chown root:root /swap/swapfile"
-        "${pkgs.util-linux}/bin/fallocate -l 40G /swap/swapfile"
-        "${pkgs.util-linux}/bin/mkswap /swap/swapfile"
-      ];
-    };
-    unitConfig.ConditionPathExists = "!/swap/swapfile";
-  };
-
   # Fonts configuration
   fonts.fontconfig = {
     enable = true;
