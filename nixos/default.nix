@@ -75,21 +75,26 @@
   };
 
   # 交换文件创建服务（btrfs 需要特殊处理）
+  # 使用 local-fs.target 而非 swap.target 避免循环依赖
   systemd.services.create-swapfile = {
     description = "Create swap file with correct attributes for btrfs";
-    wantedBy = [ "multi-user.target" ];
-    before = [ "swap.target" ];
-    requires = [ "swap.mount" ];
+    wantedBy = [ "local-fs.target" ];
+    before = [ "swap-swapfile.swap" ];
     after = [ "swap.mount" ];
+    requires = [ "swap.mount" ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
       ExecStart = [
+        # 先创建空文件
         "${pkgs.coreutils}/bin/touch /swap/swapfile"
-        "${pkgs.e2fsprogs}/bin/chattr +C /swap/swapfile" # 禁用 CoW
+        # 立即设置 NOCOW 属性（必须在写入数据之前）
+        "${pkgs.e2fsprogs}/bin/chattr +C /swap/swapfile"
+        # 设置权限
         "${pkgs.coreutils}/bin/chmod 600 /swap/swapfile"
-        "${pkgs.coreutils}/bin/chown root:root /swap/swapfile"
-        "${pkgs.util-linux}/bin/fallocate -l 40G /swap/swapfile"
+        # 使用 dd 而非 fallocate（btrfs 更可靠）
+        "${pkgs.coreutils}/bin/dd if=/dev/zero of=/swap/swapfile bs=1M count=40960 status=progress"
+        # 格式化为交换文件
         "${pkgs.util-linux}/bin/mkswap /swap/swapfile"
       ];
     };
