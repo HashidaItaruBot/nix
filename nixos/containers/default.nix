@@ -15,13 +15,17 @@
 # - 进入容器: nixos-container root-login openclaw
 # - 查看日志: journalctl -M openclaw -f
 # - 重启容器: nixos-container restart openclaw
-{ inputs
-, self
-, config
-, lib
-, pkgs
-, ...
-}: {
+
+{
+  inputs,
+  self,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+
+{
   # 启用容器支持
   boot.enableContainers = true;
   virtualisation.containers.enable = true;
@@ -32,7 +36,7 @@
     internalInterfaces = [ "ve-+" ];
     # 注意：需要根据实际网络接口调整，可以用 `ip link` 查看
     # 常见接口名: eth0, enp3s0, wlan0 等
-    externalInterface = "eno1";
+    externalInterface = "eth0";
     enableIPv6 = true;
   };
 
@@ -60,81 +64,77 @@
       };
     };
 
-    config =
-      { config
-      , pkgs
-      , lib
-      , ...
-      }: {
-        # 导入nix-openclaw的NixOS模块
-        imports = [
-          inputs.nix-openclaw.nixosModules.openclaw-gateway
-        ];
+    config = { config, pkgs, lib, ... }:
+    {
+      # 导入nix-openclaw的NixOS模块
+      imports = [
+        inputs.nix-openclaw.nixosModules.openclaw-gateway
+      ];
 
-        # 容器基本配置
-        boot.isContainer = true;
-        networking.useHostResolvConf = lib.mkForce false;
-        services.resolved.enable = true;
+      # 容器基本配置
+      boot.isContainer = true;
+      networking.useHostResolvConf = lib.mkForce false;
+      services.resolved.enable = true;
 
-        # 启用Podman（容器内的容器运行时）
-        # 这允许 OpenClaw 在容器内运行 Docker 容器
-        virtualisation.podman = {
+      # 启用Podman（容器内的容器运行时）
+      # 这允许 OpenClaw 在容器内运行 Docker 容器
+      virtualisation.podman = {
+        enable = true;
+        dockerCompat = true; # 提供 docker 命令别名
+        defaultNetwork.settings.dns_enabled = true;
+        autoPrune = {
           enable = true;
-          dockerCompat = true; # 提供 docker 命令别名
-          defaultNetwork.settings.dns_enabled = true;
-          autoPrune = {
-            enable = true;
-            dates = "weekly";
-          };
+          dates = "weekly";
         };
-
-        # OpenClaw Gateway 服务配置
-        services.openclaw-gateway = {
-          enable = true;
-          port = 18789;
-          # 使用nix-openclaw提供的包
-          package = inputs.nix-openclaw.packages.${pkgs.system}.openclaw-gateway;
-
-          # OpenClaw JSON 配置
-          config = {
-            # Gateway 配置
-            gateway = {
-              mode = "local";
-              auth.token = "openclaw-gateway-local-token";
-            };
-
-            # Telegram 配置
-            channels.telegram = {
-              tokenFile = "/run/secrets/telegram_bot_token";
-              # 允许的用户ID（从 @userinfobot 获取）
-              # 示例: allowFrom = [ 123456789 ];
-              allowFrom = [ ];
-              groups."*".requireMention = true;
-            };
-
-            # AI提供商配置 - 阿里百炼
-            providers.alibaba = {
-              apiKeyFile = "/run/secrets/alibaba_api_key";
-            };
-          };
-
-          # 服务PATH中包含podman和相关工具
-          servicePath = with pkgs; [
-            podman
-            curl
-            jq
-            git
-            ripgrep
-          ];
-        };
-
-        # 开放防火墙端口
-        networking.firewall.allowedTCPPorts = [
-          18789 # OpenClaw Gateway
-        ];
-
-        # 系统状态版本
-        system.stateVersion = "25.11";
       };
+
+      # OpenClaw Gateway 服务配置
+      services.openclaw-gateway = {
+        enable = true;
+        port = 18789;
+        # 使用nix-openclaw提供的包
+        package = inputs.nix-openclaw.packages.${pkgs.system}.openclaw-gateway;
+        
+        # OpenClaw JSON 配置
+        config = {
+          # Gateway 配置
+          gateway = {
+            mode = "local";
+            auth.token = "openclaw-gateway-local-token";
+          };
+
+          # Telegram 配置
+          channels.telegram = {
+            tokenFile = "/run/secrets/telegram_bot_token";
+            # 允许的用户ID（从 @userinfobot 获取）
+            # 示例: allowFrom = [ 123456789 ];
+            allowFrom = [ ];
+            groups."*".requireMention = true;
+          };
+
+          # AI提供商配置 - 阿里百炼
+          providers.alibaba = {
+            apiKeyFile = "/run/secrets/alibaba_api_key";
+          };
+        };
+
+        # 服务PATH中包含podman和相关工具
+        servicePath = with pkgs; [
+          podman
+          curl
+          jq
+          git
+          ripgrep
+        ];
+      };
+
+      # 开放防火墙端口
+      networking.firewall.allowedTCPPorts = [ 
+        18789 # OpenClaw Gateway
+      ];
+
+      # 系统状态版本
+      system.stateVersion = "25.11";
+    };
   };
 }

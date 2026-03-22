@@ -1,9 +1,11 @@
-{ inputs
-, self
-, config
-, lib
-, ...
-}: {
+{
+  inputs,
+  self,
+  config,
+  lib,
+  ...
+}:
+{
   imports = [
     inputs.sops-nix.nixosModules.sops
   ];
@@ -24,6 +26,19 @@
     };
     sb_db_key = {
       sopsFile = "${self}/shared/secrets/secureboot.yaml";
+      owner = "root";
+      mode = "0400";
+    };
+
+    # OpenClaw 容器所需 secrets
+    telegram_bot_token = {
+      sopsFile = "${self}/shared/secrets/telegram_bot_token.yaml";
+      owner = "root";
+      mode = "0400";
+    };
+    alibaba_api_key = {
+      sopsFile = "${self}/shared/secrets/api_keys.yaml";
+      key = "alibaba_api_key";
       owner = "root";
       mode = "0400";
     };
