@@ -3,4 +3,6 @@ _: {
     enable = true;
     agent.enable = true;
   };
+
+  networking.firewall.trustedInterfaces = [ "incusbr0" ];
 }
