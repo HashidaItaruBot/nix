@@ -24,6 +24,7 @@
       "ntp.tuna.tsinghua.edu.cn"
       "0.nixos.pool.ntp.org"
     ];
+    nftables.enable = true;
   };
 
   time.timeZone = "Asia/Shanghai";
