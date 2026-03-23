@@ -1,9 +1,8 @@
-{
-  self,
-  config,
-  lib,
-  pkgs,
-  ...
+{ self
+, config
+, lib
+, pkgs
+, ...
 }:
 {
   imports = [
@@ -111,7 +110,6 @@
       "wheel"
       "networkmanager"
       "video"
-      "containers" # 允许管理 NixOS 容器
     ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP5M2RGhIG1CslAdzx+1xcOFiAgJhw0FKFqhe/Wkm1qZ"
