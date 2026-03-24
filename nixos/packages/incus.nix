@@ -4,6 +4,8 @@ _: {
     agent.enable = true;
   };
 
+  security.apparmor.enable = true;
+
   networking.firewall = {
     trustedInterfaces = [ "incusbr0" ];
     # 允许 Incus 网桥的 DHCP 和 DNS 流量
