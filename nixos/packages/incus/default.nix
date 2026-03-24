@@ -1,4 +1,8 @@
 _: {
+  imports = [
+    ./openclaw.nix
+  ];
+
   virtualisation.incus = {
     enable = true;
     agent.enable = true;
