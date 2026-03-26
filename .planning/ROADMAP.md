@@ -2,9 +2,9 @@
 
 **Milestone:** v1.1
 **Created:** 2026-03-19
-**Updated:** 2026-03-21
-**Granularity:** Coarse (5 phases)
-**Coverage:** 25/25 requirements mapped
+**Updated:** 2026-03-26
+**Granularity:** Coarse (6 phases)
+**Coverage:** 30/30 requirements mapped
 
 ---
 
@@ -15,6 +15,7 @@
 - [ ] **Phase 6: 网络配置** - 配置 TAP 桥接接口使 MicroVM 获得独立 LAN IP
 - [ ] **Phase 7: openclaw 集成与运维** - 运行 openclaw Gateway 服务并配置开机自启
 - [ ] **Phase 8: OpenHands AI 助手** - 在 NixOS 容器内部署 OpenHands 编程助手
+- [ ] **Phase 9: vLLM GPU 推理服务** - 配置 vLLM 推理服务实现 GPU 直通
 
 ---
 
@@ -130,6 +131,39 @@ Plans:
 
 ---
 
+### Phase 9: vLLM GPU 推理服务
+**Goal**: 在 NixOS 上配置 vLLM 推理服务，实现 GPU 直通，提供 OpenAI 兼容 API
+
+**Requirements**: VLLM-01, VLLM-02, VLLM-03, VLLM-04, VLLM-05
+
+**Depends on:** Phase 8 (Podman 已配置)
+
+**Architecture:** Podman + 官方 vLLM ROCm 镜像 + GPU 设备直通
+
+| Component | Decision |
+|-----------|----------|
+| 容器运行时 | Podman (宿主机直接运行) |
+| 镜像 | rocm/vllm-dev:base (官方 ROCm 镜像) |
+| GPU 设备 | /dev/kfd, /dev/dri (AMD GPU) |
+| 网络 | 端口 8000 (OpenAI 兼容 API) |
+| 数据路径 | /var/lib/vllm/models (模型存储) |
+| GPU 选择 | GPU 1 (HIP_VISIBLE_DEVICES=1) |
+
+**Success Criteria** (what must be TRUE):
+1. vLLM 服务可通过 `systemctl start vllm` 启动
+2. GPU 设备 `/dev/kfd` 和 `/dev/dri` 可访问
+3. API 端点 `http://localhost:8000/v1/models` 返回有效响应
+4. 模型加载成功并可进行推理
+5. 服务开机自启
+
+**Plans:** 2 plans
+
+Plans:
+- [ ] 09-01-PLAN.md — 创建 vLLM Podman 容器配置 (Wave 1, VLLM-01/02/05)
+- [ ] 09-02-PLAN.md — 验证 API 端点和推理功能 (Wave 2, VLLM-03/04)
+
+---
+
 ## Progress Table
 
 | Phase | Plans Complete | Status | Completed |
@@ -139,6 +173,7 @@ Plans:
 | 6. 网络配置 | 0/4 | Not started | - |
 | 7. openclaw 集成与运维 | 0/6 | Not started | - |
 | 8. OpenHands AI 助手 | 2/3 | In Progress | 2026-03-21 |
+| 9. vLLM GPU 推理服务 | 0/2 | Planned | - |
 
 ---
 
@@ -171,11 +206,17 @@ Plans:
 | OH-03 | Phase 8 | OH |
 | OH-04 | Phase 8 | OH |
 | OH-05 | Phase 8 | OH |
+| VLLM-01 | Phase 9 | VLLM |
+| VLLM-02 | Phase 9 | VLLM |
+| VLLM-03 | Phase 9 | VLLM |
+| VLLM-04 | Phase 9 | VLLM |
+| VLLM-05 | Phase 9 | VLLM |
 
-**Coverage:** 25/25 v1.1 requirements mapped ✓
+**Coverage:** 30/30 v1.1 requirements mapped
 
 ---
 
 *Created: 2026-03-19*
 *Phase 8 planned: 2026-03-20*
 *Phase 8 revised: 2026-03-21 (架构: nixos-container + Docker)*
+*Phase 9 planned: 2026-03-26 (架构: Podman + ROCm 镜像)*
