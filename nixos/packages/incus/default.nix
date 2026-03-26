@@ -1,8 +1,4 @@
 _: {
-  imports = [
-    ./openclaw.nix
-  ];
-
   virtualisation.incus = {
     enable = true;
     agent.enable = true;
@@ -13,7 +9,11 @@ _: {
   networking.firewall = {
     trustedInterfaces = [ "incusbr0" ];
     # 允许 Incus 网桥的 DHCP 和 DNS 流量
-    allowedUDPPorts = [ 67 68 53 ];
+    allowedUDPPorts = [
+      67
+      68
+      53
+    ];
     allowedTCPPorts = [ 53 ];
   };
 

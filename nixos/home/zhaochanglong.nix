@@ -14,7 +14,6 @@
     ./ssh.nix
     ./vscode.nix
     ./zed.nix
-    ./ollama.nix
     ./kitty.nix
     ./nixvim
     ./1password.nix
