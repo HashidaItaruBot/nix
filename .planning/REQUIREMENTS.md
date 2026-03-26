@@ -51,14 +51,6 @@
 - [x] **OH-04**: 数据持久化配置正确
 - [x] **OH-05**: 容器开机自启
 
-### VLLM (vLLM GPU 推理)
-
-- [x] **VLLM-01**: vLLM 服务在 Podman 容器内运行
-- [x] **VLLM-02**: GPU 设备直通配置正确（/dev/kfd, /dev/dri）
-- [ ] **VLLM-03**: OpenAI 兼容 API 在端口 8000 可访问
-- [ ] **VLLM-04**: 模型加载和推理功能正常
-- [x] **VLLM-05**: 服务开机自启
-
 ---
 
 ## Future Requirements (Deferred)
@@ -119,13 +111,8 @@
 | OH-03 | Phase 8 | Complete |
 | OH-04 | Phase 8 | Complete |
 | OH-05 | Phase 8 | Complete |
-| VLLM-01 | Phase 9 | Complete |
-| VLLM-02 | Phase 9 | Complete |
-| VLLM-03 | Phase 9 | Pending |
-| VLLM-04 | Phase 9 | Pending |
-| VLLM-05 | Phase 9 | Complete |
 
-**Coverage:** 30/30 v1 requirements mapped ✓
+**Coverage:** 25/25 v1 requirements mapped ✓
 
 ---
 

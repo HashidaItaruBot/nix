@@ -159,7 +159,7 @@ Plans:
 **Plans:** 2 plans
 
 Plans:
-- [x] 09-01-PLAN.md — 创建 vLLM Podman 容器配置 (Wave 1, VLLM-01/02/05)
+- [ ] 09-01-PLAN.md — 创建 vLLM Podman 容器配置 (Wave 1, VLLM-01/02/05)
 - [ ] 09-02-PLAN.md — 验证 API 端点和推理功能 (Wave 2, VLLM-03/04)
 
 ---
@@ -173,7 +173,7 @@ Plans:
 | 6. 网络配置 | 0/4 | Not started | - |
 | 7. openclaw 集成与运维 | 0/6 | Not started | - |
 | 8. OpenHands AI 助手 | 2/3 | In Progress | 2026-03-21 |
-| 9. vLLM GPU 推理服务 | 1/2 | In Progress | 2026-03-26 |
+| 9. vLLM GPU 推理服务 | 0/2 | Planned | - |
 
 ---
 
