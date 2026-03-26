@@ -1,9 +1,8 @@
-{
-  self,
-  config,
-  lib,
-  pkgs,
-  ...
+{ self
+, config
+, lib
+, pkgs
+, ...
 }:
 {
   imports = [
@@ -14,7 +13,6 @@
     ./sops.nix
     ./zerotier.nix
     ./sshd.nix
-    ./containers
   ];
 
   networking = {
@@ -112,7 +110,6 @@
       "wheel"
       "networkmanager"
       "video"
-      "render"
     ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP5M2RGhIG1CslAdzx+1xcOFiAgJhw0FKFqhe/Wkm1qZ"
