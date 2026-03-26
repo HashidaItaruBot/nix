@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: milestone
 status: executing
-last_updated: "2026-03-21T13:00:00.000Z"
+last_updated: "2026-03-26T14:05:13Z"
 progress:
-  total_phases: 5
+  total_phases: 6
   completed_phases: 0
-  total_plans: 8
-  completed_plans: 4
+  total_plans: 11
+  completed_plans: 5
 ---
 
 # STATE: v1.3 Colima + OpenHands on macOS
@@ -23,13 +23,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-19 after v1.0, starting v1.1)
 
 **Core value:** 所有系统配置和软件包管理必须通过修改 Nix 配置文件完成，完全声明式，可复现
-**Current focus:** Phase 08 — nixos-openhands-ai
+**Current focus:** Phase 09 — nixos-vllm-gpu
 
 ---
 
 ## Milestone: v1.1 — MicroVM 运行 OpenClaw
 
-**Status:** Executing Phase 08
+**Status:** Executing Phase 09
 **Started:** 2026-03-19
 **Completed:** —
 
@@ -42,6 +42,7 @@ See: .planning/PROJECT.md (updated 2026-03-19 after v1.0, starting v1.1)
 | 6 | 网络配置 | Not started | 0/4 |
 | 7 | openclaw 集成与运维 | Not started | 0/6 |
 | 8 | OpenHands AI 助手 | **Ready** | 3/3 |
+| 9 | vLLM + GPU 容器 | Executing | 1/1 |
 
 ### Requirements Status
 
@@ -53,7 +54,8 @@ See: .planning/PROJECT.md (updated 2026-03-19 after v1.0, starting v1.1)
 | OCL (openclaw 集成) | 4 | 0 | 4 |
 | OPS (运维加固) | 4 | 0 | 4 |
 | OH (OpenHands AI 助手) | 5 | 5 | 0 |
-| **Total** | **25** | **5** | **20** |
+| VLLM (vLLM GPU 推理) | 5 | 3 | 2 |
+| **Total** | **30** | **8** | **22** |
 
 ---
 
@@ -61,16 +63,17 @@ See: .planning/PROJECT.md (updated 2026-03-19 after v1.0, starting v1.1)
 
 | Metric | Value |
 |--------|-------|
-| Phases Complete | 0/5 |
-| Plans Complete | 4/8 |
-| Tasks Complete | 4/4 |
-| Requirements Complete | 8/25 |
+| Phases Complete | 0/6 |
+| Plans Complete | 5/11 |
+| Tasks Complete | 7/7 |
+| Requirements Complete | 11/25 |
 
 ---
 | Phase 04-git-ssh P01 | 5m | 2 tasks | 2 files |
 | Phase 04-git-ssh P02 | 5m | 2 tasks | 2 files |
 | Phase 08 P01 | 3min | 4 tasks | 4 files |
 | Phase 08 P02 | 10min | 3 tasks | 1 file |
+| Phase 09 P01 | 3min | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -85,6 +88,9 @@ See: .planning/PROJECT.md (updated 2026-03-19 after v1.0, starting v1.1)
 - **Phase 8 使用 nixos-container + Docker** - 容器内运行 Docker 确保 OpenHands 兼容性
 - [Phase 08]: Use EnvironmentFile for LLM_API_KEY injection from SOPS secrets
 - [Phase 08 P02]: Reuse existing alibaba_api_key from shared secrets for OpenHands LLM API
+- [Phase 09 P01]: Use Podman + official ROCm image instead of nixos-container for vLLM
+- [Phase 09 P01]: GPU 1 selected via HIP_VISIBLE_DEVICES=1 consistent with hardware-configuration.nix
+- [Phase 09 P01]: HSA_OVERRIDE_GFX_VERSION=10.3.0 for consumer GPU compatibility
 
 ### Todos
 
@@ -126,6 +132,7 @@ See: .planning/PROJECT.md (updated 2026-03-19 after v1.0, starting v1.1)
 | 2026-03-20 | Phase 8 replanned (nixos-container) | 架构变更：nixos-container + Podman |
 | 2026-03-20 | Phase 8 final (podman host) | 架构简化：宿主机直接运行 Podman 容器 |
 | 2026-03-20 | Phase 8 暂停 GSD 执行 | 用户手动编写 podman-compose.yml 和部署 |
+| 2026-03-26 | Phase 9 added | NixOS 容器 + vLLM + GPU 直通 |
 
 ## Decisions Log
 
@@ -157,6 +164,8 @@ See: .planning/PROJECT.md (updated 2026-03-19 after v1.0, starting v1.1)
 | 2026-03-20 | Phase 8 planned (3 plans in 3 waves) |
 | 2026-03-21 | Phase 8 Plan 01 complete (container configuration) |
 | 2026-03-21 | Phase 8 Plan 02 complete (SOPS secrets) |
+| 2026-03-26 | Phase 9 added (vLLM + GPU 容器) |
+| 2026-03-26 | Phase 9 Plan 01 complete (vLLM container with GPU passthrough) |
 
 ---
 
