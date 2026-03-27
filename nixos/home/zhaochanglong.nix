@@ -18,6 +18,7 @@
     ./nixvim
     ./1password.nix
     ./appimage.nix
+    ./podman
   ];
 
   home.homeDirectory = "/home/zhaochanglong";
