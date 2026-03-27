@@ -1,7 +1,9 @@
-{ pkgs
-, inputs
-, ...
-}: {
+{
+  pkgs,
+  inputs,
+  ...
+}:
+{
   imports = [
     ./flatpak.nix
     ./podman.nix
@@ -30,6 +32,7 @@
     ppsspp-sdl-wayland
     appimage-run
     podman-desktop
+    python314Packages.vllm
   ];
 
   programs._1password-gui = {
