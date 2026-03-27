@@ -32,7 +32,7 @@
     ppsspp-sdl-wayland
     appimage-run
     podman-desktop
-    python314Packages.vllm
+    python313Packages.vllm
   ];
 
   programs._1password-gui = {
