@@ -57,7 +57,6 @@
       "moonlight"
       "steam"
       "codex-app"
-      "mark-text"
     ];
   };
 }
