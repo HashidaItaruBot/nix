@@ -10,7 +10,7 @@ let
 in
 {
   programs.git = {
-    signing.signer = "${pkgs._1password-gui}/bin/op-ssh-sign";
+    signing.signer = "${pkgs.openssh}/bin/ssh-keygen";
     settings.gpg.ssh.allowedSignersFile = toString allowedSigners;
   };
 }
