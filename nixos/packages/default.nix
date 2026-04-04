@@ -52,8 +52,6 @@
     openFirewall = true; # 自动打开必要的端口 (47984-48010 等)
   };
 
-  services.redshift = {
-    enable = true;
-    provider = "geoclue2";
-  };
+  services.redshift.enable = true;
+  location.provider = "geoclue2";
 }
