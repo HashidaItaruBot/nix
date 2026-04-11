@@ -24,11 +24,6 @@
       owner = "root";
       mode = "0400";
     };
-    zai_api_key = {
-      sopsFile = "${self}/shared/secrets/api_keys.yaml";
-      owner = "root";
-      mode = "0400";
-    };
 
     telegram_bot_token = {
       sopsFile = "${self}/shared/secrets/telegram_bot_token.yaml";

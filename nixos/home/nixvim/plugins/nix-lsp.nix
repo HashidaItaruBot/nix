@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   programs.nixvim.plugins = {
     # 启用LSP支持
     lsp = {
@@ -39,7 +40,7 @@
           enable = true;
           settings = {
             formatting = {
-              command = ["alejandra"];
+              command = [ "alejandra" ];
             };
             nixd = {
               options = {
@@ -60,7 +61,7 @@
           settings = {
             Lua = {
               runtime.version = "LuaJIT";
-              diagnostics.globals = ["vim"];
+              diagnostics.globals = [ "vim" ];
               workspace = {
                 checkThirdParty = false;
                 library = [
@@ -138,7 +139,7 @@
         formatting = {
           alejandra.enable = true;
           stylua.enable = true;
-          prettier = {
+          prettierd = {
             enable = true;
             disableTsServerFormatter = true;
           };
@@ -174,10 +175,10 @@
           "<C-e>" = "cmp.mapping.abort()";
         };
         sources = [
-          {name = "nvim_lsp";}
-          {name = "luasnip";}
-          {name = "path";}
-          {name = "buffer";}
+          { name = "nvim_lsp"; }
+          { name = "luasnip"; }
+          { name = "path"; }
+          { name = "buffer"; }
         ];
       };
     };
