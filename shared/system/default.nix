@@ -27,6 +27,7 @@
     cmake
     nodejs
     pnpm
+    gdb
 
     qemu
     nh
