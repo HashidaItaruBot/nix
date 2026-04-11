@@ -30,6 +30,7 @@
     ppsspp-sdl-wayland
     appimage-run
     podman-desktop
+    thunderbird
   ];
 
   programs._1password-gui = {
