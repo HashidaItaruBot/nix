@@ -1,8 +1,10 @@
-{ self
-, config
-, lib
-, pkgs
-, ...
+{
+  self,
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
 }:
 {
   imports = [
@@ -78,7 +80,7 @@
         "Sarasa Term SC"
         "Noto Sans CJK SC"
       ];
-      serif = [ "Noto Serif CJK SC" ];
+      serif = [ "Noto Serif CJK CJK" ];
     };
     antialias = true;
     hinting.enable = true;

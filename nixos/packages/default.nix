@@ -1,11 +1,14 @@
-{ pkgs
-, inputs
-, ...
-}: {
+{
+  pkgs,
+  inputs,
+  ...
+}:
+{
   imports = [
     ./flatpak.nix
     ./podman.nix
     ./incus
+    ./comfyui
   ];
 
   environment.systemPackages = with pkgs; [
