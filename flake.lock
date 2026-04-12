@@ -226,11 +226,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1775889759,
-        "narHash": "sha256-dIlQ17BlxzjYGx9Vj7CmL/aqWlvt7S0nlsiPBo1nrJI=",
+        "lastModified": 1775987221,
+        "narHash": "sha256-G+vUCy7vlJSYHzWlDg02ruR0G4jYODxz9gRnF32/ZDI=",
         "owner": "nixified-ai",
         "repo": "flake",
-        "rev": "2f8e7106ca8bd3e57bfc531bdf2589b6a9913378",
+        "rev": "bef7be03aed7e49bb280cc5900788224b87e93f0",
         "type": "github"
       },
       "original": {
