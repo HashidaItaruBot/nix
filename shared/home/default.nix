@@ -9,6 +9,7 @@
     ./opencode.nix
     ./claude-code.nix
     ./codex.nix
+    ./uv.nix
   ];
 
   home = {

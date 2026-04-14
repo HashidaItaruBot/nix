@@ -2,7 +2,8 @@
   pkgs,
   inputs,
   ...
-}: {
+}:
+{
   programs.zsh = {
     enable = true;
     enableCompletion = true;
