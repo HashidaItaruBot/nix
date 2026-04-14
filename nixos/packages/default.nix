@@ -15,7 +15,7 @@
     kdePackages.kate
     kdePackages.dolphin
     firefox
-    code-cursor
+    # code-cursor # 暂时注释掉，有哈希不匹配问题
     alacritty
     obsidian
     telegram-desktop
