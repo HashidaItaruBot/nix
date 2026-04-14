@@ -1,7 +1,23 @@
 {
   inputs,
+  pkgs,
+  lib,
   ...
 }:
+let
+  # Get the comfyui infrastructure from the overlay
+  comfyuiLib = pkgs.comfyuiLib;
+
+  # Import custom nodes from separate files
+  comfyui-manager = import ./custom-nodes/comfyui-manager.nix {
+    inherit pkgs comfyuiLib;
+  };
+
+  customNodes = [
+    # ComfyUI Manager - A powerful management tool for ComfyUI
+    comfyui-manager
+  ];
+in
 {
   # Import the comfyui module from nixified-ai/flake
   imports = [
@@ -30,8 +46,8 @@
     port = 8188;
     # No models by default - add your models here if needed
     models = [ ];
-    # No custom nodes by default - add your custom nodes here if needed
-    customNodes = [ ];
+    # Custom nodes - imported from separate files for better modularity
+    customNodes = customNodes;
     openFirewall = false;
   };
 }
