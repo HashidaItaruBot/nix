@@ -21,9 +21,6 @@
 
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
-    nixified-ai.url = "github:nixified-ai/flake";
-    nixified-ai.inputs.nixpkgs.follows = "nixpkgs";
-
     plasma-manager = {
       url = "github:nix-community/plasma-manager";
       inputs = {
