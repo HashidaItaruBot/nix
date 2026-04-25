@@ -19,4 +19,6 @@
     username = "zhaochanglong";
     stateVersion = "24.05";
   };
+
+  home.sessionPath = [ "$HOME/.local/bin" ];
 }
