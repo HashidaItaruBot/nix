@@ -32,7 +32,7 @@
     appimage-run
     podman-desktop
     thunderbird
-    google-chrome
+    chromium
   ];
 
   programs._1password-gui = {
