@@ -58,7 +58,7 @@
       "steam"
       "codex-app"
       "tencent-meeting"
-      "yuanbao"
+      "ungoogled-chromium"
     ];
   };
 }
