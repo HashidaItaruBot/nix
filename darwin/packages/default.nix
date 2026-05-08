@@ -59,7 +59,6 @@
       "codex-app"
       "tencent-meeting"
       "ungoogled-chromium"
-      "librewolf"
     ];
   };
 }
