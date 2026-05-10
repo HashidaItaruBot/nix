@@ -33,7 +33,7 @@
     podman-desktop
     thunderbird
     chromium
-    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+    librewolf
   ];
 
   programs._1password-gui = {
