@@ -59,6 +59,8 @@
       "codex-app"
       "tencent-meeting"
       "ungoogled-chromium"
+      "zen"
+      "mark-text"
     ];
   };
 }
