@@ -1,4 +1,11 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  self,
+  ...
+}:
+let
+  ecc-universal = pkgs.callPackage "${self}/shared/packages/ecc-universal.nix" { };
+in
 {
   imports = [
     ./sops.nix
@@ -26,6 +33,7 @@
     clang
     cmake
     nodejs
+    ecc-universal
     pnpm
     gdb
 
@@ -42,6 +50,7 @@
     alejandra
     statix
     nom
+
   ];
 
   fonts.packages = with pkgs; [
