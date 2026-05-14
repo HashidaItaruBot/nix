@@ -27,6 +27,11 @@
   # TouchID for sudo
   security.pam.services.sudo_local.touchIdAuth = true;
 
+  environment.variables = {
+    EDITOR = "vim";
+    VISUAL = "vim";
+  };
+
   # Docker configuration for macOS
   # Docker CLI tools are installed via shared system packages
   # Docker Desktop is installed via Homebrew (see packages/default.nix)
