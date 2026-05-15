@@ -5,6 +5,7 @@
 }:
 let
   ecc-universal = pkgs.callPackage "${self}/shared/packages/ecc-universal.nix" { };
+  mgrep = pkgs.callPackage "${self}/shared/packages/mgrep.nix" { };
 in
 {
   imports = [
@@ -34,6 +35,7 @@ in
     cmake
     nodejs
     ecc-universal
+    mgrep
     pnpm
     gdb
 
