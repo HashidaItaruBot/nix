@@ -6,6 +6,7 @@
 let
   ecc-universal = pkgs.callPackage "${self}/shared/packages/ecc-universal.nix" { };
   mgrep = pkgs.callPackage "${self}/shared/packages/mgrep.nix" { };
+  athena-core = pkgs.callPackage "${self}/shared/packages/athena-core.nix" { };
 in
 {
   imports = [
@@ -36,6 +37,7 @@ in
     nodejs
     ecc-universal
     mgrep
+    athena-core
     pnpm
     gdb
 
