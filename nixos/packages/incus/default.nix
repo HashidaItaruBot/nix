@@ -6,7 +6,6 @@ _: {
   virtualisation.incus = {
     enable = true;
     agent.enable = true;
-    bucketSupport = false;
   };
 
   security.apparmor.enable = true;
