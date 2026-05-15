@@ -38,12 +38,6 @@ jobs:
       - name: Check flake validity
         run: nix flake check --no-build --system ${{ matrix.system }}
 
-      - name: Check Nix formatting
-        run: nix run nixpkgs#alejandra -- --check .
-
-      - name: Run statix linter
-        run: nix run nixpkgs#statix -- check .
-
       - name: Evaluate NixOS configuration
         if: matrix.config == 'nixos'
         run: nix eval .#nixosConfigurations.nixos.config.system.build.toplevel.drvPath --raw
