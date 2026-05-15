@@ -2,6 +2,8 @@
 {
   environment.systemPackages = with pkgs; [
     mas
+    colima
+    docker
   ];
 
   homebrew = {

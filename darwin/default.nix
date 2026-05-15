@@ -33,7 +33,6 @@
   };
 
   # Docker configuration for macOS
-  # Docker CLI tools are installed via shared system packages
-  # Docker Desktop is installed via Homebrew (see packages/default.nix)
-  # After installation, Docker Desktop will automatically configure permissions
+  # docker CLI + colima (replaces Docker Desktop) installed via packages/default.nix
+  # Start colima: colima start
 }
