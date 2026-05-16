@@ -1,199 +1,216 @@
 {pkgs, ...}: {
   programs.nixvim = {
     keymaps = [
-      # 快捷跳转
       {
         mode = "n";
         key = "<leader>,";
-        action = "buffers sort_mru=true sort_lastused=true";
+        action = "<cmd>Telescope buffers sort_mru=true sort_lastused=true<CR>";
         options.desc = "Switch Buffer";
       }
       {
         mode = "n";
         key = "<leader>/";
-        action = "live_grep";
+        action = "<cmd>Telescope live_grep<CR>";
         options.desc = "Grep (Root Dir)";
       }
       {
         mode = "n";
         key = "<leader>:";
-        action = "command_history";
+        action = "<cmd>Telescope command_history<CR>";
         options.desc = "Command History";
       }
       {
         mode = "n";
         key = "<leader><space>";
-        action = "find_files";
+        action = "<cmd>Telescope find_files<CR>";
         options.desc = "Find Files (Root Dir)";
       }
 
-      # f - Find 模块
+      # f - Find
       {
         mode = "n";
         key = "<leader>fb";
-        action = "buffers sort_mru=true sort_lastused=true ignore_current_buffer=true";
+        action = "<cmd>Telescope buffers sort_mru=true sort_lastused=true ignore_current_buffer=true<CR>";
         options.desc = "Buffers";
       }
       {
         mode = "n";
         key = "<leader>fB";
-        action = "buffers";
+        action = "<cmd>Telescope buffers<CR>";
         options.desc = "Buffers (all)";
       }
       {
         mode = "n";
         key = "<leader>ff";
-        action = "find_files";
+        action = "<cmd>Telescope find_files<CR>";
         options.desc = "Find Files (Root Dir)";
       }
       {
         mode = "n";
         key = "<leader>fg";
-        action = "git_files";
+        action = "<cmd>Telescope git_files<CR>";
         options.desc = "Find Files (git-files)";
       }
       {
         mode = "n";
         key = "<leader>fr";
-        action = "oldfiles";
+        action = "<cmd>Telescope oldfiles<CR>";
         options.desc = "Recent";
       }
 
-      # g - Git 模块
+      # g - Git
       {
         mode = "n";
         key = "<leader>gc";
-        action = "git_commits";
+        action = "<cmd>Telescope git_commits<CR>";
         options.desc = "Commits";
       }
       {
         mode = "n";
         key = "<leader>gs";
-        action = "git_status";
+        action = "<cmd>Telescope git_status<CR>";
         options.desc = "Status";
       }
       {
         mode = "n";
         key = "<leader>gS";
-        action = "git_stash";
+        action = "<cmd>Telescope git_stash<CR>";
         options.desc = "Git Stash";
       }
 
-      # s - Search 模块
+      # s - Search
       {
         mode = "n";
         key = "<leader>s\"";
-        action = "registers";
+        action = "<cmd>Telescope registers<CR>";
+        options.desc = "Registers";
       }
       {
         mode = "n";
         key = "<leader>s/";
-        action = "search_history";
+        action = "<cmd>Telescope search_history<CR>";
+        options.desc = "Search History";
       }
       {
         mode = "n";
         key = "<leader>sa";
-        action = "autocommands";
+        action = "<cmd>Telescope autocommands<CR>";
+        options.desc = "Autocommands";
       }
       {
         mode = "n";
         key = "<leader>sb";
-        action = "current_buffer_fuzzy_find";
+        action = "<cmd>Telescope current_buffer_fuzzy_find<CR>";
+        options.desc = "Current Buffer";
       }
       {
         mode = "n";
         key = "<leader>sc";
-        action = "command_history";
+        action = "<cmd>Telescope command_history<CR>";
+        options.desc = "Command History";
       }
       {
         mode = "n";
         key = "<leader>sC";
-        action = "commands";
+        action = "<cmd>Telescope commands<CR>";
+        options.desc = "Commands";
       }
       {
         mode = "n";
         key = "<leader>sd";
-        action = "diagnostics";
+        action = "<cmd>Telescope diagnostics<CR>";
+        options.desc = "Diagnostics";
       }
       {
         mode = "n";
         key = "<leader>sg";
-        action = "live_grep";
+        action = "<cmd>Telescope live_grep<CR>";
+        options.desc = "Live Grep";
       }
       {
         mode = "n";
         key = "<leader>sh";
-        action = "help_tags";
+        action = "<cmd>Telescope help_tags<CR>";
+        options.desc = "Help Tags";
       }
       {
         mode = "n";
         key = "<leader>sH";
-        action = "highlights";
+        action = "<cmd>Telescope highlights<CR>";
+        options.desc = "Highlights";
       }
       {
         mode = "n";
         key = "<leader>sj";
-        action = "jumplist";
+        action = "<cmd>Telescope jumplist<CR>";
+        options.desc = "Jumplist";
       }
       {
         mode = "n";
         key = "<leader>sk";
-        action = "keymaps";
+        action = "<cmd>Telescope keymaps<CR>";
+        options.desc = "Keymaps";
       }
       {
         mode = "n";
         key = "<leader>sl";
-        action = "loclist";
+        action = "<cmd>Telescope loclist<CR>";
+        options.desc = "Location List";
       }
       {
         mode = "n";
         key = "<leader>sM";
-        action = "man_pages";
+        action = "<cmd>Telescope man_pages<CR>";
+        options.desc = "Man Pages";
       }
       {
         mode = "n";
         key = "<leader>sm";
-        action = "marks";
+        action = "<cmd>Telescope marks<CR>";
+        options.desc = "Marks";
       }
       {
         mode = "n";
         key = "<leader>so";
-        action = "vim_options";
+        action = "<cmd>Telescope vim_options<CR>";
+        options.desc = "Vim Options";
       }
       {
         mode = "n";
         key = "<leader>sR";
-        action = "resume";
+        action = "<cmd>Telescope resume<CR>";
+        options.desc = "Resume";
       }
       {
         mode = "n";
         key = "<leader>sq";
-        action = "quickfix";
+        action = "<cmd>Telescope quickfix<CR>";
+        options.desc = "Quickfix";
       }
       {
         mode = "n";
         key = "<leader>sw";
-        action = "grep_string";
+        action = "<cmd>Telescope grep_string<CR>";
         options.desc = "Word (Root Dir)";
       }
       {
         mode = "n";
         key = "<leader>ss";
-        action = "lsp_document_symbols";
+        action = "<cmd>Telescope lsp_document_symbols<CR>";
         options.desc = "Goto Symbol";
       }
       {
         mode = "n";
         key = "<leader>sS";
-        action = "lsp_dynamic_workspace_symbols";
+        action = "<cmd>Telescope lsp_dynamic_workspace_symbols<CR>";
         options.desc = "Goto Symbol (Workspace)";
       }
 
-      # UI 模块
+      # UI
       {
         mode = "n";
         key = "<leader>uC";
-        action = "colorscheme enable_preview=true";
+        action = "<cmd>Telescope colorscheme enable_preview=true<CR>";
         options.desc = "Colorscheme with Preview";
       }
     ];

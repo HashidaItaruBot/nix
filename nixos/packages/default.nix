@@ -34,6 +34,7 @@
     thunderbird
     chromium
     librewolf
+    tor-browser
   ];
 
   programs._1password-gui = {

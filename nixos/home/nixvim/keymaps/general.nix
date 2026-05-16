@@ -149,14 +149,6 @@
         options.desc = "Split window right";
       }
 
-      # Close buffer
-      {
-        mode = "n";
-        key = "<leader>bd";
-        action = "<cmd>bdelete<cr>";
-        options.desc = "Delete buffer";
-      }
-
       # Quickfix
       {
         mode = "n";

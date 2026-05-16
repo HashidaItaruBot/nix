@@ -10,7 +10,6 @@
       softtabstop = 2;
 
       # Editing
-      smartindent = true;
       autoindent = true;
       breakindent = true;
 

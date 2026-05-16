@@ -4,6 +4,9 @@
     viAlias = true;
     vimAlias = true;
     defaultEditor = true;
-    globals.mapleader = " ";
+    globals = {
+      mapleader = " ";
+      maplocalleader = " ";
+    };
   };
 }

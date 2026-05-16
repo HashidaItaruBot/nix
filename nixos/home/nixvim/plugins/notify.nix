@@ -14,11 +14,6 @@
       };
     };
 
-    # Use notify as the default notification handler
-    opts = {
-      termguicolors = true;
-    };
-
     extraConfigLua = ''
       vim.notify = require("notify")
     '';

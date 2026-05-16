@@ -8,22 +8,13 @@
       # LSP Keymaps
       keymaps = {
         lspBuf = {
-          # 跳转到定义
           gd = "definition";
-          # 跳转到类型定义
           gD = "type_definition";
-          # 显示悬停信息
           K = "hover";
-          # 跳转到实现
           gi = "implementation";
-          # 跳转到引用
           gr = "references";
-          # 重命名符号
           "<leader>rn" = "rename";
-          # 代码操作
           "<leader>ca" = "code_action";
-          # 格式化
-          "<leader>cf" = "format";
         };
         diagnostic = {
           "<leader>d" = "open_float";
@@ -42,16 +33,16 @@
             formatting = {
               command = [ "alejandra" ];
             };
-            nixd = {
-              options = {
-                nixos = {
-                  expr = "(builtins.getFlake \"/path/to/flake\").nixosConfigurations.nixos.options";
-                };
-                home_manager = {
-                  expr = "(builtins.getFlake \"/path/to/flake\").homeConfigurations.zhaochanglong.options";
+              nixd = {
+                options = {
+                  nixos = {
+                    expr = "(builtins.getFlake \"/home/zhaochanglong/Documents/nix\").nixosConfigurations.nixos.options";
+                  };
+                  home_manager = {
+                    expr = "(builtins.getFlake \"/home/zhaochanglong/Documents/nix\").homeConfigurations.zhaochanglong.options";
+                  };
                 };
               };
-            };
           };
         };
 
@@ -113,9 +104,6 @@
       };
     };
 
-    # LSP 格式化
-    lsp-format.enable = true;
-
     # LSP Lines (显示诊断行)
     lsp-lines.enable = true;
 
@@ -132,19 +120,10 @@
     # SchemaStore (JSON Schema)
     schemastore.enable = true;
 
-    # none-ls (格式化和诊断)
+    # none-ls (诊断)
     none-ls = {
       enable = true;
       sources = {
-        formatting = {
-          alejandra.enable = true;
-          stylua.enable = true;
-          prettierd = {
-            enable = true;
-            disableTsServerFormatter = true;
-          };
-          shfmt.enable = true;
-        };
         diagnostics = {
           shellcheck.enable = true;
         };
