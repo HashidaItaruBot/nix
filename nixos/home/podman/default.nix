@@ -1,5 +1,5 @@
 _: {
   imports = [
-    ./vllm.nix
+    ./openlist.nix
   ];
 }
