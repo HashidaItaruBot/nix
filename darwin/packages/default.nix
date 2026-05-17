@@ -1,9 +1,13 @@
 { pkgs, ... }:
+let
+  nipaplay-reload = pkgs.callPackage ./nipaplay-reload.nix { };
+in
 {
   environment.systemPackages = with pkgs; [
     mas
     colima
     docker
+    nipaplay-reload
   ];
 
   homebrew = {

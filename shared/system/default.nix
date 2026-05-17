@@ -5,7 +5,6 @@
 }:
 let
   ecc-universal = pkgs.callPackage "${self}/shared/packages/ecc-universal.nix" { };
-  nipaplay = pkgs.callPackage "${self}/shared/packages/nipaplay.nix" { };
 in
 {
   imports = [
@@ -44,11 +43,6 @@ in
       qemu
       nh
 
-      caddy
-
-      # GUI apps
-      nipaplay
-
     ]
     ++ (with pkgs; [
       ssh-to-age
@@ -61,7 +55,6 @@ in
       alejandra
       statix
       nom
-
     ]);
 
   fonts.packages = with pkgs; [
