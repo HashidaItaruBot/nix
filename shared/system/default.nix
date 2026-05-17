@@ -12,50 +12,46 @@ in
     ./environment.nix
   ];
 
-  environment.systemPackages =
-    with pkgs;
-    [
-      # Core tools
-      vim
-      git
-      gh # GitHub CLI
-      tree
-      wget
-      htop
-      aria2
-      fd
-      fzf
-      ripgrep
-      lazygit
-      zoxide
-      bat
+  environment.systemPackages = with pkgs; [
+    # Core tools
+    vim
+    git
+    gh # GitHub CLI
+    tree
+    wget
+    htop
+    aria2
+    fd
+    fzf
+    ripgrep
+    lazygit
+    zoxide
+    bat
 
-      # Development
-      gnumake
-      gcc
-      clang
-      cmake
-      nodejs
-      ecc-universal
-      pnpm
-      gdb
+    # Development
+    gnumake
+    gcc
+    clang
+    cmake
+    nodejs
+    ecc-universal
+    pnpm
+    gdb
 
-      qemu
-      nh
+    qemu
+    nh
 
-    ]
-    ++ (with pkgs; [
-      ssh-to-age
-      sops
-      openssh
+    ssh-to-age
+    sops
+    openssh
 
-      # Nix开发工具
-      nixd
-      nil
-      alejandra
-      statix
-      nom
-    ]);
+    # Nix开发工具
+    nixd
+    nil
+    alejandra
+    statix
+    nom
+  ];
 
   fonts.packages = with pkgs; [
     wqy_microhei
