@@ -35,6 +35,7 @@
     chromium
     librewolf
     tor-browser
+    aider-chat-full
   ];
 
   programs._1password-gui = {
