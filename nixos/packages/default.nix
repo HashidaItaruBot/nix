@@ -3,6 +3,9 @@
   inputs,
   ...
 }:
+let
+  nipaplay-reload = pkgs.callPackage ./nipaplay-reload/package.nix { };
+in
 {
   imports = [
     ./flatpak.nix
@@ -36,6 +39,7 @@
     librewolf
     tor-browser
     aider-chat-full
+    nipaplay-reload
   ];
 
   programs._1password-gui = {
