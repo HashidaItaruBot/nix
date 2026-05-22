@@ -12,11 +12,5 @@
       owner = "root";
       mode = "0400";
     };
-
-    bayesdl_api_key = {
-      sopsFile = "${self}/shared/secrets/api_keys.yaml";
-      owner = "root";
-      mode = "0400";
-    };
   };
 }

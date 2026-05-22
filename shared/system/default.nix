@@ -9,7 +9,6 @@ in
 {
   imports = [
     ./sops.nix
-    ./environment.nix
   ];
 
   environment.systemPackages = with pkgs; [
