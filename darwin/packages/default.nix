@@ -67,6 +67,8 @@ in
       "ungoogled-chromium"
       "zen"
       "mark-text"
+
+      "cloudflare-warp"
     ];
   };
 }

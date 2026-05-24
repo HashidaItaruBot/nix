@@ -28,6 +28,11 @@
         home-manager.follows = "home-manager";
       };
     };
+
+    deepseek-tui = {
+      url = "github:Hmbown/DeepSeek-TUI/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
