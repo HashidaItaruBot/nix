@@ -55,7 +55,7 @@
     extraModulePackages = [ ];
     loader = {
       systemd-boot.enable = lib.mkForce false;
-      efi.canTouchEfiVariables = true; # Use the systemd-boot EFI boot loader.
+      efi.canTouchEfiVariables = true;
     };
     lanzaboote = {
       enable = true;
