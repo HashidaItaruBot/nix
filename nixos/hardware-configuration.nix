@@ -38,6 +38,10 @@
           crypttabExtraOpts = [ "tpm2-device=auto" ];
           preLVM = true;
         };
+        "crypt-swap" = {
+          device = "/dev/disk/by-partuuid/44a9af0a-27e5-40d8-8ebb-903e89e9b9a3";
+          crypttabExtraOpts = [ "tpm2-device=auto" ];
+        };
       };
     };
     kernelModules = [
@@ -101,7 +105,9 @@
     };
   };
 
-  swapDevices = [ ];
+  swapDevices = [
+    { device = "/dev/mapper/crypt-swap"; }
+  ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
