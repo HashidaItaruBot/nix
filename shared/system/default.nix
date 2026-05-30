@@ -57,7 +57,6 @@ in
     alejandra
     statix
     nom
-    xquartz
   ];
 
   fonts.packages = with pkgs; [
