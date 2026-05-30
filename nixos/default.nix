@@ -9,6 +9,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./zram.nix
     ./packages
     "${self}/shared/system"
     ./home

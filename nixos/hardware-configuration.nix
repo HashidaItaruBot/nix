@@ -108,7 +108,10 @@
   };
 
   swapDevices = [
-    { device = "/dev/mapper/crypt-swap"; }
+    {
+      device = "/dev/mapper/crypt-swap";
+      priority = -1; # 低于 zram 优先级(5)，作为后备 swap
+    }
   ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
