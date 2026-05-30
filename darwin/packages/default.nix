@@ -5,9 +5,8 @@ in
 {
   environment.systemPackages = with pkgs; [
     mas
-    colima
-    docker
     nipaplay-reload
+    orbstack
   ];
 
   homebrew = {

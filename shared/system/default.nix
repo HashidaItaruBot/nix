@@ -6,9 +6,11 @@
 }:
 let
   ecc-universal = pkgs.callPackage "${self}/shared/packages/ecc-universal.nix" { };
-  deepseek-tui = inputs.deepseek-tui.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (_: {
-    doCheck = false; # 17 tests fail on macOS due to sandbox-exec restrictions
-  });
+  deepseek-tui =
+    inputs.deepseek-tui.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs
+      (_: {
+        doCheck = false; # 17 tests fail on macOS due to sandbox-exec restrictions
+      });
 in
 {
   imports = [
@@ -55,6 +57,7 @@ in
     alejandra
     statix
     nom
+    xquartz
   ];
 
   fonts.packages = with pkgs; [
