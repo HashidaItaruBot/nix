@@ -29,6 +29,11 @@
       };
     };
 
+    zen-browser = {
+      url = "github:youwen5/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     deepseek-tui = {
       url = "github:Hmbown/DeepSeek-TUI/main";
       inputs.nixpkgs.follows = "nixpkgs";
