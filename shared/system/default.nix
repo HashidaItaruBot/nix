@@ -57,6 +57,8 @@ in
     alejandra
     statix
     nom
+
+    logisim-evolution
   ];
 
   fonts.packages = with pkgs; [
