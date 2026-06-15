@@ -11,6 +11,7 @@ in
     ./flatpak.nix
     ./podman.nix
     ./incus
+    ./hyprland.nix
   ];
 
   environment.systemPackages = with pkgs; [
