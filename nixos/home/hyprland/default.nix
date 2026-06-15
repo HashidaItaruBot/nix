@@ -21,6 +21,9 @@ in
 {
   wayland.windowManager.hyprland = {
     enable = true;
+    # 使用 NixOS 模块提供的 Hyprland 包，避免版本冲突
+    package = null;
+    portalPackage = null;
     configType = "hyprlang";
 
     settings = {
