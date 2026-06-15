@@ -7,7 +7,7 @@
     [Desktop Entry]
     Type=Application
     Name=1Password
-    Exec=1password
+    Exec=1password --silent
     Icon=1password
     Terminal=false
     Categories=Utility;Security;
