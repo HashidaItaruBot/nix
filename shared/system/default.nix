@@ -59,6 +59,12 @@ in
     nom
 
     logisim-evolution
+
+    # Chisel开发工具
+    sbt
+    jdk8
+    verilator
+    gtkwave
   ];
 
   fonts.packages = with pkgs; [
