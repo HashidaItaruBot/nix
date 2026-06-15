@@ -94,7 +94,7 @@
         gopls.enable = true;
 
         # Bash
-        bash-ls.enable = true;
+        bashls.enable = true;
 
         # Docker
         dockerls.enable = true;
@@ -123,11 +123,6 @@
     # none-ls (诊断)
     none-ls = {
       enable = true;
-      sources = {
-        diagnostics = {
-          shellcheck.enable = true;
-        };
-      };
     };
 
     # 补全

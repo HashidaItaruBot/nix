@@ -40,7 +40,6 @@ in
     tor-browser
     aider-chat-full
     nipaplay-reload
-    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   programs._1password-gui = {

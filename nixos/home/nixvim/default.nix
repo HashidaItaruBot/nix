@@ -17,4 +17,6 @@
     # 键盘映射配置
     ./keymaps
   ];
+
+  programs.nixvim.nixpkgs.source = pkgs.path;
 }

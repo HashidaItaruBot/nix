@@ -73,7 +73,7 @@
     };
 
     # Treesitter textobjects
-    nvim-treesitter-textobjects = {
+    treesitter-textobjects = {
       enable = true;
       select = {
         enable = true;
