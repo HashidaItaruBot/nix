@@ -31,17 +31,21 @@
 
   time.timeZone = "Asia/Shanghai";
 
-  # Enable the X11 windowing system.
+  # Hyprland (Wayland 合成器)
+  programs.hyprland.enable = true;
+
+  # XWayland 兼容层
+  services.xserver.enable = true;
+
   services = {
-    xserver.enable = true;
     displayManager = {
       sddm.enable = true;
+      sddm.wayland.enable = true;
       autoLogin = {
         enable = true;
         user = "zhaochanglong";
       };
     };
-    desktopManager.plasma6.enable = true;
     thermald.enable = true; # 启用温度管理
     power-profiles-daemon.enable = true; # 启用电源模式切换
     logind.settings.Login = {
@@ -99,11 +103,6 @@
       fcitx5-gtk
       fcitx5-material-color
     ];
-  };
-
-  environment.variables = {
-    GTK_IM_MODULE = lib.mkForce "";
-    QT_IM_MODULE = lib.mkForce "";
   };
 
   # Define a user account.
