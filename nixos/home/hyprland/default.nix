@@ -157,9 +157,30 @@ in
 
       # ---- 窗口规则 ----
       windowrulev2 = [
-        "nomaximizerequest, class:.*" # 阻止窗口最大化请求
-        "nofocus, xwayland:1, class:^$, title:^$" # 修复 XWayland 拖拽问题
-        "move 20 monitor_h-120, float, class:hyprland-run" # hyprland-run 窗口定位
+        # 修复 XWayland 拖拽问题
+        "nofocus, xwayland:1, class:^$, title:^$"
+
+        # 阻止窗口最大化请求（保持平铺）
+        "nomaximizerequest, class:.*"
+
+        # 通讯/媒体应用浮动
+        "float, class:^(org.telegram.desktop|telegram-desktop)$, title:^(Telegram)$"
+        "float, class:^(discord|WebCord|vesktop)$, title:^(Discord)$"
+        "float, class:^(Spotify)$"
+
+        # 文件选择对话框浮动 + 居中
+        "float, class:^(org.kde.dolphin)$, title:^(.* — Dolphin)$"
+        "center, class:^(org.kde.dolphin)$, title:^(.* — Dolphin)$"
+
+        # 图片查看器浮动
+        "float, class:^(org.kde.gwenview|imv|feh|mpv)$"
+
+        # 阻止视频播放时进入空闲
+        "idleinhibit focus, class:^(mpv|vlc|firefox)$"
+        "idleinhibit fullscreen, class:.*"
+
+        # 工具窗口
+        "move 20 monitor_h-120, float, class:hyprland-run"
       ];
 
       # ---- 按键绑定 ----
