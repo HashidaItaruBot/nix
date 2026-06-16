@@ -27,8 +27,8 @@
       inputs.home-manager.follows = "home-manager";
     };
 
-    deepseek-tui = {
-      url = "github:Hmbown/DeepSeek-TUI/main";
+    codewhale = {
+      url = "github:Hmbown/CodeWhale/main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
