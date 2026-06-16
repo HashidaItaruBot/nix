@@ -209,4 +209,74 @@ in
       ];
     };
   };
+
+  # ---- hypridle 空闲管理（UWSM 兼容）----
+  services.hypridle = {
+    enable = true;
+    settings = {
+      general = {
+        lock_cmd = "pidof hyprlock || hyprlock";
+        before_sleep_cmd = "loginctl lock-session";
+        after_sleep_cmd = "hyprctl dispatch dpms on";
+      };
+      listener = [
+        {
+          timeout = 180; # 3分钟：降低屏幕亮度
+          on-timeout = "brightnessctl -s set 15%";
+          on-resume = "brightnessctl -r";
+        }
+        {
+          timeout = 300; # 5分钟：锁屏
+          on-timeout = "loginctl lock-session";
+        }
+        {
+          timeout = 350; # 5分50秒：关闭显示器
+          on-timeout = "hyprctl dispatch dpms off";
+          on-resume = "hyprctl dispatch dpms on";
+        }
+        {
+          timeout = 420; # 7分钟：挂起系统
+          on-timeout = "systemctl suspend";
+        }
+      ];
+    };
+  };
+
+  # ---- hyprlock 锁屏界面（最小化）----
+  programs.hyprlock = {
+    enable = true;
+    settings = {
+      general = {
+        hide_cursor = true;
+      };
+      background = [
+        {
+          path = "screenshot";
+          blur_passes = 2;
+          blur_size = 7;
+        }
+      ];
+      label = [
+        {
+          text = "cmd[update:30000] echo \"$(date +\"%H:%M\")\"";
+          font_size = 90;
+          position = "0, -80";
+          halign = "center";
+          valign = "center";
+        }
+      ];
+      input-field = [
+        {
+          size = "300, 50";
+          outline_thickness = 2;
+          dots_center = true;
+          fade_on_empty = false;
+          placeholder_text = "输入密码解锁";
+          position = "0, -160";
+          halign = "center";
+          valign = "center";
+        }
+      ];
+    };
+  };
 }
