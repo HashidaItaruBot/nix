@@ -5,6 +5,9 @@
   ...
 }:
 let
+  # Catppuccin Macchiato 颜色变量
+  c = (import ./macchiato.nix).catppuccin;
+
   mainMod = "SUPER";
   terminal = "ghotty";
   fileManager = "dolphin";
@@ -34,6 +37,8 @@ in
       env = [
         "XCURSOR_SIZE,24"
         "HYPRCURSOR_SIZE,24"
+        "XCURSOR_THEME,Catppuccin-Macchiato-Teal"
+        "HYPRCURSOR_THEME,Catppuccin-Macchiato-Teal"
       ];
 
       # ---- 通用设置 ----
@@ -41,8 +46,8 @@ in
         gaps_in = 5;
         gaps_out = 20;
         border_size = 2;
-        "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-        "col.inactive_border" = "rgba(595959aa)";
+        "col.active_border" = "rgba(${c.tealAlpha}ee) rgba(a6da95ee) 45deg";
+        "col.inactive_border" = "rgba(494d64aa)";
         resize_on_border = false;
         allow_tearing = false;
         layout = "dwindle";
@@ -58,7 +63,7 @@ in
           enabled = true;
           range = 4;
           render_power = 3;
-          color = "rgba(1a1a1aee)";
+          color = "rgba(${c.baseAlpha}ee)";
         };
         blur = {
           enabled = true;
@@ -242,7 +247,7 @@ in
     };
   };
 
-  # ---- hyprlock 锁屏界面（最小化）----
+  # ---- hyprlock 锁屏界面（Catppuccin Macchiato 配色）----
   programs.hyprlock = {
     enable = true;
     settings = {
@@ -254,11 +259,13 @@ in
           path = "screenshot";
           blur_passes = 2;
           blur_size = 7;
+          color = "${c.base}";
         }
       ];
       label = [
         {
           text = "cmd[update:30000] echo \"$(date +\"%H:%M\")\"";
+          color = "${c.text}";
           font_size = 90;
           position = "0, -80";
           halign = "center";
@@ -268,10 +275,14 @@ in
       input-field = [
         {
           size = "300, 50";
-          outline_thickness = 2;
+          outline_thickness = 3;
           dots_center = true;
           fade_on_empty = false;
+          outer_color = "${c.teal}";
+          inner_color = "${c.surface0}";
+          font_color = "${c.text}";
           placeholder_text = "输入密码解锁";
+          fail_color = "${c.red}";
           position = "0, -160";
           halign = "center";
           valign = "center";

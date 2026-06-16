@@ -41,6 +41,12 @@ in
     tor-browser
     aider-chat-full
     nipaplay-reload
+
+    # Catppuccin Macchiato 主题
+    catppuccin-gtk
+    catppuccin-kvantum
+    catppuccin-cursors.macchiatoTeal
+    colloid-icon-theme
   ];
 
   programs._1password-gui = {

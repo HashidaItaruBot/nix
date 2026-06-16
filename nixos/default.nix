@@ -97,6 +97,9 @@
   environment.variables = {
     GTK_IM_MODULE = lib.mkForce "";
     QT_IM_MODULE = lib.mkForce "";
+
+    # Catppuccin Macchiato Teal 全局主题
+    GTK_THEME = "catppuccin-macchiato-teal-standard";
   };
 
   # Define a user account.
