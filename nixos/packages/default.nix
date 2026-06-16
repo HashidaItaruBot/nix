@@ -12,7 +12,6 @@ in
     ./podman.nix
     ./incus
     ./hyprland.nix
-    ./llm.nix  # 本地 AI 服务（注释即可禁用）
   ];
 
   environment.systemPackages = with pkgs; [
