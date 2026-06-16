@@ -31,16 +31,9 @@
 
   time.timeZone = "Asia/Shanghai";
 
-  # Enable the X11 windowing system.
   services = {
     xserver.enable = true;
-    displayManager = {
-      sddm.enable = true;
-      autoLogin = {
-        enable = true;
-        user = "zhaochanglong";
-      };
-    };
+    displayManager.sddm.enable = true;
     desktopManager.plasma6.enable = true;
     thermald.enable = true; # 启用温度管理
     power-profiles-daemon.enable = true; # 启用电源模式切换

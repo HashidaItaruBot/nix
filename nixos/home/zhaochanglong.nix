@@ -24,19 +24,6 @@
 
   home.homeDirectory = "/home/zhaochanglong";
 
-  # 登录后自动锁屏
-  xdg.configFile."autostart/lock-screen.desktop" = {
-    text = ''
-      [Desktop Entry]
-      Type=Application
-      Name=Lock Screen on Login
-      Exec=sh -c "loginctl lock-session"
-      Icon=system-lock-screen
-      Terminal=false
-      X-KDE-autostart-phase=2
-    '';
-  };
-
   services.linux-wallpaperengine = {
     enable = true;
     assetsPath = config.home.homeDirectory + "/.local/share/Steam/steamapps/workshop/content/431960";
