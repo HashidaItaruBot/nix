@@ -178,6 +178,14 @@ flutter.buildFlutterApplication {
   postPatch = ''
     sed -i '/rust_lib_nipaplay:/,+1d' pubspec.yaml
     sed -i '/rust_lib_nipaplay/d' .dart_tool/package_config.json 2>/dev/null || true
+
+    # MDK player may have EGL texture sharing issues on AMD/Wayland.
+    # Force MediaKit (libmpv-based) as default, and migrate saved MDK preference.
+    sed -i '
+      s/_cachedKernelType = PlayerKernelType.mdk;/_cachedKernelType = PlayerKernelType.mediaKit;/g
+      /PlayerKernelType.values\[kernelTypeIndex\]/c\
+      _cachedKernelType = PlayerKernelType.values[kernelTypeIndex] == PlayerKernelType.mdk ? PlayerKernelType.mediaKit : PlayerKernelType.values[kernelTypeIndex];
+    ' lib/player_abstraction/player_factory.dart
   '';
 
   preBuild = ''
