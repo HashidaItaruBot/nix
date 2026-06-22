@@ -186,6 +186,15 @@ flutter.buildFlutterApplication {
       /PlayerKernelType.values\[kernelTypeIndex\]/c\
       _cachedKernelType = PlayerKernelType.values[kernelTypeIndex] == PlayerKernelType.mdk ? PlayerKernelType.mediaKit : PlayerKernelType.values[kernelTypeIndex];
     ' lib/player_abstraction/player_factory.dart
+
+    # Fix: media_kit creates a GLES 2.0 EGL context but tells mpv to use
+    # MPV_RENDER_API_TYPE_OPENGL (desktop GL). Mesa AMD driver reports
+    # desktop GL version string for GLES contexts, so mpv uses desktop GLSL
+    # shaders that fail to compile on the GLES shader compiler (blue screen).
+    # Force mpv to detect GLES by setting gl-version option before render
+    # context creation.
+    sed -i '/mpv_set_option_string(self->handle, "video-sync", "audio");/a\  mpv_set_option_string(self->handle, "gl-version", "OpenGL ES 2.0");' \
+      third_party/media-kit-upstream/media_kit_video/linux/video_output.cc
   '';
 
   preBuild = ''
