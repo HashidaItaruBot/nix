@@ -8,6 +8,7 @@
     ./direnv.nix
     ./opencode.nix
     ./claude-code.nix
+    ./openclaude.nix
     ./codex.nix
     ./uv.nix
   ];
