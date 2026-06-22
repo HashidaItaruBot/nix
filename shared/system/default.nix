@@ -42,6 +42,7 @@ in
     cmake
     nodejs
     ecc-universal
+    rtk
     langcli
     pnpm
     gdb
