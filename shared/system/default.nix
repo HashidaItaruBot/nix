@@ -6,6 +6,7 @@
 }:
 let
   ecc-universal = pkgs.callPackage "${self}/shared/packages/ecc-universal.nix" { };
+  langcli = pkgs.callPackage "${self}/shared/packages/langcli.nix" { };
   codewhale =
     inputs.codewhale.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs
       (_: {
@@ -41,6 +42,7 @@ in
     cmake
     nodejs
     ecc-universal
+    langcli
     pnpm
     gdb
 
