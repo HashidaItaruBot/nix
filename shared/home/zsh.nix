@@ -10,6 +10,10 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
+    sessionVariables = {
+      ZSH_TMUX_AUTOSTART = "true";
+    };
+
     shellAliases = {
       ll = "ls -l";
     };
