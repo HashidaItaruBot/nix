@@ -44,6 +44,11 @@ in
         "HYPRCURSOR_SIZE,24"
       ];
 
+      exec-once = [
+        "waybar"
+        "linux-wallpaperengine"
+      ];
+
       general = {
         gaps_in = 5;
         gaps_out = 20;
@@ -254,6 +259,11 @@ in
       ];
     };
   };
+
+  # 壁纸：复用 services.linux-wallpaperengine（见 zhaochanglong.nix），
+  # 供 Plasma 与 Hyprland 会话共用。Hyprland 通过上面 exec-once 拉起。
+  # 该服务默认 WantedBy = graphical-session.target，对 Hyprland 同样生效。
+
 
   # 状态栏
   programs.waybar = {
