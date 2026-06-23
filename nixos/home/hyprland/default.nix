@@ -34,7 +34,8 @@ in
     enable = true;
     package = null;
     portalPackage = null;
-    systemd.enable = true;
+    systemd.enable = false;
+    configType = "lua";
 
     settings = {
       monitor = [ ",preferred,auto,auto" ];
@@ -155,7 +156,7 @@ in
           "${mainMod}, V, togglefloating"
           "${mainMod}, R, exec, ${menu}"
           "${mainMod}, P, pseudo"
-          "${mainMod}, J, togglesplit"
+          "${mainMod}, J, layoutmsg, togglesplit"
           "${mainMod}, L, exec, hyprlock"
 
           "${mainMod}, left, movefocus, l"
