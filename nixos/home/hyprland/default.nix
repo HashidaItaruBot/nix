@@ -89,7 +89,7 @@ in
       master.new_status = "master";
 
       misc = {
-        force_default_wallpaper = 0;
+        force_default_wallpaper = -1;
         disable_hyprland_logo = false;
       };
 
@@ -108,47 +108,6 @@ in
       windowrulev2 = [
         "nomaximizerequest, class:.*"
         "float, class:^(org.kde.polkit-kde-authentication-agent-1)$"
-
-        # 浮动工具窗口
-        "float, class:^(pavucontrol)$"
-        "float, class:^(org.pulseaudio.pavucontrol)$"
-        "float, class:^(wofi)$"
-        "float, class:^(org.keepassxc.KeePassXC)$"
-        "float, class:^(Bitwarden)$"
-        "float, class:^(1password)$"
-        "float, class:^(OnePassword)$"
-        "size 800 600, class:^(pavucontrol)$"
-        "size 900 600, class:^(org.keepassxc.KeePassXC)$"
-
-        # 文件对话框 - 浮动居中
-        "float, class:^(xdg-desktop-portal-gtk)$"
-        "center, class:^(xdg-desktop-portal-gtk)$"
-
-        # Steam
-        "float, class:^(Steam)$"
-        "float, title:^(Steam Settings)$"
-        "size 1200 800, class:^(Steam)$, title:^(Steam)$"
-
-        # Discord / Vesktop
-        "workspace 4 silent, class:^(discord)$"
-        "workspace 4 silent, class:^(Vesktop)$"
-
-        # JetBrains IDE
-        "float, class:^(jetbrains-.*)$, title:^(Welcome to .*)$"
-        "float, class:^(jetbrains-.*)$, title:^(win.*)$"
-
-        # JetBrains 内嵌工具窗口
-        "float, title:^(Password.*)$"
-        "float, title:^(Open Project.*)$"
-
-        # 浏览器 - 独立 workspace
-        "workspace 2 silent, class:^(firefox)$"
-        "workspace 2 silent, class:^(firefoxdeveloperedition)$"
-        "workspace 2 silent, class:^(chromium)$"
-        "workspace 2 silent, class:^(google-chrome)$"
-
-        # 透明度 - 非焦点窗口
-        "opacity 0.95 0.85, class:.*"
       ];
 
       bind =
