@@ -19,6 +19,7 @@
     ./1password.nix
     ./appimage.nix
     ./podman
+    ./hyprland
   ];
 
   home.homeDirectory = "/home/zhaochanglong";
