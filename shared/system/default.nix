@@ -1,8 +1,7 @@
-{
-  pkgs,
-  self,
-  inputs,
-  ...
+{ pkgs
+, self
+, inputs
+, ...
 }:
 let
   ecc-universal = pkgs.callPackage "${self}/shared/packages/ecc-universal.nix" { };
@@ -68,6 +67,8 @@ in
     jdk8
     verilator
     gtkwave
+
+    helix
   ];
 
   fonts.packages = with pkgs; [
