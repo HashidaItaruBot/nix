@@ -1,8 +1,4 @@
-{
-  pkgs,
-  inputs,
-  ...
-}:
+{ ... }:
 {
   programs.zsh = {
     enable = true;
@@ -10,9 +6,11 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
-    sessionVariables = {
-      ZSH_TMUX_AUTOSTART = "true";
-    };
+    envExtra = ''
+      if [[ "$XDG_CURRENT_DESKTOP" == *"KDE"* ]]; then
+        export ZSH_TMUX_AUTOSTART=true
+      fi
+    '';
 
     shellAliases = {
       ll = "ls -l";
