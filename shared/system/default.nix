@@ -69,6 +69,7 @@ in
     gtkwave
 
     helix
+    yazi
   ];
 
   fonts.packages = with pkgs; [
