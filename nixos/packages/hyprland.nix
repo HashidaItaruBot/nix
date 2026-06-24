@@ -9,5 +9,8 @@
     hyprlauncher
     hyprlock
     waybar
+    rofi
+    wl-clipboard
+    cliphist
   ];
 }

@@ -33,7 +33,7 @@ hl.monitor({
 -- Set programs that you use
 local terminal = "kitty"
 local fileManager = "dolphin"
-local menu = "hyprlauncher"
+local menu = "rofi -show drun"
 
 -------------------
 ---- AUTOSTART ----
@@ -259,6 +259,16 @@ hl.bind(
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
+
+-- Rofi: window switcher
+hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("rofi -show window"))
+
+-- Rofi: power menu
+hl.bind(mainMod .. " + X", hl.dsp.exec_cmd("$HOME/.config/rofi/powermenu.sh"))
+
+-- Rofi: clipboard history (requires wl-clipboard and cliphist)
+hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("cliphist list | rofi -dmenu -p 'Clipboard' | cliphist decode | wl-copy"))
+
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit")) -- dwindle only
 
