@@ -68,7 +68,6 @@ in
     verilator
     gtkwave
 
-    helix
     yazi
   ];
 
