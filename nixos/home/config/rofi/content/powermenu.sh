@@ -3,6 +3,7 @@
 
 options=(
     "󰤄   Sleep"
+    "󰒲   Hibernate"
     "󰌾   Lock"
     "󰗽   Logout"
     "󰜉   Reboot"
@@ -14,6 +15,9 @@ selected=$(printf '%s\n' "${options[@]}" | rofi -dmenu -theme powermenu -p "Powe
 case "$selected" in
     *Sleep)
         systemctl suspend
+        ;;
+    *Hibernate)
+        systemctl hibernate
         ;;
     *Lock)
         hyprlock
