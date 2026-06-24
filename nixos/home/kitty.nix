@@ -9,7 +9,7 @@ _: {
     settings = {
       macos_show_window_title_in = "none";
       background_opacity = "0.95";
-      cursor_trail = 2;
+      cursor_trail = 1;
     };
   };
 }
