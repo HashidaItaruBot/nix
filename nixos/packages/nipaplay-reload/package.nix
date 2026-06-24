@@ -33,7 +33,7 @@
   gsettings-desktop-schemas,
   libsoup_3,
   webkitgtk_4_1,
-  libx11,
+  xorg,
   at-spi2-core,
   dbus,
   wrapGAppsHook4,
@@ -147,7 +147,7 @@ flutter.buildFlutterApplication {
     libsecret
     libsoup_3
     webkitgtk_4_1
-    libx11
+    xorg.libX11
     at-spi2-core
     dbus
     lua
