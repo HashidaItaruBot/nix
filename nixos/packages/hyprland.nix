@@ -12,5 +12,6 @@
     rofi
     wl-clipboard
     cliphist
+    swayosd
   ];
 }
