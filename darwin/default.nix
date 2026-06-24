@@ -28,8 +28,8 @@
   security.pam.services.sudo_local.touchIdAuth = true;
 
   environment.variables = {
-    EDITOR = "vim";
-    VISUAL = "vim";
+    EDITOR = "hx";
+    VISUAL = "hx";
   };
 
   # Docker configuration for macOS
