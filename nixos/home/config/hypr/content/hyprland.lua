@@ -119,8 +119,8 @@ hl.config({
 
 		blur = {
 			enabled = true,
-			size = 3,
-			passes = 1,
+			size = 10,
+			passes = 2,
 			vibrancy = 0.1696,
 		},
 	},
@@ -379,6 +379,15 @@ hl.window_rule({
 --     no_anim = true,
 -- })
 -- overlayLayerRule:set_enabled(false)
+
+	-- Kitty: enable transparency for background blur
+	hl.window_rule({
+		name = "kitty-opacity",
+		match = { class = "kitty" },
+
+		opacity = "0.85",
+	})
+
 
 -- Hyprland-run windowrule
 hl.window_rule({

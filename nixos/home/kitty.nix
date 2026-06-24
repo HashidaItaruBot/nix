@@ -8,8 +8,7 @@ _: {
     };
     settings = {
       macos_show_window_title_in = "none";
-      background_opacity = "0.85";
-      background_blur = 30;
+      background_opacity = "0.8";
       cursor_trail = 1;
     };
     keybindings = {
