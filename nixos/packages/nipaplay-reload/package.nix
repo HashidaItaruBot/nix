@@ -3,7 +3,6 @@
   lua,
   fetchFromGitHub,
   flutter,
-  stdenv,
   pkg-config,
   cmake,
   ninja,
@@ -60,58 +59,31 @@
   ...
 }:
 
-let
-  version = "1.10.10";
-in
-flutter.buildFlutterApplication {
-  inherit version;
+flutter.buildFlutterApplication rec {
   pname = "nipaplay-reload";
+  version = "1.8.11";
 
   src = fetchFromGitHub {
-    owner = "AimesSoft";
+    owner = "MCDFsteve";
     repo = "NipaPlay-Reload";
     rev = "v${version}";
-    hash = "sha256-4k/UWTCfYFQoFZhZu5SwuEgGD2xE6uS/cQrIR+PdkN8=";
-    fetchSubmodules = true;
+    hash = "sha256-XbM0d0F+dhTRSVRNpXRYpa1A2cXvh6fvSqrcuL7q0ss=";
   };
 
-  pubspecLock = let
-    raw = lib.importJSON ./pubspec.lock.json;
-  in raw // {
-    packages = builtins.removeAttrs raw.packages [ "rust_lib_nipaplay" ];
-  };
+  pubspecLock = lib.importJSON ./pubspec.lock.json;
 
   gitHashes = {
-    "erika_flutter" = "sha256-mjdn/A072ol0IWsdwahXYpv7ko2YZcKeHKvkINIfR68=";
+    "media_kit" = "sha256-aBQnp2gnwu4YVa6vFvjYCAU+Rf8Ovmq+hrR+3Vfygmw=";
+    "media_kit_video" = "sha256-aBQnp2gnwu4YVa6vFvjYCAU+Rf8Ovmq+hrR+3Vfygmw=";
+    "media_kit_libs_android_video" = "sha256-aBQnp2gnwu4YVa6vFvjYCAU+Rf8Ovmq+hrR+3Vfygmw=";
+    "media_kit_libs_ios_video" = "sha256-aBQnp2gnwu4YVa6vFvjYCAU+Rf8Ovmq+hrR+3Vfygmw=";
+    "media_kit_libs_linux" = "sha256-aBQnp2gnwu4YVa6vFvjYCAU+Rf8Ovmq+hrR+3Vfygmw=";
+    "media_kit_libs_macos_video" = "sha256-aBQnp2gnwu4YVa6vFvjYCAU+Rf8Ovmq+hrR+3Vfygmw=";
+    "media_kit_libs_video" = "sha256-aBQnp2gnwu4YVa6vFvjYCAU+Rf8Ovmq+hrR+3Vfygmw=";
+    "media_kit_libs_windows_video" = "sha256-aBQnp2gnwu4YVa6vFvjYCAU+Rf8Ovmq+hrR+3Vfygmw=";
   };
-
-  # The nixpkgs volume_controller custom source builder does not pushd into
-  # the packageRoot when it's a path dependency, so we override it here.
-  customSourceBuilders = {
-    volume_controller = { version, src, ... }:
-      stdenv.mkDerivation {
-        pname = "volume_controller";
-        inherit version src;
-        inherit (src) passthru;
-        postPatch = lib.optionalString (lib.versionAtLeast version "3.4.0") ''
-          pushd ${src.passthru.packageRoot}
-          substituteInPlace linux/CMakeLists.txt \
-            --replace-fail "# ALSA dependency for volume control" "find_package(PkgConfig REQUIRED)" \
-            --replace-fail "find_package(ALSA REQUIRED)" "pkg_check_modules(ALSA REQUIRED alsa)"
-          popd
-        '';
-        installPhase = ''
-          runHook preInstall
-          cp -r . $out
-          runHook postInstall
-        '';
-      };
-  };
-
-  packageRoot = ".";
 
   dontUseCmakeConfigure = true;
-
 
   nativeBuildInputs = [
     pkg-config
@@ -173,30 +145,6 @@ flutter.buildFlutterApplication {
     gsettings-desktop-schemas
   ];
 
-  # Skip rust_lib_nipaplay plugin (requires flutter_rust_bridge codegen + cargo build
-  # in sandbox). Remove it from pubspec.yaml so Flutter tooling excludes it.
-  postPatch = ''
-    sed -i '/rust_lib_nipaplay:/,+1d' pubspec.yaml
-    sed -i '/rust_lib_nipaplay/d' .dart_tool/package_config.json 2>/dev/null || true
-
-    # MDK player may have EGL texture sharing issues on AMD/Wayland.
-    # Force MediaKit (libmpv-based) as default, and migrate saved MDK preference.
-    sed -i '
-      s/_cachedKernelType = PlayerKernelType.mdk;/_cachedKernelType = PlayerKernelType.mediaKit;/g
-      /PlayerKernelType.values\[kernelTypeIndex\]/c\
-      _cachedKernelType = PlayerKernelType.values[kernelTypeIndex] == PlayerKernelType.mdk ? PlayerKernelType.mediaKit : PlayerKernelType.values[kernelTypeIndex];
-    ' lib/player_abstraction/player_factory.dart
-
-    # Fix: media_kit creates a GLES 2.0 EGL context but tells mpv to use
-    # MPV_RENDER_API_TYPE_OPENGL (desktop GL). Mesa AMD driver reports
-    # desktop GL version string for GLES contexts, so mpv uses desktop GLSL
-    # shaders that fail to compile on the GLES shader compiler (blue screen).
-    # Force mpv to detect GLES by setting gl-version option before render
-    # context creation.
-    sed -i '/mpv_set_option_string(self->handle, "video-sync", "audio");/a\  mpv_set_option_string(self->handle, "gl-version", "OpenGL ES 2.0");' \
-      third_party/media-kit-upstream/media_kit_video/linux/video_output.cc
-  '';
-
   preBuild = ''
     mkdir -p assets/web
   '';
@@ -224,8 +172,7 @@ flutter.buildFlutterApplication {
 
   meta = with lib; {
     description = "A modern, cross-platform local video player that supports bullet comments and multiple subtitle formats.";
-    homepage = "https://github.com/AimesSoft/NipaPlay-Reload";
-    changelog = "https://github.com/AimesSoft/NipaPlay-Reload/releases/tag/v${version}";
+    homepage = "https://github.com/MCDFsteve/NipaPlay-Reload";
     license = licenses.mit;
     mainProgram = "nipaplay-reload";
     platforms = [
