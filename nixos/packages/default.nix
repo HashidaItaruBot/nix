@@ -40,6 +40,7 @@ in
     tor-browser
     aider-chat-full
     nipaplay-reload
+    discord
   ];
 
   programs._1password-gui = {
