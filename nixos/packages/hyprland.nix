@@ -7,6 +7,7 @@
 
   environment.systemPackages = with pkgs; [
     hyprlauncher
-    walker
+    hyprlock
+    waybar
   ];
 }

@@ -37,7 +37,6 @@ in
     podman-desktop
     thunderbird
     chromium
-    librewolf
     tor-browser
     aider-chat-full
     nipaplay-reload
