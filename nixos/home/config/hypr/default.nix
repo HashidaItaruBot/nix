@@ -1,3 +1,3 @@
 _: {
-  xdg.configFile."hypr".source = ./.;
+  xdg.configFile."hypr".source = ./content;
 }

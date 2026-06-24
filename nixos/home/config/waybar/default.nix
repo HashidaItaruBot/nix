@@ -1,3 +1,3 @@
 _: {
-  xdg.configFile."waybar".source = ./.;
+  xdg.configFile."waybar".source = ./content;
 }
