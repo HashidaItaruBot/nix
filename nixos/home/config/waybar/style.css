@@ -1,0 +1,186 @@
+/*
+ * Waybar Style - ML4W-inspired
+ * Adapted for NixOS
+ */
+
+/* ===== CSS Variables ===== */
+@define-color bg        rgba(26, 17, 15, 0.82);
+@define-color bg_hover  rgba(255, 255, 255, 0.06);
+@define-color bg_active rgba(255, 255, 255, 0.10);
+@define-color fg        #f1dfda;
+@define-color fg_dim    #a08d87;
+@define-color fg_muted  #53433f;
+@define-color accent    #ffb59d;
+@define-color accent2   #7dcfff;
+@define-color green     #a9d98a;
+@define-color yellow    #e0af68;
+@define-color red       #f7768e;
+@define-color blue      #7aa2f7;
+@define-color purple    #bb9af7;
+@define-color cyan      #73daca;
+@define-color orange    #ff9e64;
+/* ===== Reset ===== */
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrainsMono Nerd Font", "FiraCode Nerd Font", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    min-height: 0;
+}
+
+/* ===== Waybar Window ===== */
+window#waybar {
+    background: @bg;
+    border-radius: 10px;
+    color: @fg;
+}
+
+/* ===== Tooltips ===== */
+tooltip {
+    background: rgba(26, 17, 15, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 8px 12px;
+}
+tooltip label {
+    color: @fg;
+    font-size: 12px;
+}
+
+/* ===== Workspaces ===== */
+#workspaces {
+    margin-left: 4px;
+}
+#workspaces button {
+    padding: 0 8px;
+    margin: 4px 3px;
+    color: @fg_dim;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+#workspaces button.active {
+    color: @fg;
+    background: rgba(255, 181, 157, 0.22);
+    min-width: 30px;
+}
+#workspaces button:hover {
+    color: @fg;
+    background: rgba(255, 255, 255, 0.10);
+}
+
+/* ===== Window Title ===== */
+#window {
+    margin: 4px 0;
+    padding: 0 12px;
+    color: @fg_dim;
+    font-style: italic;
+}
+
+/* ===== App Menu ===== */
+#custom-appmenu {
+    padding: 0 12px;
+    margin: 4px 2px;
+    margin-left: 6px;
+    color: @accent;
+}
+#custom-appmenu:hover {
+    background: @bg_hover;
+    border-radius: 6px;
+}
+
+/* ===== Right-side Modules ===== */
+#pulseaudio,
+#backlight,
+#bluetooth,
+#network,
+#battery,
+#clock,
+#custom-notification,
+#custom-exit,
+#custom-updates,
+#custom-system,
+#custom-tools,
+#custom-colorpicker,
+#custom-screenshot,
+#custom-clipboard,
+#cpu,
+#memory,
+#disk,
+#language {
+    padding: 0 10px;
+    margin: 4px 2px;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+}
+
+/* ===== Colors Per Module ===== */
+#pulseaudio            { color: @green; }
+#pulseaudio.muted      { color: @red; }
+#backlight             { color: @yellow; }
+#bluetooth             { color: @accent2; }
+#network               { color: @blue; }
+#network.disconnected  { color: @red; }
+
+#battery                { color: @green; }
+#battery.charging,
+#battery.plugged        { color: @accent2; }
+#battery.warning        { color: @yellow; }
+#battery.critical       { color: @red; background: rgba(247, 118, 142, 0.2); }
+
+#clock                 { color: @purple; }
+#custom-notification   { color: @cyan; }
+#custom-exit           { color: @red; }
+#custom-updates        { color: @accent; }
+#custom-system         { color: @blue; }
+#custom-tools          { color: @cyan; }
+#custom-colorpicker    { color: @orange; }
+#custom-screenshot     { color: @yellow; }
+#custom-clipboard      { color: @accent2; }
+
+#cpu                   { color: @orange; }
+#memory                { color: @purple; }
+#disk                  { color: @yellow; }
+#language              { color: @green; }
+
+/* ===== Hover Effect ===== */
+#pulseaudio:hover,
+#backlight:hover,
+#bluetooth:hover,
+#network:hover,
+#battery:hover,
+#clock:hover,
+#custom-notification:hover,
+#custom-exit:hover,
+#custom-updates:hover,
+#cpu:hover,
+#memory:hover,
+#disk:hover,
+#language:hover {
+    background: @bg_hover;
+}
+
+/* ===== Tray ===== */
+#tray {
+    margin: 0 6px;
+}
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background: rgba(247, 118, 142, 0.3);
+    border-radius: 6px;
+}
+
+/* ===== Hidden Drawer Children ===== */
+.hidden {
+    border-radius: 0;
+}
+.hidden * {
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+}

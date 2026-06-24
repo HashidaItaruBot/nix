@@ -1,0 +1,6 @@
+_: {
+  imports = [
+    ./hypr
+    ./waybar
+  ];
+}
