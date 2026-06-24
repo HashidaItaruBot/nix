@@ -3,7 +3,6 @@
   config,
   lib,
   pkgs,
-  inputs,
   ...
 }:
 {
@@ -110,6 +109,17 @@
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP5M2RGhIG1CslAdzx+1xcOFiAgJhw0FKFqhe/Wkm1qZ"
     ];
+  };
+
+  nix = {
+    gc = {
+      automatic = true;
+      persistent = true;
+      dates = "02:00";
+      options = "--delete-older-than 30d";
+    };
+    optimise.automatic = true;
+    settings.auto-optimise-store = true;
   };
 
   system.stateVersion = "25.11";

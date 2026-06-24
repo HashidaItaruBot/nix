@@ -55,6 +55,7 @@
     extraModulePackages = [ ];
     loader = {
       systemd-boot.enable = lib.mkForce false;
+      systemd-boot.configurationLimit = 100;
       efi.canTouchEfiVariables = true;
     };
     lanzaboote = {
