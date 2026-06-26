@@ -293,15 +293,15 @@ hl.bind(mainMod .. " + SHIFT + j", hl.dsp.window.resize({ x = 0, y = 100, relati
 hl.bind(mainMod .. " + SHIFT + k", hl.dsp.window.resize({ x = 0, y = -100, relative = true }), { repeating = true })
 hl.bind(mainMod .. " + SHIFT + l", hl.dsp.window.resize({ x = 100, y = 0, relative = true }), { repeating = true })
 
--- Move floating windows
-hl.bind(mainMod .. " + CTRL + left", hl.dsp.window.move({ x = -100, y = 0, relative = true }), { repeating = true })
-hl.bind(mainMod .. " + CTRL + right", hl.dsp.window.move({ x = 100, y = 0, relative = true }), { repeating = true })
-hl.bind(mainMod .. " + CTRL + up", hl.dsp.window.move({ x = 0, y = -100, relative = true }), { repeating = true })
-hl.bind(mainMod .. " + CTRL + down", hl.dsp.window.move({ x = 0, y = 100, relative = true }), { repeating = true })
-hl.bind(mainMod .. " + CTRL + h", hl.dsp.window.move({ x = -100, y = 0, relative = true }), { repeating = true })
-hl.bind(mainMod .. " + CTRL + j", hl.dsp.window.move({ x = 0, y = 100, relative = true }), { repeating = true })
-hl.bind(mainMod .. " + CTRL + k", hl.dsp.window.move({ x = 0, y = -100, relative = true }), { repeating = true })
-hl.bind(mainMod .. " + CTRL + l", hl.dsp.window.move({ x = 100, y = 0, relative = true }), { repeating = true })
+-- Swap windows in layout
+hl.bind(mainMod .. " + ALT + left", hl.dsp.window.swap({ direction = "l" }))
+hl.bind(mainMod .. " + ALT + right", hl.dsp.window.swap({ direction = "r" }))
+hl.bind(mainMod .. " + ALT + up", hl.dsp.window.swap({ direction = "u" }))
+hl.bind(mainMod .. " + ALT + down", hl.dsp.window.swap({ direction = "d" }))
+hl.bind(mainMod .. " + ALT + h", hl.dsp.window.swap({ direction = "l" }))
+hl.bind(mainMod .. " + ALT + j", hl.dsp.window.swap({ direction = "d" }))
+hl.bind(mainMod .. " + ALT + k", hl.dsp.window.swap({ direction = "u" }))
+hl.bind(mainMod .. " + ALT + l", hl.dsp.window.swap({ direction = "r" }))
 
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT + [0-9]
