@@ -60,6 +60,7 @@ hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto")
 hl.env("SDL_VIDEODRIVER", "wayland")
+hl.env("STEAM_FORCE_DESKTOPUI_SCALING", "2.0")
 
 ----------------------
 ---- XWAYLAND ----
