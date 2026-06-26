@@ -11,6 +11,8 @@
     hypridle
     waybar
     rofi
+    grim
+    slurp
     wl-clipboard
     cliphist
     swayosd

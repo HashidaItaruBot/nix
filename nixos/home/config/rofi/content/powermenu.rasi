@@ -1,118 +1,199 @@
-/**
- * Rofi power menu - ML4W glass-morphism style
- * Catppuccin Mocha color scheme
- */
+/*
+# ____ __ _
+# | _ \ ___ / _(_)
+# | |_) / _ \| |_| |
+# | _ < (_) | _| |
+# |_| \_\___/|_| |_|
+#
+# ML4W power menu - 1:1 replica
+# Catppuccin Mocha color scheme + screenshot background
+*/
 
+/* ---- Configuration ---- */
 configuration {
-    show-icons: true;
-    display-drun:    "Apps";
-    display-run:     "Run";
-    display-window:  "Windows";
-    drun-display-format: "{name}";
-    window-format:   "{w}  ·  {t}";
+    modi:                       "drun,run";
+    font:                       "FiraCode Nerd Font 11";
+    show-icons:                 true;
+    icon-theme:                 "kora";
+    display-drun:               "APPS";
+    display-run:                "RUN";
+    display-filebrowser:        "FILES";
+    display-window:             "WINDOW";
+    hover-select:               true;
+    me-select-entry:            "";
+    me-accept-entry:            "MousePrimary";
+    drun-display-format:        "{name}";
+    window-format:              "{w} · {c} · {t}";
 }
 
+/* ---- Catppuccin Mocha palette + ML4W variables ---- */
 * {
-    /* Catppuccin Mocha palette */
-    rosewater:  #f5e0dc;
-    flamingo:   #f2cdcd;
-    pink:       #f5c2e7;
-    mauve:      #cba6f7;
-    red:        #f38ba8;
-    maroon:     #eba0ac;
-    peach:      #fab387;
-    yellow:     #f9e2af;
-    green:      #a6e3a1;
-    teal:       #94e2d5;
-    sky:        #89dceb;
-    sapphire:   #74c7ec;
-    blue:       #89b4fa;
-    lavender:   #b4befe;
-    text:       #cdd6f4;
-    subtext1:   #bac2de;
-    subtext0:   #a6adc8;
-    overlay2:   #9399b2;
-    overlay1:   #7f849c;
-    overlay0:   #6c7086;
-    surface2:   #585b70;
-    surface1:   #45475a;
-    surface0:   #313244;
-    base:       #1e1e2e;
-    mantle:     #181825;
-    crust:      #11111b;
-
-    /* Glass-morphism rgba */
-    glass-base:     rgba(30, 30, 46, 0.80);
-    glass-surface:  rgba(49, 50, 68, 0.60);
-    glass-hover:    rgba(69, 71, 90, 0.70);
-
-    font:       "Sarasa Mono SC 11";
+    background:     rgba(30, 30, 46, 0.75);
+    surface:        #313244;
+    on-surface:     #cdd6f4;
+    primary:        #cba6f7;
+    color11:        #cba6f7;  /* mauve, used by ML4W button selected */
+    foreground:     #cdd6f4;
+    border-width:   2px;
+    border-radius:  2em;
+    current-image:  url("/tmp/rofi-screenshot.jpg");
+    font:           "FiraCode Nerd Font 11";
     background-color: transparent;
 }
 
+/* ---- Window ---- */
 window {
-    transparency:     "real";
-    background-color: transparent;
-    border:           0px;
-    border-radius:    20px;
-    padding:          0.8em;
-    width:            18em;
-    location:         center;
-    anchor:           center;
-    cursor:           "default";
+    width:                       400px;
+    x-offset:                    0px;
+    y-offset:                    65px;
+    spacing:                     0px;
+    padding:                     0px;
+    margin:                      0px;
+    color:                       #FFFFFF;
+    border:                      @border-width;
+    border-color:                @primary;
+    cursor:                      "default";
+    transparency:                "real";
+    location:                    center;
+    anchor:                      center;
+    fullscreen:                  false;
+    enabled:                     true;
+    border-radius:               @border-radius;
+    background-color:            transparent;
 }
 
+/* ---- Mainbox ---- */
 mainbox {
-    children:   [listview];
-    background-color: @glass-base;
-    border-radius: 1.2em;
-    padding:    0.5em;
+    enabled:                     true;
+    orientation:                 horizontal;
+    spacing:                     0px;
+    margin:                      0px;
+    background-color:            @background;
+    background-image:            @current-image;
+    children:                    ["listbox"];
 }
 
+/* ---- Listbox ---- */
+listbox {
+    spacing:                     20px;
+    background-color:            transparent;
+    orientation:                 vertical;
+    children:                    [ "listview" ];
+}
+
+/* ---- Listview ---- */
 listview {
-    background-color: transparent;
-    columns:          1;
-    lines:            6;
-    spacing:          0.3em;
-    scrollbar:        false;
-    layout:           vertical;
+    enabled:                     true;
+    columns:                     1;
+    lines:                       6;
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   false;
+    layout:                      vertical;
+    reverse:                     false;
+    fixed-height:                true;
+    fixed-columns:               true;
+    spacing:                     0px;
+    padding:                     10px;
+    margin:                      0px;
+    background-color:            @background;
+    border:                      0px;
 }
 
+/* ---- Element ---- */
 element {
-    background-color: @glass-surface;
-    text-color:       @text;
-    border-radius:    1em;
-    padding:          0.7em 1.2em;
-    orientation:      horizontal;
-    spacing:          0.8em;
-    cursor:           pointer;
+    enabled:                     true;
+    padding:                     10px;
+    margin:                      5px;
+    cursor:                      pointer;
+    background-color:            @background;
+    border-radius:               10px;
+    border:                      @border-width;
 }
 
-element selected {
-    background-color: @mauve;
-    text-color:       @base;
+element normal.normal {
+    background-color:            inherit;
+    text-color:                  @foreground;
 }
 
-element-text {
-    background-color: transparent;
-    text-color:       inherit;
-    vertical-align:   0.5;
-    font:             "Sarasa Mono SC 11";
+element normal.urgent {
+    background-color:            inherit;
+    text-color:                  @foreground;
+}
+
+element normal.active {
+    background-color:            inherit;
+    text-color:                  @foreground;
+}
+
+element selected.normal {
+    background-color:            @color11;
+    text-color:                  @foreground;
+}
+
+element selected.urgent {
+    background-color:            inherit;
+    text-color:                  @foreground;
+}
+
+element selected.active {
+    background-color:            inherit;
+    text-color:                  @foreground;
+}
+
+element alternate.normal {
+    background-color:            inherit;
+    text-color:                  @foreground;
+}
+
+element alternate.urgent {
+    background-color:            inherit;
+    text-color:                  @foreground;
+}
+
+element alternate.active {
+    background-color:            inherit;
+    text-color:                  @foreground;
 }
 
 element-icon {
-    background-color: transparent;
-    size:             22px;
+    background-color:            transparent;
+    text-color:                  inherit;
+    size:                        32px;
+    cursor:                      inherit;
 }
 
-case-indicator {
-    enabled: false;
+element-text {
+    background-color:            transparent;
+    text-color:                  inherit;
+    cursor:                      inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
 }
 
-prompt {
-    enabled: false;
+/* ---- Message ---- */
+message {
+    background-color:            transparent;
+    border:                      0px;
+    margin:                      20px 0px 0px 0px;
+    padding:                     0px;
+    spacing:                     0px;
+    border-radius:               10px;
 }
 
 textbox {
-    background-color: transparent;
+    padding:                     15px;
+    margin:                      0px;
+    border-radius:               0px;
+    background-color:            @background;
+    text-color:                  @foreground;
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
+}
+
+error-message {
+    padding:                     15px;
+    border-radius:               20px;
+    background-color:            @background;
+    text-color:                  @foreground;
 }

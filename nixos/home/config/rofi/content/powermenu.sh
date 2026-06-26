@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
-# Rofi power menu - ml4w style
+# ML4W-style power menu
+# Captures the current desktop as a frosted background, then shows a dmenu.
+
+set -euo pipefail
+
+SHOT="/tmp/rofi-screenshot.jpg"
 
 options=(
     "󰤄   Sleep"
@@ -9,6 +14,10 @@ options=(
     "󰜉   Reboot"
     "󰐥   Shutdown"
 )
+
+if command -v grim >/dev/null 2>&1; then
+    grim -t jpeg -q 60 "$SHOT" 2>/dev/null || true
+fi
 
 selected=$(printf '%s\n' "${options[@]}" | rofi -dmenu -theme powermenu -p "Power Menu")
 
