@@ -59,6 +59,18 @@ end)
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto")
+hl.env("SDL_VIDEODRIVER", "wayland")
+
+----------------------
+---- XWAYLAND ----
+----------------------
+
+-- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/XWayland/
+hl.config({
+    xwayland = {
+        force_zero_scaling = true,
+    },
+})
 
 -----------------------
 ----- PERMISSIONS -----
