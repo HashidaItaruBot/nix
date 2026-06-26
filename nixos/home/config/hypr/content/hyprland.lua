@@ -10,9 +10,9 @@
 -- Please note not all available settings / options are set here.
 -- For a full list, see the wiki
 
--- Material You 主题色 (青绿色系),定义于 colors.lua
--- 可通过 matugen image <wallpaper> 重新生成
-require("colors")
+-- You can (and should!!) split this configuration into multiple files
+-- Create your files separately and then require them like this:
+-- require("myColors")
 
 ------------------
 ---- MONITORS ----
@@ -84,18 +84,18 @@ hl.env("HYPRCURSOR_SIZE", "24")
 -- Refer to https://wiki.hypr.land/Configuring/Basics/Variables/
 hl.config({
 	general = {
-		gaps_in = 10,
+		gaps_in = 5,
 		gaps_out = 20,
 
 		border_size = 2,
 
 		col = {
-			active_border = { colors = { primary, on_primary }, angle = 90 },
-			inactive_border = on_primary,
+			active_border = { colors = { "rgba(33ccffee)", "rgba(00ff99ee)" }, angle = 45 },
+			inactive_border = "rgba(595959aa)",
 		},
 
 		-- Set to true to enable resizing windows by clicking and dragging on borders and gaps
-		resize_on_border = true,
+		resize_on_border = false,
 
 		-- Please see https://wiki.hypr.land/Configuring/Advanced-and-Cool/Tearing/ before you turn this on
 		allow_tearing = false,
@@ -109,13 +109,13 @@ hl.config({
 
 		-- Change transparency of focused and unfocused windows
 		active_opacity = 1.0,
-		inactive_opacity = 0.9,
+		inactive_opacity = 1.0,
 
 		shadow = {
 			enabled = true,
-			range = 30,
-			render_power = 2,
-			color = "rgba(00000050)",
+			range = 4,
+			render_power = 3,
+			color = 0xee1a1a1a,
 		},
 
 		blur = {
