@@ -6,7 +6,7 @@
 # |_| \_\___/|_| |_|
 #
 # ML4W application launcher - 1:1 replica
-# Catppuccin Mocha color scheme + screenshot background
+# Catppuccin Mocha color scheme + glass-morphism (Hyprland blur)
 */
 
 /* ---- Configuration ---- */
@@ -30,13 +30,12 @@ configuration {
 /* ---- Catppuccin Mocha palette + ML4W variables ---- */
 * {
     /* Material You-like tokens mapped to Catppuccin Mocha */
-    background:     rgba(30, 30, 46, 0.75);   /* base, frosted overlay */
+    background:     rgba(30, 30, 46, 0.75);   /* base, frosted overlay for Hyprland blur */
     surface:        #313244;                   /* surface0 */
     on-surface:     #cdd6f4;                   /* text */
     primary:        #cba6f7;                   /* mauve */
     border-width:   2px;
     border-radius:  2em;
-    current-image:  url("/tmp/rofi-screenshot.jpg");
     font:           "FiraCode Nerd Font 11";
     background-color: transparent;
 }
@@ -64,7 +63,6 @@ mainbox {
     orientation:                 horizontal;
     children:                    [ "imagebox" , "listbox" ];
     background-color:            transparent;
-    background-image:            @current-image;
 }
 
 imagebox {

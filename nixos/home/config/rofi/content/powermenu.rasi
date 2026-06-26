@@ -6,7 +6,7 @@
 # |_| \_\___/|_| |_|
 #
 # ML4W power menu - 1:1 replica
-# Catppuccin Mocha color scheme + screenshot background
+# Catppuccin Mocha color scheme + glass-morphism (Hyprland blur)
 */
 
 /* ---- Configuration ---- */
@@ -36,7 +36,6 @@ configuration {
     foreground:     #cdd6f4;
     border-width:   2px;
     border-radius:  2em;
-    current-image:  url("/tmp/rofi-screenshot.jpg");
     font:           "FiraCode Nerd Font 11";
     background-color: transparent;
 }
@@ -69,7 +68,6 @@ mainbox {
     spacing:                     0px;
     margin:                      0px;
     background-color:            @background;
-    background-image:            @current-image;
     children:                    ["listbox"];
 }
 

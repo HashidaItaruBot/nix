@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 # ML4W-style power menu
-# Captures the current desktop as a frosted background, then shows a dmenu.
+# Glass-morphism: Hyprland blur shows through the semi-transparent rofi window.
 
 set -euo pipefail
-
-SHOT="/tmp/rofi-screenshot.jpg"
 
 options=(
     "󰤄   Sleep"
@@ -14,10 +12,6 @@ options=(
     "󰜉   Reboot"
     "󰐥   Shutdown"
 )
-
-if command -v grim >/dev/null 2>&1; then
-    grim -t jpeg -q 60 "$SHOT" 2>/dev/null || true
-fi
 
 selected=$(printf '%s\n' "${options[@]}" | rofi -dmenu -theme powermenu -p "Power Menu")
 
