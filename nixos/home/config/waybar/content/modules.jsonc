@@ -3,25 +3,20 @@
     //  HYPRLAND WORKSPACES
     // ============================================================
     "hyprland/workspaces": {
-        "format": "{icon}",
+        "on-scroll-down": "hyprctl dispatch workspace e+1",
+        "on-scroll-up": "hyprctl dispatch workspace e-1",
+        "on-click": "activate",
+        "active-only": false,
+        "all-outputs": true,
+        "format": "{}",
         "format-icons": {
-            "1": "1",
-            "2": "2",
-            "3": "3",
-            "4": "4",
-            "5": "5",
-            "6": "6",
-            "7": "7",
-            "8": "8",
-            "9": "9",
-            "10": "0",
-            "empty": "○"
+            "urgent": "",
+            "active": "",
+            "default": ""
         },
         "persistent-workspaces": {
             "*": 5
-        },
-        "on-scroll-up": "hyprctl dispatch workspace e+1",
-        "on-scroll-down": "hyprctl dispatch workspace e-1"
+        }
     },
 
     // ============================================================
@@ -31,138 +26,156 @@
         "max-length": 60,
         "separate-outputs": true,
         "rewrite": {
-            "(.*) — Brave": "\u201c$1\u201d",
-            "(.*) - Brave": "\u201c$1\u201d",
-            "^(.*)$": "$1"
+            "(.*) - Brave": "$1",
+            "(.*) - Chromium": "$1",
+            "(.*) - Brave Search": "$1"
         }
     },
 
     // ============================================================
-    //  APP MENU (左上角启动器按钮)
+    //  APP MENU
     // ============================================================
     "custom/appmenu": {
-        "format": "  Apps",
-        "on-click": "hyprlauncher",
-        "on-click-right": "hyprctl dispatch exec ghostty",
-        "tooltip-format": "启动器 (右键打开终端)"
+        "format": "Apps",
+        "on-click": "~/.config/rofi/launcher.sh",
+        "on-click-right": "~/.config/hypr/scripts/keybindings.sh",
+        "tooltip-format": "Left: Open the application launcher\nRight: Show all keybindings"
     },
 
     // ============================================================
     //  SYSTEM TRAY
     // ============================================================
     "tray": {
-        "icon-size": 18,
-        "spacing": 8
+        "icon-size": 21,
+        "spacing": 10
     },
 
     // ============================================================
     //  PULSEAUDIO (PipeWire)
     // ============================================================
     "pulseaudio": {
-        "format": " {icon}  {volume}%",
-        "format-muted": "  静音",
+        "format": "{icon}  {volume}%",
+        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": " {format_source}",
+        "format-source": "{volume}% ",
+        "format-source-muted": "",
         "format-icons": {
-            "default": ["", "", ""]
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": [
+                "",
+                "",
+                ""
+            ]
         },
-        "format-bluetooth": " {icon}  {volume}%",
-        "format-bluetooth-muted": "  静音",
-        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
-        "on-click-right": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 1.0",
-        "on-scroll-up": "wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 2%+",
-        "on-scroll-down": "wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 2%-",
-        "tooltip": false
-    },
-
-    // ============================================================
-    //  BACKLIGHT (亮度)
-    // ============================================================
-    "backlight": {
-        "format": "{icon}  {percent}%",
-        "format-icons": ["", "", "", ""],
-        "on-scroll-up": "brightnessctl set 5%+ -q",
-        "on-scroll-down": "brightnessctl set 5%- -q"
+        "on-click": "pavucontrol"
     },
 
     // ============================================================
     //  BLUETOOTH
     // ============================================================
     "bluetooth": {
-        "format": "",
+        "format": " {status}",
         "format-disabled": "",
         "format-off": "",
-        "format-on": "",
-        "format-connected": " {device_alias}",
-        "format-connected-battery": " {device_alias} ({device_battery_percentage}%)",
-        "on-click": "bluetoothctl power toggle",
+        "interval": 30,
+        "on-click": "sleep 0.1 && bluetoothctl power toggle",
         "on-click-right": "blueman-applet",
-        "tooltip-format": "{controller_alias} ({controller_address})"
+        "tooltip-format-connected": "Connected devices: {num_connections} connected\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}",
+        "tooltip-format-enumerate-connected-battery": "{device_alias} | Battery life: {device_battery_percentage}%",
+        "format-no-controller": ""
     },
 
     // ============================================================
     //  NETWORK
     // ============================================================
     "network": {
-        "format-wifi": "  {signalStrength}%",
-        "format-ethernet": "  {ifname}",
-        "format-disconnected": " ",
-        "format-linked": " ",
-        "tooltip-format": "{ifname}: {ipaddr} ({signalStrength}%)",
-        "on-click": "ghostty -e nmtui",
-        "on-click-right": "nmcli connection down \"$(nmcli -t -f NAME,DEVICE connection show --active | head -1 | cut -d: -f1)\""
+        "format": "{ifname}",
+        "format-wifi": " {signalStrength}%",
+        "format-ethernet": " {ifname}",
+        "format-disconnected": "Disconnected ",
+        "tooltip-format": " {ifname} via {gwaddri}",
+        "tooltip-format-wifi": "  {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\nUp: {bandwidthUpBits} Down: {bandwidthDownBits}",
+        "tooltip-format-ethernet": " {ifname}\nIP: {ipaddr}\n up: {bandwidthUpBits} down: {bandwidthDownBits}",
+        "tooltip-format-disconnected": "Disconnected",
+        "max-length": 50,
+        "on-click": "ghostty -e nmtui"
     },
 
     // ============================================================
     //  BATTERY
     // ============================================================
     "battery": {
-        "interval": 10,
+        "interval": 1,
         "states": {
-            "warning": 20,
-            "critical": 10
+            "warning": 30,
+            "critical": 15
         },
-        "format": "{icon}  {capacity}%",
-        "format-charging": "  {capacity}%",
-        "format-plugged": "  {capacity}%",
-        "format-time": "{H}:{M:02}",
-        "format-icons": ["", "", "", "", ""],
-        "tooltip-format": "剩余 {time}"
+        "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": "{icon}  {time}",
+        "format-icons": [
+            "",
+            "",
+            "",
+            "",
+            ""
+        ]
     },
 
     // ============================================================
     //  CLOCK
     // ============================================================
     "clock": {
-        "format": "{:%m-%d  %H:%M}",
-        "format-alt": "{:%Y-%m-%d  %H:%M:%S}",
-        "tooltip-format": "<big>{:%Y年%m月}</big>\n<tt><small>{calendar}</small></tt>"
+        "format": "{:%H:%M %a}",
+        "tooltip": false
     },
 
     // ============================================================
-    //  NOTIFICATION TOGGLE
+    //  NOTIFICATION
     // ============================================================
     "custom/notification": {
-        "format": "{}",
-        "exec": "dunstctl is-paused 2>/dev/null && echo '{\"text\":\"\",\"class\":\"dnd\"}' || echo '{\"text\":\"\"}'",
-        "exec-if": "which dunstctl",
+        "tooltip-format": "Left: Notifications\nRight: Do not disturb",
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "",
+            "none": "",
+            "dnd-notification": "",
+            "dnd-none": "",
+            "inhibited-notification": "",
+            "inhibited-none": "",
+            "dnd-inhibited-notification": "",
+            "dnd-inhibited-none": ""
+        },
         "return-type": "json",
-        "interval": 10,
+        "exec": "~/.config/waybar/scripts/notification-status.sh",
+        "exec-if": "which dunstctl",
         "on-click": "dunstctl set-paused toggle",
         "on-click-right": "dunstctl close-all",
-        "tooltip-format": "通知 (左键切换免打扰)"
+        "escape": true,
+        "interval": 10
     },
 
     // ============================================================
-    //  NIXOS UPDATES
+    //  UPDATES
     // ============================================================
     "custom/updates": {
         "format": " {}",
-        "exec": "nix-store --verify --check-contents 2>/dev/null; echo '{\"text\":\"\"}'",
-        "exec-if": "command -v nix-store",
+        "escape": true,
         "return-type": "json",
-        "interval": 3600,
+        "exec": "~/.config/waybar/scripts/check-updates.sh",
+        "interval": 1800,
+        "signal": 1,
+        "hide-empty-text": true,
         "on-click": "ghostty -e nix-shell -p nh --run 'nh os switch'",
-        "on-click-right": "ghostty -e nixos-rebuild dry-build",
-        "tooltip-format": "NixOS 系统更新"
+        "on-click-right": "ghostty -e nixos-rebuild dry-build"
     },
 
     // ============================================================
@@ -172,64 +185,64 @@
         "format": "",
         "on-click": "wlogout",
         "on-click-right": "hyprctl dispatch exit",
-        "tooltip-format": "电源菜单 (右键强制退出)"
+        "tooltip-format": "Open Power Menu"
     },
 
     // ============================================================
-    //  GROUP: HARDWARE (抽屉式折叠)
+    //  GROUP: HARDWARE
     // ============================================================
     "group/hardware": {
         "orientation": "inherit",
         "drawer": {
             "transition-duration": 300,
-            "children-class": "hidden",
+            "children-class": "not-memory",
             "transition-left-to-right": false
         },
         "modules": [
             "custom/system",
+            "disk",
             "cpu",
             "memory",
-            "disk",
             "hyprland/language"
         ]
     },
 
     "custom/system": {
         "format": "",
-        "tooltip-format": "系统信息",
-        "on-click": "htop"
+        "tooltip-format": "System Info",
+        "on-click": "ghostty -e htop"
     },
 
     "cpu": {
-        "format": " {usage}%",
+        "format": "/ C {usage}% ",
         "on-click": "ghostty -e htop"
     },
 
     "memory": {
-        "format": " {}%",
+        "format": "/ M {}% ",
         "on-click": "ghostty -e htop"
     },
 
     "disk": {
         "interval": 30,
-        "format": " {percentage_used}%",
+        "format": "D {percentage_used}% ",
         "path": "/",
         "on-click": "ghostty -e htop"
     },
 
     "hyprland/language": {
-        "format": " {short}",
+        "format": "/ K {short}",
         "on-click": "hyprctl switchxkblayout all next"
     },
 
     // ============================================================
-    //  GROUP: TOOLS (抽屉式折叠)
+    //  GROUP: TOOLS
     // ============================================================
     "group/tools": {
         "orientation": "inherit",
         "drawer": {
             "transition-duration": 300,
-            "children-class": "hidden",
+            "children-class": "not-memory",
             "transition-left-to-right": false
         },
         "modules": [
@@ -242,26 +255,26 @@
 
     "custom/tools": {
         "format": "",
-        "tooltip-format": "工具"
+        "tooltip-format": "Tools"
     },
 
     "custom/colorpicker": {
         "format": "",
         "on-click": "hyprpicker -a",
-        "tooltip-format": "取色器"
+        "tooltip-format": "Color Picker"
     },
 
     "custom/screenshot": {
         "format": "",
         "on-click": "grim -g \"$(slurp)\" - | wl-copy && wl-paste > ~/Pictures/screenshot-$(date +%Y%m%d-%H%M%S).png",
         "on-click-right": "grim - | wl-copy && wl-paste > ~/Pictures/screenshot-$(date +%Y%m%d-%H%M%S).png",
-        "tooltip-format": "截图 (区域/全屏)"
+        "tooltip-format": "Screenshot (area/full)"
     },
 
     "custom/clipboard": {
         "format": "",
-        "on-click": "cliphist list | wofi --dmenu | cliphist decode | wl-copy",
-        "on-click-right": "cliphist wipe",
-        "tooltip-format": "剪贴板历史 (右键清空)"
+        "on-click": "sleep 0.1 && cliphist list | rofi -dmenu -p 'Clipboard' | cliphist decode | wl-copy",
+        "on-click-right": "sleep 0.1 && cliphist wipe",
+        "tooltip-format": "Left: Open clipboard Manager\nRight: Clear list"
     }
 }
