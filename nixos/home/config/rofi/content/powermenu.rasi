@@ -12,7 +12,7 @@
 /* ---- Configuration ---- */
 configuration {
     modi:                       "drun,run";
-    font:                       "Sarasa Mono SC 11";
+    font:                       "FiraCode Nerd Font 11";
     show-icons:                 true;
     icon-theme:                 "kora";
     display-drun:               "APPS";
@@ -36,7 +36,7 @@ configuration {
     foreground:     #cdd6f4;
     border-width:   2px;
     border-radius:  2em;
-    font:           "Sarasa Mono SC 11";
+    font:           "FiraCode Nerd Font 11";
     background-color: transparent;
 }
 
