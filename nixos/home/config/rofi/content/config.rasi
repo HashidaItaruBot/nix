@@ -15,10 +15,10 @@ configuration {
     font:                       "FiraCode Nerd Font 11";
     show-icons:                 true;
     icon-theme:                 "kora";
-    display-drun:               "Apps";
-    display-run:                "Run";
-    display-filebrowser:        "Files";
-    display-window:             "Windows";
+    display-drun:               "";
+    display-run:                "";
+    display-filebrowser:        "";
+    display-window:             "";
     drun-display-format:        "{name}";
     window-format:              "{w} · {c} · {t}";
     hover-select:               false;
