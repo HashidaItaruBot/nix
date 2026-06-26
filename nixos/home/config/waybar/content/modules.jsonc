@@ -184,7 +184,7 @@
     "custom/exit": {
         "format": "",
         "on-click": "wlogout",
-        "on-click-right": "hyprctl dispatch exit",
+        "on-click-right": "command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'",
         "tooltip-format": "Open Power Menu"
     },
 

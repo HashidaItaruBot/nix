@@ -5,33 +5,33 @@
 set -euo pipefail
 
 options=(
-    "󰤄   Sleep"
-    "󰒲   Hibernate"
-    "󰌾   Lock"
-    "󰗽   Logout"
-    "󰜉   Reboot"
-    "󰐥   Shutdown"
+  "󰤄   Sleep"
+  "󰒲   Hibernate"
+  "󰌾   Lock"
+  "󰗽   Logout"
+  "󰜉   Reboot"
+  "󰐥   Shutdown"
 )
 
 selected=$(printf '%s\n' "${options[@]}" | rofi -dmenu -theme powermenu -p "Power Menu")
 
 case "$selected" in
-    *Sleep)
-        systemctl suspend
-        ;;
-    *Hibernate)
-        systemctl hibernate
-        ;;
-    *Lock)
-        hyprlock
-        ;;
-    *Logout)
-        hyprctl dispatch exit
-        ;;
-    *Reboot)
-        systemctl reboot
-        ;;
-    *Shutdown)
-        systemctl poweroff
-        ;;
+*Sleep)
+  systemctl suspend
+  ;;
+*Hibernate)
+  systemctl hibernate
+  ;;
+*Lock)
+  hyprlock
+  ;;
+*Logout)
+  command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'
+  ;;
+*Reboot)
+  systemctl reboot
+  ;;
+*Shutdown)
+  systemctl poweroff
+  ;;
 esac
