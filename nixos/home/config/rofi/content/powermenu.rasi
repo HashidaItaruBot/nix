@@ -1,5 +1,6 @@
 /**
- * Rofi power menu - ml4w style
+ * Rofi power menu - ML4W glass-morphism style
+ * Catppuccin Mocha color scheme
  */
 
 configuration {
@@ -8,7 +9,7 @@ configuration {
     display-run:     "Run";
     display-window:  "Windows";
     drun-display-format: "{name}";
-    window-format:   "{w} {t}";
+    window-format:   "{w}  ·  {t}";
 }
 
 * {
@@ -40,47 +41,56 @@ configuration {
     mantle:     #181825;
     crust:      #11111b;
 
+    /* Glass-morphism rgba */
+    glass-base:     rgba(30, 30, 46, 0.80);
+    glass-surface:  rgba(49, 50, 68, 0.60);
+    glass-hover:    rgba(69, 71, 90, 0.70);
+
     font:       "Sarasa Mono SC 11";
     background-color: transparent;
 }
 
 window {
-    transparency:  "real";
-    background-color: @base;
-    border:        2px;
-    border-color:  @surface0;
-    border-radius: 12px;
-    padding:       8px;
-    width:         300px;
-    location:      center;
-    anchor:        center;
+    transparency:     "real";
+    background-color: transparent;
+    border:           0px;
+    border-radius:    20px;
+    padding:          0.8em;
+    width:            18em;
+    location:         center;
+    anchor:           center;
+    cursor:           "default";
 }
 
 mainbox {
     children:   [listview];
+    background-color: @glass-base;
+    border-radius: 1.2em;
+    padding:    0.5em;
 }
 
 listview {
     background-color: transparent;
     columns:          1;
     lines:            6;
-    spacing:          2px;
+    spacing:          0.3em;
     scrollbar:        false;
     layout:           vertical;
 }
 
 element {
-    background-color: @surface0;
+    background-color: @glass-surface;
     text-color:       @text;
-    border-radius:    8px;
-    padding:          6px 10px;
+    border-radius:    1em;
+    padding:          0.7em 1.2em;
     orientation:      horizontal;
-    spacing:          10px;
-    cursor:           default;
+    spacing:          0.8em;
+    cursor:           pointer;
 }
 
 element selected {
-    background-color: @surface1;
+    background-color: @mauve;
+    text-color:       @base;
 }
 
 element-text {
@@ -92,5 +102,17 @@ element-text {
 
 element-icon {
     background-color: transparent;
-    size:             20px;
+    size:             22px;
+}
+
+case-indicator {
+    enabled: false;
+}
+
+prompt {
+    enabled: false;
+}
+
+textbox {
+    background-color: transparent;
 }
