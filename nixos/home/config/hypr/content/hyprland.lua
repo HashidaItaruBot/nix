@@ -293,6 +293,16 @@ hl.bind(mainMod .. " + SHIFT + j", hl.dsp.window.resize({ x = 0, y = 100, relati
 hl.bind(mainMod .. " + SHIFT + k", hl.dsp.window.resize({ x = 0, y = -100, relative = true }), { repeating = true })
 hl.bind(mainMod .. " + SHIFT + l", hl.dsp.window.resize({ x = 100, y = 0, relative = true }), { repeating = true })
 
+-- Move floating windows
+hl.bind(mainMod .. " + CTRL + left", hl.dsp.window.move({ x = -100, y = 0, relative = true }), { repeating = true })
+hl.bind(mainMod .. " + CTRL + right", hl.dsp.window.move({ x = 100, y = 0, relative = true }), { repeating = true })
+hl.bind(mainMod .. " + CTRL + up", hl.dsp.window.move({ x = 0, y = -100, relative = true }), { repeating = true })
+hl.bind(mainMod .. " + CTRL + down", hl.dsp.window.move({ x = 0, y = 100, relative = true }), { repeating = true })
+hl.bind(mainMod .. " + CTRL + h", hl.dsp.window.move({ x = -100, y = 0, relative = true }), { repeating = true })
+hl.bind(mainMod .. " + CTRL + j", hl.dsp.window.move({ x = 0, y = 100, relative = true }), { repeating = true })
+hl.bind(mainMod .. " + CTRL + k", hl.dsp.window.move({ x = 0, y = -100, relative = true }), { repeating = true })
+hl.bind(mainMod .. " + CTRL + l", hl.dsp.window.move({ x = 100, y = 0, relative = true }), { repeating = true })
+
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT + [0-9]
 for i = 1, 10 do
