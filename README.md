@@ -1,165 +1,120 @@
 # Nix Configuration
 
-A unified Nix Flake configuration for managing NixOS and Darwin (macOS) systems with modular, cross-platform design.
+基于 Nix Flake 的统一声明式系统配置，管理 NixOS (x86_64-linux) 和 macOS (aarch64-darwin)。
 
-## Overview
+## 概览
 
-This repository provides declarative system configuration for:
+- **NixOS**: KDE Plasma 6 桌面环境，Hyprland 窗口管理器，PipeWire 音频，fcitx5 输入法
+- **macOS**: nix-darwin + home-manager 管理用户环境
+- 使用 **Lix** 替代标准 Nix
+- 通过 **sops-nix + age** 管理密钥
+- 通过 **home-manager** 统一管理用户配置
 
-- **NixOS**: Desktop/server configuration with secure boot (lanzaboote), and container support (Podman)
-- **Darwin/macOS**: System configuration via nix-darwin with home-manager integration
+## 前置条件
 
-Key features:
-
-- Single source of truth for all configurations
-- Secrets management via sops-nix with age encryption
-- Modular structure for cross-platform code sharing
-- Reproducible, version-controlled system state
-
-## Prerequisites
-
-- Nix with flakes enabled
-- age or SSH key for sops-nix secrets
-
-Enable flakes if not already:
+- 启用 flake 的 Nix（或 Lix）
 
 ```nix
-# Add to ~/.config/nix/nix.conf or /etc/nix/nix.conf
+# ~/.config/nix/nix.conf 或 /etc/nix/nix.conf
 experimental-features = nix-command flakes
 ```
 
-## Rebuilding
+## 快速开始
 
 ### NixOS
 
-Rebuild and switch to the new configuration:
-
 ```bash
+# 构建检查
+nixos-rebuild build --flake .#nixos
+
+# 应用配置
 sudo nixos-rebuild switch --flake .#nixos
 ```
 
 ### Darwin/macOS
 
-Rebuild and switch to the new configuration:
-
 ```bash
+# 构建检查
+darwin-rebuild build --flake .#zhaochanglongdeMacBook-Air
+
+# 应用配置
 darwin-rebuild switch --flake .#zhaochanglongdeMacBook-Air
 ```
 
-## Secrets Management
-
-Secrets are encrypted using sops-nix with age encryption.
-
-### Adding/Editing Secrets
-
-```bash
-# Edit or create a new secret
-sops shared/secrets/<secret-name>.yaml
-
-# Secrets are automatically encrypted when saved
-# They decrypt at system activation time
-```
-
-### How It Works
-
-1. Secrets are stored encrypted in [`shared/secrets/`](shared/secrets/)
-2. The [`.sops.yaml`](.sops.yaml) config specifies which age key can decrypt
-3. On system activation, sops-nix decrypts secrets to `/run/secrets/`
-4. Services read secrets from the ephemeral `/run/secrets/` path
-
-## Development
-
-### Making Changes
-
-1. Edit configuration files in the appropriate directory:
-   - [`nixos/`](nixos/) for NixOS-specific config
-   - [`darwin/`](darwin/) for Darwin-specific config
-   - [`shared/`](shared/) for cross-platform config
-
-2. Stage changes (nix only sees git-tracked files):
-
-   ```bash
-   git add .
-   ```
-
-3. Test the build:
-
-   ```bash
-   # NixOS
-   nixos-rebuild build --flake .#nixos
-
-   # Darwin
-   darwin-rebuild build --flake .#zhaochanglongdeMacBook-Air
-   ```
-
-4. Apply changes:
-
-   ```bash
-   # NixOS
-   sudo nixos-rebuild switch --flake .#nixos
-
-   # Darwin
-   darwin-rebuild switch --flake .#zhaochanglongdeMacBook-Air
-   ```
-
-### Updating Dependencies
-
-Periodically update flake inputs to get the latest packages:
-
-```bash
-# Update all inputs
-nix flake update
-
-# Update specific input
-nix flake update nixpkgs
-
-# Or lock a specific input to latest
-nix flake lock --update-input nixpkgs
-```
-
-**Recommended:** Update inputs weekly or before major changes.
-
-## Structure
+## 项目结构
 
 ```text
 .
-├── flake.nix           # Main flake configuration
-├── flake.lock          # Pinned input versions
-├── .sops.yaml          # SOPS encryption configuration
-├── darwin/             # macOS-specific configuration
-│   ├── default.nix     # Darwin system config
-│   ├── home/           # Darwin home-manager config
-│   ├── packages/       # Darwin-specific packages
-│   └── sops.nix        # Darwin sops configuration
-├── nixos/              # NixOS-specific configuration
-│   ├── default.nix     # NixOS system config
-│   ├── home/           # NixOS home-manager config
-│   ├── packages/       # NixOS-specific packages
+├── flake.nix                    # Flake 入口
+├── flake.lock
+├── .sops.yaml
+├── nixos/                       # NixOS 配置
+│   ├── default.nix              # 系统配置 (KDE Plasma 6)
 │   ├── hardware-configuration.nix
-│   ├── secureboot/     # Secure boot keys
-│   └── sops.nix        # NixOS sops configuration
-└── shared/             # Cross-platform configuration
-    ├── home/           # Shared home-manager config
-    ├── secrets/        # Encrypted secrets
-    └── system/         # Shared system config
+│   ├── sops.nix / sshd.nix / zerotier.nix / zram.nix
+│   ├── packages/                # 系统级包 + Flatpak + Podman + Incus
+│   └── home/                    # home-manager
+│       ├── kitty.nix / vscode.nix / zed.nix
+│       ├── config/              # Hyprland / Rofi / Waybar
+│       └── nixvim/              # Neovim 完整配置
+├── darwin/                      # macOS 配置
+│   ├── default.nix
+│   ├── packages/                # Homebrew casks + mas
+│   └── home/                    # home-manager
+└── shared/                      # 跨平台共享
+    ├── system/                  # 共享系统包 + 字体 + Lix
+    ├── home/                    # zsh / tmux / git / ssh / helix / uv 等
+    ├── packages/                # 自定义包 (langcli, ecc-universal 等)
+    └── secrets/                 # SOPS 加密密钥
 ```
 
-## Validation
+## 密钥管理
 
-### Cross-Platform Secret Sharing
+使用 sops-nix + age 加密密钥文件。
 
-After rebuilding on both platforms, verify secrets are accessible:
+```bash
+# 编辑或创建密钥
+sops shared/secrets/<name>.yaml
 
-- **NixOS**: Check `ls /run/secrets/` contains expected secrets
-- **Darwin**: Check `ls /run/user/$(id -u)/secrets/` contains expected secrets
+# 保存时自动加密，系统激活时解密到：
+#   NixOS: /run/secrets/
+#   Darwin: /run/user/$(id -u)/secrets/
+```
 
-## Inputs
+## Flake 输入
 
-Key flake inputs:
+| 输入 | 用途 |
+|------|------|
+| `nixpkgs` | 软件包仓库 (unstable) |
+| `nix-darwin` | macOS 系统管理 |
+| `home-manager` | 用户环境管理 |
+| `nixvim` | Neovim 配置框架 |
+| `sops-nix` | 密钥管理 |
+| `lanzaboote` | NixOS 安全启动 |
+| `plasma-manager` | KDE Plasma 配置 |
+| `nix-flatpak` | Flatpak 支持 |
+| `codewhale` | CodeWhale 工具 |
 
-- **nixpkgs**: Package repository
-- **nix-darwin**: macOS system management
-- **home-manager**: User environment management
-- **sops-nix**: Secrets management
-- **lanzaboote**: Secure boot for NixOS
-- **nixvim**: Neovim configuration
+## 开发
+
+### 修改流程
+
+1. 编辑配置文件
+2. `git add` 暂存更改（Nix 只识别 git 追踪的文件）
+3. `nixos-rebuild build --flake .#<target>` 构建检查
+4. `<rebuild-command> switch --flake .#<target>` 应用更改
+5. `git commit` 提交
+
+### 更新依赖
+
+```bash
+nix flake update              # 更新所有输入
+nix flake update nixpkgs     # 仅更新 nixpkgs
+nix flake lock --update-input nixpkgs
+```
+
+### 格式化
+
+```bash
+nix fmt  # 使用 Alejandra 格式化所有 .nix 文件
+```
