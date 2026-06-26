@@ -47,6 +47,7 @@ local menu = "rofi -show drun"
 hl.on("hyprland.start", function ()
   hl.exec_cmd("waybar")
   hl.exec_cmd("swayosd-server")
+  hl.exec_cmd("hypridle")
 end)
 
 -------------------------------
@@ -262,6 +263,9 @@ hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("rofi -show window"))
 
 -- Rofi: power menu
 hl.bind(mainMod .. " + X", hl.dsp.exec_cmd("$HOME/.config/rofi/powermenu.sh"))
+
+-- Lock screen
+hl.bind(mainMod .. " + Escape", hl.dsp.exec_cmd("hyprlock"))
 
 -- Rofi: clipboard history (requires wl-clipboard and cliphist)
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("cliphist list | rofi -dmenu -p 'Clipboard' | cliphist decode | wl-copy"))

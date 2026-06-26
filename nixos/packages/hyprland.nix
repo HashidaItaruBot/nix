@@ -8,6 +8,7 @@
   environment.systemPackages = with pkgs; [
     hyprlauncher
     hyprlock
+    hypridle
     waybar
     rofi
     wl-clipboard
