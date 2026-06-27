@@ -2,16 +2,16 @@
 
 buildNpmPackage rec {
   pname = "ecc-universal";
-  version = "1.10.0";
+  version = "2.0.0";
 
   src = fetchFromGitHub {
     owner = "affaan-m";
     repo = "everything-claude-code";
     rev = "v${version}";
-    hash = "sha256-vzlPCasQIl7WWgtpUoeVu0Q9lAHKmahFp0oi4542weo=";
+    hash = "sha256-ocCwYArThCTVDHgmV//l3tMQtu6kJB10aic5QD2BDbQ=";
   };
 
-  npmDepsHash = "sha256-e4g6ZPzcEJ8piRVnmLcwrdiv2FMqH/bNjOvZn0el+f4=";
+  npmDepsHash = "sha256-jnM0p07SDxxgDYoXYCuIzoPFID6qJ9jqbwpfcEPLRPU=";
   npmPackFlags = [ "--ignore-scripts" ];
 
   dontNpmBuild = true;
