@@ -22,10 +22,11 @@
       sopsFile = "${self}/shared/secrets/api_keys.yaml";
       owner = "zhaochanglong";
       mode = "0400";
-    };  };
-
-  environment.sessionVariables = {
-    EXA_API_KEY = "${config.sops.secrets.exa_api_key.path}";
-    DEEPSEEK_API_KEY = "${config.sops.secrets.deepseek_api_key.path}";
+    };
   };
+
+  environment.extraInit = ''
+    export EXA_API_KEY="$(cat ${config.sops.secrets.exa_api_key.path})"
+    export DEEPSEEK_API_KEY="$(cat ${config.sops.secrets.deepseek_api_key.path})"
+  '';
 }
