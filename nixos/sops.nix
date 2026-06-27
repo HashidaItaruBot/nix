@@ -13,6 +13,12 @@
   # Only configure SSH key paths if the key exists (not in CI)
   sops.age.sshKeyPaths = [ "/root/.ssh/id_ed25519" ];
   sops.secrets = {
+    # Exa 搜索引擎 API key
+    exa_api_key = {
+      sopsFile = "${self}/shared/secrets/api_keys.yaml";
+      owner = "zhaochanglong";
+      mode = "0400";
+    };
     # 解密 Secure Boot 密钥
     sb_pk_key = {
       sopsFile = "${self}/shared/secrets/secureboot.yaml";
