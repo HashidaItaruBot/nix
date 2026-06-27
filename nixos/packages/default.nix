@@ -41,6 +41,7 @@ in
     aider-chat-full
     nipaplay-reload
     discord
+    gnome-network-displays
   ];
 
   programs._1password-gui = {
