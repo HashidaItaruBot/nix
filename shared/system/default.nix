@@ -6,6 +6,7 @@
 let
   ecc-universal = pkgs.callPackage "${self}/shared/packages/ecc-universal.nix" { };
   langcli = pkgs.callPackage "${self}/shared/packages/langcli.nix" { };
+  reasonix = pkgs.callPackage "${self}/shared/packages/reasonix.nix" { };
   codewhale =
     inputs.codewhale.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs
       (_: {
@@ -43,6 +44,7 @@ in
     ecc-universal
     rtk
     langcli
+    reasonix
     pnpm
     gdb
 
