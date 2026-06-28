@@ -23,6 +23,9 @@
         "podman"
         "tmux"
         "vi-mode"
+        "zoxide"
+        "zsh-interactive-cd"
+        "zsh-navigation-tools"
       ];
     };
   };
