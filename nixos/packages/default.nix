@@ -38,7 +38,6 @@ in
     thunderbird
     chromium
     tor-browser
-    mullvad-browser
     aider-chat-full
     nipaplay-reload
     discord
