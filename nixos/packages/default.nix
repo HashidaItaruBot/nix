@@ -42,6 +42,7 @@ in
     nipaplay-reload
     discord
     gnome-network-displays
+    drawio
   ];
 
   programs._1password-gui = {
