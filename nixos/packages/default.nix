@@ -42,7 +42,6 @@ in
     nipaplay-reload
     discord
     gnome-network-displays
-    plantuml
   ];
 
   programs._1password-gui = {
