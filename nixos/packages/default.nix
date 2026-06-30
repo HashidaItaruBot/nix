@@ -43,6 +43,7 @@ in
     discord
     gnome-network-displays
     drawio
+    zotero
   ];
 
   programs._1password-gui = {
