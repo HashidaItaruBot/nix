@@ -11,6 +11,7 @@
     ./codex.nix
     ./uv.nix
     ./helix.nix
+    ./sbt.nix
   ];
 
   home = {

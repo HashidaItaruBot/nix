@@ -64,12 +64,6 @@ in
 
     logisim-evolution
 
-    # Chisel开发工具
-    sbt
-    jdk8
-    verilator
-    gtkwave
-
     yazi
   ];
 
