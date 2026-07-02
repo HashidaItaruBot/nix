@@ -11,12 +11,12 @@
 
 let
   pname = "openclaude";
-  version = "0.19.0";
+  version = "0.21.0";
   src = fetchFromGitHub {
     owner = "Gitlawb";
     repo = "openclaude";
     rev = "v${version}";
-    hash = "sha256-XFjWWL1VUkpc9hdSOe9QZ6PcbQOexsFT1C6UKFp/9tQ=";
+    hash = "sha256-hWFVvOxjc9/Kk34RCD6ocpXPLvkPtu7Bj5DgWHkaeQg=";
   };
 
   # Fixed-output derivation to pre-fetch node_modules in sandbox
@@ -26,7 +26,7 @@ let
     nativeBuildInputs = [ bun ];
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
-    outputHash = "sha256-pAOvEKfuU8t7IgwfauDNdq2udjEyZt+lr5i3KND3W8w=";
+    outputHash = "sha256-c3XY0iZdGFRymlD89aMlan3RNAXJ68nme/DRry06VBc=";
 
     buildPhase = ''
       export HOME=$TMPDIR
