@@ -1,11 +1,8 @@
 {
-  description = "Unified NixOS and Darwin System Flake";
+  description = "NixOS System Flake";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-
-    nix-darwin.url = "github:nix-darwin/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     nixvim.url = "github:nix-community/nixvim";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
@@ -33,36 +30,23 @@
     };
   };
 
-  outputs =
-    inputs@{
-      self,
-      nixpkgs,
-      nix-darwin,
-      home-manager,
-      ...
-    }:
-    let
-      specialArgs = { inherit inputs self; };
-    in
-    {
-      # Formatter outputs for `nix fmt`
-      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
-      formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.alejandra;
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    home-manager,
+    ...
+  }: let
+    specialArgs = {inherit inputs self;};
+  in {
+    # Formatter outputs for `nix fmt`
+    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
 
-      darwinConfigurations."zhaochanglongdeMacBook-Air" = nix-darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        inherit specialArgs;
-        modules = [
-          ./darwin
-        ];
-      };
-
-      nixosConfigurations."nixos" = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        inherit specialArgs;
-        modules = [
-          ./nixos
-        ];
-      };
+    nixosConfigurations."nixos" = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      inherit specialArgs;
+      modules = [
+        ./nixos
+      ];
     };
+  };
 }

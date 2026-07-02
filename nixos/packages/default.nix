@@ -2,11 +2,9 @@
   pkgs,
   inputs,
   ...
-}:
-let
-  nipaplay-reload = pkgs.callPackage ./nipaplay-reload/package.nix { };
-in
-{
+}: let
+  nipaplay-reload = pkgs.callPackage ./nipaplay-reload/package.nix {};
+in {
   imports = [
     ./flatpak.nix
     ./podman.nix
@@ -48,7 +46,7 @@ in
 
   programs._1password-gui = {
     enable = true;
-    polkitPolicyOwners = [ "zhaochanglong" ];
+    polkitPolicyOwners = ["zhaochanglong"];
   };
 
   programs.steam = {

@@ -1,4 +1,4 @@
-{ osConfig, ... }: {
+{osConfig, ...}: {
   programs.mcp.servers = {
     playwright = {
       type = "stdio";

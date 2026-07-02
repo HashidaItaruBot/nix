@@ -4,13 +4,12 @@
   lib,
   pkgs,
   ...
-}:
-{
+}: {
   imports = [
     ./hardware-configuration.nix
     ./zram.nix
     ./packages
-    "${self}/shared/system"
+    ./system.nix
     ./home
     ./sops.nix
     ./zerotier.nix
@@ -64,7 +63,7 @@
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {
-      emoji = [ "Noto Color Emoji" ];
+      emoji = ["Noto Color Emoji"];
       monospace = [
         "Sarasa Mono SC"
         "Noto Sans Mono CJK SC"
@@ -73,7 +72,7 @@
         "Sarasa Term SC"
         "Noto Sans CJK SC"
       ];
-      serif = [ "Noto Serif CJK CJK" ];
+      serif = ["Noto Serif CJK CJK"];
     };
     antialias = true;
     hinting.enable = true;

@@ -9,8 +9,7 @@
   modulesPath,
   inputs,
   ...
-}:
-{
+}: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     inputs.lanzaboote.nixosModules.lanzaboote
@@ -28,21 +27,21 @@
         "usb_storage"
         "sd_mod"
       ];
-      kernelModules = [ "tpm_tis" ];
+      kernelModules = ["tpm_tis"];
       luks.devices = {
         "crypt1" = {
           device = "/dev/disk/by-uuid/075c53b2-44d1-4fab-b6f2-f2af285e8111";
-          crypttabExtraOpts = [ "tpm2-device=auto" ];
+          crypttabExtraOpts = ["tpm2-device=auto"];
           preLVM = true;
         };
         "crypt2" = {
           device = "/dev/disk/by-uuid/36410584-09b5-444d-8731-e66a77b7a94a";
-          crypttabExtraOpts = [ "tpm2-device=auto" ];
+          crypttabExtraOpts = ["tpm2-device=auto"];
           preLVM = true;
         };
         "crypt-swap" = {
           device = "/dev/disk/by-partuuid/44a9af0a-27e5-40d8-8ebb-903e89e9b9a3";
-          crypttabExtraOpts = [ "tpm2-device=auto" ];
+          crypttabExtraOpts = ["tpm2-device=auto"];
         };
       };
     };
@@ -52,7 +51,7 @@
       "overlay"
       "br_netfilter"
     ];
-    extraModulePackages = [ ];
+    extraModulePackages = [];
     loader = {
       systemd-boot.enable = lib.mkForce false;
       systemd-boot.configurationLimit = 100;

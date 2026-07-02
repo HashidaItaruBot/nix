@@ -5,13 +5,20 @@
   lib,
   pkgs,
   ...
-}:
-{
+}: {
   imports = [
-    "${self}/shared/home"
     inputs.plasma-manager.homeModules.plasma-manager
     ./git.nix
     ./ssh.nix
+    ./tmux
+    ./zsh.nix
+    ./direnv.nix
+    ./opencode.nix
+    ./openclaude.nix
+    ./codex.nix
+    ./uv.nix
+    ./helix.nix
+    ./sbt.nix
     ./vscode.nix
     ./zed.nix
     ./kitty.nix
@@ -22,7 +29,15 @@
     ./podman
   ];
 
-  home.homeDirectory = "/home/zhaochanglong";
+  home = {
+    username = "zhaochanglong";
+    homeDirectory = "/home/zhaochanglong";
+    stateVersion = "24.05";
+    sessionPath = ["$HOME/.local/bin"];
+    packages = with pkgs; [
+      jupyter-all
+    ];
+  };
 
   services.linux-wallpaperengine = {
     enable = true;

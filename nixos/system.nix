@@ -1,19 +1,18 @@
-{ pkgs
-, self
-, inputs
-, ...
-}:
-let
-  ecc-universal = pkgs.callPackage "${self}/shared/packages/ecc-universal.nix" { };
-  langcli = pkgs.callPackage "${self}/shared/packages/langcli.nix" { };
-  reasonix = pkgs.callPackage "${self}/shared/packages/reasonix.nix" { };
+{
+  pkgs,
+  self,
+  inputs,
+  ...
+}: let
+  ecc-universal = pkgs.callPackage ./packages/ecc-universal.nix {};
+  langcli = pkgs.callPackage ./packages/langcli.nix {};
+  reasonix = pkgs.callPackage ./packages/reasonix.nix {};
   codewhale =
     inputs.codewhale.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs
-      (_: {
-        doCheck = false; # 17 tests fail on macOS due to sandbox-exec restrictions
-      });
-in
-{
+    (_: {
+      doCheck = false;
+    });
+in {
   imports = [
     ./sops.nix
   ];

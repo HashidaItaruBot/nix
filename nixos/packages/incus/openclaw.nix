@@ -1,3 +1,3 @@
 _: {
-  networking.firewall.allowedTCPPorts = [ 8000 ]; # SillyTavern
+  networking.firewall.allowedTCPPorts = [8000]; # SillyTavern
 }

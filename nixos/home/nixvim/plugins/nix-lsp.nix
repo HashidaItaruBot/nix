@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   programs.nixvim.plugins = {
     # 启用LSP支持
     lsp = {
@@ -31,18 +30,18 @@
           enable = true;
           settings = {
             formatting = {
-              command = [ "alejandra" ];
+              command = ["alejandra"];
             };
-              nixd = {
-                options = {
-                  nixos = {
-                    expr = "(builtins.getFlake \"/home/zhaochanglong/Documents/nix\").nixosConfigurations.nixos.options";
-                  };
-                  home_manager = {
-                    expr = "(builtins.getFlake \"/home/zhaochanglong/Documents/nix\").homeConfigurations.zhaochanglong.options";
-                  };
+            nixd = {
+              options = {
+                nixos = {
+                  expr = "(builtins.getFlake \"/home/zhaochanglong/Documents/nix\").nixosConfigurations.nixos.options";
+                };
+                home_manager = {
+                  expr = "(builtins.getFlake \"/home/zhaochanglong/Documents/nix\").homeConfigurations.zhaochanglong.options";
                 };
               };
+            };
           };
         };
 
@@ -52,7 +51,7 @@
           settings = {
             Lua = {
               runtime.version = "LuaJIT";
-              diagnostics.globals = [ "vim" ];
+              diagnostics.globals = ["vim"];
               workspace = {
                 checkThirdParty = false;
                 library = [
@@ -149,10 +148,10 @@
           "<C-e>" = "cmp.mapping.abort()";
         };
         sources = [
-          { name = "nvim_lsp"; }
-          { name = "luasnip"; }
-          { name = "path"; }
-          { name = "buffer"; }
+          {name = "nvim_lsp";}
+          {name = "luasnip";}
+          {name = "path";}
+          {name = "buffer";}
         ];
       };
     };

@@ -5,7 +5,6 @@
   fetchurl,
   makeWrapper,
 }:
-
 stdenv.mkDerivation rec {
   pname = "reasonix";
   version = "0.53.2";
@@ -15,7 +14,7 @@ stdenv.mkDerivation rec {
     hash = "sha256-JXphiOaJk62fCR4biIb/MeWQomVhQVJEaJnbsQ/kz2M=";
   };
 
-  nativeBuildInputs = [ makeWrapper ];
+  nativeBuildInputs = [makeWrapper];
 
   dontBuild = true;
 

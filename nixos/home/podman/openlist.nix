@@ -1,8 +1,6 @@
-{ config, ... }:
-let
+{config, ...}: let
   dataDir = config.home.homeDirectory + "/.config/openlist";
-in
-{
+in {
   services.podman.containers.openlist = {
     image = "docker.io/openlistteam/openlist:latest";
     user = "0:0";

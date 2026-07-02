@@ -7,7 +7,6 @@
   autoPatchelfHook,
   alsa-lib,
 }:
-
 stdenv.mkDerivation rec {
   pname = "langcli";
   version = "0.1.39";
@@ -17,7 +16,7 @@ stdenv.mkDerivation rec {
     hash = "sha256-TQciZ7C9gBDn/zAQAO6Ze6OeH6zgKkzp+84UELxyhmY=";
   };
 
-  nativeBuildInputs = [ makeWrapper ] ++ lib.optional stdenv.hostPlatform.isLinux autoPatchelfHook;
+  nativeBuildInputs = [makeWrapper] ++ lib.optional stdenv.hostPlatform.isLinux autoPatchelfHook;
   buildInputs = lib.optionals stdenv.hostPlatform.isLinux [
     stdenv.cc.cc.lib
     alsa-lib

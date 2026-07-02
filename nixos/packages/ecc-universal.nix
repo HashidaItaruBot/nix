@@ -1,5 +1,8 @@
-{ lib, buildNpmPackage, fetchFromGitHub }:
-
+{
+  lib,
+  buildNpmPackage,
+  fetchFromGitHub,
+}:
 buildNpmPackage rec {
   pname = "ecc-universal";
   version = "2.0.0";
@@ -12,7 +15,7 @@ buildNpmPackage rec {
   };
 
   npmDepsHash = "sha256-jnM0p07SDxxgDYoXYCuIzoPFID6qJ9jqbwpfcEPLRPU=";
-  npmPackFlags = [ "--ignore-scripts" ];
+  npmPackFlags = ["--ignore-scripts"];
 
   dontNpmBuild = true;
 
