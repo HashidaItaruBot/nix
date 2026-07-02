@@ -14,35 +14,35 @@
   sops.secrets = {
     # mihomo 配置
     mihomo_config = {
-      sopsFile = "${self}/nixos/secrets/mihomo_config.yaml";
+      sopsFile = "${self}/secrets/mihomo_config.yaml";
       key = "data";
       owner = "root";
       mode = "0400";
     };
     # 解密 Secure Boot 密钥
     sb_pk_key = {
-      sopsFile = "${self}/nixos/secrets/secureboot.yaml";
+      sopsFile = "${self}/secrets/secureboot.yaml";
       owner = "root";
       mode = "0400";
     };
     sb_kek_key = {
-      sopsFile = "${self}/nixos/secrets/secureboot.yaml";
+      sopsFile = "${self}/secrets/secureboot.yaml";
       owner = "root";
       mode = "0400";
     };
     sb_db_key = {
-      sopsFile = "${self}/nixos/secrets/secureboot.yaml";
+      sopsFile = "${self}/secrets/secureboot.yaml";
       owner = "root";
       mode = "0400";
     };
     # Exa 搜索引擎 API key
     exa_api_key = {
-      sopsFile = "${self}/nixos/secrets/api_keys.yaml";
+      sopsFile = "${self}/secrets/api_keys.yaml";
       owner = "zhaochanglong";
       mode = "0400";
     };
     deepseek_api_key = {
-      sopsFile = "${self}/nixos/secrets/api_keys.yaml";
+      sopsFile = "${self}/secrets/api_keys.yaml";
       owner = "zhaochanglong";
       mode = "0400";
     };

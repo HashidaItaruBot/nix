@@ -3,7 +3,7 @@ keys:
   - &identity age1yym34dr22lz3kumj9u437ld2exeaspsd7a5hn2p3mjq5ntrg8qusnrkph9
 
 creation_rules:
-  - path_regex: nixos/secrets/.*\.yaml$
+  - path_regex: secrets/.*\.yaml$
     key_groups:
       - age:
         - *identity
