@@ -1,10 +1,11 @@
+{ pkgs
+, inputs
+, ...
+}:
+let
+  nipaplay-reload = pkgs.callPackage ./nipaplay-reload/package.nix { };
+in
 {
-  pkgs,
-  inputs,
-  ...
-}: let
-  nipaplay-reload = pkgs.callPackage ./nipaplay-reload/package.nix {};
-in {
   imports = [
     ./flatpak.nix
     ./podman.nix
@@ -42,11 +43,13 @@ in {
     gnome-network-displays
     drawio
     zotero
+    mill
+    valgrind
   ];
 
   programs._1password-gui = {
     enable = true;
-    polkitPolicyOwners = ["zhaochanglong"];
+    polkitPolicyOwners = [ "zhaochanglong" ];
   };
 
   programs.steam = {
