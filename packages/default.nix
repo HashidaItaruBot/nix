@@ -45,6 +45,7 @@ in
     zotero
     mill
     valgrind
+    obs-studio
   ];
 
   programs._1password-gui = {
