@@ -30,14 +30,8 @@
       kernelModules = ["tpm_tis"];
       luks.devices = {
         "crypt1" = {
-          device = "/dev/disk/by-uuid/075c53b2-44d1-4fab-b6f2-f2af285e8111";
+          device = "/dev/disk/by-partuuid/cec43cac-f70a-4ef5-9f52-bbbf7225b0c5";
           crypttabExtraOpts = ["tpm2-device=auto"];
-          preLVM = true;
-        };
-        "crypt2" = {
-          device = "/dev/disk/by-uuid/36410584-09b5-444d-8731-e66a77b7a94a";
-          crypttabExtraOpts = ["tpm2-device=auto"];
-          preLVM = true;
         };
         "crypt-swap" = {
           device = "/dev/disk/by-partuuid/44a9af0a-27e5-40d8-8ebb-903e89e9b9a3";
@@ -98,7 +92,7 @@
       ];
     };
     "/boot" = {
-      device = "/dev/disk/by-uuid/E9CD-7770";
+      device = "/dev/disk/by-partuuid/18e87963-c993-4917-aae9-ef795fcced43";
       fsType = "vfat";
       options = [
         "fmask=0022"
