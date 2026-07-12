@@ -23,7 +23,6 @@
     ./zed.nix
     ./kitty.nix
     ./config
-    ./nixvim
     ./1password.nix
     ./appimage.nix
     ./podman
