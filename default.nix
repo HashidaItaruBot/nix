@@ -6,7 +6,6 @@
   ...
 }: {
   imports = [
-    ./hardware-configuration.nix
     ./zram.nix
     ./packages
     ./system.nix
@@ -17,7 +16,6 @@
   ];
 
   networking = {
-    hostName = "nixos";
     networkmanager.enable = true;
     timeServers = [
       "ntp.aliyun.com"

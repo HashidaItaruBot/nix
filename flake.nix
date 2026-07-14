@@ -33,10 +33,22 @@
     # Formatter outputs for `nix fmt`
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
 
-    nixosConfigurations."nixos" = nixpkgs.lib.nixosSystem {
+    nixosConfigurations."zeus" = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       inherit specialArgs;
       modules = [
+        ./hardware/zeus.nix
+        {networking.hostName = "zeus";}
+        ./.
+      ];
+    };
+
+    nixosConfigurations."hades" = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      inherit specialArgs;
+      modules = [
+        ./hardware/hades.nix
+        {networking.hostName = "hades";}
         ./.
       ];
     };
