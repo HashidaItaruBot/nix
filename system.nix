@@ -7,18 +7,12 @@
   ecc-universal = pkgs.callPackage ./packages/ecc-universal.nix {};
   langcli = pkgs.callPackage ./packages/langcli.nix {};
   reasonix = pkgs.callPackage ./packages/reasonix.nix {};
-  codewhale =
-    inputs.codewhale.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs
-    (_: {
-      doCheck = false;
-    });
 in {
   imports = [
     ./sops.nix
   ];
 
   environment.systemPackages = with pkgs; [
-    codewhale
     # Core tools
     vim
     git

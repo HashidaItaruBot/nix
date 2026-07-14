@@ -3,7 +3,7 @@
     owner = "gpakosz";
     repo = ".tmux";
     rev = "af33f07134b76134acca9d01eacbdecca9c9cda6";
-    hash = "sha256-rfJkL4EMMunbC7wGiw7O/1E/0XTzA2N+RR7gXEoalAY=";
+    hash = "sha256-nXm664l84YSwZeRM4Hsweqgz+OlpyfwXcgEdyNGhaGA=";
   };
 in {
   programs.tmux = {
