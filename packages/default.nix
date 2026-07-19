@@ -2,6 +2,9 @@
 , inputs
 , ...
 }:
+let
+  nipaplay-reload = pkgs.callPackage ./nipaplay-appimage.nix { };
+in
 {
   imports = [
     ./flatpak.nix
@@ -29,6 +32,7 @@
     unar
     ppsspp-sdl-wayland
     appimage-run
+    nipaplay-reload
     podman-desktop
     thunderbird
     chromium
