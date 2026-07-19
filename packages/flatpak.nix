@@ -14,6 +14,7 @@
     packages = [
       "com.usebottles.bottles"
       "com.tencent.WeChat"
+      "io.github.MCDFsteve.NipaPlay-Reload"
     ];
   };
 }

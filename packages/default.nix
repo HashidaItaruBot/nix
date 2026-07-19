@@ -2,9 +2,6 @@
 , inputs
 , ...
 }:
-let
-  nipaplay-reload = pkgs.callPackage ./nipaplay-reload/package.nix { };
-in
 {
   imports = [
     ./flatpak.nix
@@ -37,7 +34,6 @@ in
     chromium
     tor-browser
     aider-chat-full
-    nipaplay-reload
     discord
     gnome-network-displays
     drawio
