@@ -24,7 +24,8 @@ stdenv.mkDerivation rec {
     ln -s "$src" $out/lib/nipaplay-reload.AppImage
 
     makeWrapper ${appimage-run}/bin/appimage-run $out/bin/nipaplay-reload \
-      --add-flags "$out/lib/nipaplay-reload.AppImage"
+      --add-flags "$out/lib/nipaplay-reload.AppImage" \
+      --set GDK_PIXBUF_MODULE_FILE /dev/null
 
     cat > $out/share/applications/io.github.MCDFsteve.NipaPlay-Reload.desktop << 'EOF'
     [Desktop Entry]
