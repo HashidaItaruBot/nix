@@ -9,7 +9,6 @@ in
   imports = [
     ./flatpak.nix
     ./podman.nix
-    ./incus
     ./hyprland.nix
   ];
 
@@ -70,4 +69,6 @@ in
 
   services.redshift.enable = true;
   location.provider = "geoclue2";
+
+  networking.firewall.allowedTCPPorts = [8000]; # SillyTavern
 }
