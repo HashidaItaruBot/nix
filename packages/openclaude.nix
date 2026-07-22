@@ -1,7 +1,7 @@
 {
   lib,
   stdenv,
-  fetchFromGitHub,
+  fetchurl,
   bun,
   nodejs_22,
   makeWrapper,
@@ -9,12 +9,10 @@
   vips,
 }: let
   pname = "openclaude";
-  version = "0.21.0";
-  src = fetchFromGitHub {
-    owner = "Gitlawb";
-    repo = "openclaude";
-    rev = "v${version}";
-    hash = "sha256-hWFVvOxjc9/Kk34RCD6ocpXPLvkPtu7Bj5DgWHkaeQg=";
+  version = "0.25.0";
+  src = fetchurl {
+    url = "https://github.com/Gitlawb/openclaude/archive/refs/tags/v${version}.tar.gz";
+    hash = "sha256-Xi5EHWuMg7kG85oc3Izyfqdc4+DE0FJK361Q9Z2X/JE=";
   };
 
   # Fixed-output derivation to pre-fetch node_modules in sandbox
@@ -22,13 +20,14 @@
     name = "${pname}-${version}-node-modules";
     inherit src;
     nativeBuildInputs = [bun];
+    dontPatchShebangs = true;
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
-    outputHash = "sha256-c3XY0iZdGFRymlD89aMlan3RNAXJ68nme/DRry06VBc=";
+    outputHash = "sha256-+PEovIy8n7wT7f2MQKqfZgjLmKlf40zm7GRr2teSJtY=";
 
     buildPhase = ''
       export HOME=$TMPDIR
-      bun install --frozen-lockfile --production
+      bun install --frozen-lockfile
     '';
 
     installPhase = ''

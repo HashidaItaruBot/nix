@@ -7,11 +7,16 @@
 }:
 stdenv.mkDerivation rec {
   pname = "reasonix";
-  version = "0.53.2";
+  version = "1.17.18";
 
   src = fetchurl {
     url = "https://registry.npmjs.org/reasonix/-/reasonix-${version}.tgz";
-    hash = "sha256-JXphiOaJk62fCR4biIb/MeWQomVhQVJEaJnbsQ/kz2M=";
+    hash = "sha256-+wjDPFeg3NJZ/KeUrW4FptdRkaz7ZmIcHGlBgfRLGHg=";
+  };
+
+  nativeSrc = fetchurl {
+    url = "https://registry.npmjs.org/@reasonix/cli-linux-x64/-/cli-linux-x64-${version}.tgz";
+    hash = "sha256-3VtfAzNiLgi1e5jqhGNK33sMrTICd7vptryxvQqculk=";
   };
 
   nativeBuildInputs = [makeWrapper];
@@ -21,12 +26,17 @@ stdenv.mkDerivation rec {
   installPhase = ''
     runHook preInstall
     mkdir -p $out/lib/reasonix $out/bin
-    cp -r * $out/lib/reasonix/
+
+    # Extract main package (bin/reasonix.js launcher + package.json)
+    tar xzf $src -C $out/lib/reasonix/ --strip-components=1
+
+    # Extract native binary into node_modules
+    mkdir -p $out/lib/reasonix/node_modules/@reasonix/cli-linux-x64
+    tar xzf $nativeSrc -C $out/lib/reasonix/node_modules/@reasonix/cli-linux-x64/ --strip-components=1
+    chmod +x $out/lib/reasonix/node_modules/@reasonix/cli-linux-x64/bin/reasonix
 
     makeWrapper ${nodejs}/bin/node $out/bin/reasonix \
-      --add-flags "$out/lib/reasonix/dist/cli/index.js"
-    makeWrapper ${nodejs}/bin/node $out/bin/dsnix \
-      --add-flags "$out/lib/reasonix/dist/cli/index.js"
+      --add-flags "$out/lib/reasonix/bin/reasonix.js"
     runHook postInstall
   '';
 
@@ -35,6 +45,6 @@ stdenv.mkDerivation rec {
     homepage = "https://github.com/esengine/DeepSeek-Reasonix";
     license = licenses.mit;
     mainProgram = "reasonix";
-    platforms = platforms.unix;
+    platforms = platforms.linux;
   };
 }
