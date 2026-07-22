@@ -8,7 +8,6 @@
   imports = [
     ./zram.nix
     ./packages
-    ./system.nix
     ./home
     ./sops.nix
     ./zerotier.nix
@@ -77,6 +76,20 @@
     subpixel.lcdfilter = "default";
   };
 
+  fonts.packages = with pkgs; [
+    wqy_microhei
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-cjk-serif
+    sarasa-gothic
+    corefonts
+    nerd-fonts.fira-code
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.symbols-only
+    nerd-fonts.hack
+    nerd-fonts.noto
+  ];
+
   # Input Method
   i18n.inputMethod = {
     enable = true;
@@ -90,6 +103,9 @@
     ];
   };
 
+  programs.zsh.enable = true;
+  programs._1password.enable = true;
+
   environment.variables = {
     GTK_IM_MODULE = lib.mkForce "";
     QT_IM_MODULE = lib.mkForce "";
@@ -98,6 +114,7 @@
   # Define a user account.
   users.users.zhaochanglong = {
     isNormalUser = true;
+    shell = pkgs.zsh;
     extraGroups = [
       "wheel"
       "networkmanager"
@@ -108,6 +125,8 @@
     ];
   };
 
+  nixpkgs.config.allowUnfree = true;
+
   nix = {
     gc = {
       automatic = true;
@@ -116,7 +135,14 @@
       options = "--delete-older-than 30d";
     };
     optimise.automatic = true;
-    settings.auto-optimise-store = true;
+    package = pkgs.lixPackageSets.stable.lix;
+    settings = {
+      auto-optimise-store = true;
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+    };
   };
 
   system.stateVersion = "25.11";

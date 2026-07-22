@@ -4,6 +4,9 @@
 }:
 let
   nipaplay-reload = pkgs.callPackage ./nipaplay-appimage.nix { };
+  ecc-universal = pkgs.callPackage ./ecc-universal.nix { };
+  langcli = pkgs.callPackage ./langcli.nix { };
+  reasonix = pkgs.callPackage ./reasonix.nix { };
 in
 {
   imports = [
@@ -13,6 +16,52 @@ in
   ];
 
   environment.systemPackages = with pkgs; [
+    # Core CLI tools
+    vim
+    git
+    gh
+    tree
+    wget
+    htop
+    aria2
+    fd
+    fzf
+    ripgrep
+    lazygit
+    zoxide
+    bat
+
+    # Development
+    gnumake
+    gcc
+    clang
+    cmake
+    nodejs
+    ecc-universal
+    rtk
+    langcli
+    reasonix
+    pnpm
+    gdb
+
+    # System tools
+    qemu
+    nh
+    ssh-to-age
+    sops
+    openssh
+
+    # Nix tools
+    nixd
+    nil
+    alejandra
+    statix
+    nom
+
+    logisim-evolution
+    yazi
+
+    # Desktop apps
     kdePackages.kate
     kdePackages.dolphin
     firefox
