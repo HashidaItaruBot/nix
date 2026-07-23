@@ -54,7 +54,7 @@
       enable = true;
       pkiBundle = "/etc/secureboot";
     };
-    kernelPackages = pkgs.linuxPackages_zen;
+    kernelPackages = pkgs.linuxPackages_latest;
   };
 
   fileSystems = {
