@@ -13,6 +13,7 @@ in
     ./flatpak.nix
     ./podman.nix
     ./hyprland.nix
+    ./ccache.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -58,6 +59,9 @@ in
     alejandra
     statix
     nom
+
+    # Python tools
+    ruff
 
     logisim-evolution
     yazi
