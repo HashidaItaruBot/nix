@@ -145,5 +145,12 @@
     };
   };
 
+  programs.ccache = {
+    enable = true;
+    cacheDir = "/home/zhaochanglong/.cache/ccache";
+    owner = "zhaochanglong";
+    group = "users";
+  };
+
   system.stateVersion = "25.11";
 }

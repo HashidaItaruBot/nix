@@ -35,6 +35,7 @@ in
     gnumake
     gcc
     clang
+    clang-tools
     cmake
     nodejs
     ecc-universal
