@@ -7,6 +7,7 @@
 }: {
   imports = [
     ./zram.nix
+    ./waydroid.nix
     ./packages
     ./home
     ./sops.nix
