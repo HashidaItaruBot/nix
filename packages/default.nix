@@ -80,7 +80,6 @@ in
     pciutils
     mangohud
     netease-cloud-music-gtk
-    waydroid-helper
     unrar
     p7zip
     unar
