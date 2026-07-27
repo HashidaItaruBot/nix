@@ -40,7 +40,6 @@ in
     cmake
     nodejs
     ecc-universal
-    rtk
     langcli
     reasonix
     pnpm
