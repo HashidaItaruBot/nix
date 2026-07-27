@@ -39,12 +39,14 @@
       };
     };
     kernelModules = [
+      "r8125"
       "kvm-amd"
       "amdgpu"
       "overlay"
       "br_netfilter"
     ];
-    extraModulePackages = [];
+    blacklistedKernelModules = ["r8169"];
+    extraModulePackages = [config.boot.kernelPackages.r8125];
     loader = {
       systemd-boot.enable = lib.mkForce false;
       systemd-boot.configurationLimit = 100;
@@ -55,6 +57,13 @@
       pkiBundle = "/etc/secureboot";
     };
     kernelPackages = pkgs.linuxPackages_zen;
+    kernelParams = [
+      "pcie_aspm=off"
+      "pci=noaer"
+    ];
+    extraModprobeConfig = ''
+      options mt7921e disable_aspm=1
+    '';
   };
 
   fileSystems = {
@@ -106,6 +115,8 @@
       priority = -1;
     }
   ];
+
+  networking.networkmanager.wifi.powersave = lib.mkForce false;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
