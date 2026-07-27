@@ -18,6 +18,7 @@ in
 
   environment.systemPackages = with pkgs; [
     # Core CLI tools
+    bubblewrap
     vim
     git
     gh
