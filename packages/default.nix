@@ -99,6 +99,7 @@ in
     mill
     valgrind
     obs-studio
+    lm_sensors
   ];
 
   programs._1password-gui = {
