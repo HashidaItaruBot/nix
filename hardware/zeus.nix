@@ -44,9 +44,14 @@
       "amdgpu"
       "overlay"
       "br_netfilter"
+      "it87" # 主板风扇/温度传感器 (ITE - Gigabyte B850M)
+      "drivetemp" # HDD/SSD 温度读取
     ];
     blacklistedKernelModules = ["r8169"];
-    extraModulePackages = [config.boot.kernelPackages.r8125];
+    extraModulePackages = [
+      config.boot.kernelPackages.r8125
+      config.boot.kernelPackages.it87 # out-of-tree it87 (frankcrawford/it87) 支持 B850M IT8689E
+    ];
     loader = {
       systemd-boot.enable = lib.mkForce false;
       systemd-boot.configurationLimit = 100;
@@ -60,9 +65,11 @@
     kernelParams = [
       "pcie_aspm=off"
       "pci=noaer"
+      "amdgpu.ppfeaturemask=0xfff7ffff" # RX 7900 XT (RDNA3) 风扇控制
     ];
     extraModprobeConfig = ''
       options mt7921e disable_aspm=1
+      options it87 ignore_resource_conflict=1 # B850M IT8696E ACPI 冲突
     '';
   };
 

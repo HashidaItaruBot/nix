@@ -1,14 +1,13 @@
-{ pkgs
-, inputs
-, ...
-}:
-let
-  nipaplay-reload = pkgs.callPackage ./nipaplay-appimage.nix { };
-  ecc-universal = pkgs.callPackage ./ecc-universal.nix { };
-  langcli = pkgs.callPackage ./langcli.nix { };
-  reasonix = pkgs.callPackage ./reasonix.nix { };
-in
 {
+  pkgs,
+  inputs,
+  ...
+}: let
+  nipaplay-reload = pkgs.callPackage ./nipaplay-appimage.nix {};
+  ecc-universal = pkgs.callPackage ./ecc-universal.nix {};
+  langcli = pkgs.callPackage ./langcli.nix {};
+  reasonix = pkgs.callPackage ./reasonix.nix {};
+in {
   imports = [
     ./flatpak.nix
     ./podman.nix
@@ -100,11 +99,12 @@ in
     valgrind
     obs-studio
     lm_sensors
+    liquidctl # USB AIOs、水冷、风扇集线器支持
   ];
 
   programs._1password-gui = {
     enable = true;
-    polkitPolicyOwners = [ "zhaochanglong" ];
+    polkitPolicyOwners = ["zhaochanglong"];
   };
 
   programs.steam = {
