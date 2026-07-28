@@ -14,6 +14,7 @@ in
     ./podman.nix
     ./hyprland.nix
     ./ccache.nix
+    ./coolercontrol.nix
   ];
 
   environment.systemPackages = with pkgs; [
