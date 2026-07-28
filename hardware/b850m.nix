@@ -64,6 +64,7 @@
     kernelPackages = pkgs.linuxPackages_zen;
     kernelParams = [
       "pcie_aspm=off"
+      "pcie_port_pm=off"
       "pci=noaer"
       "amdgpu.ppfeaturemask=0xfff7ffff" # RX 7900 XT (RDNA3) 风扇控制
     ];
@@ -126,6 +127,12 @@
   networking.networkmanager.wifi.powersave = lib.mkForce false;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+
+  services.udev.extraRules = ''
+    # 禁止 mt7921e WiFi 设备 runtime power management，
+    # 防止高负载（如 Steam 下载）时设备从 PCIe 总线消失
+    SUBSYSTEM=="pci", DRIVER=="mt7921e", ATTR{power/control}="on"
+  '';
 
   hardware = {
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
