@@ -12,6 +12,7 @@
     ./sops.nix
     ./zerotier.nix
     ./sshd.nix
+    ./fancontrol.nix
   ];
 
   networking = {
