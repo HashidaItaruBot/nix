@@ -114,6 +114,15 @@ in {
     extraCompatPackages = with pkgs; [
       proton-ge-bin
     ];
+    extraPackages = with pkgs; [
+      at-spi2-core  # SteamVR vrwebhelper needs libatk-bridge-2.0.so.0
+    ];
+    package = pkgs.steam.override {
+      extraLibraries = ps: with ps; [
+        at-spi2-core  # SteamVR vrwebhelper needs libatk-bridge-2.0.so.0
+      ];
+      extraProfile = "export LD_LIBRARY_PATH=${pkgs.at-spi2-core}/lib:\$LD_LIBRARY_PATH";
+    };
   };
 
   services.sunshine = {
