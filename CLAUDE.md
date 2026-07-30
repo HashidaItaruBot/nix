@@ -39,15 +39,15 @@ nix-collect-garbage -d  # 除非明确要求清理
 修改配置后，使用以下命令应用更改：
 
 ```bash
-# NixOS (x86_64-linux)
-sudo nixos-rebuild switch --flake .#nixos
+# LIANLI (B850M)
+sudo nixos-rebuild switch --flake .#b850m
 
-# Darwin/macOS (aarch64-darwin)
-darwin-rebuild switch --flake .#zhaochanglongdeMacBook-Air
+# Hades
+sudo nixos-rebuild switch --flake .#hades
 
 # 仅检查构建 (不切换)
-nixos-rebuild build --flake .#nixos
-darwin-rebuild build --flake .#zhaochanglongdeMacBook-Air
+nixos-rebuild build --flake .#b850m
+nixos-rebuild build --flake .#hades
 ```
 
 ## 项目结构
@@ -57,59 +57,58 @@ darwin-rebuild build --flake .#zhaochanglongdeMacBook-Air
 ├── flake.nix                    # Flake 入口，定义系统配置和输入源
 ├── flake.lock                   # 锁定输入版本
 ├── .sops.yaml                   # SOPS 加密配置
-├── nixos/                       # NixOS 配置 (x86_64-linux)
-│   ├── default.nix              # 系统配置入口 (KDE Plasma 6 + SDDM)
-│   ├── hardware-configuration.nix
-│   ├── sops.nix                 # 密钥管理
-│   ├── sshd.nix                 # SSH 服务
-│   ├── zerotier.nix             # ZeroTier 网络
-│   ├── zram.nix                 # ZRAM 内存压缩
-│   ├── packages/                # 系统级软件包
-│   │   ├── default.nix          # 桌面应用 + Steam + Sunshine
-│   │   ├── flatpak.nix
-│   │   ├── podman.nix
-│   │   ├── hyprland.nix
-│   │   └── incus/               # Incus 容器
-│   └── home/                    # home-manager 配置
-│       ├── default.nix          # 入口
-│       ├── zhaochanglong.nix    # 用户入口（导入各模块）
-│       ├── kitty.nix
-│       ├── vscode.nix
-│       ├── zed.nix
-│       ├── config/              # 桌面环境配置
-│       │   ├── hypr/            # Hyprland 窗口管理器
-│       │   ├── rofi/            # Rofi 启动器
-│       │   └── waybar/          # Waybar 状态栏
-│       └── nixvim/              # Neovim 完整配置 (nixvim)
-├── darwin/                      # macOS Darwin 配置 (aarch64-darwin)
-│   ├── default.nix              # 系统配置入口
-│   ├── sops.nix                 # 密钥管理
-│   ├── packages/                # 系统级软件包
-│   │   └── default.nix          # Homebrew casks + mas
-│   └── home/                    # home-manager 配置
-│       ├── default.nix          # 入口
-│       └── zhaochanglong.nix    # 用户入口
-└── shared/                      # 跨平台共享配置
-    ├── system/                  # 共享系统配置
-    │   └── default.nix          # 共享系统包 + 字体 + Lix 配置
-    ├── home/                    # 共享 home-manager 配置
-    │   ├── default.nix          # 入口
-    │   ├── zsh.nix              # Zsh 配置
-    │   ├── tmux/                # Tmux 配置
-    │   ├── git.nix              # Git 全局配置
-    │   ├── ssh.nix              # SSH 配置
-    │   ├── direnv.nix           # Direnv 配置
-    │   ├── helix.nix            # Helix 编辑器
-    │   ├── uv.nix               # Python uv 工具
-    │   ├── codex.nix            # Codex CLI
-    │   ├── openclaude.nix       # OpenClaude 配置
-    │   ├── opencode.nix         # OpenCode 配置
-    │   └── mcp.nix              # MCP 工具
-    ├── packages/                # 共享的自定义包
-    │   ├── ecc-universal.nix
-    │   ├── langcli.nix
-    │   └── openclaude.nix
-    └── secrets/                 # SOPS 加密的密钥文件
+├── default.nix                  # 系统配置入口 (KDE Plasma 6 + SDDM + PipeWire + fcitx5)
+├── sops.nix                     # 密钥管理 (mihomo, Secure Boot, API keys)
+├── sshd.nix                     # SSH 服务
+├── zerotier.nix                 # ZeroTier 网络
+├── zram.nix                     # ZRAM 内存压缩 (zstd)
+├── hardware/                    # 各机器硬件配置
+│   ├── b850m.nix                # LIANLI B850M (LUKS+TPM2, Zen, ROCm, lanzaboote)
+│   └── hades.nix                # Hades (LUKS+TPM2, Zen, ROCm, lanzaboote)
+├── packages/                    # 系统级软件包
+│   ├── default.nix              # 桌面应用 + Steam + Sunshine + 开发工具
+│   ├── flatpak.nix              # Flatpak 支持
+│   ├── podman.nix               # Podman 容器
+│   ├── hyprland.nix             # Hyprland 窗口管理器
+│   ├── ccache.nix               # C/C++ 编译缓存
+│   ├── coolercontrol.nix        # 硬件温控 (liquidctl)
+│   ├── reasonix.nix             # Reasonix CLI 自定义包
+│   ├── nipaplay-appimage.nix    # NipaPlay AppImage 封装
+│   ├── ecc-universal.nix        # ECC Universal 工具
+│   └── langcli.nix              # LangCLI 工具
+├── home/                        # home-manager 配置
+│   ├── default.nix              # 入口（挂载 home-manager + plasma-manager）
+│   ├── zhaochanglong.nix        # 用户入口（导入各模块）
+│   ├── git.nix                  # Git 配置 (SSH 签名 via 1Password)
+│   ├── ssh.nix                  # SSH 配置
+│   ├── zsh.nix                  # Zsh 配置
+│   ├── tmux/                    # Tmux 配置
+│   ├── direnv.nix               # Direnv 配置
+│   ├── helix.nix                # Helix 编辑器
+│   ├── uv.nix                   # Python uv 工具
+│   ├── codex.nix                # Codex CLI
+│   ├── openclaude.nix           # OpenClaude 配置
+│   ├── opencode.nix             # OpenCode 配置
+│   ├── kitty.nix                # Kitty 终端
+│   ├── vscode.nix               # VS Code
+│   ├── zed.nix                  # Zed 编辑器
+│   ├── 1password.nix            # 1Password 自动启动
+│   ├── appimage.nix             # AppImage 集成
+│   ├── sbt.nix                  # Scala/SBT 配置
+│   ├── podman/                  # Podman 用户配置
+│   ├── mcp.nix                  # MCP 服务器 (playwright, sequential-thinking, exa)
+│   └── config/                  # 桌面环境配置
+│       ├── hypr/                # Hyprland 窗口管理器
+│       ├── rofi/                # Rofi 启动器
+│       └── waybar/              # Waybar 状态栏
+├── secrets/                     # SOPS 加密密钥文件
+│   ├── api_keys.yaml            # API 密钥
+│   ├── mihomo_config.yaml       # Mihomo 代理配置
+│   └── secureboot.yaml          # Secure Boot 私钥
+├── secureboot/                  # Secure Boot 证书
+│   ├── GUID
+│   └── keys/{PK,KEK,db}/
+└── .github/workflows/ci.yml     # CI 构建检查
 ```
 
 ## Flake 输入源
@@ -117,35 +116,51 @@ darwin-rebuild build --flake .#zhaochanglongdeMacBook-Air
 | 输入 | 用途 |
 |------|------|
 | `nixpkgs` | 软件包仓库 (unstable) |
-| `nix-darwin` | macOS 系统管理 |
 | `home-manager` | 用户环境管理 |
-| `nixvim` | Neovim 配置框架 |
+| `lanzaboote` | NixOS 安全启动 (v1.1.0) |
 | `sops-nix` | 密钥管理 |
-| `lanzaboote` | NixOS 安全启动 |
+| `nix-flatpak` | Flatpak 支持 (v0.7.0) |
 | `plasma-manager` | KDE Plasma 配置管理 |
-| `nix-flatpak` | Flatpak 支持 |
-| `codewhale` | CodeWhale 工具 |
+
+## 机器
+
+| flake target | 主机名 | 说明 |
+|-------------|--------|------|
+| `.#b850m` | `b850m` | LIANLI 主力机 (B850M + AMD + RX 7900 XT) |
+| `.#hades` | `hades` | Hades 备用机 |
 
 ## 重要注意事项
 
-- **Lix**: 本项目使用 Lix 替代标准 Nix（`shared/system/default.nix` 中配置）
+- **Lix**: 本项目使用 Lix 替代标准 Nix（`default.nix` 中 `nix.package = pkgs.lixPackageSets.stable.lix`）
 - **格式化**: `nix fmt` 使用 Alejandra 格式化器
-- **垃圾回收**: NixOS 已配置自动 GC（每天 02:00，保留 30 天）
+- **垃圾回收**: 已配置自动 GC（每天 02:00，保留 30 天）+ 自动 store 优化
 - **允许非自由软件**: `nixpkgs.config.allowUnfree = true`
-- **密钥管理**: 通过 sops-nix + age 加密，密钥文件在 `shared/secrets/`
+- **密钥管理**: 通过 sops-nix + age 加密，密钥文件在 `secrets/`
+- **安全启动**: 通过 lanzaboote + TPM2 LUKS 解密实现，证书在 `secureboot/`，私钥通过 sops 管理
+- **显示服务器**: X11 (KDE Plasma 6 + SDDM)，Hyprland Wayland 合成器可用
+- **音频**: PipeWire (ALSA/PulseAudio 兼容)
+- **CPU 调控器**: 性能模式 (`performance`)
 - **Nix 必须在 git 追踪的文件上操作**：修改 `.nix` 文件后需要先 `git add` 再构建
 
 ## 工作流程
 
 1. **修改配置文件** → 编辑对应的 `.nix` 文件
 2. **暂存更改** → `git add <changed-files>`（Nix 只看 git 追踪的文件）
-3. **检查语法** → `nixos-rebuild build --flake .#nixos` 或 `darwin-rebuild build --flake .#zhaochanglongdeMacBook-Air`
-4. **应用更改** → `sudo nixos-rebuild switch --flake .#nixos` 或 `darwin-rebuild switch --flake .#zhaochanglongdeMacBook-Air`
+3. **检查语法** → `nixos-rebuild build --flake .#b850m` 或 `.#hades`
+4. **应用更改** → `sudo nixos-rebuild switch --flake .#b850m` 或 `.#hades`
 5. **提交更改** → `git commit`
+
+## 新增软件的惯例
+
+- **系统级 GUI 应用/CLI 工具** → `packages/default.nix` 的 `environment.systemPackages`
+- **用户级 home-manager 配置** → `home/` 下新建 `.nix` 文件，然后在 `home/zhaochanglong.nix` 的 `imports` 中引用
+- **自定义包** → `packages/` 下新建 `.nix` 文件，在 `packages/default.nix` 中用 `callPackage` 引用
+- **系统服务** → 新建 `.nix` 模块文件，在 `default.nix` 的 `imports` 中引用
+- **密钥** → `secrets/` 下新建/编辑 `.yaml`，在 `sops.nix` 中声明
 
 ## 语言
 
 使用中文与用户对话。
 
 ---
-*更新于 2026-06-26*
+*更新于 2026-07-01*
