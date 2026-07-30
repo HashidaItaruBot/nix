@@ -34,20 +34,29 @@ nix-collect-garbage -d  # 除非明确要求清理
 3. **用户环境** → 修改 `home/` 目录下的 home-manager 配置
 4. **添加服务** → 修改 systemd 相关 Nix 模块
 
-### 应用更改
+### 识别当前机器
 
-修改配置后，使用以下命令应用更改：
+**任何构建或切换操作之前，必须先通过 `hostname` 识别当前机器**，然后选择对应的 flake target：
 
 ```bash
-# LIANLI (B850M)
+hostname
+# 输出 b850m → 使用 --flake .#b850m
+# 输出 hades  → 使用 --flake .#hades
+```
+
+### 应用更改
+
+修改配置后，使用以下命令应用更改（**先执行 `hostname` 确认机器**）：
+
+```bash
+# 当前机器为 b850m (LIANLI B850M)
 sudo nixos-rebuild switch --flake .#b850m
 
-# Hades
+# 当前机器为 hades
 sudo nixos-rebuild switch --flake .#hades
 
-# 仅检查构建 (不切换)
-nixos-rebuild build --flake .#b850m
-nixos-rebuild build --flake .#hades
+# 仅检查构建 (不切换) — 同样需要先确认 hostname
+nixos-rebuild build --flake .#b850m  # 或 .#hades
 ```
 
 ## 项目结构
@@ -124,10 +133,14 @@ nixos-rebuild build --flake .#hades
 
 ## 机器
 
-| flake target | 主机名 | 说明 |
-|-------------|--------|------|
-| `.#b850m` | `b850m` | LIANLI 主力机 (B850M + AMD + RX 7900 XT) |
-| `.#hades` | `hades` | Hades 备用机 |
+| flake target | 主机名 | 主板 | 网卡 | GPU | 特殊内核模块 |
+|-------------|--------|------|------|-----|-------------|
+| `.#b850m` | `b850m` | Gigabyte B850M | r8125 (2.5G) + mt7921e (WiFi) | RX 7900 XT (RDNA3) | r8125, it87, drivetemp |
+| `.#hades` | `hades` | 其他 | 无特殊网卡 | AMD RDNA3 | 无 |
+
+硬件配置文件位于 `hardware/` 目录：
+- `hardware/b850m.nix` — 包含 PCIe ASPM 禁用、内核参数调优、it87 传感器、mt7921e udev 规则
+- `hardware/hades.nix` — 更简洁的配置，无特殊内核模块或参数
 
 ## 重要注意事项
 
@@ -144,11 +157,12 @@ nixos-rebuild build --flake .#hades
 
 ## 工作流程
 
-1. **修改配置文件** → 编辑对应的 `.nix` 文件
-2. **暂存更改** → `git add <changed-files>`（Nix 只看 git 追踪的文件）
-3. **检查语法** → `nixos-rebuild build --flake .#b850m` 或 `.#hades`
-4. **应用更改** → `sudo nixos-rebuild switch --flake .#b850m` 或 `.#hades`
-5. **提交更改** → `git commit`
+1. **识别机器** → `hostname` 确定当前机器（b850m 或 hades），后续命令使用对应的 flake target
+2. **修改配置文件** → 编辑对应的 `.nix` 文件
+3. **暂存更改** → `git add <changed-files>`（Nix 只看 git 追踪的文件）
+4. **检查语法** → `nixos-rebuild build --flake .#<hostname>`
+5. **应用更改** → `sudo nixos-rebuild switch --flake .#<hostname>`
+6. **提交更改** → `git commit`
 
 ## 新增软件的惯例
 
@@ -163,4 +177,4 @@ nixos-rebuild build --flake .#hades
 使用中文与用户对话。
 
 ---
-*更新于 2026-07-01*
+*更新于 2026-07-30*
