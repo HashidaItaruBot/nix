@@ -5,6 +5,7 @@
   environment.systemPackages = with pkgs; [
     wivrn
     xrizer
+    wayvr
   ];
 
   # WiVRn 端口
