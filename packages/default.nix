@@ -14,7 +14,7 @@ in {
     ./hyprland.nix
     ./ccache.nix
     ./coolercontrol.nix
-    ./alvr.nix
+    ./wivrn.nix
   ];
 
   environment.systemPackages = with pkgs; [

@@ -54,6 +54,12 @@
   # Enable PipeWire
   security.rtkit.enable = true;
 
+  # Allow real-time priority for SteamVR vrcompositor (sched_setscheduler needs rtprio > 0)
+  systemd.settings.Manager = {
+    DefaultLimitRTPRIO = 98;
+    DefaultLimitMEMLOCK = "infinity";
+  };
+
   powerManagement.cpuFreqGovernor = "performance"; # 强制 CPU 模式为高性能
 
   # Fonts configuration
@@ -119,6 +125,7 @@
       "wheel"
       "networkmanager"
       "video"
+      "audio"
     ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP5M2RGhIG1CslAdzx+1xcOFiAgJhw0FKFqhe/Wkm1qZ"
