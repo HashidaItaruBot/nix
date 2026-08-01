@@ -15,6 +15,7 @@ in {
     ./ccache.nix
     ./coolercontrol.nix
     ./wivrn.nix
+    ./stardust.nix
   ];
 
   environment.systemPackages = with pkgs; [
