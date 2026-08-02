@@ -54,12 +54,6 @@
   # Enable PipeWire
   security.rtkit.enable = true;
 
-  # Allow real-time priority for SteamVR vrcompositor (sched_setscheduler needs rtprio > 0)
-  systemd.settings.Manager = {
-    DefaultLimitRTPRIO = 98;
-    DefaultLimitMEMLOCK = "infinity";
-  };
-
   powerManagement.cpuFreqGovernor = "performance"; # 强制 CPU 模式为高性能
 
   # Fonts configuration

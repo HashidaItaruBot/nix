@@ -146,7 +146,6 @@
       extraPackages = with pkgs; [
         rocmPackages.clr.icd
         rocmPackages.rocm-runtime
-        libdrm  # SteamVR 2.17.6 compositor needs libdrm.so for Wayland DRM lease
       ];
     };
   };
