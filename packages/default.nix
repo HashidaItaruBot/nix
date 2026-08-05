@@ -127,4 +127,5 @@ in {
   location.provider = "geoclue2";
 
   networking.firewall.allowedTCPPorts = [8000]; # SillyTavern
+  networking.firewall.allowedTCPPorts = [5244]; # OpenList
 }
