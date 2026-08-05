@@ -8,7 +8,7 @@ in {
       "${dataDir}:/opt/openlist/data"
     ];
     ports = [
-      "5244:5244"
+      "0.0.0.0:5244:5244"
     ];
     environment = {
       UMASK = "022";
