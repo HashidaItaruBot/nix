@@ -101,6 +101,7 @@ in {
     obs-studio
     lm_sensors
     liquidctl # USB AIOs、水冷、风扇集线器支持
+    intiface-central
   ];
 
   programs._1password-gui = {
