@@ -109,6 +109,7 @@
   environment.variables = {
     GTK_IM_MODULE = lib.mkForce "";
     QT_IM_MODULE = lib.mkForce "";
+    WINENTOSYNC = "1"; # 启用 ntsync 内核同步 (替代 esync/fsync)
   };
 
   # Define a user account.
