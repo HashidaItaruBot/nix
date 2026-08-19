@@ -9,10 +9,10 @@
   vips,
 }: let
   pname = "openclaude";
-  version = "0.25.0";
+  version = "0.29.0";
   src = fetchurl {
     url = "https://github.com/Gitlawb/openclaude/archive/refs/tags/v${version}.tar.gz";
-    hash = "sha256-Xi5EHWuMg7kG85oc3Izyfqdc4+DE0FJK361Q9Z2X/JE=";
+    hash = "sha256-eoc5rbK44SvkVbf4NIn6L7hTmOFruT6v34WzjbJDbBc=";
   };
 
   # Fixed-output derivation to pre-fetch node_modules in sandbox
@@ -23,7 +23,7 @@
     dontPatchShebangs = true;
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
-    outputHash = "sha256-+PEovIy8n7wT7f2MQKqfZgjLmKlf40zm7GRr2teSJtY=";
+    outputHash = "sha256-TZ3wMp/ku5E6+KKwKOndV63t2ksVDzYYYX8OmxlyTDk=";
 
     buildPhase = ''
       export HOME=$TMPDIR
