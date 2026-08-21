@@ -54,12 +54,17 @@
     ];
     loader = {
       systemd-boot.enable = lib.mkForce false;
-      systemd-boot.configurationLimit = 100;
+      systemd-boot.configurationLimit = 8;
       efi.canTouchEfiVariables = true;
     };
     lanzaboote = {
       enable = true;
       pkiBundle = "/etc/secureboot";
+      configurationLimit = 8; # measured boot 要求 ≤8（策略最多 8 个引导变体）
+      measuredBoot = {
+        enable = true;
+        pcrs = [0 4 7];
+      };
     };
     kernelPackages = pkgs.linuxPackages_zen;
     kernelParams = [
