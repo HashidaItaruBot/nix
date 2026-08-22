@@ -23,6 +23,7 @@ in {
     vim
     git
     gh
+    github-copilot-cli
     tree
     wget
     htop
