@@ -69,6 +69,7 @@ in {
     yazi
 
     # Desktop apps
+    vscodium
     code-cursor
     kdePackages.kate
     kdePackages.dolphin
