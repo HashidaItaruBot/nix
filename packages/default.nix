@@ -69,6 +69,7 @@ in {
     yazi
 
     # Desktop apps
+    code-cursor
     kdePackages.kate
     kdePackages.dolphin
     firefox
@@ -104,6 +105,8 @@ in {
     liquidctl # USB AIOs、水冷、风扇集线器支持
     intiface-central
     sbctl
+    cursor-cli
+    
   ];
 
   programs._1password-gui = {
