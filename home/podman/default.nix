@@ -1,5 +1,6 @@
 _: {
   imports = [
+    ./new-api.nix
     ./openlist.nix
   ];
 
