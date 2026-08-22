@@ -6,10 +6,12 @@
     syntaxHighlighting.enable = true;
 
     envExtra = ''
-      if [[ "$XDG_CURRENT_DESKTOP" == *"KDE"* \
-        && "$TERM_PROGRAM" != "vscode" \
-        && -z "$ZED_TERM" ]]; then
+      if [[ "$XDG_CURRENT_DESKTOP" == *"KDE"* ]] \
+        && [[ -z "$VSCODE_INJECTION" ]] \
+        && [[ -z "$ZED_TERM" ]]; then
         export ZSH_TMUX_AUTOSTART=true
+      else
+        export ZSH_TMUX_AUTOSTART=false
       fi
     '';
 
