@@ -18,8 +18,6 @@
     ./codex.nix
     ./uv.nix
     ./helix.nix
-    ./sbt.nix
-    ./vscode.nix
     ./zed.nix
     ./kitty.nix
     ./config
