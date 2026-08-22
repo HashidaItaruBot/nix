@@ -104,6 +104,7 @@ in {
     liquidctl # USB AIOs、水冷、风扇集线器支持
     intiface-central
     sbctl
+    cc-switch
   ];
 
   programs._1password-gui = {
