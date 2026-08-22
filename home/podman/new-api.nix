@@ -29,12 +29,6 @@ in {
       SQL_DSN = "postgresql://new_api@new-api-postgres:5432/new_api";
       TZ = "Asia/Shanghai";
     };
-    extraConfig = {
-      Unit = {
-        After = ["podman-new-api-postgres.service"];
-        Requires = ["podman-new-api-postgres.service"];
-      };
-    };
     autoStart = true;
   };
 }
