@@ -30,7 +30,6 @@
     xserver.enable = true;
     displayManager.sddm.enable = true;
     desktopManager.plasma6.enable = true;
-    thermald.enable = true; # 启用温度管理
     power-profiles-daemon.enable = true; # 启用电源模式切换
     logind.settings.Login = {
       IdleAction = "ignore"; # 禁用空闲时的操作（不关机、不休眠、不挂起）
