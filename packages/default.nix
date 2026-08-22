@@ -106,9 +106,8 @@ in {
     lm_sensors
     liquidctl # USB AIOs、水冷、风扇集线器支持
     intiface-central
-    sbctl
     cursor-cli
-    
+    marktext
   ];
 
   programs._1password-gui = {
