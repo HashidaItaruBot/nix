@@ -1,6 +1,10 @@
 {config, ...}: let
   dataDir = config.home.homeDirectory + "/.config/new-api";
 in {
+  services.podman.networks.new-api = {};
+
+  services.podman.volumes.new-api-postgres = {};
+
   services.podman.containers.new-api-postgres = {
     image = "docker.io/library/postgres:16-alpine";
     network = "new-api.network";
