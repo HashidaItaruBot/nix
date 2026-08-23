@@ -108,6 +108,7 @@ in {
     intiface-central
     cursor-cli
     marktext
+    gittyup
   ];
 
   programs._1password-gui = {
