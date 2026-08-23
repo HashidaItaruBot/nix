@@ -101,7 +101,6 @@ in {
     gnome-network-displays
     drawio
     zotero
-    mill
     valgrind
     obs-studio
     lm_sensors
