@@ -46,6 +46,7 @@ in {
     langcli
     reasonix
     pnpm
+    metals
     gdb
 
     # System tools
