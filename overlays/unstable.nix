@@ -18,5 +18,6 @@ in {
     qq
     aider-chat-full
     intiface-central
+    zed-editor
     ;
 }
