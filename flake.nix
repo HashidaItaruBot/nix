@@ -34,6 +34,12 @@
     # Formatter outputs for `nix fmt`
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
 
+    # Reusable overlays (pure final: prev functions)
+    overlays = {
+      unstable = import ./overlays/unstable.nix inputs;
+      default = self.overlays.unstable;
+    };
+
     nixosConfigurations."b850m" = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       inherit specialArgs;
