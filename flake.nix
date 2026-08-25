@@ -2,9 +2,10 @@
   description = "NixOS System Flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    home-manager.url = "github:nix-community/home-manager";
+    home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     lanzaboote.url = "github:nix-community/lanzaboote/v1.1.0";
@@ -16,7 +17,7 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak/v0.7.0";
 
     plasma-manager = {
-      url = "github:nix-community/plasma-manager";
+      url = "github:nix-community/plasma-manager"; # 无 release-26.05，用 trunk
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };

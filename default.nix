@@ -6,6 +6,7 @@
   ...
 }: {
   imports = [
+    ./overlays/unstable.nix
     ./zram.nix
     ./packages
     ./home
