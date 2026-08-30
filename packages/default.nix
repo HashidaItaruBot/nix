@@ -15,6 +15,7 @@ in {
     ./ccache.nix
     ./coolercontrol.nix
     ./wivrn.nix
+    ./nix-ld.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -24,6 +25,7 @@ in {
     git
     gh
     github-copilot-cli
+    copilot-language-server
     tree
     wget
     htop
