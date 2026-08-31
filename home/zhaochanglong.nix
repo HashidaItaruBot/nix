@@ -18,6 +18,7 @@
     ./codex.nix
     ./uv.nix
     ./helix.nix
+    ./nixvim
     ./zed.nix
     ./kitty.nix
     ./config
