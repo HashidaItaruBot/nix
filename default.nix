@@ -13,6 +13,7 @@
     ./sops.nix
     ./zerotier.nix
     ./sshd.nix
+    ./firewall.nix
   ];
 
   networking = {
@@ -22,7 +23,6 @@
       "ntp.tuna.tsinghua.edu.cn"
       "0.nixos.pool.ntp.org"
     ];
-    nftables.enable = true;
   };
 
   time.timeZone = "Asia/Shanghai";
