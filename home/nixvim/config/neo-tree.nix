@@ -8,7 +8,6 @@
           enabled = true;
           leave_dirs_open = true;
         };
-        window.mappings."\\" = "close_window";
       };
     };
   };
