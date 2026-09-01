@@ -16,8 +16,8 @@
   keymaps = [
     {
       key = "<leader>e";
-      action = "<cmd>Neotree reveal<cr>";
-      options.desc = "NeoTree reveal";
+      action = "<cmd>Neotree filesystem toggle reveal<cr>";
+      options.desc = "NeoTree toggle";
     }
   ];
 }
