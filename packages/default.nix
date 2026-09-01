@@ -49,6 +49,7 @@ in {
     langcli
     reasonix
     codegraph
+    openspec
     pnpm
     metals
     gdb
