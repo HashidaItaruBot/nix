@@ -15,7 +15,7 @@
         {
           __unkeyed-1 = "<leader>h";
           group = "Git [H]unk";
-          mode = ["n" "v"];
+          mode = ["n" "v" "o" "x"];
         }
       ];
     };

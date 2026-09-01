@@ -13,11 +13,12 @@
           local disable_filetypes = { c = true, cpp = true }
           if disable_filetypes[vim.bo[bufnr].filetype] then
             return nil
+          else
+            return {
+              timeout_ms = 500,
+              lsp_format = "fallback",
+            }
           end
-          return {
-            timeout_ms = 500,
-            lsp_format = "fallback",
-          }
         end
       '';
       formatters_by_ft = {
@@ -29,11 +30,11 @@
 
   keymaps = [
     {
-      mode = ["n" "v"];
+      mode = "";
       key = "<leader>f";
       action.__raw = ''
         function()
-          require('conform').format { async = true, lsp_format = "fallback" }
+          require('conform').format { async = true, lsp_fallback = true }
         end
       '';
       options.desc = "[F]ormat buffer";

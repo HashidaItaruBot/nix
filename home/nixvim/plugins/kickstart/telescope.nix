@@ -21,6 +21,11 @@
         action = "find_files";
         options.desc = "[S]earch [F]iles";
       };
+      "<leader>ss" = {
+        mode = "n";
+        action = "builtin";
+        options.desc = "[S]earch [S]elect Telescope";
+      };
       "<leader>sw" = {
         mode = "n";
         action = "grep_string";
@@ -44,12 +49,12 @@
       "<leader>s." = {
         mode = "n";
         action = "oldfiles";
-        options.desc = "[S]earch Recent Files";
+        options.desc = "[S]earch Recent Files ('.' for repeat)";
       };
       "<leader><leader>" = {
         mode = "n";
         action = "buffers";
-        options.desc = "Find existing buffers";
+        options.desc = "[ ] Find existing buffers";
       };
     };
     settings.extensions.__raw = "{ ['ui-select'] = { require('telescope.themes').get_dropdown() } }";
@@ -70,6 +75,31 @@
         end
       '';
       options.desc = "[/] Fuzzily search in current buffer";
+    }
+    {
+      mode = "n";
+      key = "<leader>s/";
+      action.__raw = ''
+        function()
+          require('telescope.builtin').live_grep {
+            grep_open_files = true,
+            prompt_title = 'Live Grep in Open Files',
+          }
+        end
+      '';
+      options.desc = "[S]earch [/] in Open Files";
+    }
+    {
+      mode = "n";
+      key = "<leader>sn";
+      action.__raw = ''
+        function()
+          require('telescope.builtin').find_files {
+            cwd = vim.fn.stdpath 'config',
+          }
+        end
+      '';
+      options.desc = "[S]earch [N]eovim files";
     }
   ];
 }
