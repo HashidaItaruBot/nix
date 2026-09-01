@@ -22,7 +22,6 @@
       inputs.home-manager.follows = "home-manager";
     };
 
-    # 与 nixpkgs 同版本分支；勿 follows 到不匹配的 nixpkgs
     nixvim.url = "github:nix-community/nixvim/nixos-26.05";
   };
 
