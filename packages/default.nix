@@ -7,6 +7,7 @@
   ecc-universal = pkgs.callPackage ./ecc-universal.nix {};
   langcli = pkgs.callPackage ./langcli.nix {};
   reasonix = pkgs.callPackage ./reasonix.nix {};
+  codegraph = pkgs.callPackage ./codegraph.nix {};
 in {
   imports = [
     ./flatpak.nix
@@ -47,6 +48,7 @@ in {
     ecc-universal
     langcli
     reasonix
+    codegraph
     pnpm
     metals
     gdb
