@@ -11,5 +11,6 @@
     ./gitsigns.nix
     ./telescope.nix
     ./lsp.nix
+    ./completion.nix
   ];
 }
