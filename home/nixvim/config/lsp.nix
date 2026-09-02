@@ -46,6 +46,9 @@
       basedpyright.enable = true;
       ruff.enable = true;
 
+      # C / C++
+      clangd.enable = true;
+
       # TypeScript / JavaScript
       ts_ls.enable = true;
 

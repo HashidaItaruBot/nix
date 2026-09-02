@@ -6,6 +6,8 @@
 
     grammarPackages = with config.plugins.treesitter.package.builtGrammars; [
       bash
+      c
+      cpp
       css
       html
       javascript
