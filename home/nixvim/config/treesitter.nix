@@ -19,6 +19,7 @@
       python
       regex
       rust
+      scala
       toml
       tsx
       typescript

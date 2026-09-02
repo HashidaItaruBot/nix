@@ -46,6 +46,9 @@
       basedpyright.enable = true;
       ruff.enable = true;
 
+      # Scala
+      metals.enable = true;
+
       # C / C++
       clangd.enable = true;
 
