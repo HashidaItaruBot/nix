@@ -2,6 +2,21 @@
   plugins.telescope = {
     enable = true;
 
+    keymaps = {
+      "<leader>ff" = {
+        action = "find_files";
+        options.desc = "Find files";
+      };
+      "<leader>fg" = {
+        action = "live_grep";
+        options.desc = "Live grep";
+      };
+      "<leader>fb" = {
+        action = "buffers";
+        options.desc = "Find buffers";
+      };
+    };
+
     extensions.fzf-native = {
       enable = true;
       settings = {
@@ -27,23 +42,5 @@
 
   extraPackages = with pkgs; [
     ripgrep
-  ];
-
-  keymaps = [
-    {
-      key = "<leader>ff";
-      action = "find_files";
-      options.desc = "Find files";
-    }
-    {
-      key = "<leader>fg";
-      action = "live_grep";
-      options.desc = "Live grep";
-    }
-    {
-      key = "<leader>fb";
-      action = "buffers";
-      options.desc = "Find buffers";
-    }
   ];
 }
