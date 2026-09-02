@@ -30,6 +30,11 @@
           group = "Git";
           icon = "󰊢 ";
         }
+        {
+          __unkeyed-1 = "<leader>l";
+          group = "LSP";
+          icon = "󰒕 ";
+        }
       ];
     };
   };

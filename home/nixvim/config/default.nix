@@ -10,5 +10,6 @@
     ./neo-tree.nix
     ./gitsigns.nix
     ./telescope.nix
+    ./lsp.nix
   ];
 }
