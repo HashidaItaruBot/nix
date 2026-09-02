@@ -25,6 +25,11 @@
           group = "Find";
           icon = "󰈞 ";
         }
+        {
+          __unkeyed-1 = "<leader>g";
+          group = "Git";
+          icon = "󰊢 ";
+        }
       ];
     };
   };
