@@ -11,6 +11,5 @@
 
     # Always show line numbers on the left.
     number = true;
-    numberwidth = 3;
   };
 }
