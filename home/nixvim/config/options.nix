@@ -11,5 +11,6 @@
 
     # Always show line numbers on the left.
     number = true;
+    relativenumber = true;
   };
 }
