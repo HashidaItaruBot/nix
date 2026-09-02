@@ -12,5 +12,6 @@
     ./telescope.nix
     ./lsp.nix
     ./completion.nix
+    ./guess-indent.nix
   ];
 }
