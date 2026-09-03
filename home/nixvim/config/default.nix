@@ -6,6 +6,7 @@
     ./which-key.nix
     ./keymaps.nix
     ./bufferline.nix
+    ./buffer.nix
     ./treesitter.nix
     ./neo-tree.nix
     ./gitsigns.nix

@@ -29,6 +29,7 @@ home/nixvim/
     ├── which-key.nix        # 快捷键提示分组
     ├── keymaps.nix          # 全局键位（窗口导航）
     ├── bufferline.nix       # 标签栏 + devicons
+    ├── buffer.nix           # Buffer 切换快捷键
     ├── treesitter.nix       # 语法高亮 / 缩进
     ├── neo-tree.nix         # 文件树
     ├── gitsigns.nix         # Git 变更标记与 hunk 操作
@@ -115,6 +116,19 @@ conform 已开启 `autoInstall`，缺失的 formatter 会自动安装。
 | `<C-j>` | 聚焦下方窗口 |
 | `<C-k>` | 聚焦上方窗口 |
 | `<C-l>` | 聚焦右侧窗口 |
+
+### Buffer 切换
+
+| 键位 | 作用 |
+|------|------|
+| `]b` / `<S-l>` | 下一个 buffer |
+| `[b` / `<S-h>` | 上一个 buffer |
+| `<leader>bb` | 切回上一个 buffer（类似 Alt+Tab） |
+| `<leader>bn` / `<leader>bp` | 下一个 / 上一个 buffer |
+| `<leader>1` … `<leader>9` | 跳到 bufferline 中第 1–9 个 buffer |
+| `<leader>fb` | Telescope 模糊选择 buffer |
+
+顶部 bufferline 会显示序号（1、2、3…），与 `<leader>1`–`<leader>9` 对应。
 
 ### 文件树（neo-tree）
 
