@@ -15,5 +15,6 @@
     ./completion.nix
     ./conform.nix
     ./guess-indent.nix
+    ./autosave.nix
   ];
 }
