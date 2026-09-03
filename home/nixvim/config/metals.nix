@@ -9,7 +9,6 @@
 
   extraPackages = with pkgs; [
     metals
-    coursier
   ];
 
   extraConfigLua = ''
@@ -18,13 +17,14 @@
     metals_config.settings = {
       showImplicitArguments = true,
       showInferredType = true,
+
+      -- Use the Nix-managed Metals binary; do not download via coursier.
+      -- metalsBinaryPath must live under settings (nvim-metals nests it as settings.metals).
+      metalsBinaryPath = "${lib.getExe pkgs.metals}",
     }
 
     -- Use LSP progress notifications instead of Metals status bar extension.
     metals_config.init_options.statusBarProvider = "off"
-
-    -- Use the Nix-managed Metals binary instead of coursier auto-install.
-    metals_config.metalsBinaryPath = "${lib.getExe pkgs.metals}"
 
     local ok, blink = pcall(require, "blink.cmp")
     if ok then
