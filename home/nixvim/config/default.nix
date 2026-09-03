@@ -11,6 +11,7 @@
     ./gitsigns.nix
     ./telescope.nix
     ./lsp.nix
+    ./metals.nix
     ./completion.nix
     ./conform.nix
     ./guess-indent.nix

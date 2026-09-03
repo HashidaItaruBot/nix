@@ -61,6 +61,11 @@
       marksman.enable = true;
       html.enable = true;
       cssls.enable = true;
+
+      # Scala — disabled here; handled by nvim-metals in metals.nix instead.
+      # Do not enable both: nvim-metals and lspconfig/metals share the same
+      # language server but nvim-metals owns install, init_options, and commands.
+      metals.enable = false;
     };
   };
 }

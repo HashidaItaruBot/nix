@@ -35,6 +35,11 @@
           group = "LSP";
           icon = "󰒕 ";
         }
+        {
+          __unkeyed-1 = "<leader>m";
+          group = "Metals";
+          icon = "󰆧 ";
+        }
       ];
     };
   };
