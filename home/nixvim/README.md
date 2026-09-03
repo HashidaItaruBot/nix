@@ -12,6 +12,8 @@
 | Leader 键 | `<Space>` |
 | 配色 | Catppuccin Mocha |
 | 补全 | blink.cmp + LuaSnip + friendly-snippets |
+| 格式化 | conform.nvim（保存时格式化，LSP fallback） |
+| 自动保存 | auto-save.nvim（debounce 1s） |
 
 配置按功能拆分为独立 Nix 模块，修改单个插件或选项时只需编辑对应文件。
 
@@ -32,8 +34,11 @@ home/nixvim/
     ├── gitsigns.nix         # Git 变更标记与 hunk 操作
     ├── telescope.nix        # 模糊搜索（fzf-native + ripgrep）
     ├── lsp.nix              # LSP 服务器与诊断键位
+    ├── metals.nix           # Scala / Java LSP（nvim-metals）
     ├── completion.nix       # blink.cmp 自动补全
-    └── guess-indent.nix     # 自动检测缩进 / 尊重 .editorconfig
+    ├── conform.nix          # 保存时格式化
+    ├── guess-indent.nix     # 自动检测缩进 / 尊重 .editorconfig
+    └── autosave.nix         # 自动保存
 ```
 
 ## 插件
@@ -47,13 +52,16 @@ home/nixvim/
 | `gitsigns.nix` | gitsigns.nvim | 行内 Git 标记、hunk 暂存/重置/预览 |
 | `telescope.nix` | telescope.nvim + fzf-native | 文件 / 内容 / buffer 搜索 |
 | `lsp.nix` | nvim-lspconfig | 语言服务器（见下方列表） |
+| `metals.nix` | nvim-metals | Scala / Java / sbt 语言服务器（Metals） |
 | `completion.nix` | blink.cmp, LuaSnip, friendly-snippets | LSP + 路径 + snippet + buffer 补全 |
+| `conform.nix` | conform.nvim | 保存时格式化（见下方格式化规则） |
 | `which-key.nix` | which-key.nvim | 快捷键分组提示 |
 | `guess-indent.nix` | guess-indent.nvim | 按文件内容推断 tab/space 宽度 |
+| `autosave.nix` | auto-save.nvim | 编辑后自动保存（debounce 1s） |
 
 ### Treesitter 语法
 
-已启用：`bash`, `c`, `cpp`, `css`, `html`, `javascript`, `json`, `lua`, `markdown`, `nix`, `python`, `regex`, `rust`, `scala`, `toml`, `tsx`, `typescript`, `vim`, `yaml`。
+已启用：`bash`, `c`, `cpp`, `css`, `html`, `javascript`, `json`, `lua`, `markdown`, `markdown_inline`, `nix`, `python`, `regex`, `rust`, `scala`, `toml`, `tsx`, `typescript`, `vim`, `vimdoc`, `yaml`。
 
 ## LSP 服务器
 
@@ -71,8 +79,29 @@ home/nixvim/
 | TOML | taplo | |
 | Markdown | marksman | |
 | HTML / CSS | html, cssls | |
+| Scala / Java / sbt | Metals（nvim-metals） | 见 `metals.nix`；`lsp.nix` 中 `metals` 已禁用，避免与 nvim-metals 冲突 |
 
 LSP 已开启 inlay hints。诊断与 Git 标记共用行号列（`signcolumn = "yes"`），不单独占用 gutter。
+
+Metals 使用 Nix 管理的 `metals` 二进制（不通过 coursier 下载），并与 blink.cmp 共享 LSP capabilities。进度反馈走 LSP 通知（`statusBarProvider = "off"`）。
+
+## 格式化（conform.nvim）
+
+保存时自动格式化（`format_on_save`，超时 500ms）。未配置专用 formatter 的文件类型回退到 LSP 格式化。
+
+| 文件类型 | Formatter | 备注 |
+|----------|-----------|------|
+| Nix | alejandra | |
+| Python | ruff_format | |
+| C / C++ | clang_format | |
+| Lua | stylua | |
+| Shell / Bash | shfmt | |
+| TOML | taplo | |
+| Rust | LSP fallback | rust-analyzer，依赖项目 toolchain |
+| TypeScript / JavaScript | LSP fallback | ts_ls |
+| JSON / YAML / Markdown / HTML / CSS | LSP fallback | 对应 LSP server |
+
+conform 已开启 `autoInstall`，缺失的 formatter 会自动安装。
 
 ## 快捷键
 
@@ -120,6 +149,16 @@ Telescope 默认忽略 `.git/`、`node_modules/`、`.cache/`、`dist/`、`target
 | `<leader>ld` | 诊断浮窗 |
 | `<leader>lq` | 诊断写入 location list |
 
+Metals buffer 复用上述 LSP 键位，并额外提供 Metals 专用快捷键（见下节）。
+
+### Metals（Scala / Java / sbt）
+
+| 键位 | 作用 |
+|------|------|
+| `<leader>lw` | 显示 Metals worksheet |
+| `<leader>mi` | 导入构建（import build） |
+| `<leader>mc` | Telescope 打开 Metals 命令列表 |
+
 ### Git（gitsigns）
 
 | 键位 | 作用 |
@@ -143,6 +182,7 @@ Telescope 默认忽略 `.git/`、`node_modules/`、`.cache/`、`dist/`、`target
 - 默认 2 空格缩进（`expandtab`）；`guess-indent` 会按文件内容覆盖，并尊重 `.editorconfig`
 - `breakindent` 开启，换行缩进与当前行对齐
 - Neo-tree 中 `<Space>` 已禁用，避免与 leader 冲突
+- 编辑后 1 秒 debounce 自动保存（auto-save.nvim）
 
 ## 修改与应用
 
@@ -173,14 +213,17 @@ nixos-rebuild build --flake .#<hostname>
 
 **新插件**：在 `config/` 下新建模块（参考现有文件），在 `config/default.nix` 加入 `imports`。
 
-**新 LSP 服务器**：编辑 `config/lsp.nix` 的 `plugins.lsp.servers`，nixvim 会处理安装与 on_attach。若需项目级 toolchain（如 Rust），可设置 `installCargo = false` 等选项。
+**新 LSP 服务器**：编辑 `config/lsp.nix` 的 `plugins.lsp.servers`，nixvim 会处理安装与 on_attach。若需项目级 toolchain（如 Rust），可设置 `installCargo = false` 等选项。Scala / Java 走 `metals.nix`，不要在 `lsp.nix` 中重复启用 `metals`。
 
 **新 Treesitter 语法**：在 `config/treesitter.nix` 的 `grammarPackages` 中追加 grammar 名称。
+
+**新 Formatter**：在 `config/conform.nix` 的 `formatters_by_ft` 中追加映射；conform 的 `autoInstall` 会自动拉取对应 formatter。
 
 更多选项见 [nixvim 文档](https://nix-community.github.io/nixvim/) 与各插件的 options 定义。
 
 ## 相关依赖
 
 - flake input：`github:nix-community/nixvim/nixos-26.05`（`flake.nix`）
-- 系统侧：`alejandra`（nixd 格式化）、`ripgrep`（telescope grep）
+- 系统侧：`alejandra`（nixd / conform 格式化）、`ripgrep`（telescope grep）、`metals`（Scala LSP）
 - Rust 项目：依赖 direnv / rustup 提供 `rust-analyzer` 所需的 toolchain
+- Scala 项目：Metals 通过 Nix 提供二进制；构建导入使用 `<leader>mi`
