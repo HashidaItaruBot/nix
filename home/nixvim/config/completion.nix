@@ -10,7 +10,10 @@
       setupLspCapabilities = true;
 
       settings = {
-        keymap.preset = "default";
+        keymap.preset = "super-tab";
+
+        # Avoid completion menu inside snippets conflicting with Tab accept/jump.
+        completion.trigger.show_in_snippet = false;
 
         appearance.nerd_font_variant = "mono";
 
