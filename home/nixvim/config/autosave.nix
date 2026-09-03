@@ -4,10 +4,6 @@
 
     settings = {
       debounce_delay = 1000;
-
-      execution_message = {
-        enabled = false;
-      };
     };
   };
 }
