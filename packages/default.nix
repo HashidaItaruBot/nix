@@ -116,6 +116,7 @@ in {
     gittyup
     wl-clipboard
     cliphist
+    jupyter-all
   ];
 
   programs._1password-gui = {

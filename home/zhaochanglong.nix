@@ -32,9 +32,6 @@
     homeDirectory = "/home/zhaochanglong";
     stateVersion = "24.05";
     sessionPath = ["$HOME/.local/bin"];
-    packages = with pkgs; [
-      jupyter-all
-    ];
   };
 
   services.linux-wallpaperengine = {
