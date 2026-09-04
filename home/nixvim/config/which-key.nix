@@ -41,19 +41,9 @@
           icon = "󰒕 ";
         }
         {
-          __unkeyed-1 = "<leader>h";
-          group = "Harpoon";
-          icon = "󱡅 ";
-        }
-        {
           __unkeyed-1 = "<leader>m";
           group = "Metals";
           icon = "󰆧 ";
-        }
-        {
-          __unkeyed-1 = "<leader>q";
-          group = "Session";
-          icon = "󰦛 ";
         }
         {
           __unkeyed-1 = "<leader>t";
