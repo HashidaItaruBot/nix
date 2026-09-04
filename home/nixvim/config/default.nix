@@ -4,7 +4,7 @@
     ./options.nix
     ./colorscheme.nix
     ./which-key.nix
-    ./keymaps.nix
+    ./tmux-navigator.nix
     ./bufferline.nix
     ./buffer.nix
     ./treesitter.nix

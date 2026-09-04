@@ -27,7 +27,7 @@ home/nixvim/
     ├── options.nix          # 全局选项（行号、缩进、signcolumn）
     ├── colorscheme.nix      # Catppuccin 配色与插件集成
     ├── which-key.nix        # 快捷键提示分组
-    ├── keymaps.nix          # 全局键位（窗口导航）
+    ├── tmux-navigator.nix   # Neovim ↔ tmux 窗格导航
     ├── bufferline.nix       # 标签栏 + devicons
     ├── buffer.nix           # Buffer 切换快捷键
     ├── treesitter.nix       # 语法高亮（indent 关闭，用 autoindent）
@@ -57,6 +57,7 @@ home/nixvim/
 | `completion.nix` | blink.cmp, LuaSnip, friendly-snippets | LSP + 路径 + snippet + buffer 补全 |
 | `conform.nix` | conform.nvim | 保存时格式化（见下方格式化规则） |
 | `which-key.nix` | which-key.nvim | 快捷键分组提示 |
+| `tmux-navigator.nix` | vim-tmux-navigator | Neovim 分屏与 tmux pane 无缝切换（`<C-hjkl>`） |
 | `guess-indent.nix` | guess-indent.nvim | 按文件内容推断 tab/space 宽度 |
 | `autosave.nix` | auto-save.nvim | 编辑后自动保存（debounce 1s） |
 
@@ -108,14 +109,17 @@ conform 已开启 `autoInstall`，缺失的 formatter 会自动安装。
 
 `<leader>` = `<Space>`。按 `<leader>` 后 which-key 会显示分组提示。
 
-### 窗口导航
+### 窗口 / tmux 导航
+
+与 `home/tmux/tmux.conf.local` 中的绑定配合，在 Neovim 分屏和 tmux pane 之间无缝切换。
 
 | 键位 | 作用 |
 |------|------|
-| `<C-h>` | 聚焦左侧窗口 |
-| `<C-j>` | 聚焦下方窗口 |
-| `<C-k>` | 聚焦上方窗口 |
-| `<C-l>` | 聚焦右侧窗口 |
+| `<C-h>` | 左侧分屏 / pane |
+| `<C-j>` | 下方分屏 / pane |
+| `<C-k>` | 上方分屏 / pane |
+| `<C-l>` | 右侧分屏 / pane |
+| `<C-\>` | 上一个分屏 / pane |
 
 ### Buffer 切换
 
