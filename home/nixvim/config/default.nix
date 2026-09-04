@@ -12,6 +12,8 @@
     ./gitsigns.nix
     ./neogit.nix
     ./telescope.nix
+    ./harpoon.nix
+    ./persistence.nix
     ./lsp.nix
     ./metals.nix
     ./completion.nix
