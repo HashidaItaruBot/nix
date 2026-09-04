@@ -44,10 +44,10 @@ local menu = "$HOME/.config/rofi/launcher.sh"
 -- Autostart necessary processes (like notifications daemons, status bars, etc.)
 -- Or execute your favorite apps at launch like this:
 --
-hl.on("hyprland.start", function ()
-  hl.exec_cmd("waybar")
-  hl.exec_cmd("swayosd-server")
-  hl.exec_cmd("hypridle")
+hl.on("hyprland.start", function()
+	hl.exec_cmd("waybar")
+	hl.exec_cmd("swayosd-server")
+	hl.exec_cmd("hypridle")
 end)
 
 -------------------------------
@@ -68,9 +68,9 @@ hl.env("STEAM_FORCE_DESKTOPUI_SCALING", "2.0")
 
 -- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/XWayland/
 hl.config({
-    xwayland = {
-        force_zero_scaling = true,
-    },
+	xwayland = {
+		force_zero_scaling = true,
+	},
 })
 
 -----------------------
@@ -285,7 +285,6 @@ hl.bind(mainMod .. " + X", hl.dsp.exec_cmd("$HOME/.config/rofi/powermenu.sh"))
 hl.bind(mainMod .. " + Escape", hl.dsp.exec_cmd("hyprlock"))
 
 -- Rofi: clipboard history (requires wl-clipboard and cliphist)
-hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("cliphist list | rofi -dmenu -p 'Clipboard' | cliphist decode | wl-copy"))
 
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + G", hl.dsp.layout("togglesplit")) -- dwindle only
@@ -361,8 +360,16 @@ hl.bind(
 	hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle && swayosd-client --input-volume mute-toggle"),
 	{ locked = true, repeating = true }
 )
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+ && swayosd-client --brightness raise"), { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%- && swayosd-client --brightness lower"), { locked = true, repeating = true })
+hl.bind(
+	"XF86MonBrightnessUp",
+	hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+ && swayosd-client --brightness raise"),
+	{ locked = true, repeating = true }
+)
+hl.bind(
+	"XF86MonBrightnessDown",
+	hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%- && swayosd-client --brightness lower"),
+	{ locked = true, repeating = true }
+)
 
 -- Requires playerctl
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
@@ -411,14 +418,13 @@ hl.window_rule({
 -- })
 -- overlayLayerRule:set_enabled(false)
 
-	-- Kitty: enable transparency for background blur
-	hl.window_rule({
-		name = "kitty-opacity",
-		match = { class = "kitty" },
+-- Kitty: enable transparency for background blur
+hl.window_rule({
+	name = "kitty-opacity",
+	match = { class = "kitty" },
 
-		opacity = "0.85",
-	})
-
+	opacity = "0.85",
+})
 
 -- Hyprland-run windowrule
 hl.window_rule({
