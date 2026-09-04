@@ -1,7 +1,4 @@
 {
-  lib,
-  ...
-}: {
   plugins.which-key = {
     enable = true;
 
@@ -22,53 +19,48 @@
         padding = [1 2];
       };
 
-      spec =
-        [
-          {
-            __unkeyed-1 = "<leader>b";
-            group = "Buffer";
-            icon = "󰓩 ";
-          }
-          {
-            __unkeyed-1 = "<leader>f";
-            group = "Find";
-            icon = "󰈞 ";
-          }
-          {
-            __unkeyed-1 = "<leader>g";
-            group = "Git";
-            icon = "󰊢 ";
-          }
-          {
-            __unkeyed-1 = "<leader>l";
-            group = "LSP";
-            icon = "󰒕 ";
-          }
-          {
-            __unkeyed-1 = "<leader>h";
-            group = "Harpoon";
-            icon = "󱡅 ";
-          }
-          {
-            __unkeyed-1 = "<leader>m";
-            group = "Metals";
-            icon = "󰆧 ";
-          }
-          {
-            __unkeyed-1 = "<leader>q";
-            group = "Session";
-            icon = "󰦛 ";
-          }
-          {
-            __unkeyed-1 = "<leader>t";
-            group = "Terminal";
-            icon = " ";
-          }
-        ]
-        ++ lib.genList (i: {
-          __unkeyed-1 = "<leader>${toString (i + 1)}";
-          hidden = true;
-        }) 9;
+      spec = [
+        {
+          __unkeyed-1 = "<leader>b";
+          group = "Buffer";
+          icon = "󰓩 ";
+        }
+        {
+          __unkeyed-1 = "<leader>f";
+          group = "Find";
+          icon = "󰈞 ";
+        }
+        {
+          __unkeyed-1 = "<leader>g";
+          group = "Git";
+          icon = "󰊢 ";
+        }
+        {
+          __unkeyed-1 = "<leader>l";
+          group = "LSP";
+          icon = "󰒕 ";
+        }
+        {
+          __unkeyed-1 = "<leader>h";
+          group = "Harpoon";
+          icon = "󱡅 ";
+        }
+        {
+          __unkeyed-1 = "<leader>m";
+          group = "Metals";
+          icon = "󰆧 ";
+        }
+        {
+          __unkeyed-1 = "<leader>q";
+          group = "Session";
+          icon = "󰦛 ";
+        }
+        {
+          __unkeyed-1 = "<leader>t";
+          group = "Terminal";
+          icon = " ";
+        }
+      ];
     };
   };
 }

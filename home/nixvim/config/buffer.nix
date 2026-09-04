@@ -41,7 +41,7 @@
       }
     ]
     ++ lib.genList (i: {
-      key = "<leader>${toString (i + 1)}";
+      key = "<leader>b${toString (i + 1)}";
       action = "<cmd>BufferLineGoToBuffer ${toString (i + 1)}<cr>";
       options.desc = "Go to buffer ${toString (i + 1)}";
     }) 9;
