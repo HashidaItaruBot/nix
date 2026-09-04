@@ -55,6 +55,11 @@
           group = "Session";
           icon = "󰦛 ";
         }
+        {
+          __unkeyed-1 = "<leader>t";
+          group = "Terminal";
+          icon = " ";
+        }
       ];
     };
   };

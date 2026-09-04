@@ -15,6 +15,7 @@
     ./telescope.nix
     ./harpoon.nix
     ./persistence.nix
+    ./toggleterm.nix
     ./lsp.nix
     ./metals.nix
     ./completion.nix
