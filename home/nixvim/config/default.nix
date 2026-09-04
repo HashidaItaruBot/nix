@@ -10,6 +10,7 @@
     ./treesitter.nix
     ./neo-tree.nix
     ./gitsigns.nix
+    ./neogit.nix
     ./telescope.nix
     ./lsp.nix
     ./metals.nix
