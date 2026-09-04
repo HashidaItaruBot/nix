@@ -30,7 +30,7 @@ home/nixvim/
     ├── keymaps.nix          # 全局键位（窗口导航）
     ├── bufferline.nix       # 标签栏 + devicons
     ├── buffer.nix           # Buffer 切换快捷键
-    ├── treesitter.nix       # 语法高亮 / 缩进
+    ├── treesitter.nix       # 语法高亮（indent 关闭，用 autoindent）
     ├── neo-tree.nix         # 文件树
     ├── gitsigns.nix         # Git 变更标记与 hunk 操作
     ├── telescope.nix        # 模糊搜索（fzf-native + ripgrep）
@@ -48,7 +48,7 @@ home/nixvim/
 |------|------|------|
 | `colorscheme.nix` | catppuccin | 主题，已集成 gitsigns / treesitter / telescope / LSP / neo-tree / bufferline / which-key / blink.cmp |
 | `bufferline.nix` | bufferline.nvim, nvim-web-devicons | 顶部 buffer 标签栏 |
-| `treesitter.nix` | nvim-treesitter | 语法高亮、缩进（见下方语言列表） |
+| `treesitter.nix` | nvim-treesitter | 语法高亮（indent 已关，避免覆盖 autoindent） |
 | `neo-tree.nix` | neo-tree.nvim | 侧边文件树，跟随当前文件 |
 | `gitsigns.nix` | gitsigns.nvim | 行内 Git 标记、hunk 暂存/重置/预览 |
 | `telescope.nix` | telescope.nvim + fzf-native | 文件 / 内容 / buffer 搜索 |
