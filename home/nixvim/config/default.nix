@@ -23,6 +23,5 @@
     ./conform.nix
     ./guess-indent.nix
     ./autosave.nix
-    ./codecompanion.nix
   ];
 }
