@@ -3,6 +3,7 @@
   imports = [
     ./options.nix
     ./colorscheme.nix
+    ./lualine.nix
     ./which-key.nix
     ./tmux-navigator.nix
     ./bufferline.nix
@@ -17,6 +18,7 @@
     ./lsp.nix
     ./metals.nix
     ./completion.nix
+    ./autopairs.nix
     ./conform.nix
     ./guess-indent.nix
     ./autosave.nix
