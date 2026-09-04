@@ -114,6 +114,8 @@ in {
     cursor-cli
     marktext
     gittyup
+    wl-clipboard
+    cliphist
   ];
 
   programs._1password-gui = {
