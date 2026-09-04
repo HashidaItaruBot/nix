@@ -22,6 +22,29 @@
           auto_show_delay_ms = 200;
         };
 
+        # Metals often labels vals / parameterless defs as Method, and its
+        # semantic tokens are similarly noisy — same class of issue as Java.
+        completion.accept.auto_brackets = {
+          kind_resolution = {
+            enabled = true;
+            blocked_filetypes = [
+              "typescriptreact"
+              "javascriptreact"
+              "vue"
+              "scala"
+              "sbt"
+            ];
+          };
+          semantic_token_resolution = {
+            enabled = true;
+            blocked_filetypes = [
+              "java"
+              "scala"
+              "sbt"
+            ];
+          };
+        };
+
         snippets.preset = "luasnip";
 
         sources.default = [
