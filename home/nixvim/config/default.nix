@@ -13,6 +13,8 @@
     ./gitsigns.nix
     ./neogit.nix
     ./telescope.nix
+    ./harpoon.nix
+    ./persistence.nix
     ./toggleterm.nix
     ./lsp.nix
     ./metals.nix
