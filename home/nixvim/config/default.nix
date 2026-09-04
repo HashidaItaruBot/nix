@@ -23,5 +23,6 @@
     ./conform.nix
     ./guess-indent.nix
     ./autosave.nix
+    ./avante.nix
   ];
 }
