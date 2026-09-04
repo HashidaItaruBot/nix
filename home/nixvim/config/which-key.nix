@@ -21,6 +21,11 @@
 
       spec = [
         {
+          __unkeyed-1 = "<leader>a";
+          group = "AI";
+          icon = "󰚩 ";
+        }
+        {
           __unkeyed-1 = "<leader>b";
           group = "Buffer";
           icon = "󰓩 ";
