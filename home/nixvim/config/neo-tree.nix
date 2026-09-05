@@ -13,6 +13,12 @@
           enabled = true;
           leave_dirs_open = true;
         };
+
+        # Show real filesystem (incl. gitignored dirs/files); keep dotfiles hidden.
+        filtered_items = {
+          hide_dotfiles = true;
+          hide_gitignored = false;
+        };
       };
     };
   };

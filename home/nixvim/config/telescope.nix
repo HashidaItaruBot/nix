@@ -26,17 +26,38 @@
       };
     };
 
-    settings.defaults = {
-      file_ignore_patterns = [
-        "^%.git/"
-        "^node_modules/"
-        "^%.cache/"
-        "^dist/"
-        "^target/"
-      ];
-      layout_config.prompt_position = "top";
-      selection_caret = "> ";
-      sorting_strategy = "ascending";
+    settings = {
+      defaults = {
+        file_ignore_patterns = [
+          "^%.git/"
+          "^node_modules/"
+          "^%.cache/"
+          "^dist/"
+          "^target/"
+        ];
+        layout_config.prompt_position = "top";
+        selection_caret = "> ";
+        sorting_strategy = "ascending";
+      };
+
+      # Search the real filesystem (incl. gitignored), but keep dotfiles hidden.
+      # Explicit rg command so ignored-dir contents are listed reliably.
+      pickers = {
+        find_files = {
+          find_command = [
+            "rg"
+            "--files"
+            "--color"
+            "never"
+            "--no-ignore"
+          ];
+        };
+        live_grep = {
+          additional_args = [
+            "--no-ignore"
+          ];
+        };
+      };
     };
   };
 
