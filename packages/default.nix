@@ -117,6 +117,7 @@ in {
     wl-clipboard
     cliphist
     jupyter-all
+    gtkwave
   ];
 
   programs._1password-gui = {
