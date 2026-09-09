@@ -21,6 +21,7 @@
     ./nixvim
     ./zed.nix
     ./kitty.nix
+    ./wayvr.nix
     ./config
     ./1password.nix
     ./appimage.nix
