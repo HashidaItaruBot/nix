@@ -22,7 +22,7 @@
       spec = [
         {
           __unkeyed-1 = "<leader>a";
-          group = "Avante";
+          group = "Agentic";
           icon = "󰚩 ";
         }
         {

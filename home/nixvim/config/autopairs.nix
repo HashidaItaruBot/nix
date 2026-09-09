@@ -8,6 +8,7 @@
         "TelescopePrompt"
         "neo-tree"
         "vim"
+        "AgenticInput"
       ];
     };
   };

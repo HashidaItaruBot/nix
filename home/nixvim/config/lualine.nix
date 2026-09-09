@@ -16,6 +16,24 @@
           left = "";
           right = "";
         };
+        disabled_filetypes = {
+          statusline = [
+            "AgenticChat"
+            "AgenticInput"
+            "AgenticCode"
+            "AgenticFiles"
+            "AgenticDiagnostics"
+            "AgenticTodos"
+          ];
+          winbar = [
+            "AgenticChat"
+            "AgenticInput"
+            "AgenticCode"
+            "AgenticFiles"
+            "AgenticDiagnostics"
+            "AgenticTodos"
+          ];
+        };
       };
 
       sections = {

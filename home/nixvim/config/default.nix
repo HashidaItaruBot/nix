@@ -23,7 +23,7 @@
     ./conform.nix
     ./guess-indent.nix
     ./autosave.nix
-    ./avante.nix
+    ./agentic.nix
     ./copilot.nix
   ];
 }

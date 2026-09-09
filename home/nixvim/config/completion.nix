@@ -10,6 +10,13 @@
       setupLspCapabilities = true;
 
       settings = {
+        # Agentic owns slash-command / file-picker completion in its prompt.
+        enabled.__raw = ''
+          function()
+            return not vim.tbl_contains({ "AgenticInput" }, vim.bo.filetype)
+          end
+        '';
+
         keymap.preset = "super-tab";
 
         # Avoid completion menu inside snippets conflicting with Tab accept/jump.
