@@ -17,7 +17,24 @@
           end
         '';
 
-        keymap.preset = "super-tab";
+        # super-tab navigation, but Tab only accepts when an item is
+        # selected (not via select_and_accept). Unselected Tab falls
+        # through to Copilot's default <Tab> mapping.
+        keymap = {
+          preset = "super-tab";
+          "<Tab>" = [
+            "accept"
+            "snippet_forward"
+            "fallback"
+          ];
+        };
+
+        # Do not preselect the first item; Tab then prefers Copilot
+        # unless the user has navigated the menu (C-n/C-p, arrows).
+        completion.list.selection = {
+          preselect = false;
+          auto_insert = false;
+        };
 
         # Avoid completion menu inside snippets conflicting with Tab accept/jump.
         completion.trigger.show_in_snippet = false;
