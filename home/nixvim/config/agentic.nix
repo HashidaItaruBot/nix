@@ -44,6 +44,15 @@
         width = "40%",
       },
     })
+
+    -- Prefer destroy over background when replacing the current session
+    -- (new_session / restore / in-widget "new"). Plugin has no config for this.
+    do
+      local SessionRegistry = require("agentic.session_registry")
+      function SessionRegistry.choose_session_lifecycle(session, _prompt, on_selected)
+        on_selected(session ~= nil)
+      end
+    end
   '';
 
   # Do not bind <C-\>: vim-tmux-navigator already uses it for last pane.
