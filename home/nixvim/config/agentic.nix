@@ -32,7 +32,8 @@
       acp_providers = {
         ["cursor-acp"] = {
           command = vim.fn.expand("~/.local/bin/cursor-agent"),
-          args = { "acp" },
+          -- --force must precede acp: enables AlwaysApprove (Run Everything).
+          args = { "--force", "acp" },
           env = {
             HOME = vim.env.HOME,
             PATH = vim.env.PATH,
