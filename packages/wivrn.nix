@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   # WiVRn config 的 application 会被拼成单个字符串，用包装脚本带参数更稳妥
   wayvr-autostart = pkgs.writeShellApplication {
     name = "wayvr-autostart";
@@ -11,6 +8,42 @@
     '';
   };
 in {
+  # nixpkgs 的 xrizer 0.5 缺少 IVRSystem_026（NMS 更新到 OpenVR 2.15.6 后需要）。
+  # 上游 #341 已合入 main，但尚未发版；钉到含该修复的 commit。
+  nixpkgs.overlays = [
+    (final: prev: {
+      xrizer = prev.xrizer.overrideAttrs (old: let
+        version = "0.5-unstable-2026-09-03";
+        src = final.fetchFromGitHub {
+          owner = "Supreeeme";
+          repo = "xrizer";
+          rev = "0989a7fac2d1efb7ea82f5fe1a8ed30c3eeb9596";
+          hash = "sha256-Rb1pssAq6Zx6VmQVQtGcThkA6zCwi5X7G7aHmdsDrJo=";
+        };
+        cargoHash = "sha256-JKQUrHGqnU5453iVKXnO51nX2NqcBYzsfvuu92WhLDE=";
+      in {
+        inherit version src cargoHash;
+        # finalAttrs 包的 cargoDeps 不会随 cargoHash override 自动重建
+        cargoDeps = final.rustPlatform.fetchCargoVendor {
+          inherit src;
+          name = "xrizer-${version}";
+          hash = cargoHash;
+        };
+        # 新 Cargo.toml 已无 static/linked 切换；仅保留 libGLX 路径替换
+        postPatch = ''
+          substituteInPlace src/graphics_backends/gl.rs \
+            --replace-fail 'libGLX.so.0' '${final.lib.getLib final.libGL}/lib/libGLX.so.0'
+        '';
+        # 无 git checkout 时用显式版本，避免 vergen-gitcl 失败
+        env =
+          (old.env or {})
+          // {
+            XRIZER_VERSION = "0.5-unstable-0989a7f";
+          };
+      });
+    })
+  ];
+
   # WiVRn — OpenXR 无线串流（Quest 等一体机）
   services.wivrn = {
     enable = true;
