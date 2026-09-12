@@ -11,7 +11,7 @@
     ./treesitter.nix
     ./neo-tree.nix
     ./gitsigns.nix
-    ./neogit.nix
+    ./lazygit.nix
     ./telescope.nix
     ./harpoon.nix
     ./persistence.nix

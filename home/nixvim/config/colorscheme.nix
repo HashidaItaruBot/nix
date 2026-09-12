@@ -8,7 +8,6 @@
 
       integrations = {
         gitsigns = true;
-        neogit = true;
         treesitter = true;
         telescope = true;
         native_lsp = true;
