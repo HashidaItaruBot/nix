@@ -112,6 +112,7 @@ in {
     liquidctl # USB AIOs、水冷、风扇集线器支持
     intiface-central
     cursor-cli
+    pi-coding-agent
     marktext
     gittyup
     wl-clipboard

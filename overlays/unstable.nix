@@ -19,5 +19,6 @@ in {
     aider-chat-full
     intiface-central
     zed-editor
+    pi-coding-agent
     ;
 }
