@@ -8,6 +8,7 @@
   langcli = pkgs.callPackage ./langcli.nix {};
   reasonix = pkgs.callPackage ./reasonix.nix {};
   codegraph = pkgs.callPackage ./codegraph.nix {};
+  oh-my-pi = pkgs.callPackage ./oh-my-pi.nix {};
 in {
   imports = [
     ./flatpak.nix
@@ -113,6 +114,7 @@ in {
     intiface-central
     cursor-cli
     pi-coding-agent
+    oh-my-pi
     marktext
     gittyup
     wl-clipboard
