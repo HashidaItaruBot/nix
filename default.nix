@@ -11,7 +11,6 @@
     ./packages
     ./home
     ./sops.nix
-    ./zerotier.nix
     ./sshd.nix
     ./firewall.nix
   ];

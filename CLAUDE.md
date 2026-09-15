@@ -69,7 +69,6 @@ nixos-rebuild build --flake .#b850m  # 或 .#hades
 ├── default.nix                  # 系统配置入口 (KDE Plasma 6 + SDDM + PipeWire + fcitx5)
 ├── sops.nix                     # 密钥管理 (mihomo, Secure Boot, API keys)
 ├── sshd.nix                     # SSH 服务
-├── zerotier.nix                 # ZeroTier 网络
 ├── zram.nix                     # ZRAM 内存压缩 (zstd)
 ├── hardware/                    # 各机器硬件配置
 │   ├── b850m.nix                # LIANLI B850M (LUKS+TPM2, Zen, ROCm, lanzaboote)
@@ -84,6 +83,7 @@ nixos-rebuild build --flake .#b850m  # 或 .#hades
 │   ├── reasonix.nix             # Reasonix CLI 自定义包
 │   ├── nipaplay-appimage.nix    # NipaPlay AppImage 封装
 │   ├── ecc-universal.nix        # ECC Universal 工具
+│   ├── zerotier.nix             # ZeroTier 网络
 │   └── langcli.nix              # LangCLI 工具
 ├── home/                        # home-manager 配置
 │   ├── default.nix              # 入口（挂载 home-manager + plasma-manager）

@@ -18,6 +18,7 @@ in {
     ./coolercontrol.nix
     ./wivrn.nix
     ./nix-ld.nix
+    ./zerotier.nix
   ];
 
   environment.systemPackages = with pkgs; [

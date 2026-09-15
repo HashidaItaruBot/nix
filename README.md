@@ -65,7 +65,6 @@ sudo nixos-rebuild switch --flake .#hades
 ├── default.nix                  # 系统配置入口 (KDE Plasma 6 + SDDM + PipeWire + fcitx5)
 ├── sops.nix                     # 密钥管理 (mihomo, API keys)
 ├── sshd.nix                     # SSH 服务
-├── zerotier.nix                 # ZeroTier 网络
 ├── zram.nix                     # ZRAM 内存压缩 (zstd)
 ├── firewall.nix                 # 防火墙端口 (SillyTavern, Openlist 等)
 ├── overlays/                    # nixpkgs overlay
@@ -83,6 +82,7 @@ sudo nixos-rebuild switch --flake .#hades
 │   ├── coolercontrol.nix        # 硬件温控 (liquidctl)
 │   ├── wivrn.nix                # WiVRn + Monado VR 串流
 │   ├── nix-ld.nix               # nix-ld 动态链接支持
+│   ├── zerotier.nix             # ZeroTier 网络
 │   ├── reasonix.nix             # Reasonix CLI 自定义包
 │   ├── codegraph.nix            # Codegraph 工具
 │   ├── nipaplay-appimage.nix    # NipaPlay AppImage 封装
