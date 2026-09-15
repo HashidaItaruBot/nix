@@ -33,6 +33,10 @@
     homeDirectory = "/home/zhaochanglong";
     stateVersion = "24.05";
     sessionPath = ["$HOME/.local/bin"];
+    sessionVariables = {
+      EDITOR = "nvim";
+      VISUAL = "nvim";
+    };
   };
 
   services.linux-wallpaperengine = {
