@@ -19,6 +19,23 @@
     };
   };
 
+  # toggleterm maps <Esc> in terminal mode to exit to Normal mode.
+  # That steals Esc (and delays other keys) inside LazyGit — restore
+  # pass-through so LazyGit keeps its own keybindings.
+  extraConfigLua = ''
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "lazygit",
+      callback = function(args)
+        vim.keymap.set("t", "<Esc>", "<Esc>", {
+          buffer = args.buf,
+          silent = true,
+          noremap = true,
+          desc = "Pass Esc through to LazyGit",
+        })
+      end,
+    })
+  '';
+
   keymaps = [
     {
       mode = "n";
