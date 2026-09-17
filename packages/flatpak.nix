@@ -15,6 +15,7 @@
       "com.usebottles.bottles"
       "com.tencent.WeChat"
       "com.geeks3d.furmark"
+      "io.github.hypengw.Qcm"
     ];
   };
 }
