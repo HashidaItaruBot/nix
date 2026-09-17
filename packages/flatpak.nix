@@ -16,6 +16,7 @@
       "com.tencent.WeChat"
       "com.geeks3d.furmark"
       "io.github.hypengw.Qcm"
+      "moe.launcher.an-anime-game-launcher" # 原神 (AAGL)
     ];
   };
 }
