@@ -19,6 +19,7 @@ in {
     ./wivrn.nix
     ./nix-ld.nix
     ./zerotier.nix
+    ./waydroid.nix
   ];
 
   environment.systemPackages = with pkgs; [
