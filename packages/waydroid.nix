@@ -4,6 +4,7 @@
   ...
 }: let
   waydroid = pkgs.waydroid-nftables;
+  waydroidScript = pkgs.callPackage ./waydroid-script.nix {};
   user = "zhaochanglong";
   # Lineage 20（Android 13）用 AIDL3。NixOS 模块默认写成 aidl2，容器会起不来。
   gbinderConf = pkgs.writeText "waydroid.conf" ''
@@ -29,6 +30,37 @@
     # 现有镜像是 VANILLA，用户数据不能和 GApps 混用。
     rm -rf /home/${user}/.local/share/waydroid
     ${waydroid}/bin/waydroid init -f -s GAPPS
+  '';
+  # waydroid_script 把任何 stderr 都当成失败，所以包一层把日志并到 stdout。
+  waydroidQuiet = pkgs.writeShellScript "waydroid-quiet" ''
+    exec ${waydroid}/bin/waydroid "$@" 2>&1
+  '';
+  waydroidBin = pkgs.runCommand "waydroid-libndk-bin" {} ''
+    mkdir -p $out/bin
+    ln -s ${waydroidQuiet} $out/bin/waydroid
+  '';
+  libndkScript = pkgs.writeShellScript "waydroid-install-libndk" ''
+    set -euo pipefail
+    cfg=/var/lib/waydroid/waydroid.cfg
+    marker=/var/lib/waydroid/overlay/system/lib64/libndk_translation.so
+    if [[ -e "$marker" ]] && grep -q 'libndk_translation.so' "$cfg"; then
+      exit 0
+    fi
+    if systemctl is-active --quiet waydroid-container.service; then
+      systemctl stop waydroid-container.service
+    fi
+    if [[ -S /run/user/1000/bus ]]; then
+      ${pkgs.util-linux}/bin/runuser -u ${user} -- env \
+        XDG_RUNTIME_DIR=/run/user/1000 \
+        DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus \
+        WAYLAND_DISPLAY=''${WAYLAND_DISPLAY:-wayland-0} \
+        ${waydroid}/bin/waydroid session stop || true
+    fi
+    export PATH="${waydroidBin}/bin:$PATH"
+    export XDG_CACHE_HOME=/var/cache/waydroid-script
+    # -a 必须写在子命令前面，否则 13 会被当成组件名。
+    ${waydroidScript}/bin/waydroid-script -a 13 install libndk
+    ${waydroid}/bin/waydroid container stop || true
   '';
   androidId = pkgs.writeShellScriptBin "waydroid-android-id" ''
     set -euo pipefail
@@ -72,8 +104,34 @@ in {
     };
   };
 
+  systemd.services.waydroid-libndk = {
+    description = "Install Waydroid libndk ARM translation";
+    wantedBy = ["multi-user.target"];
+    after = [
+      "network-online.target"
+      "waydroid-init-gapps.service"
+    ];
+    wants = [
+      "network-online.target"
+      "waydroid-init-gapps.service"
+    ];
+    before = ["waydroid-container.service"];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      TimeoutStartSec = "30min";
+      ExecStart = libndkScript;
+    };
+  };
+
   systemd.services.waydroid-container = {
-    after = ["waydroid-init-gapps.service"];
-    requires = ["waydroid-init-gapps.service"];
+    after = [
+      "waydroid-init-gapps.service"
+      "waydroid-libndk.service"
+    ];
+    requires = [
+      "waydroid-init-gapps.service"
+      "waydroid-libndk.service"
+    ];
   };
 }
