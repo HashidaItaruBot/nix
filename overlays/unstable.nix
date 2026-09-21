@@ -10,7 +10,8 @@ inputs: final: prev: let
   };
 in {
   # 只 inherit 26.05 没有、或稳定版过旧必须用 unstable 的包
-  inherit (unstable)
+  inherit
+    (unstable)
     code-cursor
     cursor-cli
     github-copilot-cli
@@ -20,5 +21,6 @@ in {
     intiface-central
     zed-editor
     pi-coding-agent
+    wivrn
     ;
 }
