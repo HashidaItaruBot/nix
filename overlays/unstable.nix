@@ -22,5 +22,7 @@ in {
     zed-editor
     pi-coding-agent
     wivrn
+    steam
+    proton-ge-bin
     ;
 }
