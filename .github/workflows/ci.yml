@@ -26,8 +26,5 @@ jobs:
           extra_nix_config: |
             experimental-features = nix-command flakes
 
-      - name: Check flake metadata
-        run: nix flake metadata
-
       - name: Build ${{ matrix.host }}
         run: nix build --print-build-logs .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
