@@ -2,46 +2,32 @@ name: Nix CI
 
 on:
   push:
-    branches: [main]
   pull_request:
-    branches: [main]
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
-  check:
+  build:
     strategy:
       matrix:
-        include:
-          - os: ubuntu-latest
-            system: x86_64-linux
-            config: nixos
-          - os: macos-latest
-            system: aarch64-darwin
-            config: darwin
-    runs-on: ${{ matrix.os }}
+        host: [b850m, hades]
+    runs-on: ubuntu-latest
     timeout-minutes: 30
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Install Nix
-        uses: cachix/install-nix-action@master
+        uses: cachix/install-nix-action@v31
         with:
-          nix_path: nixpkgs=channel:nixpkgs-unstable
           extra_nix_config: |
             experimental-features = nix-command flakes
 
-      - name: Check flake validity
-        run: nix flake check --no-build --system ${{ matrix.system }}
+      - name: Check flake metadata
+        run: nix flake metadata
 
-      - name: Evaluate NixOS configuration
-        if: matrix.config == 'nixos'
-        run: nix eval .#nixosConfigurations.nixos.config.system.build.toplevel.drvPath --raw
-
-      - name: Evaluate Darwin configuration
-        if: matrix.config == 'darwin'
-        run: nix eval .#darwinConfigurations.zhaochanglongdeMacBook-Air.config.system.build.toplevel.drvPath --raw
+      - name: Build ${{ matrix.host }}
+        run: nix build --print-build-logs .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
