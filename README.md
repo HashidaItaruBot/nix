@@ -183,4 +183,4 @@ nix fmt  # 使用 Alejandra 格式化所有 .nix 文件
 
 ### CI
 
-`.github/workflows/ci.yml` 会在 push 和 pull request 事件中构建 `.#b850m` 与 `.#hades` 对应的 NixOS 系统闭包，用于验证 flake 配置可成功构建。
+`.github/workflows/ci.yml` 会在所有分支的 push 与 pull request 事件中构建 `.#b850m` 和 `.#hades` 对应的 NixOS 系统闭包，用于验证 flake 配置可成功构建。
