@@ -25,6 +25,7 @@
 
   # OpenVR→OpenXR 桥接 + Wayland VR compositor
   environment.systemPackages = with pkgs; [
+    opencomposite
     xrizer
     wayvr
   ];
