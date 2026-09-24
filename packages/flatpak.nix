@@ -23,17 +23,5 @@
       # 32 位 Mesa，AMD GPU 上跑 Wine 游戏需要
       "org.freedesktop.Platform.GL32.default//25.08"
     ];
-    overrides."com.usebottles.bottles" = {
-      Context = {
-        devices = ["dri"];
-        filesystems = [
-          "xdg-run/monado_comp_ipc"
-          "/run/current-system/sw/share/openxr:ro"
-          "/nix/store:ro"
-        ];
-      };
-      Environment.XR_RUNTIME_JSON =
-        "/run/current-system/sw/share/openxr/1/openxr_monado.json";
-    };
   };
 }
