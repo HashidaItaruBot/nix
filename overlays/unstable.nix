@@ -24,5 +24,6 @@ in {
     wivrn
     steam
     proton-ge-bin
+    monado
     ;
 }
