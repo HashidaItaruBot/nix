@@ -239,8 +239,7 @@
         )
       fi
 
-      # Keep bubblewrap isolation but avoid Chromium's clone3 SIGSYS on current glibc.
-      bwrap "''${bwrap_args[@]}" -- /opt/baidunetdisk/baidunetdisk --disable-seccomp-filter-sandbox "$@"
+      bwrap "''${bwrap_args[@]}" -- /opt/baidunetdisk/baidunetdisk "$@"
     '';
   };
 
