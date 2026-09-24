@@ -22,6 +22,9 @@ inputs: final: prev: let
       hash = "sha256-JKQUrHGqnU5453iVKXnO51nX2NqcBYzsfvuu92WhLDE=";
     };
     postPatch = ''
+      substituteInPlace Cargo.toml \
+        --replace-fail 'static-openxr = ["openxr/static"]' 'static-openxr = ["openxr/linked"]' \
+        --replace-fail 'default = ["monado", "git-version"]' 'default = ["monado", "git-version", "static-openxr"]'
       substituteInPlace src/graphics_backends/gl.rs \
         --replace-fail 'libGLX.so.0' '${unstable.lib.getLib unstable.libGL}/lib/libGLX.so.0'
     '';
