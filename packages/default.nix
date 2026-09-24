@@ -4,7 +4,6 @@
   ...
 }: let
   nipaplay-reload = pkgs.callPackage ./nipaplay-appimage.nix {};
-  baidunetdisk-sandbox = pkgs.callPackage ./baidunetdisk-sandbox.nix {};
   ecc-universal = pkgs.callPackage ./ecc-universal.nix {};
   langcli = pkgs.callPackage ./langcli.nix {};
   reasonix = pkgs.callPackage ./reasonix.nix {};
@@ -100,7 +99,6 @@ in {
     unar
     ppsspp-sdl-wayland
     appimage-run
-    baidunetdisk-sandbox
     nipaplay-reload
     podman-desktop
     thunderbird

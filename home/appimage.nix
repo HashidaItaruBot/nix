@@ -17,14 +17,6 @@
     categories = ["Utility"];
   };
 
-  xdg.desktopEntries.baidunetdisk-sandbox = {
-    name = "百度网盘（沙盒）";
-    exec = "baidunetdisk-sandbox %U";
-    icon = "folder-download";
-    terminal = false;
-    categories = ["Network" "FileTransfer"];
-  };
-
   # Set default application for AppImage files
   xdg.mimeApps.defaultApplications = {
     "application/vnd.appimage" = "appimage-run.desktop";
