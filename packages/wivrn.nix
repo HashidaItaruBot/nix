@@ -19,7 +19,7 @@
   # Monado — OpenXR 运行时（xrizer 回退 + 本地 VR 应用支持）
   services.monado = {
     enable = true;
-    defaultRuntime = false; # 不覆盖系统 OpenXR 运行时，保持由 WiVRn 管理
+    defaultRuntime = true; # 设为系统默认 OpenXR 运行时
     highPriority = true;
   };
 
