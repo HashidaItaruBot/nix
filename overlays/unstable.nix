@@ -24,5 +24,8 @@ in {
     wivrn
     steam
     proton-ge-bin
+    xrizer
+    opencomposite
+    wayvr
     ;
 }
