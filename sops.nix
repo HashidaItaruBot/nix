@@ -4,15 +4,13 @@
   config,
   lib,
   ...
-}: let
-  rootSshKeyPath = "/root/.ssh/id_ed25519";
-in {
+}: {
   imports = [
     inputs.sops-nix.nixosModules.sops
   ];
 
   # Only configure SSH key paths if the key exists (not in CI)
-  sops.age.sshKeyPaths = lib.optional (builtins.pathExists rootSshKeyPath) rootSshKeyPath;
+  sops.age.sshKeyPaths = ["/root/.ssh/id_ed25519"];
   sops.secrets = {
     # mihomo 配置
     mihomo_config = {
