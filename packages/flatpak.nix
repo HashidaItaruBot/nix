@@ -1,7 +1,4 @@
-{
-  inputs,
-  ...
-}: {
+{inputs, ...}: {
   imports = [
     inputs.nix-flatpak.nixosModules.nix-flatpak
   ];
@@ -20,8 +17,7 @@
       "com.geeks3d.furmark"
       "io.github.hypengw.Qcm"
       "moe.launcher.an-anime-game-launcher" # 原神 (AAGL)
-      # 32 位 Mesa，AMD GPU 上跑 Wine 游戏需要
-      "org.freedesktop.Platform.GL32.default//25.08"
+      "com.baidu.NetDisk"
     ];
   };
 }
