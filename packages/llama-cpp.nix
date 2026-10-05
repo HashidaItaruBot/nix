@@ -14,10 +14,10 @@
     # DynamicUser 的状态目录；把 .gguf 放到这里即可被 --models-dir 扫到
     modelsDir = "/var/lib/llama-cpp";
     modelsPreset = {
-      "qwen3.8-27b" = {
-        hf-repo = "unsloth/Qwen3.8-27B-GGUF";
-        hf-file = "Qwen3.8-27B-UD-Q4_K_M.gguf";
-        alias = "qwen3.8:27b";
+      "qwen3-14b-abliterated" = {
+        hf-repo = "bartowski/mlabonne_Qwen3-14B-abliterated-GGUF";
+        hf-file = "mlabonne_Qwen3-14B-abliterated-Q5_K_M.gguf";
+        alias = "qwen3-14b-abliterated";
         fit = "on";
         jinja = "on";
       };
