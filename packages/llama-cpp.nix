@@ -48,5 +48,6 @@
     # 与 hardware 里 HIP_VISIBLE_DEVICES=1 一致：跳过核显
     GGML_VK_VISIBLE_DEVICES = "1";
     AMD_VULKAN_ICD = "RADV";
+    XDG_CACHE_HOME = "/var/cache/llama-cpp";
   };
 }
