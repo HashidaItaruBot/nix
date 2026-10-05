@@ -16,7 +16,7 @@
     modelsPreset = {
       "qwen3.8-27b" = {
         hf-repo = "unsloth/Qwen3.8-27B-GGUF";
-        hf-file = "Qwen3.8-27B-UD-Q4_K_M.gguf";
+        hf-file = "Qwen3.8-27B-UD-Q3_K_XL.gguf";
         alias = "qwen3.8-27b";
         fit = "on";
         jinja = "on";
