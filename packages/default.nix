@@ -20,7 +20,6 @@ in {
     ./nix-ld.nix
     ./zerotier.nix
     ./waydroid.nix
-    ./ollama.nix
   ];
 
   environment.systemPackages = with pkgs; [
