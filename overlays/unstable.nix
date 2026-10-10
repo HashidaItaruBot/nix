@@ -14,7 +14,6 @@ in {
     (unstable)
     code-cursor
     cursor-cli
-    github-copilot-cli
     qbittorrent-enhanced
     qq
     aider-chat-full

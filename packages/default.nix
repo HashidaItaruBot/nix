@@ -31,8 +31,6 @@ in {
     vim
     git
     gh
-    github-copilot-cli
-    copilot-language-server
     tree
     wget
     htop

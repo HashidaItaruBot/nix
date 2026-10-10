@@ -18,8 +18,7 @@
         '';
 
         # super-tab navigation, but Tab only accepts when an item is
-        # selected (not via select_and_accept). Unselected Tab falls
-        # through to Copilot's default <Tab> mapping.
+        # selected (not via select_and_accept).
         keymap = {
           preset = "super-tab";
           "<Tab>" = [
@@ -29,7 +28,7 @@
           ];
         };
 
-        # Do not preselect the first item; Tab then prefers Copilot
+        # Do not preselect the first item; Tab then prefers navigation
         # unless the user has navigated the menu (C-n/C-p, arrows).
         completion.list.selection = {
           preselect = false;
