@@ -88,7 +88,8 @@ sudo nixos-rebuild switch --flake .#hades
 │   ├── nipaplay-appimage.nix    # NipaPlay AppImage 封装
 │   ├── ecc-universal.nix        # ECC Universal 工具
 │   ├── langcli.nix              # LangCLI 工具
-│   └── openclaude.nix           # OpenClaude 自定义包
+│   ├── openclaude.nix           # OpenClaude 自定义包
+│   └── opencode-v2.nix          # OpenCode v2 (npm 平台二进制)
 ├── home/                        # home-manager 配置
 │   ├── default.nix              # 入口（挂载 home-manager）
 │   ├── zhaochanglong.nix        # 用户入口（导入各模块）
@@ -102,7 +103,6 @@ sudo nixos-rebuild switch --flake .#hades
 │   ├── uv.nix                   # Python uv 工具
 │   ├── codex.nix                # Codex CLI
 │   ├── openclaude.nix           # OpenClaude 配置
-│   ├── opencode.nix             # OpenCode 配置
 │   ├── kitty.nix                # Kitty 终端
 │   ├── zed.nix                  # Zed 编辑器
 │   ├── 1password.nix            # 1Password 自动启动

@@ -13,7 +13,6 @@
     ./tmux
     ./zsh.nix
     ./direnv.nix
-    ./opencode.nix
     ./openclaude.nix
     ./codex.nix
     ./uv.nix

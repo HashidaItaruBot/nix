@@ -9,6 +9,7 @@
   reasonix = pkgs.callPackage ./reasonix.nix {};
   codegraph = pkgs.callPackage ./codegraph.nix {};
   oh-my-pi = pkgs.callPackage ./oh-my-pi.nix {};
+  opencode-v2 = pkgs.callPackage ./opencode-v2.nix {};
 in {
   imports = [
     ./flatpak.nix
@@ -116,6 +117,7 @@ in {
     intiface-central
     cursor-cli
     pi-coding-agent
+    opencode-v2
     oh-my-pi
     marktext
     gittyup
