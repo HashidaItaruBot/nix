@@ -10,8 +10,8 @@
   codegraph = pkgs.callPackage ./codegraph.nix {};
   oh-my-pi = pkgs.callPackage ./oh-my-pi.nix {};
   # OpenCode v2: 官方 flake 源码构建 (github:anomalyco/opencode @ v2.0.26)
-  opencode-v2 = inputs.opencode-v2.packages.${pkgs.system}.opencode;
-  opencode-desktop-v2 = inputs.opencode-v2.packages.${pkgs.system}.opencode-desktop;
+  opencode-v2 = inputs.opencode.packages.${pkgs.system}.opencode;
+  opencode-desktop = inputs.opencode.packages.${pkgs.system}.opencode-desktop;
 in {
   imports = [
     ./flatpak.nix
@@ -118,7 +118,7 @@ in {
     cursor-cli
     pi-coding-agent
     opencode-v2
-    opencode-desktop-v2
+    opencode-desktop
     oh-my-pi
     marktext
     gittyup
