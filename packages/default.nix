@@ -9,7 +9,8 @@
   reasonix = pkgs.callPackage ./reasonix.nix {};
   codegraph = pkgs.callPackage ./codegraph.nix {};
   oh-my-pi = pkgs.callPackage ./oh-my-pi.nix {};
-  opencode-v2 = pkgs.callPackage ./opencode-v2.nix {};
+  # OpenCode v2: 官方 flake 源码构建 (github:anomalyco/opencode @ v2.0.26)
+  opencode-v2 = inputs.opencode-v2.packages.${pkgs.system}.opencode;
 in {
   imports = [
     ./flatpak.nix

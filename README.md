@@ -88,8 +88,7 @@ sudo nixos-rebuild switch --flake .#hades
 │   ├── nipaplay-appimage.nix    # NipaPlay AppImage 封装
 │   ├── ecc-universal.nix        # ECC Universal 工具
 │   ├── langcli.nix              # LangCLI 工具
-│   ├── openclaude.nix           # OpenClaude 自定义包
-│   └── opencode-v2.nix          # OpenCode v2 (npm 平台二进制)
+│   └── openclaude.nix           # OpenClaude 自定义包
 ├── home/                        # home-manager 配置
 │   ├── default.nix              # 入口（挂载 home-manager）
 │   ├── zhaochanglong.nix        # 用户入口（导入各模块）
@@ -147,6 +146,7 @@ Secure Boot 证书通过 lanzaboote 的 `pkiBundle = "/etc/secureboot"` 引用�
 | `nix-flatpak` | Flatpak 支持 (v0.7.0) |
 | `plasma-manager` | KDE Plasma 配置管理 |
 | `nixvim` | Neovim 声明式配置 (nixos-26.05) |
+| `opencode-v2` | OpenCode v2 (官方 flake 源码构建，pin v2.0.26) |
 
 ## 开发
 

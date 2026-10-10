@@ -84,8 +84,7 @@ nixos-rebuild build --flake .#b850m  # 或 .#hades
 │   ├── nipaplay-appimage.nix    # NipaPlay AppImage 封装
 │   ├── ecc-universal.nix        # ECC Universal 工具
 │   ├── zerotier.nix             # ZeroTier 网络
-│   ├── langcli.nix              # LangCLI 工具
-│   └── opencode-v2.nix          # OpenCode v2 (npm 平台二进制)
+│   └── langcli.nix              # LangCLI 工具
 ├── home/                        # home-manager 配置
 │   ├── default.nix              # 入口（挂载 home-manager + plasma-manager）
 │   ├── zhaochanglong.nix        # 用户入口（导入各模块）
@@ -130,6 +129,7 @@ nixos-rebuild build --flake .#b850m  # 或 .#hades
 | `sops-nix` | 密钥管理 |
 | `nix-flatpak` | Flatpak 支持 (v0.7.0) |
 | `plasma-manager` | KDE Plasma 配置管理 |
+| `opencode-v2` | OpenCode v2 (官方 flake 源码构建，pin v2.0.26) |
 
 ## 机器
 
