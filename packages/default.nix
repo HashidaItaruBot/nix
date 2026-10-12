@@ -94,6 +94,7 @@ in {
     protonup-qt
     pciutils
     mangohud
+    ryubing # Switch 模拟器 (Ryujinx 社区 fork)
     netease-cloud-music-gtk
     unrar
     p7zip
