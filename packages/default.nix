@@ -9,9 +9,14 @@
   reasonix = pkgs.callPackage ./reasonix.nix {};
   codegraph = pkgs.callPackage ./codegraph.nix {};
   oh-my-pi = pkgs.callPackage ./oh-my-pi.nix {};
-  # OpenCode v2: 官方 flake 源码构建 (github:anomalyco/opencode @ v2.0.26)
+  # OpenCode v2: 官方 flake 源码构建 (github:anomalyco/opencode @ v2.0.27)
   opencode-v2 = inputs.opencode.packages.${pkgs.system}.opencode;
-  opencode-desktop = inputs.opencode.packages.${pkgs.system}.opencode-desktop;
+  # 官方 flake 源码构建的 desktop 有 channel 不匹配 bug：CLI 写 service-prod.json，
+  # desktop 读 service.json → 后台服务启动永远超时。用 wrapper 对齐（见
+  # packages/opencode-desktop.nix 注释）；等上游 nix 打包修复后可换回。
+  opencode-desktop = pkgs.callPackage ./opencode-desktop.nix {
+    opencode-desktop = inputs.opencode.packages.${pkgs.system}.opencode-desktop;
+  };
 in {
   imports = [
     ./flatpak.nix
