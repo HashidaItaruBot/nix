@@ -9,11 +9,11 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "oh-my-pi";
-  version = "18.9.1";
+  version = "18.10.1";
 
   src = fetchurl {
     url = "https://github.com/can1357/oh-my-pi/releases/download/v${finalAttrs.version}/omp-linux-x64";
-    hash = "sha256-CsJKfBRtv7QAXvAOIapgv5sd3xXa5fkpOFQsFHWCRBc=";
+    hash = "sha256-l5jSLVGLIzQrTK31dnKydu8J51bBgyrcZXGwSyatTxs=";
   };
 
   strictDeps = true;
