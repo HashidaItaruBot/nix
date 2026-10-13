@@ -8,7 +8,7 @@
     system = pkgs.system;
     config.allowUnfree = true;
   };
-  nipaplay-reload = unstable.callPackage ./nipaplay/package.nix {
+  nipaplay-reload = unstable.callPackage ./nipaplay {
     nixpkgsPath = unstable.path;
   };
   ecc-universal = pkgs.callPackage ./ecc-universal.nix {};
