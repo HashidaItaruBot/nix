@@ -1,0 +1,9 @@
+{
+  "package_info_plus_tvos": "sha256-1K0sl/H+FLBaHCX4LHlkI1XccH340gViEcUkn2lUQnw=",
+  "path_provider_tvos": "sha256-1K0sl/H+FLBaHCX4LHlkI1XccH340gViEcUkn2lUQnw=",
+  "shared_preferences_tvos": "sha256-1K0sl/H+FLBaHCX4LHlkI1XccH340gViEcUkn2lUQnw=",
+  "sqflite_tvos": "sha256-1K0sl/H+FLBaHCX4LHlkI1XccH340gViEcUkn2lUQnw=",
+  "video_player_tvos": "sha256-1K0sl/H+FLBaHCX4LHlkI1XccH340gViEcUkn2lUQnw=",
+  "wakelock_plus_tvos": "sha256-1K0sl/H+FLBaHCX4LHlkI1XccH340gViEcUkn2lUQnw=",
+  "universal_gamepad": "sha256-dZglevH7R8f3lkqPoj9k6FxdzcbKeAqwOtgOasVChg8="
+}
