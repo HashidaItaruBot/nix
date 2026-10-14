@@ -216,6 +216,21 @@ Metals buffer 复用上述 LSP 键位，并额外提供 Metals 专用快捷键�
 | `<leader>ar` | 轮换侧栏布局（右 / 下 / 左） |
 | `<leader>aS` | 停止生成 |
 
+### Minuet（AI 代码补全 / OpenCode Go）
+
+Copilot 式 ghost text 行内补全（`plugins.minuet`，`virtualtext` 前端），后端为 OpenCode Go 订阅的 chat-completions 端点（`https://opencode.ai/zen/go/v1/chat/completions`，模型 `space-bunny`，节流 1.5s / 去抖 600ms）。注意：Go 网关把 GLM/DeepSeek/Qwen 等主力模型强制为思考模式（会吃满 token 导致补全超时/空响应），实测 `space-bunny` 是唯一以增量补全形态稳定返回的模型；改模型只需动 `minuet.nix` 的 `model` 字段。密钥经 sops 存储（`api_keys.yaml` 的 `opencode_api_key`），导出为环境变量 `OPENCODE_GO_API_KEY`；运行时可用 `:Minuet change_model` 切换模型，`:Minuet virtualtext toggle` 暂停/恢复。
+
+| 键位 | 作用 |
+|------|------|
+| `<A-A>` | 接受整条建议 |
+| `<A-a>` | 接受一行 |
+| `<A-z>` | 接受 n 行（提示输入数字） |
+| `<A-]>` | 下一条建议 / 无建议时手动触发 |
+| `<A-[>` | 上一条建议 |
+| `<A-e>` | 关闭当前建议 |
+
+自动触发文件类型：`nix`、`rust`、`python`、`c`、`cpp`、`typescript`/`typescriptreact`、`javascript`/`javascriptreact`、`lua`、`sh`/`bash`、`json`、`yaml`、`toml`、`scala`/`sbt`；其余文件类型用 `<A-]>` 手动触发。
+
 ## 编辑器选项
 
 - 绝对行号 + 相对行号

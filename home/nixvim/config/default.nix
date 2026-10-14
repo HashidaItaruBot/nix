@@ -24,6 +24,7 @@
     ./guess-indent.nix
     ./autosave.nix
     ./agentic.nix
+    ./minuet.nix
     ./im-select.nix
   ];
 }
