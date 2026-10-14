@@ -1,4 +1,7 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  ...
+}: {
   extraPlugins = [
     (pkgs.vimUtils.buildVimPlugin {
       pname = "agentic.nvim";
@@ -27,13 +30,14 @@
 
   extraConfigLua = ''
     require("agentic").setup({
-      -- Cursor CLI via ACP. Authenticate first: `agent login`
-      provider = "cursor-acp",
+      -- OpenCode CLI via ACP (opencode-go 订阅). 模型在 ~/.config/opencode/opencode.json
+      -- 或 chat 内 <localLeader>m 切换.
+      provider = "opencode-acp",
       acp_providers = {
-        ["cursor-acp"] = {
-          command = vim.fn.expand("~/.local/bin/cursor-agent"),
-          -- --force must precede acp: enables AlwaysApprove (Run Everything).
-          args = { "--force", "acp" },
+        ["opencode-acp"] = {
+          -- 解析到 nixvim extraPackages 注入的官方 flake opencode
+          command = "opencode",
+          args = { "acp" },
           env = {
             HOME = vim.env.HOME,
             PATH = vim.env.PATH,

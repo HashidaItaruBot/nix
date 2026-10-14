@@ -12,7 +12,7 @@
 | Leader 键 | `<Space>` |
 | 配色 | Catppuccin Mocha |
 | 补全 | blink.cmp + LuaSnip + friendly-snippets |
-| AI | agentic.nvim（Cursor CLI via ACP） |
+| AI | agentic.nvim（OpenCode CLI via ACP，opencode-go 订阅） |
 | 格式化 | conform.nvim（保存时格式化，LSP fallback） |
 | 自动保存 | auto-save.nvim（debounce 1s） |
 
@@ -41,7 +41,7 @@ home/nixvim/
     ├── conform.nix          # 保存时格式化
     ├── guess-indent.nix     # 自动检测缩进 / 尊重 .editorconfig
     ├── autosave.nix         # 自动保存
-    └── agentic.nix          # Agentic + Cursor CLI（ACP）
+    └── agentic.nix          # Agentic + OpenCode CLI（ACP，opencode-go 订阅）
 ```
 
 ## 插件
@@ -57,7 +57,7 @@ home/nixvim/
 | `lsp.nix` | nvim-lspconfig | 语言服务器（见下方列表） |
 | `metals.nix` | nvim-metals | Scala / Java / sbt 语言服务器（Metals） |
 | `completion.nix` | blink.cmp, LuaSnip, friendly-snippets | LSP + 路径 + snippet + buffer 补全 |
-| `agentic.nix` | agentic.nvim, render-markdown.nvim | Cursor CLI ACP 侧栏聊天 / 改码 |
+| `agentic.nix` | agentic.nvim, render-markdown.nvim | OpenCode ACP 侧栏聊天 / 改码（`<leader>a*`） |
 | `conform.nix` | conform.nvim | 保存时格式化（见下方格式化规则） |
 | `which-key.nix` | which-key.nvim | 快捷键分组提示 |
 | `tmux-navigator.nix` | vim-tmux-navigator | Neovim 分屏与 tmux pane 无缝切换（`<C-hjkl>`） |
@@ -197,9 +197,9 @@ Metals buffer 复用上述 LSP 键位，并额外提供 Metals 专用快捷键�
 | `<leader>gt` | 切换当前行 blame |
 | `ih`（operator / visual） | 选择 hunk 文本对象 |
 
-### Agentic（Cursor CLI / ACP）
+### Agentic（OpenCode CLI / ACP）
 
-需先在终端执行 `agent login`。默认 provider 为 Cursor CLI（`~/.local/bin/cursor-agent acp`）。未绑定 `<C-\\>`，避免与 vim-tmux-navigator 冲突。
+默认 provider 为 OpenCode（`opencode acp`，二进制由 nixvim `extraPackages` 注入，订阅 opencode-go）。模型在 `~/.config/opencode/opencode.json` 或聊天窗口内 `<localleader>m` 切换。未绑定 `<C-\\>`，避免与 vim-tmux-navigator 冲突。
 
 聊天窗口内：`<localleader>m` 切换模型，`<localleader>s` 切换 provider，`<S-Tab>` 切换 agent 模式。
 
