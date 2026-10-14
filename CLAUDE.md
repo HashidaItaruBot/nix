@@ -82,9 +82,7 @@ nixos-rebuild build --flake .#b850m  # 或 .#hades
 │   ├── coolercontrol.nix        # 硬件温控 (liquidctl)
 │   ├── reasonix.nix             # Reasonix CLI 自定义包
 │   ├── nipaplay-appimage.nix    # NipaPlay AppImage 封装
-│   ├── ecc-universal.nix        # ECC Universal 工具
-│   ├── zerotier.nix             # ZeroTier 网络
-│   └── langcli.nix              # LangCLI 工具
+│   └── zerotier.nix             # ZeroTier 网络
 ├── home/                        # home-manager 配置
 │   ├── default.nix              # 入口（挂载 home-manager + plasma-manager）
 │   ├── zhaochanglong.nix        # 用户入口（导入各模块）

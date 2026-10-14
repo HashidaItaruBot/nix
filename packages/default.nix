@@ -11,8 +11,6 @@
   nipaplay-reload = unstable.callPackage ./nipaplay {
     nixpkgsPath = unstable.path;
   };
-  ecc-universal = pkgs.callPackage ./ecc-universal.nix {};
-  langcli = pkgs.callPackage ./langcli.nix {};
   reasonix = pkgs.callPackage ./reasonix.nix {};
   codegraph = pkgs.callPackage ./codegraph.nix {};
   oh-my-pi = pkgs.callPackage ./oh-my-pi.nix {};
@@ -61,8 +59,6 @@ in {
     clang-tools
     cmake
     nodejs
-    ecc-universal
-    langcli
     reasonix
     codegraph
     openspec
