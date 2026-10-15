@@ -7,11 +7,11 @@
     inputs.nixvim.homeModules.nixvim
   ];
 
-  # nixvim 自建 nixpkgs 实例，看不到仓库 packages/default.nix 的本地包。
-  # 把官方 flake 构建的 opencode 注入 nixvim 环境，
-  # agentic.nix 以裸命令 "opencode" 从 PATH 解析（ACP 子进程继承该 PATH）。
+  # pi-acp: ACP (Agent Client Protocol) ↔ `pi --mode rpc` 桥。
+  # agentic.nix 以裸命令 "pi-acp" 从 PATH 解析（ACP 子进程继承该 PATH）。
+  # pi 二进制来自系统包 pi-coding-agent，适配器只 spawn 它，不需要在这里注入。
   programs.nixvim.extraPackages = [
-    inputs.opencode.packages.${pkgs.system}.opencode
+    (pkgs.callPackage ../../packages/pi-acp.nix { })
   ];
 
   programs.nixvim = {
