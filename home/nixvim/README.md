@@ -222,6 +222,7 @@ Copilot 式 ghost text 行内补全（`plugins.minuet`，`virtualtext` 前端）
 
 | 键位 | 作用 |
 |------|------|
+| `<Tab>` | 接受补全：blink 菜单有选中 → 接受 blink 候选；否则（minuet ghost 可见时）→ 接受 ghost text |
 | `<A-A>` | 接受整条建议 |
 | `<A-a>` | 接受一行 |
 | `<A-z>` | 接受 n 行（提示输入数字） |
@@ -230,6 +231,8 @@ Copilot 式 ghost text 行内补全（`plugins.minuet`，`virtualtext` 前端）
 | `<A-e>` | 关闭当前建议 |
 
 自动触发文件类型：`nix`、`rust`、`python`、`c`、`cpp`、`typescript`/`typescriptreact`、`javascript`/`javascriptreact`、`lua`、`sh`/`bash`、`json`、`yaml`、`toml`、`scala`/`sbt`；其余文件类型用 `<A-]>` 手动触发。
+
+已设 `virtualtext.show_on_completion_menu = true`：blink 菜单与 minuet ghost text 可同屏，`<Tab>` 按"是否选中 blink 候选"分流（无选中且 ghost 可见时接受 ghost text）。
 
 ## 编辑器选项
 

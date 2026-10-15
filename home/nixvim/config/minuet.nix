@@ -46,6 +46,8 @@
       };
 
       virtualtext = {
+        # blink 菜单打开时仍渲染 ghost text，使"菜单未选中 + Tab"可接受建议
+        show_on_completion_menu = true;
         # 与 lsp.nix / metals.nix 的语言集一致：自动触发；其余文件 <A-]> 手动
         auto_trigger_ft = [
           "nix"
