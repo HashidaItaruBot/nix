@@ -135,6 +135,7 @@ in {
     cliphist
     jupyter-all
     gtkwave
+    libreoffice-fresh # 办公套件，编辑 xlsx/docx
   ];
 
   programs._1password-gui = {
