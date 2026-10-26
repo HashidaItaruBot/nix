@@ -97,6 +97,7 @@ in {
     obsidian
     telegram-desktop
     vlc
+    celluloid
     qbittorrent-enhanced
     qq
     protonup-qt
