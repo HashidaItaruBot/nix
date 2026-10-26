@@ -98,6 +98,7 @@ in {
     telegram-desktop
     vlc
     celluloid
+    haruna
     qbittorrent-enhanced
     qq
     protonup-qt
