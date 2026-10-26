@@ -21,6 +21,7 @@
     ./zed.nix
     ./kitty.nix
     ./config
+    ./mpd.nix
     ./1password.nix
     ./appimage.nix
     ./podman
