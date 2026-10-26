@@ -99,6 +99,7 @@ in {
     vlc
     celluloid
     haruna
+    yt-dlp # Haruna 在线视频/缩略图依赖
     qbittorrent-enhanced
     qq
     protonup-qt
