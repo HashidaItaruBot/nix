@@ -1,7 +1,4 @@
-{
-  lib,
-  ...
-}: {
+{lib, ...}: {
   plugins.harpoon = {
     enable = true;
     enableTelescope = true;
@@ -52,5 +49,6 @@
       key = "<leader>h${toString (i + 1)}";
       action.__raw = "function() require('harpoon'):list():select(${toString (i + 1)}) end";
       options.desc = "Harpoon file ${toString (i + 1)}";
-    }) 4;
+    })
+    4;
 }

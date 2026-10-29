@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   extraPlugins = [
     (pkgs.vimUtils.buildVimPlugin {
       pname = "agentic.nvim";

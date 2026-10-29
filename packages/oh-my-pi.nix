@@ -6,7 +6,6 @@
   versionCheckHook,
   writableTmpDirAsHomeHook,
 }:
-
 stdenv.mkDerivation (finalAttrs: {
   pname = "oh-my-pi";
   version = "18.10.4";
@@ -19,7 +18,7 @@ stdenv.mkDerivation (finalAttrs: {
   strictDeps = true;
   dontUnpack = true;
 
-  nativeBuildInputs = [ autoPatchelfHook ];
+  nativeBuildInputs = [autoPatchelfHook];
 
   installPhase = ''
     runHook preInstall
@@ -42,7 +41,7 @@ stdenv.mkDerivation (finalAttrs: {
     changelog = "https://github.com/can1357/oh-my-pi/releases/tag/v${finalAttrs.version}";
     license = lib.licenses.mit;
     mainProgram = "omp";
-    platforms = [ "x86_64-linux" ];
-    sourceProvenance = [ lib.sourceTypes.binaryNativeCode ];
+    platforms = ["x86_64-linux"];
+    sourceProvenance = [lib.sourceTypes.binaryNativeCode];
   };
 })

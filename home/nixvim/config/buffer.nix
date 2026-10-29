@@ -1,7 +1,4 @@
-{
-  lib,
-  ...
-}: {
+{lib, ...}: {
   keymaps =
     [
       {
@@ -44,5 +41,6 @@
       key = "<leader>b${toString (i + 1)}";
       action = "<cmd>BufferLineGoToBuffer ${toString (i + 1)}<cr>";
       options.desc = "Go to buffer ${toString (i + 1)}";
-    }) 9;
+    })
+    9;
 }

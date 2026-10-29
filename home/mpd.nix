@@ -1,9 +1,6 @@
 # MPD 守护进程 + Cantata 前端
 # MPD 以用户服务运行 (systemd --user)，通过 PipeWire 输出音频
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   services.mpd = {
     enable = true;
     musicDirectory = "/home/zhaochanglong/Music";

@@ -1,3 +1,3 @@
-_:{
+_: {
   programs.coolercontrol.enable = true;
 }
