@@ -14,6 +14,7 @@
     packages = [
       "com.usebottles.bottles"
       "com.tencent.WeChat"
+      "com.qq.QQmusic" # QQ 音乐 (社区维护包)
       "com.geeks3d.furmark"
       "io.github.hypengw.Qcm"
       "moe.launcher.an-anime-game-launcher" # 原神 (AAGL)
