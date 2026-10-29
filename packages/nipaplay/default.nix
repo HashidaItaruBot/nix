@@ -50,14 +50,14 @@
   mdk-sdk,
   zlib,
 }: let
-  nipaplayVersion = "1.11.9";
+  nipaplayVersion = "1.11.10";
 
   src = fetchFromGitHub {
     owner = "AimesSoft";
     repo = "NipaPlay-Reload";
     tag = "v${nipaplayVersion}";
     fetchSubmodules = true;
-    hash = "sha256-SWAjTEvMQwVtakCJdJ3lNNijB/ziBQMZqH4LzS9C97I=";
+    hash = "sha256-g86p34N96VbwogPXq6oHtCn4RQZf3vV3GjixeA7Xdd4=";
   };
 
   # NipaPlay 仓库内针对 liberika v0.2.1 的 Linux 构建补丁。
