@@ -8,8 +8,10 @@ _: {
       networks = [
         {
           config = {
-            "ipv4.address" = "10.100.0.1/24";
-            "ipv4.nat" = "true";
+            ipv4 = {
+              address = "10.100.0.1/24";
+              nat = "true";
+            };
           };
           description = "";
           name = "incusbr0";
@@ -19,7 +21,7 @@ _: {
       profiles = [
         {
           config = {
-            "security.nesting" = "true";
+            security.nesting = "true";
           };
           description = "Default profile";
           devices = {
