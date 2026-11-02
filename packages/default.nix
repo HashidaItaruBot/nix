@@ -33,6 +33,7 @@ in {
     ./nix-ld.nix
     ./zerotier.nix
     ./waydroid.nix
+    ./incus.nix
   ];
 
   environment.systemPackages = with pkgs; [
