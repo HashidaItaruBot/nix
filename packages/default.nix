@@ -12,6 +12,7 @@
     nixpkgsPath = unstable.path;
   };
   reasonix = pkgs.callPackage ./reasonix.nix {};
+  claude-desktop = pkgs.callPackage ./claude-desktop.nix {};
   codegraph = pkgs.callPackage ./codegraph.nix {};
   oh-my-pi = pkgs.callPackage ./oh-my-pi.nix {};
   # OpenCode v2: 官方 flake 源码构建 (github:anomalyco/opencode @ v2.0.27)
@@ -131,6 +132,7 @@ in {
     pi-coding-agent
     opencode-v2
     opencode-desktop
+    claude-desktop # 官方 Linux beta (apt 源打包, 见 packages/claude-desktop.nix)
     oh-my-pi
     marktext
     gittyup
