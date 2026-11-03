@@ -15,7 +15,6 @@
     ./direnv.nix
     ./openclaude.nix
     ./codex.nix
-    ./zcode.nix
     ./uv.nix
     ./helix.nix
     ./nixvim
