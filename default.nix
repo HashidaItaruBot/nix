@@ -1,6 +1,5 @@
 {
   self,
-  config,
   lib,
   pkgs,
   ...
@@ -40,12 +39,6 @@
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
-    };
-    mihomo = {
-      enable = false;
-      configFile = config.sops.secrets.mihomo_config.path;
-      tunMode = true;
-      webui = pkgs.metacubexd;
     };
     blueman.enable = true;
   };

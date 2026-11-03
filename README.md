@@ -63,7 +63,7 @@ sudo nixos-rebuild switch --flake .#hades
 ├── flake.lock
 ├── .sops.yaml                   # SOPS 加密配置
 ├── default.nix                  # 系统配置入口 (KDE Plasma 6 + SDDM + PipeWire + fcitx5)
-├── sops.nix                     # 密钥管理 (mihomo, API keys)
+├── sops.nix                     # 密钥管理 (API keys)
 ├── sshd.nix                     # SSH 服务
 ├── zram.nix                     # ZRAM 内存压缩 (zstd)
 ├── firewall.nix                 # 防火墙端口 (SillyTavern, Openlist 等)
@@ -111,8 +111,7 @@ sudo nixos-rebuild switch --flake .#hades
 │       ├── rofi/                # Rofi 启动器
 │       └── waybar/              # Waybar 状态栏
 └── secrets/                     # SOPS 加密密钥文件
-    ├── api_keys.yaml            # API 密钥 (DeepSeek, Exa)
-    └── mihomo_config.yaml       # Mihomo 代理配置
+    └── api_keys.yaml            # API 密钥 (DeepSeek, Exa)
 ```
 
 ## 密钥管理
@@ -128,7 +127,6 @@ sops secrets/<name>.yaml
 
 管理的密钥：
 
-- `mihomo_config` — 代理配置（mihomo 服务当前默认关闭）
 - `exa_api_key` / `deepseek_api_key` — API 密钥（导出为环境变量）
 
 Secure Boot 证书通过 lanzaboote 的 `pkiBundle = "/etc/secureboot"` 引用，需在目标机器上预先部署。

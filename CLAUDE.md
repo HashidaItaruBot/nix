@@ -67,7 +67,7 @@ nixos-rebuild build --flake .#b850m  # 或 .#hades
 ├── flake.lock                   # 锁定输入版本
 ├── .sops.yaml                   # SOPS 加密配置
 ├── default.nix                  # 系统配置入口 (KDE Plasma 6 + SDDM + PipeWire + fcitx5)
-├── sops.nix                     # 密钥管理 (mihomo, Secure Boot, API keys)
+├── sops.nix                     # 密钥管理 (API keys)
 ├── sshd.nix                     # SSH 服务
 ├── zram.nix                     # ZRAM 内存压缩 (zstd)
 ├── hardware/                    # 各机器硬件配置
@@ -108,7 +108,6 @@ nixos-rebuild build --flake .#b850m  # 或 .#hades
 │       └── waybar/              # Waybar 状态栏
 ├── secrets/                     # SOPS 加密密钥文件
 │   ├── api_keys.yaml            # API 密钥
-│   ├── mihomo_config.yaml       # Mihomo 代理配置
 │   └── secureboot.yaml          # Secure Boot 私钥
 ├── secureboot/                  # Secure Boot 证书
 │   ├── GUID
