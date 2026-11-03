@@ -11,7 +11,7 @@
 - **lanzaboote** 安全启动 + TPM2 LUKS 解密
 - **nixpkgs-unstable overlay**：按需引入 unstable 软件包（Cursor、Zed 等）
 - 游戏与串流：Steam、Sunshine、WiVRn + Monado（OpenXR/VR）
-- 网络：NetworkManager、ZeroTier
+- 网络：NetworkManager
 
 ## 前置条件
 
@@ -82,7 +82,6 @@ sudo nixos-rebuild switch --flake .#hades
 │   ├── coolercontrol.nix        # 硬件温控 (liquidctl)
 │   ├── wivrn.nix                # WiVRn + Monado VR 串流
 │   ├── nix-ld.nix               # nix-ld 动态链接支持
-│   ├── zerotier.nix             # ZeroTier 网络
 │   ├── reasonix.nix             # Reasonix CLI 自定义包
 │   ├── codegraph.nix            # Codegraph 工具
 │   ├── nipaplay-appimage.nix    # NipaPlay AppImage 封装

@@ -31,7 +31,6 @@ in {
     ./coolercontrol.nix
     ./wivrn.nix
     ./nix-ld.nix
-    ./zerotier.nix
     ./waydroid.nix
     ./incus.nix
   ];
