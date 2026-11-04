@@ -82,12 +82,17 @@ sudo nixos-rebuild switch --flake .#hades
 │   ├── coolercontrol.nix        # 硬件温控 (liquidctl)
 │   ├── wivrn.nix                # WiVRn + Monado VR 串流
 │   ├── nix-ld.nix               # nix-ld 动态链接支持
+│   ├── incus.nix                # Incus 容器/虚拟机
+│   ├── waydroid.nix             # Waydroid Android 容器
+│   ├── waydroid-script.nix      # Waydroid 辅助脚本
 │   ├── reasonix.nix             # Reasonix CLI 自定义包
 │   ├── codegraph.nix            # Codegraph 工具
-│   ├── nipaplay-appimage.nix    # NipaPlay AppImage 封装
-│   ├── ecc-universal.nix        # ECC Universal 工具
-│   ├── langcli.nix              # LangCLI 工具
-│   └── openclaude.nix           # OpenClaude 自定义包
+│   ├── oh-my-pi.nix             # Oh My Pi 自定义包
+│   ├── pi-acp.nix               # Pi ACP 自定义包
+│   ├── claude-desktop.nix       # Claude Desktop 封装
+│   ├── opencode-desktop.nix     # OpenCode Desktop (源码构建)
+│   ├── openclaude.nix           # OpenClaude 自定义包
+│   └── nipaplay/                # NipaPlay 源码构建封装
 ├── home/                        # home-manager 配置
 │   ├── default.nix              # 入口（挂载 home-manager）
 │   ├── zhaochanglong.nix        # 用户入口（导入各模块）
@@ -105,7 +110,9 @@ sudo nixos-rebuild switch --flake .#hades
 │   ├── zed.nix                  # Zed 编辑器
 │   ├── 1password.nix            # 1Password 自动启动
 │   ├── appimage.nix             # AppImage 集成
-│   ├── podman/                  # Podman 用户配置 (Openlist)
+│   ├── mcp.nix                  # MCP 服务器 (playwright, sequential-thinking, exa)
+│   ├── mpd.nix                  # MPD 音乐服务器
+│   ├── podman/                  # Podman 用户服务 (Openlist, MaiBot)
 │   └── config/                  # 桌面环境配置
 │       ├── hypr/                # Hyprland 窗口管理器
 │       ├── rofi/                # Rofi 启动器
@@ -143,7 +150,7 @@ Secure Boot 证书通过 lanzaboote 的 `pkiBundle = "/etc/secureboot"` 引用�
 | `nix-flatpak` | Flatpak 支持 (v0.7.0) |
 | `plasma-manager` | KDE Plasma 配置管理 |
 | `nixvim` | Neovim 声明式配置 (nixos-26.05) |
-| `opencode-v2` | OpenCode v2 (官方 flake 源码构建，pin v2.0.26) |
+| `opencode` | OpenCode (官方 flake 源码构建，pin v2.0.27) |
 
 ## 开发
 

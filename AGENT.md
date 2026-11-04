@@ -1,4 +1,4 @@
-# Nix Configuration Project - Claude 指令
+# Nix Configuration Project - Agent 指令
 
 ## 核心原则
 
@@ -70,18 +70,33 @@ nixos-rebuild build --flake .#b850m  # 或 .#hades
 ├── sops.nix                     # 密钥管理 (API keys)
 ├── sshd.nix                     # SSH 服务
 ├── zram.nix                     # ZRAM 内存压缩 (zstd)
+├── firewall.nix                 # 防火墙端口 (SillyTavern, Openlist 等)
+├── overlays/                    # nixpkgs overlay
+│   ├── default.nix              # 挂载 unstable overlay
+│   └── unstable.nix             # 从 nixpkgs-unstable 引入选定软件包
 ├── hardware/                    # 各机器硬件配置
 │   ├── b850m.nix                # LIANLI B850M (LUKS+TPM2, Zen, ROCm, lanzaboote)
 │   └── hades.nix                # Hades (LUKS+TPM2, Zen, ROCm, lanzaboote)
-├── packages/                    # 系统级软件包
+├── packages/                    # 系统级软件包与服务
 │   ├── default.nix              # 桌面应用 + Steam + Sunshine + 开发工具
 │   ├── flatpak.nix              # Flatpak 支持
 │   ├── podman.nix               # Podman 容器
 │   ├── hyprland.nix             # Hyprland 窗口管理器
 │   ├── ccache.nix               # C/C++ 编译缓存
 │   ├── coolercontrol.nix        # 硬件温控 (liquidctl)
+│   ├── nix-ld.nix               # nix-ld 动态链接支持
+│   ├── incus.nix                # Incus 容器/虚拟机
+│   ├── waydroid.nix             # Waydroid Android 容器
+│   ├── waydroid-script.nix      # Waydroid 辅助脚本
+│   ├── wivrn.nix                # WiVRn + Monado VR 串流
 │   ├── reasonix.nix             # Reasonix CLI 自定义包
-│   └── nipaplay-appimage.nix    # NipaPlay AppImage 封装
+│   ├── codegraph.nix            # Codegraph 工具
+│   ├── oh-my-pi.nix             # Oh My Pi 自定义包
+│   ├── pi-acp.nix               # Pi ACP 自定义包
+│   ├── claude-desktop.nix       # Claude Desktop 封装
+│   ├── opencode-desktop.nix     # OpenCode Desktop (源码构建)
+│   ├── openclaude.nix           # OpenClaude 自定义包
+│   └── nipaplay/                # NipaPlay 源码构建封装
 ├── home/                        # home-manager 配置
 │   ├── default.nix              # 入口（挂载 home-manager + plasma-manager）
 │   ├── zhaochanglong.nix        # 用户入口（导入各模块）
@@ -91,27 +106,23 @@ nixos-rebuild build --flake .#b850m  # 或 .#hades
 │   ├── tmux/                    # Tmux 配置
 │   ├── direnv.nix               # Direnv 配置
 │   ├── helix.nix                # Helix 编辑器
+│   ├── nixvim/                  # Neovim (nixvim) 配置，含独立 README
 │   ├── uv.nix                   # Python uv 工具
 │   ├── codex.nix                # Codex CLI
 │   ├── openclaude.nix           # OpenClaude 配置
 │   ├── kitty.nix                # Kitty 终端
-│   ├── vscode.nix               # VS Code
 │   ├── zed.nix                  # Zed 编辑器
 │   ├── 1password.nix            # 1Password 自动启动
 │   ├── appimage.nix             # AppImage 集成
-│   ├── sbt.nix                  # Scala/SBT 配置
-│   ├── podman/                  # Podman 用户配置
 │   ├── mcp.nix                  # MCP 服务器 (playwright, sequential-thinking, exa)
+│   ├── mpd.nix                  # MPD 音乐服务器
+│   ├── podman/                  # Podman 用户服务 (Openlist, MaiBot)
 │   └── config/                  # 桌面环境配置
 │       ├── hypr/                # Hyprland 窗口管理器
 │       ├── rofi/                # Rofi 启动器
 │       └── waybar/              # Waybar 状态栏
 ├── secrets/                     # SOPS 加密密钥文件
-│   ├── api_keys.yaml            # API 密钥
-│   └── secureboot.yaml          # Secure Boot 私钥
-├── secureboot/                  # Secure Boot 证书
-│   ├── GUID
-│   └── keys/{PK,KEK,db}/
+│   └── api_keys.yaml            # API 密钥 (DeepSeek, Exa)
 └── .github/workflows/ci.yml     # CI 构建检查
 ```
 
@@ -119,13 +130,15 @@ nixos-rebuild build --flake .#b850m  # 或 .#hades
 
 | 输入 | 用途 |
 |------|------|
-| `nixpkgs` | 软件包仓库 (unstable) |
-| `home-manager` | 用户环境管理 |
+| `nixpkgs` | 软件包仓库 (nixos-26.05) |
+| `nixpkgs-unstable` | 选定软件包的 unstable 来源（经 overlay 引入） |
+| `home-manager` | 用户环境管理 (release-26.05) |
 | `lanzaboote` | NixOS 安全启动 (v1.1.0) |
 | `sops-nix` | 密钥管理 |
 | `nix-flatpak` | Flatpak 支持 (v0.7.0) |
 | `plasma-manager` | KDE Plasma 配置管理 |
-| `opencode-v2` | OpenCode v2 (官方 flake 源码构建，pin v2.0.26) |
+| `nixvim` | Neovim 声明式配置 (nixos-26.05) |
+| `opencode` | OpenCode (官方 flake 源码构建，pin v2.0.27) |
 
 ## 机器
 
@@ -145,7 +158,7 @@ nixos-rebuild build --flake .#b850m  # 或 .#hades
 - **垃圾回收**: 已配置自动 GC（每天 02:00，保留 30 天）+ 自动 store 优化
 - **允许非自由软件**: `nixpkgs.config.allowUnfree = true`
 - **密钥管理**: 通过 sops-nix + age 加密，密钥文件在 `secrets/`
-- **安全启动**: 通过 lanzaboote + TPM2 LUKS 解密实现，证书在 `secureboot/`，私钥通过 sops 管理
+- **安全启动**: 通过 lanzaboote + TPM2 LUKS 解密实现，证书需预先部署在目标机器的 `/etc/secureboot`
 - **显示服务器**: X11 (KDE Plasma 6 + SDDM)，Hyprland Wayland 合成器可用
 - **音频**: PipeWire (ALSA/PulseAudio 兼容)
 - **CPU 调控器**: 性能模式 (`performance`)
@@ -173,4 +186,4 @@ nixos-rebuild build --flake .#b850m  # 或 .#hades
 使用中文与用户对话。
 
 ---
-*更新于 2026-07-30*
+*更新于 2026-11-04*
