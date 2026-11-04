@@ -24,10 +24,8 @@
 
     nixvim.url = "github:nix-community/nixvim/nixos-26.05";
 
-    # OpenCode v2 官方 flake (源码构建，pin 到发布 tag)
     opencode = {
       url = "github:anomalyco/opencode/v2.0.27";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
 

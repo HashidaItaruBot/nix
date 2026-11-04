@@ -16,7 +16,7 @@ in {
     cursor-cli
     qbittorrent-enhanced
     qq
-    aider-chat-full
+    podman-desktop
     intiface-central
     zed-editor
     pi-coding-agent

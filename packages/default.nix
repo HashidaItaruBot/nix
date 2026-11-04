@@ -118,7 +118,6 @@ in {
     thunderbird
     chromium
     tor-browser
-    aider-chat-full
     discord
     gnome-network-displays
     drawio
