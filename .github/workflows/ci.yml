@@ -101,21 +101,26 @@ jobs:
         run: nix build --print-build-logs .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
 
       - name: Diagnose store and GC to the real cache target
-        # The action's gc-max is broken: it passes storeSize - gcMax to
-        # `nix store gc --max`, but --max is a target size, not
-        # bytes-to-free (collectGarbage.ts), so GC aimed at ~67 GB and the
-        # cache stayed a ~19 GB tar. GC ourselves to the 8 GiB target.
+        # NOTE: `nix store gc --max N` frees up to N bytes and stops (it is
+        # NOT a target size — same semantics as `nix-store --gc --max-freed`).
+        # The rooted floor here is the toplevel closure (~53.5 GB), so only a
+        # full GC (no --max) actually reaches it; anything above the closure
+        # is build-time debris that the cache tar shouldn't carry.
         run: |
           RES=$(readlink -f result)
           echo "toplevel: $RES"
           echo "-- indirect GC roots:"
           ls -l /nix/var/nix/gcroots/auto/ || true
+          echo "-- all GC roots:"
+          nix-store --gc --print-roots 2>/dev/null | grep -v 'temproots' | head -20 || true
           echo "-- store before gc (bytes):"
           nix path-info --all --json --json-format 2 | jq '[.info[].narSize] | add' || true
           echo "-- toplevel closure size:"
           nix path-info -S "$RES" || true
-          nix store gc --max 8589934592
+          nix store gc
           echo "-- store after gc (bytes):"
           nix path-info --all --json --json-format 2 | jq '[.info[].narSize] | add' || true
           echo "-- biggest toplevel closure entries (bytes, path):"
-          nix path-info -r --json --json-format 2 "$RES" | jq -r '.info | map([.narSize, .path]) | sort_by(.[0]) | reverse | .[:15][] | "\(.[0]) \(.[1])"' || true
+          nix path-info -r --json --json-format 2 "$RES" | jq -r '.info | map([.narSize, (.path // .storePath // .name // "?"))] | sort_by(.[0]) | reverse | .[:15][] | "\(.[0]) \(.[1])"' || true
+          echo "-- closure entry count:"
+          nix path-info -r "$RES" | wc -l || true
