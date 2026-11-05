@@ -80,52 +80,8 @@ jobs:
           name: itsmyowninvention
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
 
-      - name: Restore and save Nix store
-        uses: nix-community/cache-nix-action@v7
-        with:
-          # New cache per flake.lock change; job-scoped
-          primary-key: nix-${{ runner.os }}-${{ matrix.host }}-${{ hashFiles('**/flake.lock') }}
-          # Fall back to this host's older cache, then any host's (shared base)
-          restore-prefixes-first-match: |
-            nix-${{ runner.os }}-${{ matrix.host }}-
-            nix-${{ runner.os }}-
-          # Stay under the 10 GB Actions cache limit
-          gc-max-store-size-linux: 8G
-          # Drop caches not used for a week
-          purge: true
-          purge-prefixes: nix-${{ runner.os }}-
-          purge-created: 0
-          purge-last-accessed: P7D
-          purge-primary-key: never
-
       - name: Check flake metadata
         run: nix flake metadata
 
       - name: Build ${{ matrix.host }}
         run: nix build --print-build-logs .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
-
-      - name: Diagnose store and GC to the real cache target
-        # NOTE: `nix store gc --max N` frees up to N bytes and stops (it is
-        # NOT a target size — same semantics as `nix-store --gc --max-freed`).
-        # The rooted floor here is the toplevel closure (~53.5 GB), so only a
-        # full GC (no --max) actually reaches it; anything above the closure
-        # is build-time debris that the cache tar shouldn't carry.
-        run: |
-          RES=$(readlink -f result)
-          echo "toplevel: $RES"
-          echo "-- indirect GC roots:"
-          ls -l /nix/var/nix/gcroots/auto/ || true
-          echo "-- all GC roots:"
-          nix-store --gc --print-roots 2>/dev/null | grep -v 'temproots' | head -20 || true
-          echo "-- store before gc (bytes):"
-          nix path-info --all --json --json-format 2 | jq '[.info[].narSize] | add' || true
-          echo "-- toplevel closure size:"
-          nix path-info -S "$RES" || true
-          nix store gc
-          echo "-- store after gc (bytes):"
-          nix path-info --all --json --json-format 2 | jq '[.info[].narSize] | add' || true
-          echo "-- biggest toplevel closure entries (bytes, path):"
-          nix path-info -r --json --json-format 2 "$RES" | jq -r '.info | type' || true
-          nix path-info -r --json --json-format 2 "$RES" | jq -r '.info | (if type=="object" then to_entries | map([.value.narSize, .key]) else map([.narSize, (.path // .storePath // .name // "?")]) end) | sort_by(.[0]) | reverse | .[:15][] | "\(.[0]) \(.[1])"' || true
-          echo "-- closure entry count:"
-          nix path-info -r "$RES" | wc -l || true
