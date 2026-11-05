@@ -85,13 +85,10 @@ sudo nixos-rebuild switch --flake .#hades
 │   ├── incus.nix                # Incus 容器/虚拟机
 │   ├── waydroid.nix             # Waydroid Android 容器
 │   ├── waydroid-script.nix      # Waydroid 辅助脚本
-│   ├── reasonix.nix             # Reasonix CLI 自定义包
 │   ├── codegraph.nix            # Codegraph 工具
 │   ├── oh-my-pi.nix             # Oh My Pi 自定义包
 │   ├── pi-acp.nix               # Pi ACP 自定义包
 │   ├── claude-desktop.nix       # Claude Desktop 封装
-│   ├── opencode-desktop.nix     # OpenCode Desktop (源码构建)
-│   ├── openclaude.nix           # OpenClaude 自定义包
 │   └── nipaplay/                # NipaPlay 源码构建封装
 ├── home/                        # home-manager 配置
 │   ├── default.nix              # 入口（挂载 home-manager）
@@ -105,7 +102,6 @@ sudo nixos-rebuild switch --flake .#hades
 │   ├── nixvim/                  # Neovim (nixvim) 配置
 │   ├── uv.nix                   # Python uv 工具
 │   ├── codex.nix                # Codex CLI
-│   ├── openclaude.nix           # OpenClaude 配置
 │   ├── kitty.nix                # Kitty 终端
 │   ├── zed.nix                  # Zed 编辑器
 │   ├── 1password.nix            # 1Password 自动启动
