@@ -90,3 +90,23 @@ jobs:
 
       - name: Build ${{ matrix.host }}
         run: nix build --print-build-logs .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
+
+      - name: Diagnose store and GC to the real cache target
+        # The action's gc-max is broken: it passes storeSize - gcMax to
+        # `nix store gc --max`, but --max is a target size, not
+        # bytes-to-free (collectGarbage.ts), so GC aimed at ~67 GB and the
+        # cache stayed a ~19 GB tar. GC ourselves to the 8 GiB target.
+        run: |
+          RES=$(readlink -f result)
+          echo "toplevel: $RES"
+          echo "-- indirect GC roots:"
+          ls -l /nix/var/nix/gcroots/auto/ || true
+          echo "-- store before gc (bytes):"
+          nix path-info --all --json | jq '[.info[].narSize] | add'
+          echo "-- toplevel closure size:"
+          nix path-info -S "$RES"
+          nix store gc --max 8589934592
+          echo "-- store after gc (bytes):"
+          nix path-info --all --json | jq '[.info[].narSize] | add'
+          echo "-- biggest toplevel closure entries (bytes, path):"
+          nix path-info -r --json "$RES" | jq -r '.info | map([.narSize, .path]) | sort_by(.[0]) | reverse | .[:15][] | "\(.[0]) \(.[1])"'
