@@ -60,9 +60,12 @@ jobs:
             # Keep as much room as possible for the store while building
             min-free = 5368709120
             max-free = 10737418240
-            # Retain closures so the cache keeps full dependency trees
-            keep-env-derivations = true
-            keep-outputs = true
+            # NOTE: intentionally no keep-outputs / keep-env-derivations here.
+            # They root the whole build graph (~75 GB), so GC could not shrink
+            # the store and every cache save was a ~26 GB tar — far over the
+            # 10 GB Actions cache quota, making saves evict each other. Leave
+            # them off so gc-max-store-size below can trim the store down to
+            # the runtime closure and both hosts' caches fit side by side.
 
       - name: Restore and save Nix store
         uses: nix-community/cache-nix-action@v7
