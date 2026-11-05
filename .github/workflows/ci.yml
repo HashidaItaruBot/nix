@@ -102,11 +102,11 @@ jobs:
           echo "-- indirect GC roots:"
           ls -l /nix/var/nix/gcroots/auto/ || true
           echo "-- store before gc (bytes):"
-          nix path-info --all --json | jq '[.info[].narSize] | add'
+          nix path-info --all --json --json-format 2 | jq '[.info[].narSize] | add' || true
           echo "-- toplevel closure size:"
-          nix path-info -S "$RES"
+          nix path-info -S "$RES" || true
           nix store gc --max 8589934592
           echo "-- store after gc (bytes):"
-          nix path-info --all --json | jq '[.info[].narSize] | add'
+          nix path-info --all --json --json-format 2 | jq '[.info[].narSize] | add' || true
           echo "-- biggest toplevel closure entries (bytes, path):"
-          nix path-info -r --json "$RES" | jq -r '.info | map([.narSize, .path]) | sort_by(.[0]) | reverse | .[:15][] | "\(.[0]) \(.[1])"'
+          nix path-info -r --json --json-format 2 "$RES" | jq -r '.info | map([.narSize, .path]) | sort_by(.[0]) | reverse | .[:15][] | "\(.[0]) \(.[1])"' || true
