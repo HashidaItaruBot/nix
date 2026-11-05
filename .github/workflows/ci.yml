@@ -71,9 +71,10 @@ jobs:
             # them off so gc-max-store-size below can trim the store down to
             # the runtime closure and both hosts' caches fit side by side.
 
-      # Persistent binary cache (survives GHA cache eviction, usable from
-      # local machines via `cachix use itsmyowninvention`). Pushes only
-      # paths cache.nixos.org doesn't already serve.
+      # Persistent binary cache (survives GHA cache eviction). Hosts
+      # consume it declaratively via nix.settings in default.nix, so no
+      # manual `cachix use` is needed. Pushes cover only paths
+      # cache.nixos.org doesn't already serve.
       - name: Setup Cachix
         uses: cachix/cachix-action@v17
         with:
