@@ -60,6 +60,10 @@ jobs:
             # Keep as much room as possible for the store while building
             min-free = 5368709120
             max-free = 10737418240
+            # CDN flakiness from GH runners (e.g. fetchurl of the QQ .deb,
+            # curl(35) connection reset): retry more, fail faster per attempt
+            download-attempts = 15
+            connect-timeout = 15
             # NOTE: intentionally no keep-outputs / keep-env-derivations here.
             # They root the whole build graph (~75 GB), so GC could not shrink
             # the store and every cache save was a ~26 GB tar — far over the
