@@ -125,6 +125,7 @@ jobs:
           echo "-- store after gc (bytes):"
           nix path-info --all --json --json-format 2 | jq '[.info[].narSize] | add' || true
           echo "-- biggest toplevel closure entries (bytes, path):"
-          nix path-info -r --json --json-format 2 "$RES" | jq -r '.info | map([.narSize, (.path // .storePath // .name // "?")]) | sort_by(.[0]) | reverse | .[:15][] | "\(.[0]) \(.[1])"' || true
+          nix path-info -r --json --json-format 2 "$RES" | jq -r '.info | type' || true
+          nix path-info -r --json --json-format 2 "$RES" | jq -r '.info | (if type=="object" then to_entries | map([.value.narSize, .key]) else map([.narSize, (.path // .storePath // .name // "?")]) end) | sort_by(.[0]) | reverse | .[:15][] | "\(.[0]) \(.[1])"' || true
           echo "-- closure entry count:"
           nix path-info -r "$RES" | wc -l || true
