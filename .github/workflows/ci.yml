@@ -20,19 +20,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Free disk space
+      # Give Nix a dedicated ~65 GB volume carved from /mnt free space.
+      # Nothing preinstalled is deleted ("holster" protocol), so the image's
+      # tools stay fully functional. Must run before Nix is installed.
+      - name: Create dedicated /nix volume
         continue-on-error: true
-        run: |
-          echo "Disk usage before cleanup:"
-          df -h /
-          # Remove preinstalled toolchains we don't need (~25 GB total)
-          timeout 600 sudo rm -rf /usr/share/dotnet /usr/local/lib/android \
-            /usr/local/.ghc /opt/ghc /opt/hostedtoolcache/CodeQL \
-            /usr/local/share/boost /usr/share/swift || true
-          # Guard against a hung Docker daemon
-          timeout 300 sudo docker image prune --all --force > /dev/null 2>&1 || true
-          echo "Disk usage after cleanup:"
-          df -h /
+        uses: wimpysworld/nothing-but-nix@v10
+        with:
+          hatchet-protocol: holster
+          mnt-safe-haven: 2048
+          root-safe-haven: 3072
 
       - name: Install Nix
         uses: cachix/install-nix-action@v31
