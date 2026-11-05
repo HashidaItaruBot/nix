@@ -137,6 +137,15 @@
         "nix-command"
         "flakes"
       ];
+      # Own cachix cache first: CI pushes every path cache.nixos.org
+      # doesn't already serve (see .github/workflows/ci.yml). The NixOS
+      # default (cache.nixos.org) is appended after by nixpkgs' mkAfter.
+      substituters = [
+        "https://itsmyowninvention.cachix.org"
+      ];
+      trusted-public-keys = [
+        "itsmyowninvention.cachix.org-1:2jQNzmiDJrru2Z8gMKUYzCE7DOzu8MHD8j3gHGbDqcM="
+      ];
     };
   };
 
