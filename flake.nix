@@ -47,7 +47,6 @@
     };
 
     nixosConfigurations."b850m" = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
       inherit specialArgs;
       modules = [
         ./hardware/b850m.nix
@@ -57,7 +56,6 @@
     };
 
     nixosConfigurations."hades" = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
       inherit specialArgs;
       modules = [
         ./hardware/hades.nix

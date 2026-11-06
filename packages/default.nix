@@ -5,7 +5,7 @@
 }: let
   # nixpkgs-unstable 实例：nipaplay 需要 flutter347 (26.05 只有 3.41)
   unstable = import inputs.nixpkgs-unstable {
-    system = pkgs.system;
+    system = pkgs.stdenv.hostPlatform.system;
     config.allowUnfree = true;
   };
   nipaplay-reload = unstable.callPackage ./nipaplay {
@@ -15,7 +15,7 @@
   codegraph = pkgs.callPackage ./codegraph.nix {};
   oh-my-pi = pkgs.callPackage ./oh-my-pi.nix {};
   # OpenCode v2: 官方 flake 源码构建 (github:anomalyco/opencode @ v2.0.27)
-  opencode-v2 = inputs.opencode.packages.${pkgs.system}.opencode;
+  opencode-v2 = inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.opencode;
 in {
   imports = [
     ./flatpak.nix
