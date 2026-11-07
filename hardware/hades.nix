@@ -30,6 +30,14 @@
           device = "/dev/disk/by-partuuid/cec43cac-f70a-4ef5-9f52-bbbf7225b0c5";
           crypttabExtraOpts = ["tpm2-device=auto"];
         };
+        "crypt2" = {
+          device = "/dev/disk/by-partuuid/7941ceaf-15e2-4711-af3c-bffdc2b9c345";
+          crypttabExtraOpts = ["tpm2-device=auto"];
+        };
+        "crypt-swap" = {
+          device = "/dev/disk/by-partuuid/38dfabec-d147-4061-8fbb-b3f9a295f847";
+          crypttabExtraOpts = ["tpm2-device=auto"];
+        };
       };
     };
     kernelModules = [
@@ -56,6 +64,7 @@
       };
     };
     kernelPackages = pkgs.linuxPackages_zen;
+    resumeDevice = "/dev/mapper/crypt-swap";
   };
 
   fileSystems = {
@@ -100,6 +109,13 @@
       ];
     };
   };
+
+  swapDevices = [
+    {
+      device = "/dev/mapper/crypt-swap";
+      priority = -1;
+    }
+  ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
