@@ -251,20 +251,16 @@ Copilot 式 ghost text 行内补全（`plugins.minuet`，`virtualtext` 前端）
 git add home/nixvim/
 ```
 
-3. 确认主机名并重建系统（home-manager 随 NixOS 一并切换）：
+3. 重建系统（home-manager 随 NixOS 一并切换）：
 
 ```bash
-hostname
-# b850m → .#b850m
-# hades → .#hades
-
-sudo nixos-rebuild switch --flake .#<hostname>
+sudo nixos-rebuild switch --flake .#hades
 ```
 
 仅做构建检查、不切换：
 
 ```bash
-nixos-rebuild build --flake .#<hostname>
+nixos-rebuild build --flake .#hades
 ```
 
 ## 添加新插件或 LSP

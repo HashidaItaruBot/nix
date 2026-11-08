@@ -33,7 +33,7 @@ jobs:
   build:
     strategy:
       matrix:
-        host: [b850m, hades]
+        host: [hades]
     runs-on: ubuntu-latest
     timeout-minutes: 60
 

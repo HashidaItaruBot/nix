@@ -26,30 +26,19 @@ experimental-features = nix-command flakes
 
 | Flake target | 主机名 | 主板 / 硬件 | 网卡 | GPU | 特殊内核模块 |
 |-------------|--------|-------------|------|-----|-------------|
-| `.#b850m` | `b850m` | Gigabyte B850M | r8125 (2.5G) + mt7921e (WiFi) | RX 7900 XT (RDNA3) | r8125, it87, drivetemp |
 | `.#hades` | `hades` | — | — | AMD RDNA3 | — |
 
-两台机器均使用 Btrfs 子卷 + LUKS + TPM2 自动解密，Zen 内核，ROCm 支持。
-
-`b850m` 额外配置了 PCIe ASPM 禁用、it87 主板传感器、mt7921e udev 规则，以及 lanzaboote measured boot（PCR 0/4/7）。
+机器使用 Btrfs 子卷 + LUKS + TPM2 自动解密，Zen 内核，ROCm 支持。
 
 ## 快速开始
 
-构建或切换前，先确认当前主机名并选择对应的 flake target：
-
-```bash
-hostname
-# b850m → --flake .#b850m
-# hades → --flake .#hades
-```
+本项目仅维护 `hades` 一台机器，构建与切换固定使用 `.#hades`：
 
 ```bash
 # 构建检查
-nixos-rebuild build --flake .#b850m
 nixos-rebuild build --flake .#hades
 
 # 应用配置
-sudo nixos-rebuild switch --flake .#b850m
 sudo nixos-rebuild switch --flake .#hades
 ```
 
@@ -70,8 +59,7 @@ sudo nixos-rebuild switch --flake .#hades
 ├── overlays/                    # nixpkgs overlay
 │   ├── default.nix              # 挂载 unstable overlay
 │   └── unstable.nix             # 从 nixpkgs-unstable 引入选定软件包
-├── hardware/                    # 各机器硬件配置
-│   ├── b850m.nix                # LIANLI B850M (LUKS+TPM2, Zen, ROCm, lanzaboote)
+├── hardware/                    # 机器硬件配置
 │   └── hades.nix                # Hades (LUKS+TPM2, Zen, ROCm, lanzaboote)
 ├── packages/                    # 系统级软件包与服务
 │   ├── default.nix              # 桌面应用 + Steam + Sunshine + 开发工具
@@ -152,12 +140,11 @@ Secure Boot 证书通过 lanzaboote 的 `pkiBundle = "/etc/secureboot"` 引用�
 
 ### 修改流程
 
-1. 执行 `hostname` 确认当前机器
-2. 编辑配置文件
-3. `git add` 暂存更改（Nix 只识别 git 追踪的文件）
-4. `nixos-rebuild build --flake .#<host>` 构建检查
-5. `sudo nixos-rebuild switch --flake .#<host>` 应用更改
-6. `git commit` 提交
+1. 编辑配置文件
+2. `git add` 暂存更改（Nix 只识别 git 追踪的文件）
+3. `nixos-rebuild build --flake .#hades` 构建检查
+4. `sudo nixos-rebuild switch --flake .#hades` 应用更改
+5. `git commit` 提交
 
 ### 新增软件惯例
 
@@ -183,4 +170,4 @@ nix fmt  # 使用 Alejandra 格式化所有 .nix 文件
 
 ### CI
 
-`.github/workflows/ci.yml` 会在所有分支的 push 与 pull request 事件中构建 `.#b850m` 和 `.#hades` 对应的 NixOS 系统闭包，用于验证 flake 配置可成功构建。
+`.github/workflows/ci.yml` 会在所有分支的 push 与 pull request 事件中构建 `.#hades` 对应的 NixOS 系统闭包，用于验证 flake 配置可成功构建。

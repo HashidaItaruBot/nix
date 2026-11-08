@@ -51,15 +51,6 @@
       default = self.overlays.unstable;
     };
 
-    nixosConfigurations."b850m" = nixpkgs.lib.nixosSystem {
-      inherit specialArgs;
-      modules = [
-        ./hardware/b850m.nix
-        {networking.hostName = "b850m";}
-        ./.
-      ];
-    };
-
     nixosConfigurations."hades" = nixpkgs.lib.nixosSystem {
       inherit specialArgs;
       modules = [
