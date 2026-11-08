@@ -60,7 +60,7 @@
     lanzaboote = {
       enable = true;
       pkiBundle = "/var/lib/sbctl";
-      configurationLimit = 8; # measured boot 要求 ≤8（策略最多 8 个引导变体）
+      configurationLimit = 4; # lanzaboote v1.2.0/systemd-pcrlock：measured boot 下 ESP 硬限 ≤4
       measuredBoot = {
         enable = true;
         # PCR 7 预测受 systemd #40381 影响（AMD fTPM authority 事件序错乱），

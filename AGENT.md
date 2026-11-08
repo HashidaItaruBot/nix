@@ -129,12 +129,12 @@ nixos-rebuild build --flake .#b850m  # 或 .#hades
 | `nixpkgs` | 软件包仓库 (nixos-26.05) |
 | `nixpkgs-unstable` | 选定软件包的 unstable 来源（经 overlay 引入） |
 | `home-manager` | 用户环境管理 (release-26.05) |
-| `lanzaboote` | NixOS 安全启动 (v1.1.0) |
+| `lanzaboote` | NixOS 安全启动 (v1.2.0) |
 | `sops-nix` | 密钥管理 |
-| `nix-flatpak` | Flatpak 支持 (v0.7.0) |
+| `nix-flatpak` | Flatpak 支持 (v0.8.0) |
 | `plasma-manager` | KDE Plasma 配置管理 |
 | `nixvim` | Neovim 声明式配置 (nixos-26.05) |
-| `opencode` | OpenCode (官方 flake 源码构建，pin v2.0.27) |
+| `opencode` | OpenCode (官方 flake 源码构建，pin v2.2.4；v2.2.5+ 上游 FOD hash 损坏) |
 
 ## 机器
 
@@ -182,4 +182,4 @@ nixos-rebuild build --flake .#b850m  # 或 .#hades
 使用中文与用户对话。
 
 ---
-*更新于 2026-11-04*
+*更新于 2026-11-08*
