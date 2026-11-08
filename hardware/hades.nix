@@ -58,7 +58,7 @@
     lanzaboote = {
       enable = true;
       pkiBundle = "/var/lib/sbctl";
-      configurationLimit = 8; # measured boot requires <=8 (policy allows at most 8 boot variants)
+      configurationLimit = 4; # lanzaboote v1.2.0 asserts measuredBoot.enable -> configurationLimit <= 4 (nix/modules/lanzaboote.nix)
       measuredBoot = {
         enable = true;
         # PCR 7 prediction is affected by systemd #40381 (AMD fTPM authority events arriving out of order),
