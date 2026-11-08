@@ -1,5 +1,5 @@
 # packages/nipaplay/package.nix
-# NipaPlay-Reload Linux 桌面版：从源码构建的 Flutter 应用 (v1.11.9)。
+# NipaPlay-Reload Linux 桌面版：从源码构建的 Flutter 应用 (v1.11.11)。
 # 复刻上游官方 Linux 构建 (.github/workflows/build-linux.yml):
 #   - Flutter 3.47 (nixpkgs-unstable flutter347, 上游 pin 3.47.0-0.3.pre beta 同代)
 #   - libmpv 走 nixpkgs mpv (上游 link 系统 libmpv2，pkg-config 链接)
@@ -50,17 +50,17 @@
   mdk-sdk,
   zlib,
 }: let
-  nipaplayVersion = "1.11.10";
+  nipaplayVersion = "1.11.11";
 
   src = fetchFromGitHub {
     owner = "AimesSoft";
     repo = "NipaPlay-Reload";
     tag = "v${nipaplayVersion}";
     fetchSubmodules = true;
-    hash = "sha256-g86p34N96VbwogPXq6oHtCn4RQZf3vV3GjixeA7Xdd4=";
+    hash = "sha256-yoX1LlXymJj5qQkWEgtfPULRxEePPKwvl9Cg5BLWIOg=";
   };
 
-  # NipaPlay 仓库内针对 liberika v0.2.1 的 Linux 构建补丁。
+  # NipaPlay 仓库内针对 liberika 的 Linux 构建补丁 (v0.2.1 / v0.3.2 共用同一份)。
   erikaPatch = fetchurl {
     url = "https://raw.githubusercontent.com/AimesSoft/NipaPlay-Reload/v${nipaplayVersion}/.github/patches/erika-linux-native-deps.patch";
     hash = "sha256:0as7cd9vb800wnsgyk6x26acn5vzh7z9j8a14v3g0gjzi76rv4xs";
@@ -121,12 +121,12 @@
 
   erikaRuntime = stdenv.mkDerivation rec {
     pname = "liberika-runtime";
-    version = "0.2.1";
+    version = "0.3.2";
 
     src = fetchgit {
-      url = "https://github.com/AimesSoft/Erika";
-      rev = "70f12bf325ce8d020d2155635f5992eff4654321";
-      hash = "sha256-FKUAwOe06XFh1F5FYws5ekJZw9cYc5PEj30KMgrfgfA=";
+      url = "https://github.com/AimesSoft/liberika";
+      rev = "9afcdd88f1afcd26d8d5c07d3e37b6fbe77e8fd4";
+      hash = "sha256-K2VO8tAhtaWWdLDL2vtDvb0ll4DPtGdgkIhBbK05Ut0=";
     };
 
     cargoDeps = rustPlatform.importCargoLock {
@@ -231,7 +231,7 @@
       runHook preInstall
 
       # 复用 liberika 自带的打包脚本 (纯本地 staging，含全部 licenses)
-      GITHUB_SHA="70f12bf325ce8d020d2155635f5992eff4654321" \
+      GITHUB_SHA="9afcdd88f1afcd26d8d5c07d3e37b6fbe77e8fd4" \
         GITHUB_REF_NAME="v${version}" ERIKA_NATIVE_PROFILE=lgpl \
         bash packaging/bundle.sh erika-linux ./erika-linux.zip \
         target/release/liberika_capi.so
