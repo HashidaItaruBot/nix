@@ -14,7 +14,7 @@
   claude-desktop = pkgs.callPackage ./claude-desktop.nix {};
   codegraph = pkgs.callPackage ./codegraph.nix {};
   oh-my-pi = pkgs.callPackage ./oh-my-pi.nix {};
-  # OpenCode v2: built from source via the official flake (github:anomalyco/opencode @ v2.0.27)
+  # OpenCode v2: built from source via the official flake (github:anomalyco/opencode @ v2.2.4; see flake.nix for why not v2.2.5/v2.2.6)
   opencode-v2 = inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.opencode;
 in {
   imports = [

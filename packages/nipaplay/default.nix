@@ -1,9 +1,9 @@
 # packages/nipaplay/package.nix
-# NipaPlay-Reload Linux desktop: a Flutter application built from source (v1.11.9).
+# NipaPlay-Reload Linux desktop: a Flutter application built from source (v1.11.11).
 # Replicates the upstream official Linux build (.github/workflows/build-linux.yml):
 #   - Flutter 3.47 (nixpkgs-unstable flutter347, same generation as upstream's pinned 3.47.0-0.3.pre beta)
 #   - libmpv from nixpkgs mpv (upstream links the system libmpv2 via pkg-config)
-#   - the "Erika" native playback kernel (AimesSoft/liberika v0.2.1): vendored deps built offline via xtask
+#   - the "Erika" native playback kernel (AimesSoft/liberika v0.3.2): vendored deps built offline via xtask
 #     FFmpeg 8.1.2 / dav1d / libass / harfbuzz / freetype / fribidi / zlib
 #   - the Rust FRB library librust_lib_nipaplay.so is prebuilt and injected via the official
 #     NIPAPLAY_RUST_LIBRARY hook, skipping cargokit entirely (avoids network access)
@@ -50,20 +50,20 @@
   mdk-sdk,
   zlib,
 }: let
-  nipaplayVersion = "1.11.10";
+  nipaplayVersion = "1.11.11";
 
   src = fetchFromGitHub {
     owner = "AimesSoft";
     repo = "NipaPlay-Reload";
     tag = "v${nipaplayVersion}";
     fetchSubmodules = true;
-    hash = "sha256-g86p34N96VbwogPXq6oHtCn4RQZf3vV3GjixeA7Xdd4=";
+    hash = "sha256-yoX1LlXymJj5qQkWEgtfPULRxEePPKwvl9Cg5BLWIOg=";
   };
 
-  # Linux build patch for liberika v0.2.1 from the NipaPlay repo.
+  # Linux build patch for liberika v0.3.2 from the NipaPlay repo.
   erikaPatch = fetchurl {
     url = "https://raw.githubusercontent.com/AimesSoft/NipaPlay-Reload/v${nipaplayVersion}/.github/patches/erika-linux-native-deps.patch";
-    hash = "sha256:0as7cd9vb800wnsgyk6x26acn5vzh7z9j8a14v3g0gjzi76rv4xs";
+    hash = "sha256-upOdzYlfPvDGJkEhmf6BfxfLlBHdTP+05QCgtVNjRys=";
   };
 
   # Vendored third-party source tarballs for liberika's xtask: once third_party/cache is pre-filled,
@@ -121,12 +121,12 @@
 
   erikaRuntime = stdenv.mkDerivation rec {
     pname = "liberika-runtime";
-    version = "0.2.1";
+    version = "0.3.2";
 
     src = fetchgit {
-      url = "https://github.com/AimesSoft/Erika";
-      rev = "70f12bf325ce8d020d2155635f5992eff4654321";
-      hash = "sha256-FKUAwOe06XFh1F5FYws5ekJZw9cYc5PEj30KMgrfgfA=";
+      url = "https://github.com/AimesSoft/liberika";
+      rev = "9afcdd88f1afcd26d8d5c07d3e37b6fbe77e8fd4";
+      hash = "sha256-K2VO8tAhtaWWdLDL2vtDvb0ll4DPtGdgkIhBbK05Ut0=";
     };
 
     cargoDeps = rustPlatform.importCargoLock {
@@ -231,7 +231,7 @@
       runHook preInstall
 
       # Reuse liberika's own packaging script (purely local staging, includes all licenses)
-      GITHUB_SHA="70f12bf325ce8d020d2155635f5992eff4654321" \
+      GITHUB_SHA="9afcdd88f1afcd26d8d5c07d3e37b6fbe77e8fd4" \
         GITHUB_REF_NAME="v${version}" ERIKA_NATIVE_PROFILE=lgpl \
         bash packaging/bundle.sh erika-linux ./erika-linux.zip \
         target/release/liberika_capi.so
