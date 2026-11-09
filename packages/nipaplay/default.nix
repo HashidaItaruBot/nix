@@ -117,6 +117,16 @@
     };
 
     doCheck = false;
+
+    preBuild = ''
+      # nixpkgs cargo-setup-hook.sh (nixpkgs-unstable since ~2026-11-06) now
+      # exports AWS_LC_SYS_USE_SYSTEM=1 globally, forcing aws-lc-sys to link a
+      # system AWS-LC. This derivation wires no system aws-lc/openssl, so the
+      # pkg-config probe finds nothing and the build panics. Exporting 0 here
+      # (after all hooks, before cargo invokes build scripts) restores the
+      # vendored source build this package was verified with.
+      export AWS_LC_SYS_USE_SYSTEM=0
+    '';
   };
 
   erikaRuntime = stdenv.mkDerivation rec {
