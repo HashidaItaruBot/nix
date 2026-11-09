@@ -17,7 +17,6 @@ in {
     qbittorrent-enhanced
     qq
     podman-desktop
-    intiface-central
     zed-editor
     pi-coding-agent
     wivrn
@@ -25,4 +24,38 @@ in {
     proton-ge-bin
     monado
     ;
+
+  # nixpkgs cargo-setup-hook.sh (unstable since ~2026-11-06) exports
+  # AWS_LC_SYS_USE_SYSTEM=1 globally for cargo builds. intiface-central
+  # compiles aws-lc-sys 0.45.0 inside its internal rustDep (a buildRustPackage
+  # let-binding in nixpkgs' package.nix), which wires no system AWS-LC, so the
+  # pkg-config probe finds nothing and panics. rustPlatform is a callPackage
+  # argument, so wrap buildRustPackage through .override to re-export 0 in
+  # preBuild (after hooks, before build scripts run) and restore the vendored
+  # source build. Same fix as packages/nipaplay. Drop this override once
+  # upstream intiface-central handles the hook's export itself.
+  intiface-central = let
+    fixed = unstable.intiface-central.override (old: {
+      rustPlatform =
+        old.rustPlatform
+        // {
+          buildRustPackage = args:
+            old.rustPlatform.buildRustPackage (args
+              // {
+                preBuild =
+                  (args.preBuild or "")
+                  + ''
+                    export AWS_LC_SYS_USE_SYSTEM=0
+                  '';
+              });
+        };
+    });
+  in
+    fixed.overrideAttrs (old: {
+      preBuild =
+        (old.preBuild or "")
+        + ''
+          export AWS_LC_SYS_USE_SYSTEM=0
+        '';
+    });
 }
