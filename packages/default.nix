@@ -118,7 +118,6 @@ in {
     obs-studio
     lm_sensors
     liquidctl # support for USB AIOs, liquid coolers, and fan hubs
-    intiface-central
     cursor-cli
     pi-coding-agent
     opencode-v2
