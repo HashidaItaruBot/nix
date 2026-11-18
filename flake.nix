@@ -25,11 +25,11 @@
     nixvim.url = "github:nix-community/nixvim/nixos-26.05";
 
     opencode = {
-      # NOT v2.2.5/v2.2.6: both ship a wrong opencode-node_modules FOD hash upstream.
-      # v2.2.6 verified broken locally (bun install completes, FOD hash mismatch:
-      # specified sha256-UOVs48Z4yO4TJv859cg89lsul54KB9StTSl/VSQJXmc=,
-      # got sha256-s8XswivimwgzG0wMleHee5zliDKd+UC84eAvBvzr6cI=).
-      # Re-bump once upstream fixes the node_modules hash.
+      # NOT v2.2.5/v2.2.6/v2.2.7/v2.3.0: all ship a wrong opencode-node_modules FOD hash upstream
+      # (v2.2.5/v2.2.6/v2.2.7/v2.3.0 all specify sha256-UOVs48Z4yO4TJv859cg89lsul54KB9StTSl/VSQJXmc=;
+      # builds verified locally 2026-11-16: v2.2.7 got sha256-1mAAHaGwJ1sqxRe0YUsPEXJpXzEsZVX0VOmxRbY75n4=,
+      # v2.3.0 got sha256-zOejpMyUjcewmtGRbJnNFIYfWoT44Fru59mGl4KnrHE= — both mismatch, FOD fails).
+      # v2.2.4 is the newest tag that builds. Re-bump once upstream fixes the node_modules hash.
       url = "github:anomalyco/opencode/v2.2.4";
     };
   };
