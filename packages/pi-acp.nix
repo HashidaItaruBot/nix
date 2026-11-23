@@ -9,14 +9,14 @@
 }:
 buildNpmPackage {
   pname = "pi-acp";
-  version = "0.0.34";
+  version = "0.0.35";
   nodejs = nodejs; # upstream requires node >=20
 
   src = fetchFromGitHub {
     owner = "svkozak";
     repo = "pi-acp";
-    rev = "v0.0.34";
-    hash = "sha256-QRwxOtTZOY+Np3PkAoy2o2PrUzEqjItM/372sCPlSMo=";
+    rev = "v0.0.35";
+    hash = "sha256-/5ga4YEi5GZ95ru+9gDpXp9iWVqmLeInIHddskO4uXg=";
   };
 
   npmDepsHash = "sha256-BvLNtFfp1cMVjzWcMRSdhTqiJrTfbFoUbWkkPW9200o=";

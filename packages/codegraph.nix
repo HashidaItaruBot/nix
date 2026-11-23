@@ -5,9 +5,9 @@
   makeWrapper,
   autoPatchelfHook,
 }: let
-  version = "1.6.2";
+  version = "1.6.4";
   platform = "linux-x64";
-  hash = "sha256-7wr0FgkhKPsczHI3hgALft9KaXH+YErNCL+Wbk83uCg=";
+  hash = "sha256-hHfzhBy6asjEWEfULrUlTx8tf7wwRbrzM+HL6SJnAi0=";
 in
   stdenv.mkDerivation {
     pname = "codegraph";
