@@ -19,7 +19,7 @@ buildNpmPackage {
     hash = "sha256-/5ga4YEi5GZ95ru+9gDpXp9iWVqmLeInIHddskO4uXg=";
   };
 
-  npmDepsHash = "sha256-BvLNtFfp1cMVjzWcMRSdhTqiJrTfbFoUbWkkPW9200o=";
+  npmDepsHash = "sha256-BtLtlL0zpoOzN094Wf9GZrpfQm4eVpcITzMxfEeMpKI=";
 
   # layout: $out/lib/node_modules/pi-acp/dist/index.js + $out/bin/pi-acp (npmInstallHook defaults come from package.json bin)
 }
